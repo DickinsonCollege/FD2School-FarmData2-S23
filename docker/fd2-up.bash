@@ -1,8 +1,8 @@
 #!/bin/bash
-
 # Function that checks if prior operation succeded and
 # terminates if not.  Used throughout to avoid continuing
 # if an operation fails.
+
 function error_check {
   if [ "$?" != "0" ];
   then
