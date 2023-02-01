@@ -1,6 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <style>
+        th, td {
+            border: solid 1px black;
+        }
+    </style>
 </head>
 <body>
     <h1>Harvest Report</h1>
@@ -8,43 +13,66 @@
     <p>This page is a <i>mockup</i> of a simplified harvest report.</p>
     <form>
         <label for="title">Title: </label>
-        <input type="text" name="title" id="title"> 
-        <br>
+        <input type="text" name="title" id="title" value="My Sample Harvest Report"> 
+        <br><br>
+        <label for="startdate">Start: </label>
+        <input type="date" min="2014-01-01" max="2022-01-01" value="2020-05-05">
+        <label for="enddate">End: </label>
+        <input type="date" min="2020-05-05" max="2022-01-01" value="2020-05-15"> <br><br>
         <label for="crop">Crop: </label>
         <select name="crop" id="crop">
             <option>Broccoli</option>
-            <option>Kale</option>
+            <option selected>Kale</option>
             <option>Peas</option>
             </select>
-        <br>
-        <label for="field">Field: </label>
+        <label for="field">Area: </label>
         <select name="field" id="field">
-            <option>All</option>
+            <option selected>All</option>
             <option>Chuau-1</option>
             <option>SQ7</option>
             </select>
-        <br>
-        <label for="startdate">Start</label>
-        <input type="date" min="2014-01-01" max="2022-01-01" value="2020-05-05">
-        <label for="enddate">End</label>
-        <input type="date" min="2020-05-05" max="2022-01-01" value="2020-05-15"> <br>
+        <br><br>
+
         <input type="button" value="Generate Report">
     </form>
     <hr>
     <h1>My Sample Harvest Report</h1>
-    <p>Details:</p>
+    <p>Details: </p>
     <ul>
-        <li><b>Farm</b>:Sample Farm</li>
-        <li><b>User</b>:manager1</li>
-        <li><b>Language</b>:English</li>
+        <li><b>Farm:</b>Sample Farm</li>
+        <li><b>User:</b>manager1</li>
+        <li><b>Language:</b>English</li>
     </ul>
     <br>
     <form>
     <ul>
-        <li><b>Start</b>:05/01/2018</li>
-        <li><b>End</b>:05/15/2018</li>
-        <li><b>Crop</b>:Kale</li>
+        <li><b>Start:</b>05/01/2018</li>
+        <li><b>End:</b>05/15/2018</li>
+        <li><b>Crop:</b>Kale</li>
     </ul>
     </form>
+    <table>
+        <tr>
+            <th>Date</th>
+            <th>Area</th>
+            <th>Crop</th>
+            <th>Yield</th>
+            <th>Units</th>
+        </tr>
+        <tr>
+            <td>05/02/2018</td>
+            <td>Chuau-1</td>
+            <td>Kale</td>
+            <td>10</td>
+            <td>Bunches</td>
+        </tr>
+        <tr>
+            <td>05/05/2018</td>
+            <td>SQ7</td>
+            <td>Kale</td>
+            <td>7</td>
+            <td>Bunches</td>
+        </tr>
+    </table>
 </body>
 </html>
