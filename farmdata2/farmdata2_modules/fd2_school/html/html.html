@@ -1,18 +1,25 @@
 <h2>Harvest Report</h2>
 <p>This page is a <i>mockup</i> of a simplified harvest report.</p>
-<label for="title">Title</label>
+<label for="title">Title: </label>
 <input type="text" id="title" value="My Sample Harvest Report">
 <br>
 <br>
 
-<label for="crop">Crop</label>
+<label for="start-date">Start: </label>
+<input type="date" id="start-date" min="2014-01-01" max="2022-01-01" value="2020-05-05">
+<label for="end-date">End: </label>
+<input type="date" id="end-date" min="2020-05-05" max="2022-01-01" value="2020-05-15">
+<br>
+<br>
+
+<label for="crop">Crop: </label>
 <select id="crop">
     <option>Brocoli</option>
     <option selected>Kale</option>
     <option>Peas</option>
 </select>
 
-<label for="field">Field</label>
+<label for="field">Field: </label>
 <select id="field">
     <option selected>All</option>
     <option>Chuau-1</option>
