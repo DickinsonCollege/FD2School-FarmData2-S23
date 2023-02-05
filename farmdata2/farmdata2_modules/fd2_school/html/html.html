@@ -1,6 +1,18 @@
 <div>
     <h1>Harvest Report</h1>
-    <p>This <b>page</b> is a <dfn>mockup<dfn> of a simplified harvest report</p>
+    <p>This page is a <dfn>mockup</dfn> of a simplified harvest report</p>
+
+    <p> Title: 
+    <input type="text" id="Title" name="Title" value="My Sample Harvest Report" />
+    </p>
+    <br>
+    <p>Start Date:
+        <input type="date" id="start" name="start_date"
+       value="2020-05-05" min="2014-01-01" max="2022-01-01">
+        <d>End Date: </d><input type="date" id="end" name="end_date"
+       value="2020-05-15" min="2020-05-05" max="2022-01-01">
+    </p>
+   <br>
 
     <p>Crop: 
         <select id="crops" name="crops">
@@ -8,34 +20,15 @@
           <option selected>Kale</option>
           <option>Peas</option>
       </select>
-    </p>
-    <br>
-    <p>Field:
+      <g>Field: </g>
         <select id="field" name="field">
             <option selected>All</option>
             <option>Chuau-1</option>
             <option>SQ7</option>
         </select>
-      </p>        
     </p>
     <br>
-    <p>Start Date:
-        <input type="date" id="start" name="start_date"
-       value="2020-05-05" min="2014-01-01" max="2022-01-01">
-      </p>        
-    </p>
-    <p>End Date:
-        <input type="date" id="end" name="end_date"
-       value="2020-05-15" min="2020-05-05" max="2022-01-01">
-      </p>        
-    </p>
 
-    
-
-    <br>
-    <input type="text" id="Title" name="Title" value="Title" />
-    <br>
-    <br>
     <button type="button">Generate Report</button>
         
     <hr>
