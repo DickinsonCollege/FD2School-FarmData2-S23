@@ -41,8 +41,7 @@
  */
 function fd2_school_menu() {
   $items = array();
-
-  // Define the tab for the module.
+  
   $items['farm/fd2-school'] = array(                 // Put the school in the farm menu
     'title' => 'FD2 School',                         // Put FD2 School on the tab
     'page callback' => 'fd2_school_view',            // The function that will provide the content
@@ -52,13 +51,20 @@ function fd2_school_menu() {
     'weight' => -30,                                  // larger weights appear further right.
   );
 
-  // Define the name and URL for the default sub-tab that appears when the tab is opened.
-  // Content for this default sub-tab is provided by the 'page arguments' above.
   $items['farm/fd2-school/info'] = array(
     'title' => 'Info',
     'type' => MENU_DEFAULT_LOCAL_TASK,
     'weight' => -100,
   );
+
+  $items['farm/fd2-school/html'] = array(
+        'title' => 'HTML',
+        'type' => MENU_LOCAL_TASK,
+        'page callback' => 'fd2_school_view',
+        'page arguments' => array('html'),
+        'access arguments' => array('view fd2 school'),
+        'weight' => 110,
+    );
 
   // Add items blocks for new sub-tabs here.
 
