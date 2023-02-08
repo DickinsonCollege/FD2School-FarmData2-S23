@@ -2,6 +2,17 @@
 <input name = "title" type = "text" id = "title"/>
 
 <br />
+<br />
+<label for="start">Start</label>
+<input type="date" id="start" name="Start Date"
+       value="2020-05-05"
+       min="2014-01-01" max="2022-01-01">
+<label for="end">End</label>
+<input type="date" id="end" name="End-Date"
+       value="2020-05-15"
+       min="2020-05-05" max="2022-01-01">
+<br />
+<br />
 <label for = "crop">Crop</label>
 <select id = "crop" name = "crop">
     <option selected>Kale</option>
@@ -16,4 +27,5 @@
     <option>SQ7</option>
 </select>
 <br >
+<br />
 <button type = "submit" value = 'generate Report'> Generate Report </button>
