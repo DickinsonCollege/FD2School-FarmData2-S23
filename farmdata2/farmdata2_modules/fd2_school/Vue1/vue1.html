@@ -22,16 +22,12 @@
         <input type="date" min="2020-05-05" v-model="rptEndDate" max="2022-01-01" value="2020-05-15"> <br><br>
         <label for="crop">Crop: </label>
         <select name="crop" v-model="rptCrop" id="crop">
-            <option>Broccoli</option>
-            <option selected>Kale</option>
-            <option>Peas</option>
+            <option v-for="item in crops">{{item}}</option>
             </select>
         <label for="field">Area: </label>
         <select name="field" id="field">
-            <option selected>All</option>
-            <option>Chuau-1</option>
-            <option>SQ7</option>
-            </select>
+            <option v-for="item in fields">{{item}}</option>
+        </select>
         <br><br>
 
         <input type="button" value="Generate Report">
@@ -86,7 +82,10 @@
                     rptStartDate:'2020-01-01',
                     rptEndDate:'2020-01-01',
                     rptCrop:'',
-                } 
+                    crops:["Brocoli", "Kale", "Peas"],
+                    fields: ["All", "Chuau-1", "SQ7"],
+                } ,
+                
             }
         )
     </script>
