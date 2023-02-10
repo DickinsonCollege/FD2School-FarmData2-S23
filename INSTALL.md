@@ -29,13 +29,18 @@ Full installation details for these tools are provided by the projects themselve
     - Installation
       - For Windows:
         - First [install *WSL* (the *Windows Subsystem for Linux*)](https://learn.microsoft.com/en-us/windows/wsl/install).
+        - Test that you can *Open an WSL Terminal* by:
+          - Open a PowerShell
+          - Use the command `wsl`
+            - The command prompt should change to a Linux prompt instead of a PowerShell prompt.
+          - You'll be using a *WSL Terminal* for many of the steps below.
         - Then follow the instructions for installing [Docker Desktop for Windows](https://docs.docker.com/desktop/install/windows-install/). Be sure to follow the directions for the "WSL 2 backend" (not the "Hyper-V backend").
       - For MacOS:
         - Follow the instructions for installing [Docker Desktop for Mac](https://docs.docker.com/desktop/install/mac-install/). Be sure to choose chose "Mac with Intel Chip" or "Mac with Apple Silicon" as appropriate for your Mac.  If you are unsure, choose "About this Mac" from the Apple menu and check which "Chip" is in your Mac (Intel or Apple).
       - For Linux:
         - Follow the instructions for installing [Docker Desktop for Linux](https://docs.docker.com/desktop/install/linux-install/).
     - Test your installation of Docker Desktop.
-      - Open a Terminal (in Windows be sure to use a WSL terminal) and use the command: 
+      - Open a Terminal (**in Windows be sure to use a WSL Terminal**) and use the command: 
         ```
         docker run hello-world
         ```
@@ -60,7 +65,7 @@ To get started:
 
   1. [Create a GitHub Account](https://github.com/join) (if you do not already have one).
   1. [Fork the FarmData2 repository](https://docs.github.com/en/free-pro-team@latest/github/getting-started-with-github/fork-a-repo) into your own GitHub account.
-  1. Open a Terminal (be sure this is a WSL terminal in Windows), then:
+  1. Open a Terminal (**in Windows be sure to use a WSL Terminal**), then:
      1. [Clone your fork](https://docs.github.com/en/free-pro-team@latest/github/creating-cloning-and-archiving-repositories/cloning-a-repository) of FarmData2.
      1. Change your directory to where you have cloned FarmData2 using `cd`.
      1. [Set your upstream remote](https://docs.github.com/en/free-pro-team@latest/github/collaborating-with-issues-and-pull-requests/configuring-a-remote-for-a-fork) to point to the main [FarmData2 repository](https://github.com/DickinsonCollege/FarmData2) at https://github.com/DickinsonCollege/FarmData2.
@@ -69,7 +74,7 @@ To get started:
 
 To start FarmData2 
 1. Ensure that Docker Desktop is running on your machine.   
-1. In a Terminal (a WSL terminal on Windows):
+1. In a Terminal (**in Windows be sure to use a WSL Terminal**):
    1. Change to the `docker` directory of the FarmData2 repository. 
    1. Use the command:
       ```
