@@ -9,15 +9,15 @@
 <br>
 <label for="start">Start:</label>
 <input type="date" id="start" name="start"
-       value="2020-05-05" min="2014-01-01" max="2022-01-01">
+       value ="2020-05-05" min="2014-01-01" max="2022-01-01" v-model="startdate">
 <label for="End">End:</label>
 <input type="date" id="end" name="end" value="2020-05-15"
-                          min="2020-05-05" max="2022-01-01">
+                          min="2020-05-05" max="2022-01-01" v-model="enddate">
 
 <br><br>
 
 <label for="Crop">Crop:</label> 
-<select id="crops" name="crops">
+<select id="crops" name="crops" v-model="crop">
     <option>Broccoli</option>
     <option selected>Kale</option>
     <option>Peas</option>
@@ -45,9 +45,9 @@
     <li><strong>User</strong>: Manager 1</li>
     <li><strong>Language</strong>: English</li>
     <br>
-    <li><strong>Start</strong>: 05/01/2018</li>
-    <li><strong>End</strong>: 05/15/2018</li>
-    <li><strong>Crop</strong>: Kale</li>
+    <li><strong>Start</strong>: {{startdate}}</li>
+    <li><strong>End</strong>: {{enddate}}</li>
+    <li><strong>Crop</strong>: {{crop}}</li>
 </ul>
 <br>
 
@@ -81,6 +81,9 @@
     el: '#vue',
     data: {
       titlerp: "My Sample Harvest Report",
+      startdate: "2020-05-05",
+      enddate: "2020-05-15",
+      crop: "Kale",
     }
   });
 </script>
