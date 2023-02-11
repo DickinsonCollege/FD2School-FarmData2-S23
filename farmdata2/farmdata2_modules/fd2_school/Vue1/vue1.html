@@ -3,6 +3,7 @@
 <h1>Harvest Report</h1>
 <p>This page is a <i>mockup</i> of a simplified harvest report</p>
 
+
 <label for="Title">Title:</label>
 <input type = 'text' name = "title" placeholder = "title" >
 <br>
@@ -34,7 +35,8 @@
 <input type="button" value="Generate Report" />
 
 <hr>
-<h1>My sample harvest report</h1>
+<div id="vue" v-cloak>
+<h1>{{titlerp}}</h1>
 
 <dd>Details:</dd>
 <br>
@@ -72,3 +74,13 @@
       <td>Bunches</td>
     </tr>
   </table>
+</div>
+
+<script>
+  let titleReport = new Vue({
+    el: '#vue',
+    data: {
+      titlerp: "Title",
+    }
+  });
+</script>
