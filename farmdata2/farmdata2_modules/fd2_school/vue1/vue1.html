@@ -60,20 +60,13 @@
       <th>Yield</th>
       <th>Units</th>
     </tr>
-    <tr>
-      <td>05/02/2018</td>
-      <td>Chuau-1</td>
-      <td>Kale</td>
-      <td>10</td>
-      <td>Bunches</td>
+    <tr v-for="log in harvestLog"><td>{{log.date}}</td>
+      <td>{{log.area}}</td>
+      <td>{{log.crop}}</td>
+      <td>{{log.yield}}</td>
+      <td>{{log.units}}</td>
     </tr>
-     <tr>
-      <td>05/02/2018</td>
-      <td>Chuau-1</td>
-      <td>Kale</td>
-      <td>10</td>
-      <td>Bunches</td>
-    </tr>
+    
    
   
   </table>
@@ -91,6 +84,8 @@
                            cropList:["Kale","Broccoli","Peas"],
                            fieldList:["Chuau-1","Chuau-2","Chuau-3"],
                            crop:"Kale",
+                           harvestLog:[{date: "2018-05-02", area: "Chuau-1", crop: "Kale", yield: 10, units: "Bunches"},
+                           {date: "2019-06-04", area: "Chuau-2", crop: "Peas", yield: 20, units: "Bunches"}],
             header:'Vue',
             
         }
