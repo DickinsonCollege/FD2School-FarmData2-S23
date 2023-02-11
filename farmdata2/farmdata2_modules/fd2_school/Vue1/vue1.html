@@ -21,17 +21,13 @@
         min="2020-05-05" max="2022-01-01" v-model = "reportEndDate">   
     <br>
     <br>
-    <label for="reportCrop">Crop: </label>
+    <label for="reportCrops">Crop: </label>
     <select id="reportCrop" name="reportCrop" v-model = "reportCrop">
-        <option>Broccoli</option>
-        <option selected>Kale</option>
-        <option>Peas</option>
+        <option v-for="reportCrop in reportCrops">{{reportCrop}}</option>
       </select>
-    <label for="field">Field: </label>
-    <select id="field" name="Field">
-        <option selected>All</option>
-        <option>Chuau-1</option>
-        <option>SQ7</option>
+    <label for="reportFields">Field: </label>
+    <select id="reportFields" name="reportFields">
+        <option v-for="reportField in reportFields">{{reportField}}</option>
       </select>  
     <br>
     <br>
@@ -50,9 +46,9 @@
     </ul>
   </div>
   <script>
-        var titleVar = new Vue({el: '#SampleHarvestReport', data: {
+        var reportVar = new Vue({el: '#SampleHarvestReport', data: {
           reportTitle: "My Sample Harvest Report", reportStartDate: "2020-05-05", reportEndDate: "2020-05-15", reportCrop: "Kale",
-        },})
+        reportCrops: ["Broccoli", "Kale", "Peas"], reportFields: ["All", "CHUAU-1", "SQ7"]},})
       </script>
     <br>
     <br>
