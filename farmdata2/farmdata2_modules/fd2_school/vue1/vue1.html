@@ -8,6 +8,8 @@
   <body>
     <div v-cloak id="vuespike">
     <h1> Harvest Report</h1>
+   
+   
     <p>This page is a <i>mock up</i>  of a simplified harvest report</p>
     <form>
       <label for="title">Title:</label>
@@ -37,7 +39,7 @@
     <br>
     <button type="button">Generate Report</button>
     <hr>
-    <h1>{{titleReport}}</h1>
+    <h1>{{titleReport==""? "Mock harvest report":titleReport}}</h1>
    <p>Details:</p>
    <ul>
     <li> <strong>Farm:</strong> Sample Farm</li>
@@ -81,7 +83,8 @@
         el:'#vuespike',
         
                  data:{
-                  titleReport:'My sample harvest report',           
+                      
+              titleReport:'My sample harvest report',           
                            startDate:"05-01-2018" ,
                            endDate:"05-15-2018" ,
                            crop:"Kale",
