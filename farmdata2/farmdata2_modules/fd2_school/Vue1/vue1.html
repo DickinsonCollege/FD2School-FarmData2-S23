@@ -3,9 +3,9 @@
 <h1>Harvest Report</h1>
 <p>This page is a <i>mockup</i> of a simplified harvest report</p>
 
-
+<div id="vue" v-cloak>
 <label for="Title">Title:</label>
-<input type = 'text' name = "title" placeholder = "title" >
+<input type = 'text' name = "title" placeholder = "title" v-model="titlerp">
 <br>
 <label for="start">Start:</label>
 <input type="date" id="start" name="start"
@@ -35,7 +35,7 @@
 <input type="button" value="Generate Report" />
 
 <hr>
-<div id="vue" v-cloak>
+
 <h1>{{titlerp}}</h1>
 
 <dd>Details:</dd>
@@ -77,10 +77,10 @@
 </div>
 
 <script>
-  let titleReport = new Vue({
+  let report = new Vue({
     el: '#vue',
     data: {
-      titlerp: "Title",
+      titlerp: "My Sample Harvest Report",
     }
   });
 </script>
