@@ -5,8 +5,13 @@
     <meta name="viewport" content="width=device-width" />
     
   </head>
-  <body>
+  <body >
+    
     <div v-cloak id="vuespike">
+      <ul>
+        <li v-for ="item in names">{{item}}
+        </li>
+      </ul>
     <h1> Harvest Report</h1>
    
    
@@ -22,17 +27,13 @@
       <input v-model="endDate" type="date" id="end" name="date"min="2020-05-05" max="2022-01-01" >
       <br><br>
       <label for="crop">Crop:</label>
-      <select v-model="crop" name="crop" id="crop">
-        <option value="Kale">Kale</option>
-        <option value="Broccoli">Broccoli</option>
-        <option value="Peas">Peas</option>
+      <select  name="crop" id="crop">
+        <option v-for="crop in cropList">{{crop}}</option>
         
       </select>
       <label for="field">Field:</label>
   <select name="field" id="field">
-    <option value="All">All</option>
-    <option value="Chuau-1">Chuau-1</option>
-    <option value="SQ7">SQ7</option>
+    <option v-for="field in fieldList">{{field}}</option>
     
   </select>
     </form>
@@ -83,10 +84,12 @@
         el:'#vuespike',
         
                  data:{
-                      
+             names: [ "Joe", "Arun", "Ouwen", "Anh", "Sue" ],
               titleReport:'My sample harvest report',           
                            startDate:"05-01-2018" ,
                            endDate:"05-15-2018" ,
+                           cropList:["Kale","Broccoli","Peas"],
+                           fieldList:["Chuau-1","Chuau-2","Chuau-3"],
                            crop:"Kale",
             header:'Vue',
             
