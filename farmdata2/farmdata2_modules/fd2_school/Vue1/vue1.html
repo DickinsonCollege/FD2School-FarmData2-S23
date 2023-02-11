@@ -55,20 +55,20 @@
       <th>Yield</th>
       <th>Units</th>
     </tr>
-    <tr>
-      <td>05/02/2018</td>
-      <td>Chuau-1</td>
-      <td>Kale</td>
-      <td>10</td>
-      <td>Bunches</td>
+    <tr v-for="r in records">
+      <td>{{r.date}}</td>
+      <td>{{r.area}}</td>
+      <td>{{r.crop}}</td>
+      <td>{{r.yield}}</td>
+      <td>{{r.units}}</td>
     </tr>
-    <tr>
+    <!-- <tr>
       <td>05/05/2018</td>
       <td>SQ7</td>
       <td>Kale</td>
       <td>7</td>
       <td>Bunches</td>
-    </tr>
+    </tr> -->
   </table>
 </div>
 
@@ -82,6 +82,8 @@
       crop: "Kale",
       cropList: ["Brocoli", "Kale", "Peas"],
       areaList: ["All", "Chuau", "SQ7"],
+      records: [{date: "2018-05-02", area: "Chuau-1", crop: "Kale", yield: 10, units: "Bunches"},
+      {date: "2020-05-02", area: "SQ7", crop: "Peas", yield: 20, units: "Bunches"}],
     }
   });
 </script>
