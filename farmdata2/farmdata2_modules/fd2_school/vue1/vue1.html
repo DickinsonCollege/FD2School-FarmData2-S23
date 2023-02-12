@@ -34,7 +34,7 @@
         <hr>
 
         <div id="exampleReport" v-cloak>
-            <h1>{{ reportTitle }}</h1>
+            <h1>{{ reportTitle ? reportTitle : "Mock Harvest Report" }}</h1>
             <p>Details:</p>
             <UL>
                 <LI><b>Farm:</b>: Sample Farm </LI>
@@ -77,7 +77,7 @@
         var harvestReport = new Vue({
             el:'#exampleReport',
             data: {
-                reportTitle: 'My Sample Harvest Report',
+                reportTitle: '',
                 start_date: '',
                 end_date: '',
                 corps_name: ''
