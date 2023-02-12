@@ -34,7 +34,7 @@
     <input type="button" value="Generate Report">
     <hr>
     
-    <h2>{{ reportTitle }}</h2>
+    <h2>{{ reportTitle ? reportTitle : "Mock Harvest Report" }}</h2>
     <p>Details:</p>
     <ul>
         <li><strong>Farm:</strong>Sample Farm</li>
