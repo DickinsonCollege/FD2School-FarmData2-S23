@@ -15,16 +15,12 @@
         <br>
 
         <p>Crop: 
-            <select id="crops" v-model = "corps_name">
-            <option>Broccoli</option>
-            <option selected>Kale</option>
-            <option>Peas</option>
-        </select>
+            <select id="crop-select" v-model = "selectedCrop">
+                <option v-for = 'crops in corps'>{{ crops }}</option>
+            </select>
         <g>Field: </g>
-            <select id="field" name="field">
-                <option selected>All</option>
-                <option>Chuau-1</option>
-                <option>SQ7</option>
+            <select id="field" v-model = "selectedArea">
+                <option v-for = 'areas in areas'> {{ areas }} </option>
             </select>
         </p>
         <br>
@@ -42,8 +38,9 @@
                 <LI><b>Language</b>: English</LI>
                 <br>
                 <LI><b>Start</b>: {{start_date}}</LI>
-                <LI><b>End</b>: {{end_date}} </b></LI>
-                <LI><b>Crop</b>: {{ corps_name }}</b></LI>
+                <LI><b>End</b>: {{end_date}} </LI>
+                <LI><b>Crop</b>: {{ selectedCrop }} </LI>
+                <Li><b>Area</b>: {{ selectedArea }} </Li>
             </UL>
 
             <table border="1">
@@ -80,7 +77,17 @@
                 reportTitle: '',
                 start_date: '',
                 end_date: '',
-                corps_name: ''
+                selectedCrop : '', 
+                selectedArea : '',
+                corps: [
+                 'Kale',
+                 'Broccoli', 
+                 'Peas',
+                 ],
+                 areas: [
+                 'Chuau-1',
+                 'SQ7'
+                 ]
             }
         });
     </script>
