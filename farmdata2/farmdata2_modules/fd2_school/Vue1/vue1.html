@@ -44,12 +44,6 @@
         <li><strong>End:</strong>{{reportEndDate}}</li>
         <li><strong>Crop:</strong>{{reportCrop}}</li>
     </ul>
-  </div>
-  <script>
-        var reportVar = new Vue({el: '#SampleHarvestReport', data: {
-          reportTitle: "My Sample Harvest Report", reportStartDate: "2020-05-05", reportEndDate: "2020-05-15", reportCrop: "Kale",
-        reportCrops: ["Broccoli", "Kale", "Peas"], reportFields: ["All", "CHUAU-1", "SQ7"]},})
-      </script>
     <br>
     <br>
     <table border="1">
@@ -60,20 +54,16 @@
             <th>Yield</th>
             <th>Units</th>
         </tr>
-        <tr>
-            <td>05/02/2018</td>
-            <td>Chuau-1</td>
-            <td>Kale</td>
-            <td>10</td>
-            <td>Bunches</td>
-        </tr>
-        <tr>
-            <td>05/05/2018</td>
-            <td>SQ7</td>
-            <td>Kale</td>
-            <td>7</td>
-            <td>Bunches</td>
-        </tr>
+        <tr v-for="log in reportLogs">{{
+          <td v-for="entry in log">{{entry}}</td>}}</tr>
     </table>
+  </div>
+    <script>
+      var reportVar = new Vue({el: '#SampleHarvestReport', data: {
+        reportTitle: "My Sample Harvest Report", reportStartDate: "2020-05-05", reportEndDate: "2020-05-15", reportCrop: "Kale",
+      reportCrops: ["Broccoli", "Kale", "Peas"], reportFields: ["All", "CHUAU-1", "SQ7"], 
+    reportLogs: [{date: "2018-05-02", area: "Chuau-1", crop: "Kale", yield: 10, units: "Bunches"},
+    {date:"2018-05-05", area: "SQ7", crop: "Kale", yield: 7, units: "Bunches"}]},})
+    </script>
   </body>
 </html>
