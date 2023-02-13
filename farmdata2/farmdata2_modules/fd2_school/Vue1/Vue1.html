@@ -44,7 +44,7 @@
    <input type="button" value="Generate Report" />
     <hr style="width:100%;text-align:left;margin-left:0">
  
-	<h1> {{ title }} </h1>
+	<h1> {{ title && title.trim() !== '' ? title : 'Mock Harvest Report'}} </h1>
 	
     <p>Details:</p>
     <ul>
