@@ -64,20 +64,12 @@
     <td>Yield</td>
     <td>Units</td>
   </tr>
-  <tr>
-    <td>05/02/2018</td>
-    <td>Chuau-1</td>
-    <td>Kale</td>
-    <td>10</td>
-    <td>Bunches</td>
-  </tr>
-
-  <tr>
-    <td>05/05/2018</td>
-    <td>SQ7</td>
-    <td>Kale</td>
-    <td>7</td>
-    <td>Bunches</td>
+  <tr v-for = "i in logs">
+    <td>{{i.date}}</td>
+    <td>{{i.area}}</td>
+    <td>{{i.crop}}</td>
+    <td>{{i.yield}}</td>
+    <td>{{i.units}}</td>
   </tr>
 
 </table>
@@ -102,6 +94,10 @@
 				"All",
 				"Chuau-1",
 				"SQ7"
+			],
+			logs: [
+				{date: "2018-05-02", area: "Chuau-1", crop: "Kale", yield: 50, units: "Bunches"},
+				{date: "2020-08-15", area: "SQ7", crop: "Peas", yield: 84, units: "Bunches"},
 			],
 		},
 	})
