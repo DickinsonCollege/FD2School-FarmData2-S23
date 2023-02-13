@@ -4,7 +4,7 @@
 	  </head>
 	  <body>
 	   <p>This page is a <i>mockup</i> of a simplified harvest report.</p>
-	   <div id = "titleName" v-cloak>
+	   <div id = "form" v-cloak>
 	   <label for="title">Title: <input type = "text" v-model="title"/></label>
 	   
 		
@@ -13,9 +13,9 @@
 
 	   <br>
 	   <label for="crop">Crop: </label>
-	   <select id="crop" name="Crop">
+	   <select v-model = "selectCrop" id="crop" name="Crop">
 	   <option>Broccoli</option>
-	   <option selected>Kale</option>
+	   <option>Kale</option>
 	   <option>Peas</option>
 	   </select>
 	   
@@ -28,16 +28,15 @@
 	   <br>
 
    <br>
-   <label for="start">Start:</label>
-
-   <input type="date" id="start" name="Start"
-       value="2020-05-05"
+   
+	<label for="startDate">Start:</label>
+	<input type="date" v-model="start" name="Start"
        min="2014-01-01" max="2022-01-01">
+   <br>
 
    <label for="end">End:</label>
 
-   <input type="date" id="end" name="End"
-       value="2020-05-15"
+   <input type="date" v-model="end" name="End"
        min="2020-05-05" max="2022-01-01">
    <br>
 
@@ -55,11 +54,11 @@
 
 	  <br>
 
-	  <li><strong>Start</strong>:05/01/2018</li>
-	  <li><strong>End</strong>:05/15/2018</li>
-	  <li><strong>Crop</strong>:Kale</li>
+	  <li><strong>Start</strong>:{{ start }}</li>
+	  <li><strong>End</strong>:{{ end }}</li>
+	  <li><strong>Crop</strong>:{{ selectCrop }}</li>
     </ul>
-    
+
 <br>
 <table border = "1">
   <tr>
@@ -86,15 +85,21 @@
   </tr>
 
 </table>
+
 </div>	
   </body>
   <script>
-	let titleName = new Vue({
-		el: '#titleName',
+	let form = new Vue({
+		el: '#form',
 		data:{
-			title: 'My Sample Harvest Report'
+			title: 'My Sample Harvest Report',
+			start: "2020-05-05",
+			end: "2020-05-15",
+			selectCrop: "Kale"
 		},
 	})
    </script>
+
+   </script>   
 </html>
 
