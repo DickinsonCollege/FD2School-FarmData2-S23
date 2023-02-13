@@ -7,7 +7,7 @@
   </head>
   <body>
     <div id="harvest-report" v-cloak>
-        <h1>{{ repTitle }}</h1>
+        <h1>{{ repTitle ? repTitle:"Mock Harvest Report" }}</h1>
         <p>This page is <i>mockup</i> of a simplified harvest report.</p>
         <label for="title">Title:</label>
         <input type="text" id="title" v-model='repTitle' />
