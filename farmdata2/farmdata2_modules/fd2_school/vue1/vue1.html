@@ -58,20 +58,14 @@
     <th><strong>Crop</strong></th>
     <th><strong>Yield</strong></th>
     <th><strong>Units</strong></th>
-    <tr>
-        <td>05/02/2018</td>
-        <td>Chuau-1</td>
-        <td>Kale</td>
-        <td>10</td>
-        <td>Bunches</td>
+    <tr v-for = "harvest in harvestLog">
+        <td>{{harvest.date}}</td>
+        <td>{{harvest.area}}</td>
+        <td>{{harvest.crop}}</td>
+        <td>{{harvest.yield}}</td>
+        <td>{{harvest.unites}}</td>
     </tr>
-    <tr>
-        <td>05/05/2018</td>
-        <td>SQ7</td>
-        <td>Kale</td>
-        <td>7</td>
-        <td>Bunches</td>
-    </tr>
+  
 </table>
 </div>
 <script>
@@ -86,6 +80,10 @@
 
                 crops:["Kale", "Broccoli", "Peas"],
                 areas:["All","Chuau-1", "SQ7"],
+                harvestLog: [
+                    {date: "2018-05-02", area: "Chuau-1", crop : "Kale",yield :10, unites:"Bunches"},
+                    {date: "2019-03-07", area: "SQ7", crop : "Broccoli",yield :5, unites:"Bunches"},
+                ],
                 
             }
         });
