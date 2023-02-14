@@ -52,19 +52,12 @@
                 <th>Yield</th>
                 <th>Unit</th>
             </tr>
-            <tr>
-                <td>05/02/2018</td>
-                <td>Chuau-1</td>
-                <td>Kale</td>
-                <td>10</td>
-                <td>Bunches</td>
-            </tr>
-            <tr>
-                <td>05/05/2018</td>
-                <td>sQ7</td>
-                <td>Kale</td>
-                <td>7</td>
-                <td>Bunches</td>
+            <tr v-for="harvestLog in harvestLogList">
+                <td>{{harvestLog.date}}</td>
+                <td>{{harvestLog.area}}</td>
+                <td>{{harvestLog.crop}}</td>
+                <td>{{harvestLog.yield}}</td>
+                <td>{{harvestLog.units}}</td>
             </tr>
         </table>
     </div>
@@ -85,6 +78,10 @@
                     "All",
                     "Chuau-1",
                     "SQ7"
+                ],
+                harvestLogList:[
+                    {date: "2018-05-02", area: "Chuau-1", crop: "Kale", yield: 10, units: "Bunches"},
+                    {date: "2018-05-10", area: "SQ7", crop: "Kale", yield: 7, units: "Bunches"}
                 ],
             },
         });
