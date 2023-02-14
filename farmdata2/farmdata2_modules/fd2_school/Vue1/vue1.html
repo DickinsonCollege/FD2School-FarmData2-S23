@@ -37,16 +37,12 @@
             <p>
                 <label for="crop">Crop:</label>
                 <select id="crop" name="crop" v-model="cropSelect">
-                    <option>Broccoli</option>
-                    <option>Kale</option>
-                    <option>Peas</option>
+                    <option v-for="crop in crops" :value="crop.value">{{crop.text}}</option>
                 </select>
 
                 <label for="area">Area:</label>
-                <select id="area" name="area">
-                    <option>All</option>
-                    <option>Chuau-1</option>
-                    <option>SQ7</option>
+                <select id="area" name="area" v-model="areaSelect">
+                    <option v-for="area in areas" :value="area.value">{{area.text}}</option>
                 </select>
             </p>
             <br>        
@@ -111,6 +107,17 @@
                         startDate: "2020-05-05",
                         endDate: "2020-05-15",
                         cropSelect: "Kale",
+                        crops: [
+                            {text: "Broccoli", value: "Broccoli"},
+                            {text: "Kale", value: "Kale"},
+                            {text: "Peas", value: "Peas"},
+                        ],
+                        areaSelect: "All",
+                        areas: [
+                            {text: "All", value: "All"},
+                            {text: "Chuau-1", value: "Chuau-1"},
+                            {text: "SQ7", value: "SQ7"},
+                        ],
                     },
                 });
             </script>
