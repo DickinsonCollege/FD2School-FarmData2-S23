@@ -20,16 +20,12 @@
         <div>
             <label for="crop">Crop: </label>
             <select name="crop" id="crop" v-model="reportCrop">
-                <option value="Broccoli">Broccoli</option>
-                <option value="Kale" selected>Kale</option>
-                <option value="Peas">Peas</option>
+                <option v-for="crop in crops" :value="crop">{{crop}}</option>
             </select>
 
             <label for="area">Area: </label>
             <select name="area" id="crop">
-                <option value="all" selected>All</option>
-                <option value="chuau-1">Chuau-1</option>
-                <option value="sq7">SQ7</option>
+                <option v-for="area in areas" :value="area"></option>
             </select>
         </div>
         <br>
@@ -84,6 +80,16 @@
             reportStartDate: "",
             reportEndDate: "",
             reportCrop: "",
+            crops: [
+                "Broccoli",
+                "Kale",
+                "Peas",
+            ],
+            areas: [
+                "All",
+                "Chuau-1",
+                "SQ7",
+            ]
         },
     }) 
 </script>
