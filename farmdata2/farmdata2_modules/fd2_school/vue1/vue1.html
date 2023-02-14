@@ -17,17 +17,14 @@
 <br />
 <br />
 <label for = "crop">Crop</label>
-<select id = "crop" name = "crop">
-    <option selected>Kale</option>
-    <option>Broccoli</option>
-    <option>Peas</option>
+<select id = "crop" name = "crop" v-model = "rptCrop">
+    <option v-for = "crop in crops">{{crop}}</option>
+
 </select>
 
 <label for = "field">Area</label>
-<select id = "field" name = "field" v-model = "rptCrop">
-    <option>All</option>
-    <option>Chuau-1</option>
-    <option>SQ7</option>
+<select id = "field" name = "field" >
+    <option v-for ="area in areas">{{area}}</option>
 </select>
 <br >
 <br />
@@ -79,13 +76,17 @@
 </div>
 <script>
 
-    var myReport = new Vue({
+    var myPage = new Vue({
             el: "#report",
             data: {
                 rptTitle: "My Sample Harvest Report",
                 rptStartDate : "2020-05-05",
                 rptEndDate : "2020-05-15",
-                rptCrop: "All",
+                rptCrop: "Kale",
+
+                crops:["Kale", "Broccoli", "Peas"],
+                areas:["All","Chuau-1", "SQ7"],
+                
             }
         });
 
