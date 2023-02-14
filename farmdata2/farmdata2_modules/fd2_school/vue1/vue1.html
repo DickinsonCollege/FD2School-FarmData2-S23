@@ -1,5 +1,8 @@
+<div id ="report" v-cloak>
+<h1>Harvest Report</h1>
+<br />
 <label for = "title">Title</label>
-<input name = "title" type = "text" id = "title"/>
+<input name = "title" type = "text" id = "title" v-model  = "rptTitle"/>
 
 <br />
 <br />
@@ -32,7 +35,10 @@
 <br />
 <br />
 <hr />
-<h1>My Sample Harvest Report</h1>
+
+<h1>{{ rptTitle }}</h1>
+
+
 <br />
 <br />
 
@@ -70,3 +76,14 @@
         <td>Bunches</td>
     </tr>
 </table>
+</div>
+<script>
+
+    var myReport = new Vue({
+            el: "#report",
+            data: {
+                rptTitle: "My Sample Harvest Report",
+            }
+        });
+
+    </script>
