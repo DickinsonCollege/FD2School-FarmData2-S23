@@ -20,7 +20,7 @@
                 name="startdate"
                 min="2014-01-01"
                 max="2022-01-01"
-                value="2020-05-05"
+                v-model="startDate"
                 />
 
                 <label for="enddate">End:</label>
@@ -30,15 +30,15 @@
                 name="enddate"
                 min="2020-05-05"
                 max="2022-01-01"
-                value="2020-05-15"
+                v-model="endDate"
                 />
             </p>
             <br>
             <p>
                 <label for="crop">Crop:</label>
-                <select id="crop" name="crop">
+                <select id="crop" name="crop" v-model="cropSelect">
                     <option>Broccoli</option>
-                    <option selected>Kale</option>
+                    <option>Kale</option>
                     <option>Peas</option>
                 </select>
 
@@ -55,14 +55,6 @@
             <hr>
 
             <h1>{{reportTitle}}</h1>   
-            <script>
-                var report = new Vue({
-                    el: "#reportDiv",
-                    data: {
-                        reportTitle: "My Sample Harvest Report",
-                    },
-                });
-            </script>
             <p>Details:</p>
             <ul>
                 <li>
@@ -78,13 +70,13 @@
             <br>
             <ul>
                 <li>
-                    <strong>Start:</strong>05/05/2020
+                    <strong>Start:</strong>{{startDate}}
                 </li>
                 <li>
-                    <strong>End:</strong>05/15/2020
+                    <strong>End:</strong>{{endDate}}
                 </li>
                 <li>
-                    <strong>Crop:</strong>Kale
+                    <strong>Crop:</strong>{{cropSelect}}
                 </li>
             </ul>
             <table border="1">
@@ -110,6 +102,18 @@
                     <td>Bunches</td>
                 </tr>
             </table>
+
+            <script>
+                var report = new Vue({
+                    el: "#reportDiv",
+                    data: {
+                        reportTitle: "My Sample Harvest Report",
+                        startDate: "2020-05-05",
+                        endDate: "2020-05-15",
+                        cropSelect: "Kale",
+                    },
+                });
+            </script>
         </div>
     </body>
 </html>
