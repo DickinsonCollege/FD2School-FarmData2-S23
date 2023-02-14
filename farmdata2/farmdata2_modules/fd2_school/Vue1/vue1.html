@@ -1,19 +1,17 @@
 <!DOCTYPE html>
-<div v-cloak id="reportheader" >
-    <h1>{{ header }}</h1>
+<div id="reportform" v-cloak>
+    <h1>Harvest Report Form:</h1>
     <p>This page is a <i>mockup</i> of a simplified harvest report</p>
     <label for="title" >Title:</label>
     <input type="text" v-model="header">
-</div>
-<br><br>
-<div id="reportform" v-cloak>
-        <label for="startdate">Start date:</label>
-        <input v-model='startdate' type="date" id="startdate" name="startdate"
-            min="2014-01-01" max="2022-01-01">
-            <br>
-        <label for="enddate">End date:</label>
-        <input v-model='enddate' type="date" id="enddate" name="enddate"
-            min="2020-05-05" max="2022-01-01">
+    <br><br>
+    <label for="startdate">Start date:</label>
+    <input v-model='startdate' type="date" id="startdate" name="startdate"
+        min="2014-01-01" max="2022-01-01">
+        <br>
+    <label for="enddate">End date:</label>
+    <input v-model='enddate' type="date" id="enddate" name="enddate"
+        min="2020-05-05" max="2022-01-01">
     <br><br>
     <label for="crop">Choose a crop:</label>
     <select v-model="cropselect" name="crop" id="crop">
@@ -32,7 +30,7 @@
     <br><br>
     <input type="button" value="Generate Report" id="Generate Report Button">
     <hr></hr>
-    <h1>My Sample Harvest Report</h1>
+    <h1>{{ header == null ? "Mock Harvest Report" : header }}</h1>
     <br>
     <div>
     <p>Details:</p>
@@ -74,15 +72,10 @@
 </div>
 
 <script>
-    var reportheader = new Vue({
-        el: '#reportheader',
-        data: {
-            header:"My Sample Harvest Report!",
-        }
-    })
     var form = new Vue({
         el: '#reportform',
         data: {
+            header: null,
             startdate:"2020-05-15",
             enddate:"2020-05-15",
             cropselect: "Kale"
