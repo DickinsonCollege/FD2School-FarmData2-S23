@@ -6,75 +6,86 @@
     <input type="text" v-model="header">
 </div>
 <br><br>
-<label for="startdate">Start date:</label>
-<input type="date" id="startdate" name="startdate"
-       value="2020-05-05"
-       min="2014-01-01" max="2022-01-01">
-       <br>
-<label for="startdate">End date:</label>
-<input type="date" id="enddate" name="enddate"
-       value="2020-05-15"
-       min="2020-05-05" max="2022-01-01">
-<br><br>
-<label for="crop">Choose a crop:</label>
-  <select name="crop" id="crop">
-    <option value="broccoli">Broccoli</option>
-    <option selected value="kale">Kale</option>
-    <option value="peas">Peas</option>
-  </select>
-<br>
-<label for="field">Field:</label>
-  <select name="field" id="field">
-    <option selected value="All">All</option>
-    <option value="Chaua-1">Chaua-1</option>
-    <option value="SQ7">SQ7</option>
-  </select>
-<br><br>
-<input type="button" value="Generate Report" id="Generate Report Button">
-<hr></hr>
-<h1>My Sample Harvest Report</h1>
-<br>
-<p>Details:</p>
-<ul>
-	<li><b>Farm</b>:Sample Farm</li>
-	<li><b>User</b>:manager1</li>
-	<li><b>Language</b>:English</li>
-</ul>
-<ul>
-	<li><b>Start</b>:05/01/2018</li>
-	<li><b>End</b>:05/15/2018</li>
-	<li><b>Crop</b>:Kale</li>
-<br><br>
-</ul>
-<table border=1>
-  <tr>
-    <th>Date</th>
-    <th>Area</th>
-    <th>Crop</th>
-    <th>Yeild</th>
-    <th>Units</th>
-  </tr>
-  <tr>
-    <td>05/02/2018</td>
-    <td>Chuau-1</td>
-    <td>Kale</td>
-    <td>10</td>
-    <td>Bunches</td>
-  </tr>
-  <tr>
-    <td>05/05/2018</td>
-    <td>SQ7</td>
-    <td>Kale</td>
-    <td>7</td>
-    <td>Bunches</td>
-  </tr>
-</table>
+<div id="reportform" v-cloak>
+        <label for="startdate">Start date:</label>
+        <input v-model='startdate' type="date" id="startdate" name="startdate"
+            min="2014-01-01" max="2022-01-01">
+            <br>
+        <label for="enddate">End date:</label>
+        <input v-model='enddate' type="date" id="enddate" name="enddate"
+            min="2020-05-05" max="2022-01-01">
+    <br><br>
+    <label for="crop">Choose a crop:</label>
+    <select v-model="cropselect" name="crop" id="crop">
+        <option value="broccoli">Broccoli</option>
+        <option selected value="kale">Kale</option>
+        <option value="peas">Peas</option>
+    </select>
+    <br>
+    <label for="field">Field:</label>
+    <select name="field" id="field">
+        <option selected value="All">All</option>
+        <option value="Chaua-1">Chaua-1</option>
+        <option value="SQ7">SQ7</option>
+    </select>
+
+    <br><br>
+    <input type="button" value="Generate Report" id="Generate Report Button">
+    <hr></hr>
+    <h1>My Sample Harvest Report</h1>
+    <br>
+    <div>
+    <p>Details:</p>
+        <ul>
+            <li><b>Farm</b>:Sample Farm</li>
+            <li><b>User</b>:manager1</li>
+            <li><b>Language</b>:English</li>
+        </ul>
+        <ul>
+            <li><b>Start</b>:{{ startdate }}</li>
+            <li><b>End</b>:{{ enddate }} </li>
+            <li><b>Crop</b>:{{ cropselect }}</li>
+    </div>
+    <br><br>
+    </ul>
+    <table border=1>
+    <tr>
+        <th>Date</th>
+        <th>Area</th>
+        <th>Crop</th>
+        <th>Yeild</th>
+        <th>Units</th>
+    </tr>
+    <tr>
+        <td>05/02/2018</td>
+        <td>Chuau-1</td>
+        <td>Kale</td>
+        <td>10</td>
+        <td>Bunches</td>
+    </tr>
+    <tr>
+        <td>05/05/2018</td>
+        <td>SQ7</td>
+        <td>Kale</td>
+        <td>7</td>
+        <td>Bunches</td>
+    </tr>
+    </table>
+</div>
 
 <script>
     var reportheader = new Vue({
         el: '#reportheader',
         data: {
-            header:"My Sample Harvest Report"
+            header:"My Sample Harvest Report!",
         }
     })
+    var form = new Vue({
+        el: '#reportform',
+        data: {
+            startdate:"2020-05-15",
+            enddate:"2020-05-15",
+            cropselect: "Kale"
+        }
+        })
 </script>
