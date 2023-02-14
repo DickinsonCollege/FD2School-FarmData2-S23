@@ -84,18 +84,18 @@
                     <th>Units</th>
                 </tr>
                 <tr>
-                    <td>05/08/2020</td>
-                    <td>Chuau-1</td>
-                    <td>Kale</td>
-                    <td>10</td>
-                    <td>Bunches</td>
+                    <td>{{harvestLogs[0].date}}</td>
+                    <td>{{harvestLogs[0].area}}</td>
+                    <td>{{harvestLogs[0].crop}}</td>
+                    <td>{{harvestLogs[0].yield}}</td>
+                    <td>{{harvestLogs[0].units}}</td>
                 </tr>
                 <tr>
-                    <td>05/08/2020</td>
-                    <td>SQ7</td>
-                    <td>Kale</td>
-                    <td>7</td>
-                    <td>Bunches</td>
+                    <td>{{harvestLogs[1].date}}</td>
+                    <td>{{harvestLogs[1].area}}</td>
+                    <td>{{harvestLogs[1].crop}}</td>
+                    <td>{{harvestLogs[1].yield}}</td>
+                    <td>{{harvestLogs[1].units}}</td>
                 </tr>
             </table>
 
@@ -117,6 +117,10 @@
                             {text: "All", value: "All"},
                             {text: "Chuau-1", value: "Chuau-1"},
                             {text: "SQ7", value: "SQ7"},
+                        ],
+                        harvestLogs: [
+                            {date:"05/08/2020",area:"Chuau-1",crop:"Kale",yield:10,units:"Bunches"},
+                            {date:"05/08/2020",area:"SQ7",crop:"Kale",yield:7,units:"Bunches"},
                         ],
                     },
                 });
