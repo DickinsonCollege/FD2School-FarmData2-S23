@@ -23,15 +23,11 @@
         <br><br>
         <label for="crop">Crop:</label>
         <select id="crop" name="crop" v-model="reportCrop">
-                <option>Broccoli</option>
-                <option selected>Kale</option>
-                <option>Peas</option>
+            <option selected v-for="crop in cropList">{{crop}}</option>
         </select>
         <label for="field">Field:</label>
         <select id="field" name="field">
-            <option selected>All</option>
-            <option>Chuau-1</option>
-            <option>SQ7</option>
+            <option selected v-for="area in areaList">{{area}}</option>
         </select>
         <br><br>
             <input type="button" value="Generate Report">
@@ -80,6 +76,16 @@
                 reportStartDate: "2020-05-05",
                 reportEndDate: "2020-05-15",
                 reportCrop: "Kale",
+                cropList: [
+                    "Broccoli",
+                    "Kale",
+                    "Peas",
+                ],
+                areaList: [
+                    "All",
+                    "Chuau-1",
+                    "SQ7"
+                ],
             },
         });
     </script>
