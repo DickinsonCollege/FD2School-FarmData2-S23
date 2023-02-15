@@ -57,25 +57,18 @@
 
             <table border="1" style="width: 35%">
                 <tr>
-                    <th>Date</th>
-                    <th>Area</th>
-                    <th>Crop</th>
-                    <th>Yield</th>
-                    <th>Units</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Area</th>
+                    <th scope="col">Crop</th>
+                    <th scope="col">Yield</th>
+                    <th scope="col">Units</th>
                 </tr>
-                <tr>
-                    <td>05/02/2018</td>
-                    <td>Chuau-1</td>
-                    <td>Kale</td>
-                    <td>10</td>
-                    <td>Bunches</td>
-                </tr>
-                <tr>
-                    <td>05/05/2018</td>
-                    <td>SQ7</td>
-                    <td>Kale</td>
-                    <td>7</td>
-                    <td>Bunches</td>
+                <tr v-for="t in table">
+                    <td>{{ t.date }}</td>
+                    <td>{{ t.area }}</td>
+                    <td>{{ t.crop }}</td>
+                    <td>{{ t.yield }}</td>
+                    <td>{{ t.units }}</td>
                 </tr>
             </table>
     </div>
@@ -91,6 +84,8 @@
                 reportArea: '' ,
                 crops: ['Broccoli' , 'Kale' , 'Peas'] ,
                 areas: ['Chuau-1' , 'All' , 'SQ7'] ,
+                table:[{date: "2018-05-02", area: "Chuau-1", crop: "Kale" , yield: "10", units:"Bunches"},
+                       {date: "2018-05-05", area: "SQ7", crop: "Kale" , yield: "7", units:"Bunches"}],
             }
         });
     </script>
