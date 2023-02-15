@@ -42,7 +42,7 @@
     </div>
 <hr>
 <div v-cloak>
-  <h1>{{header}}</h1>
+  <h1>{{header ? header : 'Mock Harvest Report'}}</h1>
   
 </div>
 
@@ -73,7 +73,7 @@
     var inputTitle = new Vue({
         el: "#app",
         data: {
-            header: 'My Sample Harvest Report',
+            header: '',
             startDate:'',
             endDate:'',
             selectedCrop: 'Kale',
