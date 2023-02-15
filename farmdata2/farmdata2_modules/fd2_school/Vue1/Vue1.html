@@ -8,49 +8,53 @@
     </p>
   </head>
   <body>
-    <div>
+    <div id="app">
+    <div id="inputTitle">
       <label for="title">Title: </label>
-      <input type="text" id="title" name="Title">
+      <input id="title" type="text" v-model="header">
+      
     </div>
     <div>
       <label for="start-date">Start:</label>
-      <input type="date" id="start-date" name="start-date" min="2014-01-01" max="2022-01-01">
+      <input type="date" id="start-date" name="start-date" min="2014-01-01" max="2022-01-01" v-model="startDate">
 
       <label for="end-date">End:</label>
-      <input type="date" id="end-date" name="end-date" min="2020-05-05" max="2022-01-01">
-
+      <input type="date" id="end-date" name="end-date" min="2020-05-05" max="2022-01-01" v-model="endDate">
+      
     </div>
     <div>
       <label for="crop">Crop: </label>
-      <select id="crop" name="Crop">
+      <select id="crop" name="Crop" v-model="selectedCrop">
         <option value="Kale" selected>Kale</option>
         <option value="Broccoli">Broccoli</option>
         <option value="Peas">Peas</option>
 
       
       </select>
-      <label for="crop">Crop: </label>
-      <select id="field" name="Field">
+      <label for="crop">Field: </label>
+      <select id="field" name="Field" v-model="selectedField">
         <option value="All" selected>All</option>
         <option value="Chuau-1">Chuau-1</option>
         <option value="SQ7">SQ7</option>
-
-      
       </select>
       <br>
       <button>Generate Report</button>
-
     </div>
 <hr>
-<h1>My Sample Harvest Report</h1>
+<div v-cloak>
+  <h1>{{header}}</h1>
+  
+</div>
+
+
 <p>details</p>
   <ul>
-    <li><strong>Farm: </strong>Sample Farm</li>
+    <li><strong>Farm: </strong>{{selectedField}}</li>
     <li><strong>User: </strong>manager1</li>
     <li><strong>Language: </strong>English</li>
-    <li><strong>Start: </strong>05/01/2018</li>
-    <li><strong>End: </strong>05/15/2018</li>
-    <li><strong>Crop: </strong> Kale</li>
+    <li><strong>Start: </strong>{{startDate}}</li>
+    <li><strong>End: </strong>{{endDate}}</li>
+    <li><strong>Crop: </strong> {{selectedCrop}}</li>
   </ul>
   <table border="1">
     <tr>
@@ -63,5 +67,19 @@
       <td>05/02/2018</td><td>SQ7</td><td>Kale</td><td>7</td><td>Bunches</td>
     </tr>
   </table>
+</div>
   </body>
+  <script>
+    var inputTitle = new Vue({
+        el: "#app",
+        data: {
+            header: 'My Sample Harvest Report',
+            startDate:'',
+            endDate:'',
+            selectedCrop: 'Kale',
+            selectedField: 'All',
+        },
+  
+    });
+  </script>
 </html>
