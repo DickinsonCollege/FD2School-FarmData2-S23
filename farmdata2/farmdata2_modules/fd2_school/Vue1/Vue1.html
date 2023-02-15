@@ -25,17 +25,13 @@
     <div>
       <label for="crop">Crop: </label>
       <select id="crop" name="Crop" v-model="selectedCrop">
-        <option value="Kale" selected>Kale</option>
-        <option value="Broccoli">Broccoli</option>
-        <option value="Peas">Peas</option>
+        <option v-for="crop in crops">{{crop}}</option>
 
       
       </select>
       <label for="crop">Field: </label>
       <select id="field" name="Field" v-model="selectedField">
-        <option value="All" selected>All</option>
-        <option value="Chuau-1">Chuau-1</option>
-        <option value="SQ7">SQ7</option>
+        <option v-for="field in fields">{{field}}</option>
       </select>
       <br>
       <button>Generate Report</button>
@@ -70,7 +66,7 @@
 </div>
   </body>
   <script>
-    var inputTitle = new Vue({
+    var mockupVue = new Vue({
         el: "#app",
         data: {
             header: '',
@@ -78,6 +74,8 @@
             endDate:'',
             selectedCrop: 'Kale',
             selectedField: 'All',
+            crops: ['Kale', 'Broccoli', 'Peas'],
+            fields: ['All', 'Chuau-1', 'SQ7'],
         },
   
     });
