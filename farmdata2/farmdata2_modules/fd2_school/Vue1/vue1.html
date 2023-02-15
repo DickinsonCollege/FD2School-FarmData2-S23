@@ -10,7 +10,7 @@
     <div id="reportTitle" v-cloak>
             <h1>Harvest Report</h1>
             <p>This page is a <em>mockup</em> of a simplified harvest report.</p>
-            <label for="title">Title: <input type="text"  v-model="header"/> </label>
+            <label for="title">Title: <input type="text"  v-model="header" placeholder="Mock Harvest Report"/> </label>
             <br>
 
         <div id="reportDate" v-cloak> 
@@ -43,7 +43,7 @@
         <br><input type="button" value="Generate Report">
         <hr>
 
-        <h1>{{ header }}</h1>
+        <h1>{{ header && header.trim() != '' ? header : 'Mock Harvest Report'}}</h1>
 
         <div id="reportDetails">
             <p>Details:</p>
@@ -88,7 +88,7 @@
         let reportView = new Vue({
             el: '#reportTitle',
             data:{
-                header:'My Sample Harvest Report' ,
+                header:'' ,
                 reportStartDate: '' ,
                 reportEndDate: '' ,
                 reportCrop: '' ,
