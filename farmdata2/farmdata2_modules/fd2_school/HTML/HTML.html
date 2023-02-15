@@ -1,18 +1,32 @@
 <!DOCTYPE html>
-<h1>Harvest Report</h1>
-<p>This page is a <em>mockup</em> of a simplified harvest report.</p>
-<hr>
+<html>
+  <head>
+    <title>Harvest Report</title>
+  </head>
+  <body>
+    <h1>Harvest Report</h1>
+    <p>This page is a <em>mockup</em> of a simplified harvest report.</p>
+    <hr>
 
-<h1>My Sample Harvest Report</h1>
-<ul>
-  <li>Details:</li>
-  <ul>
-    <li><strong>Farm:</strong>Sample Farm</li>
-    <li><strong>User:</strong>Manager1</li>
-    <li><strong>Language:</strong>English</li>
-    <br>
-    <li><strong>Start:</strong>05/01/2018</li>
-    <li><strong>End:</strong>05/15/2018</li>
-    <li><strong>Crop:</strong>Kale</li>
-  </ul>
-</ul>
+    <form>
+      <label for="title">Title:</label>
+      <input type="text" id="title" name="title"><br><br>
+
+      <h1>My Sample Harvest Report</h1>
+      <ul>
+        <li>Details:</li>
+        <ul>
+          <li><strong>Farm:</strong>Sample Farm</li>
+          <li><strong>User:</strong>Manager1</li>
+          <li><strong>Language:</strong>English</li>
+          <br>
+          <li><strong>Start:</strong>05/01/2018</li>
+          <li><strong>End:</strong>05/15/2018</li>
+          <li><strong>Crop:</strong>Kale</li>
+        </ul>
+      </ul>
+
+      <button type="submit">Generate Report</button>
+    </form>
+  </body>
+</html>
