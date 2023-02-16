@@ -33,7 +33,7 @@
           
         <button type="button">Generate Report</button>
     <hr>    
-    <h2 v-cloak> {{ rptTitle }} </h2>
+    <h2 v-cloak> {{ rptTitle ? rptTitle: "Mock Harvest Report" }} </h2>
         <p> Details: </p>
         <ul>
             <li><b>Farm</b>:Sample Farm</li>
@@ -71,7 +71,7 @@
     var vueHarv = new Vue ({
         el: '#vue-harv',
         data: {
-            rptTitle: 'My Sample Harvest Report',
+            rptTitle: null,
             rptStart: 'mm/dd/yyyy',
             rptEnd: 'mm/dd/yyyy',
             rptCrop: 'Kale'
