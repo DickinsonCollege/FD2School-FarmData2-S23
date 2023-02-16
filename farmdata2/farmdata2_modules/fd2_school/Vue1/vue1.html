@@ -47,19 +47,12 @@
                 <th>Yield</th>
                 <th>Units</th>
             </tr>
-            <tr>
-                <td>05/01/2020</td>
-                <td>Chuau-1</td>
-                <td>Kale</td>
-                <td>10</td>
-                <td>Bunches</td>
-            </tr>
-            <tr>
-                <td>05/15/2020</td>
-                <td>SQ7</td>
-                <td>Kale</td>
-                <td>7</td>
-                <td>Bunches</td>
+            <tr v-for = "data in tables">
+                <td >{{data.date}}</td>
+                <td >{{data.area}}</td>
+                <td >{{data.crop}}</td>
+                <td >{{data.yield}}</td>
+                <td >{{data.units}}</td>
             </tr>
         </table>
   </div>      
@@ -80,6 +73,10 @@
                 "All",
                 "Chuau-1",
                 "SQ7"
+            ],
+            tables: [
+                {date: "2020-05-05", area: "Chuau-1", crop: "Kale", yield: 10, units: "Bunches"},
+                {date: "2020-15-05", area: "SQ7", crop: "Kale", yield: 7, units: "Bunches"},
             ]
         }
     });
