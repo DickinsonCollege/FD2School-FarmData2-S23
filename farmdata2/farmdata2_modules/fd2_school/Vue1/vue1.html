@@ -19,15 +19,11 @@
 
         <label for="crop">Crop:</label>
         <select id="crop" name="crop" v-model="rptCrop">
-            <option selected>Kale</option>
-            <option>Broccoli</option>
-            <option>Peas</option>
+            <option v-for="crop in crops">{{crop}}</option>  
         </select>
         <label for="field">Field:</label>
         <select id="field" name="field">
-            <option selected>All</option>
-            <option>Chuau-1</option>
-            <option>SQ7</option>
+            <option v-for = "area in areas">{{area}}</option> 
         </select>
         <br> <br>
           
@@ -74,7 +70,17 @@
             rptTitle: null,
             rptStart: 'mm/dd/yyyy',
             rptEnd: 'mm/dd/yyyy',
-            rptCrop: 'Kale'
+            rptCrop: 'Kale',
+            crops: [
+                "Kale",
+                "Broccoli",
+                "Peas"
+            ],
+            areas: [
+                "All",
+                "Chuau-1",
+                "SQ7"
+            ]
         }
     });
 </script>
