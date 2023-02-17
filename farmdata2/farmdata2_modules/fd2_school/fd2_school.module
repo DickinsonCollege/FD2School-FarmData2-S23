@@ -69,8 +69,8 @@ $items['farm/fd2-school/html'] = array(
             'access arguments' => array('view fd2 school'),
             'weight' => 110,
         );
- 
-$items['farm/fd2-school/vue1'] = array(
+
+        $items['farm/fd2-school/vue1'] = array(
             'title' => 'Vue1',
             'type' => MENU_LOCAL_TASK,
             'page callback' => 'fd2_school_view',
@@ -78,6 +78,9 @@ $items['farm/fd2-school/vue1'] = array(
             'access arguments' => array('view fd2 school'),
             'weight' => 110,
         );
+
+ 
+
 
  
   return $items;
