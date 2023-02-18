@@ -28,27 +28,28 @@
 
 <br><br>
 
-<input type="button" value="Generate Report" @click='generate' />
+<input type="button" value="Generate Report" @click='generate'/>
 
 <hr>
 
-<h1>{{titlerp ? titlerp : "Mock Harvest Report"}}</h1>
+<div v-if="rpStat">
+  <h1>{{titlerp ? titlerp : "Mock Harvest Report"}}</h1>
+  <dd>Details:</dd>
+  <br>
+  <ul>
+      <li><strong>Farm</strong>: Sample Farm</li>
+      <li><strong>User</strong>: Manager 1</li>
+      <li><strong>Language</strong>: English</li>
+      <br>
+      <li><strong>Start</strong>: {{startdate}}</li>
+      <li><strong>End</strong>: {{enddate}}</li>
+      <li><strong>Crop</strong>: {{crop}}</li>
+  </ul>
+  <br>
 
-<dd>Details:</dd>
-<br>
-<ul>
-    <li><strong>Farm</strong>: Sample Farm</li>
-    <li><strong>User</strong>: Manager 1</li>
-    <li><strong>Language</strong>: English</li>
-    <br>
-    <li><strong>Start</strong>: {{startdate}}</li>
-    <li><strong>End</strong>: {{enddate}}</li>
-    <li><strong>Crop</strong>: {{crop}}</li>
-</ul>
-<br>
+  <table border = 1>
 
-<table border = 1>
-    <tr>
+    <tr v-if="harvestLogs.length>0">
       <th>Row</th>
       <th>Date</th>
       <th>Area</th>
@@ -57,6 +58,10 @@
       <th>Units</th>
       <th>Delete</th>
     </tr>
+    <tr v-else>
+      <th>No record</th>
+    </tr>
+
     <tr v-for="(r,index) in harvestLogs">
       <td>{{index+1}}</td>
       <td>{{r.date}}</td>
@@ -66,20 +71,22 @@
       <td>{{r.units}}</td>
       <td><button v-on:click="deleteRecord">Del</button></td>
     </tr>
-    <!-- <tr>
-      <td>05/05/2018</td>
-      <td>SQ7</td>
-      <td>Kale</td>
-      <td>7</td>
-      <td>Bunches</td>
-    </tr> -->
+      <!-- <tr>
+        <td>05/05/2018</td>
+        <td>SQ7</td>
+        <td>Kale</td>
+        <td>7</td>
+        <td>Bunches</td>
+      </tr> -->
   </table>
+</div>
 </div>
 
 <script>
   let report = new Vue({
     el: '#vue',
     data: {
+      rpStat: false,
       titlerp: "My Sample Harvest Report",
       startdate: "2020-05-05",
       enddate: "2020-05-15",
@@ -90,8 +97,10 @@
     },
     methods: {
       generate: function() {
-        if(this.harvestLogs.length <3){
+        if(this.harvestLogs.length <3 && this.rpStat){
           this.harvestLogs.push({date: "2018-05-02", area: "Chuau-1", crop: "Kale", yield: 10, units: "Bunches"});
+        } else {
+          this.rpStat = true;
         }
       },
       deleteRecord: function(index) {
