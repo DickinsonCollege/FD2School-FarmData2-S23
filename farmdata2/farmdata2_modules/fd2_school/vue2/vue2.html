@@ -7,6 +7,7 @@
   </head>
   <body >
   <p>abcd</p>
+  <button> click</button>
     <div v-cloak id="vuespike">
       <ul>
         <li v-for ="item in names">{{item}}
@@ -40,7 +41,8 @@
     <br>
     <button type="button" v-on:click='addReport'>Generate Report</button>
     <hr>
-    <h1>{{titleReport==""? "Mock harvest report":titleReport}}</h1>
+    <h1 v-if="harvestLog.length!=0">{{titleReport}}</h1>
+    <h1 v-else>no matching record</h1>
    <p>Details:</p>
    <ul>
     <li> <strong>Farm:</strong> Sample Farm</li>
@@ -68,7 +70,7 @@
       <td>{{log.crop}}</td>
       <td>{{log.yield}}</td>
       <td>{{log.units}}</td>
-      <td><button v-on:click="harvestLog.splice(index,1)">Delete</button></td>
+      <td><button type="button" v-on:click="harvestLog.splice(index,1)">Delete</button></td>
     </tr>
     
    
