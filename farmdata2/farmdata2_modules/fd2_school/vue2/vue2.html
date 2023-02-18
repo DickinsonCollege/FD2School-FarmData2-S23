@@ -6,7 +6,7 @@
     
   </head>
   <body >
-    
+  <p>abcd</p>
     <div v-cloak id="vuespike">
       <ul>
         <li v-for ="item in names">{{item}}
@@ -51,7 +51,7 @@
     <li><strong>End:</strong> {{endDate}}</li>
     <li><strong>Crop:</strong>{{crop}}</li>
    </ul>
-   <table  border=1>
+   <table  >
   
     <tr>
       <th>Row</th>
@@ -68,6 +68,7 @@
       <td>{{log.crop}}</td>
       <td>{{log.yield}}</td>
       <td>{{log.units}}</td>
+      <td><button v-on:click="harvestLog.splice(index,1)">Delete</button></td>
     </tr>
     
    
