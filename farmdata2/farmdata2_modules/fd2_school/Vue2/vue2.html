@@ -55,6 +55,7 @@
       <th>Crop</th>
       <th>Yield</th>
       <th>Units</th>
+      <th>Delete</th>
     </tr>
     <tr v-for="(r,index) in harvestLogs">
       <td>{{index+1}}</td>
@@ -63,6 +64,7 @@
       <td>{{r.crop}}</td>
       <td>{{r.yield}}</td>
       <td>{{r.units}}</td>
+      <td><button v-on:click="deleteRecord">Del</button></td>
     </tr>
     <!-- <tr>
       <td>05/05/2018</td>
@@ -91,6 +93,9 @@
         if(this.harvestLogs.length <3){
           this.harvestLogs.push({date: "2018-05-02", area: "Chuau-1", crop: "Kale", yield: 10, units: "Bunches"});
         }
+      },
+      deleteRecord: function(index) {
+        this.harvestLogs.splice(index, 1);
       }
     }
   });
