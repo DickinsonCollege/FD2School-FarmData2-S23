@@ -6,15 +6,17 @@
     <br>
     <label for="startDate">Start:</label>
     <input type="date" id="startDate"
+           v-model="startDate"
            value="2020-05-05"
            min="2014-01-01" max="2022-01-01">
     <label for="endDate">End:</label>
     <input type="date" id="endDate"
+           v-model ="endDate"
            value="2020-05-15"
            min="2020-05-05" max="2022-01-01">
     <br>
     <label for="cropList">Crop:</label>
-    <select id="cropList">
+    <select id="cropList" v-model="crops">
         <option>Broccoli</option>
         <option selected>Kale</option>
         <option>Peas</option>
@@ -60,7 +62,7 @@
             rptEndDate:'2020-01-01',
             rptCrop:'',
             crops:["Brocoli", "Kale", "Peas"],
-            area: ["All", "Chuau-1", "SQ7"],
+            areas: ["All", "Chuau-1", "SQ7"],
             hlogs : [{date: "2018-05-02", area: "Chuau-1", crop: "Kale", yield: 10, units: "Bunches"},
             {date: "2018-05-05", area: "SQ7", crop: "Kale", yield: 7, units: "Bunches"},],
           }
