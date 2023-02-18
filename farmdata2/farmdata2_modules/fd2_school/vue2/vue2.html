@@ -38,7 +38,7 @@
   </select>
     </form>
     <br>
-    <button type="button" v-on:click='harvestLog.push( {date:"2018-05-01"  ,area:"Orion-3",  crop:"Kale",yield:"12",units:"Bunches"})' >Generate Report</button>
+    <button type="button" v-on:click='addReport'>Generate Report</button>
     <hr>
     <h1>{{titleReport==""? "Mock harvest report":titleReport}}</h1>
    <p>Details:</p>
@@ -87,6 +87,13 @@
                            harvestLog:[],
             header:'Vue',
             
+        },
+
+        methods : {
+addReport: function(){
+
+  this.harvestLog.push( {date:"2018-05-01"  ,area:"Orion-3",  crop:"Kale",yield:"12",units:"Bunches"})
+}
         }
 
     })
