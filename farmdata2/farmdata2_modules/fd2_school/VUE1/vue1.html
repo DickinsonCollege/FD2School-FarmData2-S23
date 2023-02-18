@@ -1,8 +1,13 @@
-<html>
-    <div id="mockHarvestReport" v-cloak></div>
+<!DOCTYPE html>
+    <head></head>
+    <body>
+        
+   
+    <div id="mockHarvestReport" v-cloak>
     <h1>Harvest Report</h1>
     <p> This page is a <i>mockup</i> of a simplified harvest report</p>
     <label for="title">Title: </label>
+    <input type="text" id="rptTitle" v-model="rptTitle"></input>
     <br>
     <label for="startDate">Start:</label>
     <input type="date" id="startDate"
@@ -32,7 +37,7 @@
     <input type="button" value="Generate Report">
     <hr>
     <br>
-    <h1>My Sample Harvest Report</h1>
+    <h1>{{rptTitle=="" ? "Mock Harvest Report" : rptTitle}}</h1>
 
     <p>Details:</p>
     <ul>
@@ -51,13 +56,15 @@
         <tr><th>Date</th><th>Area </th><th>Crop</th><th>Yield</th><th>Units</th></tr>
         <tr><td>05/02/2018 </td><td>Chuau-1 </td><td>Kale</td><td>10</td><td>Bunches</td></tr>
         <tr><td>05/05/2018 </td><td>SQ7</td><td>Kale</td><td>7</td><td>Bunches</td></tr>
-    </table>    
-    <script>
+    </table>  
+    <h1>{{rptTitle}}</h1>
+    </div>  
+    <script src=”https://unpkg.com/vue@2”>
         let spike = new Vue({
  
           el:"#mockHarvestReport",
           data:{
-            rptTitle: "My Sample Harvest Report",
+            rptTitle: "",
             rptStartDate:'2020-01-01',
             rptEndDate:'2020-01-01',
             rptCrop:'',
@@ -67,5 +74,6 @@
             {date: "2018-05-05", area: "SQ7", crop: "Kale", yield: 7, units: "Bunches"},],
           }
         })
-      </script>    
+      </script>   
+       </body> 
 </html>
