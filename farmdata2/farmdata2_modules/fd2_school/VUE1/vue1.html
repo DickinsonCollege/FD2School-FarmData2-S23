@@ -21,17 +21,15 @@
            min="2020-05-05" max="2022-01-01">
     <br>
     <label for="cropList">Crop:</label>
-    <select id="cropList" v-model="crops">
-        <option>Broccoli</option>
-        <option selected>Kale</option>
-        <option>Peas</option>
+    <select name="crop" id="cropList" v-model="rptCrop">
+        <option v-for="item in crops">{{item}}</option>
+        
     </select>
 
     <label for="areaList">Area:</label>
-    <select id="areaList">
-        <option selected>All</option>
-        <option>Chuau-1</option>
-        <option>SQ7</option>
+    <select name="area" id="areaList" v-model="rptArea">
+        <option v-for="item in areas">{{item}}</option>
+        
     </select>
     <br> 
     <input type="button" value="Generate Report">
@@ -56,7 +54,10 @@
         <tr><th>Date</th><th>Area </th><th>Crop</th><th>Yield</th><th>Units</th></tr>
         <tr><td>05/02/2018 </td><td>Chuau-1 </td><td>Kale</td><td>10</td><td>Bunches</td></tr>
         <tr><td>05/05/2018 </td><td>SQ7</td><td>Kale</td><td>7</td><td>Bunches</td></tr>
-    </table>  
+    </table>
+    <tr v-for="log in hlogs">
+        <td v-for="item in log">{{item}}</td>
+    </tr>  
     <h1>{{rptTitle}}</h1>
     </div>  
     <script src=”https://unpkg.com/vue@2”>
@@ -64,7 +65,7 @@
  
           el:"#mockHarvestReport",
           data:{
-            rptTitle: "",
+            rptTitle: "My Sample Harvest Report",
             rptStartDate:'2020-01-01',
             rptEndDate:'2020-01-01',
             rptCrop:'',
