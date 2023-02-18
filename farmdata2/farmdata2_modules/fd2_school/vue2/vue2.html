@@ -5,14 +5,10 @@
     <meta name="viewport" content="width=device-width" />
     
   </head>
-  <body >
-  <p>abcd</p>
-  <button> click</button>
+  
+  
     <div v-cloak id="vuespike">
-      <ul>
-        <li v-for ="item in names">{{item}}
-        </li>
-      </ul>
+     
     <h1> Harvest Report</h1>
    
    
@@ -22,18 +18,18 @@
       <input v-model="titleReport" type="text" id="title" name="title" >
       <br><br>
       <label for="start">Start:</label>
-      <input v-model="startDate"  type="date" id="start" name="date"min="2014-01-01" max="2022-01-01" > 
+      <input v-model="startDate"  type="date" id="start" name="date"   min="2014-01-01" max="2022-01-01" > 
       
       <label for="end">End:</label>
-      <input v-model="endDate" type="date" id="end" name="date"min="2020-05-05" max="2022-01-01" >
+      <input v-model="endDate" type="date" id="end" name="date" v-bind:min="startDate" max="2022-01-01" >
       <br><br>
       <label for="crop">Crop:</label>
-      <select  name="crop" id="crop">
+      <select v-model="crop" name="crop" id="crop">
         <option v-for="crop in cropList">{{crop}}</option>
         
       </select>
       <label for="field">Field:</label>
-  <select name="field" id="field">
+  <select v-model="field" name="field" id="field">
     <option v-for="field in fieldList">{{field}}</option>
     
   </select>
@@ -83,12 +79,15 @@
         el:'#vuespike',
         
                  data:{
-             names: [ "Joe", "Arun", "Ouwen", "Anh", "Sue" ],
-              titleReport:'My sample harvest report',           
+             
+              titleReport:'My sample harvest report',  
+                          maxStartDate:""        , 
                            startDate:"05-01-2018" ,
                            endDate:"05-15-2018" ,
+                          
                            cropList:["Kale","Broccoli","Peas"],
                            fieldList:["Chuau-1","Chuau-2","Chuau-3"],
+                           field:"Chuau-1",
                            crop:"Kale",
                            harvestLog:[{date:"2018-05-01",area:"Orion-3",crop:"Kale",yield:12,units:"Bunches"},{date:"2018-05-01",area:"Orion-3",crop:"Kale",yield:12,units:"Bunches"},{date:"2018-05-01",area:"Orion-3",crop:"Kale",yield:12,units:"Bunches"}],
             header:'Vue',
@@ -97,8 +96,8 @@
 
         methods : {
 addReport: function(){
-
-  this.harvestLog.push( {date:"2018-05-01"  ,area:"Orion-3",  crop:"Kale",yield:"12",units:"Bunches"})
+  this.harvestLog.push( {date:this.startDate  ,area:this.area,  crop:this.crop,yield:"12",units:"Bunches"})
+  // this.harvestLog.push( {date:"2018-05-01"  ,area:"Orion-3",  crop:"Kale",yield:"12",units:"Bunches"})
 }
         }
 
