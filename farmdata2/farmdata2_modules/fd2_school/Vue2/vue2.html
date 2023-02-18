@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>AndrewScheiner-03-Vue1</title>
+        <title>AndrewScheiner-04-Vue2</title>
     </head>
     <body>
         <h1>Harvest Report</h1>
@@ -46,7 +46,12 @@
                 </select>
             </p>
             <br>        
-            <p><button type=button><strong>Generate Report</strong></button></p>
+            <p>
+                <button type=button
+                        v-on:click="harvestLogs.push({date:'05/08/2020',area:'Orion-3',crop:'Kale',yield:12,units:'Bunches'})">
+                        <strong>Generate Report</strong>
+                </button>
+            </p>
             
             <hr>
 
@@ -83,19 +88,12 @@
                     <th>Yield</th>
                     <th>Units</th>
                 </tr>
-                <tr>
-                    <td>{{harvestLogs[0].date}}</td>
-                    <td>{{harvestLogs[0].area}}</td>
-                    <td>{{harvestLogs[0].crop}}</td>
-                    <td>{{harvestLogs[0].yield}}</td>
-                    <td>{{harvestLogs[0].units}}</td>
-                </tr>
-                <tr>
-                    <td>{{harvestLogs[1].date}}</td>
-                    <td>{{harvestLogs[1].area}}</td>
-                    <td>{{harvestLogs[1].crop}}</td>
-                    <td>{{harvestLogs[1].yield}}</td>
-                    <td>{{harvestLogs[1].units}}</td>
+                <tr v-for="hLog in harvestLogs">
+                    <td>{{hLog.date}}</td>
+                    <td>{{hLog.area}}</td>
+                    <td>{{hLog.crop}}</td>
+                    <td>{{hLog.yield}}</td>
+                    <td>{{hLog.units}}</td>
                 </tr>
             </table>
 
@@ -118,10 +116,7 @@
                             {text: "Chuau-1", value: "Chuau-1"},
                             {text: "SQ7", value: "SQ7"},
                         ],
-                        harvestLogs: [
-                            {date:"05/08/2020",area:"Chuau-1",crop:"Kale",yield:10,units:"Bunches"},
-                            {date:"05/08/2020",area:"SQ7",crop:"Kale",yield:7,units:"Bunches"},
-                        ],
+                        harvestLogs: [],
                     },
                 });
                 Vue.config.devtools = true;
