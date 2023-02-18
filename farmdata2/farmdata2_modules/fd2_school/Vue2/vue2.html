@@ -28,7 +28,7 @@
 
 <br><br>
 
-<input type="button" value="Generate Report" @click='harvestLogs.push({date: "2018-05-02", area: "Chuau-1", crop: "Kale", yield: 10, units: "Bunches"})' />
+<input type="button" value="Generate Report" @click='generate' />
 
 <hr>
 
@@ -83,6 +83,13 @@
       cropList: ["Brocoli", "Kale", "Peas"],
       areaList: ["All", "Chuau", "SQ7"],
       harvestLogs: [ ],
+    },
+    methods: {
+      generate: function() {
+        if(this.harvestLogs.length <3){
+          this.harvestLogs.push({date: "2018-05-02", area: "Chuau-1", crop: "Kale", yield: 10, units: "Bunches"});
+        }
+      }
     }
   });
   Vue.config.devtools = true;
