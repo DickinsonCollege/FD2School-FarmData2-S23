@@ -28,7 +28,7 @@
 
 <br><br>
 
-<input type="button" value="Generate Report" />
+<input type="button" value="Generate Report" @click='harvestLogs.push({date: "2018-05-02", area: "Chuau-1", crop: "Kale", yield: 10, units: "Bunches"})' />
 
 <hr>
 
@@ -55,7 +55,7 @@
       <th>Yield</th>
       <th>Units</th>
     </tr>
-    <tr v-for="r in records">
+    <tr v-for="r in harvestLogs">
       <td>{{r.date}}</td>
       <td>{{r.area}}</td>
       <td>{{r.crop}}</td>
@@ -82,8 +82,7 @@
       crop: "Kale",
       cropList: ["Brocoli", "Kale", "Peas"],
       areaList: ["All", "Chuau", "SQ7"],
-      records: [{date: "2018-05-02", area: "Chuau-1", crop: "Kale", yield: 10, units: "Bunches"},
-      {date: "2020-05-02", area: "SQ7", crop: "Peas", yield: 20, units: "Bunches"}],
+      harvestLogs: [ ],
     }
   });
   Vue.config.devtools = true;
