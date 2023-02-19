@@ -16,25 +16,25 @@
     </div>
     <div>
       <label for="start-date">Start:</label>
-      <input type="date" id="start-date" name="start-date" min="2014-01-01" max="2022-01-01" v-model="startDate">
+      <input type="date" id="start-date" name="start-date" min="2014-01-01" max="2022-01-01" v-model="startDate"/>
 
       <label for="end-date">End:</label>
-      <input type="date" id="end-date" name="end-date" min="2020-05-05" max="2022-01-01" v-model="endDate">
+      <input type="date" id="end-date" name="end-date" min="2020-05-05" max="2022-01-01" v-model="endDate"/>
       
     </div>
     <div>
       <label for="crop">Crop: </label>
-      <select id="crop" name="Crop" v-model="selectedCrop">
+      <select id="crop" name="Crop" v-model="selectedCrop"/>
         <option v-for="crop in crops">{{crop}}</option>
 
       
       </select>
       <label for="crop">Field: </label>
-      <select id="field" name="Field" v-model="selectedField">
+      <select id="field" name="Field" v-model="selectedField"/>
         <option v-for="field in fields">{{field}}</option>
       </select>
       <br>
-      <button class="btn btn-primary" v-on:click='table.push({date:"2018-05-01", area:"Chuau-1", crop:"Kale", yield:"10", units:"Bunches"})'>Generate Report</button>
+      <button class="btn btn-primary" v-on:click='generateReportData'>Generate Report</button>
     </div>
 <hr>
 <div v-cloak>
@@ -80,6 +80,15 @@
             table: [
 
               ]
+        },
+        methods: {
+          generateReportData: function() {
+            this.table.push({date: this.startDate, area: this.selectedField, crop: this.selectedCrop, yield: "12", units: "Bunches"});
+            this.startDate = '';
+            this.endDate = '';
+            this.selectedCrop = 'Kale';
+            this.selectedField  = 'All';
+          }
         },
   
     });
