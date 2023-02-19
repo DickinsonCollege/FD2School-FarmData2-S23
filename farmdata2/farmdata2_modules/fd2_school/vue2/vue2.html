@@ -34,7 +34,7 @@
         <option v-for="field in fields">{{field}}</option>
       </select>
       <br>
-      <button>Generate Report</button>
+      <button class="btn btn-primary" v-on:click='table.push({date:"2018-05-01", area:"Chuau-1", crop:"Kale", yield:"10", units:"Bunches"})'>Generate Report</button>
     </div>
 <hr>
 <div v-cloak>
@@ -78,10 +78,8 @@
             crops: ['Kale', 'Broccoli', 'Peas'],
             fields: ['All', 'Chuau-1', 'SQ7'],
             table: [
-              {date: "2018-05-02", area: "Chuau-1", crop: "Kale", yield: 10, units: "Bunches"},
-              {date: "2018-05-02", area: "SQ7", crop: "Kale", yield: 7, units: "Bunches"},
-              {date: "2018-05-02", area: "All", crop: "Broccoli", yield: 5, units: "Heads"},
-            ]
+
+              ]
         },
   
     });
