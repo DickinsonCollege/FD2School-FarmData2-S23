@@ -25,7 +25,7 @@
         </p>
         <br>
 
-        <button type="button">Generate Report</button>
+        <button type="button" @click="harvestLogs.push({date: '2023-02-18', area: 'Chuau-1', crop: 'Peas', yield: 15, units: 'Pounds'})">Generate Report</button>
         
         <hr>
 
@@ -83,8 +83,8 @@
                  harvestLogs: [
                  {date: "2018-05-02", area: "Chuau-1", crop: "Kale", yield: 10, units: "Bunches"},
                  {date: "2019-03-10", area: "SQ7", crop: "Broccoli", yield: 7, units: "Bunches"}
-                 ]
-            }
+                 ],
+            },
         });
         Vue.config.devtools = true;
     </script>
