@@ -88,6 +88,7 @@
                     <th>Crop</th>
                     <th>Yield</th>
                     <th>Units</th>
+                    <th>Delete</th>
                 </tr>
                 <tr v-for="(hLog, index) in harvestLogs">
                     <td>{{index+1}}</td>
@@ -96,6 +97,9 @@
                     <td>{{hLog.crop}}</td>
                     <td>{{hLog.yield}}</td>
                     <td>{{hLog.units}}</td>
+                    <td>
+                        <button type="button" @click="deleteHarvestLog(index)">Delete</button>
+                    </td>
                 </tr>
             </table>
 
@@ -123,6 +127,9 @@
                     methods: {
                         addHarvestLog: function() {
                             this.harvestLogs.push({date:'05/08/2020',area:'Orion-3',crop:'Kale',yield:12,units:'Bunches'});
+                        },
+                        deleteHarvestLog: function(hLogIndex) {
+                            this.harvestLogs.splice(hLogIndex, 1);
                         },
                     },
                 });
