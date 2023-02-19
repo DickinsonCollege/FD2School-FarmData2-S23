@@ -19,7 +19,7 @@
                 id="startdate"
                 name="startdate"
                 min="2014-01-01"
-                max="2022-01-01"
+                :max="endDate"
                 v-model="startDate"
                 />
 
@@ -28,7 +28,7 @@
                 type="date"
                 id="enddate"
                 name="enddate"
-                min="2020-05-05"
+                :min="startDate"
                 max="2022-01-01"
                 v-model="endDate"
                 />
@@ -126,6 +126,7 @@
                             {text: "SQ7", value: "SQ7"},
                         ],
                         harvestLogs: [],
+                        reportVisState: 'hide',
                     },
                     methods: {
                         addHarvestLog: function() {
