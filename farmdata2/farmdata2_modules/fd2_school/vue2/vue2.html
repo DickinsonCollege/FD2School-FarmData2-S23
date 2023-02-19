@@ -56,6 +56,7 @@
             <td>{{ log.crop }}</td>
             <td>{{ log.yield }}</td>
             <td>{{ log.units }}</td>
+            <td><button type="button" @click="deleteButton">Delete</button></td>
         </tr>
         
     </table>
@@ -84,6 +85,10 @@
                 else if (this.harvestLog.length == 2){
                     this.harvestLog.push({date: "2020-05-05", area: "Chuau-1", crop: "Kale", yield: 10, units: "Bunches"});
                 }
+            },
+
+            deleteButton: function(logIndex){
+                this.harvestLog.splice(logIndex, 1)
             }
         }
     });
