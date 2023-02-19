@@ -48,7 +48,7 @@
             <br>        
             <p>
                 <button type=button
-                        v-on:click="harvestLogs.push({date:'05/08/2020',area:'Orion-3',crop:'Kale',yield:12,units:'Bunches'})">
+                        v-on:click="addHarvestLog">
                         <strong>Generate Report</strong>
                 </button>
             </p>
@@ -117,6 +117,11 @@
                             {text: "SQ7", value: "SQ7"},
                         ],
                         harvestLogs: [],
+                    },
+                    methods: {
+                        addHarvestLog: function() {
+                            this.harvestLogs.push({date:'05/08/2020',area:'Orion-3',crop:'Kale',yield:12,units:'Bunches'});
+                        },
                     },
                 });
                 Vue.config.devtools = true;
