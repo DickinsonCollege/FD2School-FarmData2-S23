@@ -44,7 +44,7 @@
                 <li><strong>Crop:</strong>{{reportCrop}}</li>
             </ul>
         </p>
-        <table border = 1>
+        <table v-if="harvestLogList.length > 0" border = 1>
             <tr>
                 <th>Row</th>
                 <th>Date</th>
@@ -64,6 +64,7 @@
                 <td><button type="button" @click="harvestLogList.splice(index, 1)">Delete</button></td>
             </tr>
         </table>
+        <p v-else>No matching records found</p>
     </div>
     <script>
         let mainVue = new Vue({
