@@ -38,9 +38,8 @@
 
    <br>
    
-   <div class=""add-item-form>
-	<button class="btn btn-primary" v-on:click='logs.push({date: "2018-05-18", area: "Orion-3", crop: "Kale", yield: 12, units: "Bunches"})'>Generate Report</button>
-	</div>
+
+	<button type="button" v-on:click='saveItems'>Generate Report</button>
     <hr style="width:100%;text-align:left;margin-left:0">
  
 	<h1> {{ title && title.trim() !== '' ? title : 'Mock Harvest Report'}} </h1>
@@ -101,6 +100,11 @@
 			logs: [
 			],
 		},
+		methods: {
+              saveItems: function(){
+                this.logs.push({date: "2018-05-18", area: "Orion-3", crop: "Kale", yield: 12, units: "Bunches"});
+            }
+        }
 	})
 	Vue.config.devtools = true;
    </script>
