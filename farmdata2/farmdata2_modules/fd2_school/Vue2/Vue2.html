@@ -37,7 +37,10 @@
    <br>
 
    <br>
-   <input type="button" value="Generate Report" />
+   
+   <div class=""add-item-form>
+	<button class="btn btn-primary" v-on:click='logs.push({date: "2018-05-18", area: "Orion-3", crop: "Kale", yield: 12, units: "Bunches"})'>Generate Report</button>
+	</div>
     <hr style="width:100%;text-align:left;margin-left:0">
  
 	<h1> {{ title && title.trim() !== '' ? title : 'Mock Harvest Report'}} </h1>
@@ -96,8 +99,6 @@
 				"SQ7"
 			],
 			logs: [
-				{date: "2018-05-02", area: "Chuau-1", crop: "Kale", yield: 50, units: "Bunches"},
-				{date: "2020-08-15", area: "SQ7", crop: "Peas", yield: 84, units: "Bunches"},
 			],
 		},
 	})
