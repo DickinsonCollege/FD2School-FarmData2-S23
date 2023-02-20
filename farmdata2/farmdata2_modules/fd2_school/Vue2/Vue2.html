@@ -1,0 +1,109 @@
+	<html>
+	  <head>
+	    <h1>Harvest Report</h1>
+	  </head>
+	  <body>
+	   <p>This page is a <i>mockup</i> of a simplified harvest report.</p>
+	   <div id = "form" v-cloak>
+	   <label for="title">Title: <input type = "text" v-model="title"/></label>
+	   
+		
+	
+	   <br>
+
+	   <br>
+	   <label for="crop">Crop: </label>
+	   <select v-model = "selectCrop" id="crop" name="Crop">
+        <option v-for = "crop in crops">{{crop}}</option>
+	   </select>
+	   
+	   <label for="field">Field: </label>
+	   <select v-model = "selectField" id="field" name="Field">
+	   <option v-for = "field in fields">{{field}}</option>
+	   </select>
+	   <br>
+
+   <br>
+   
+	<label for="startDate">Start:</label>
+	<input type="date" v-model="start" name="Start"
+       min="2014-01-01" max="2022-01-01">
+   <br>
+
+   <label for="end">End:</label>
+
+   <input type="date" v-model="end" name="End"
+       min="2020-05-05" max="2022-01-01">
+   <br>
+
+   <br>
+   <input type="button" value="Generate Report" />
+    <hr style="width:100%;text-align:left;margin-left:0">
+ 
+	<h1> {{ title && title.trim() !== '' ? title : 'Mock Harvest Report'}} </h1>
+	
+    <p>Details:</p>
+    <ul>
+	  <li><strong>Farm</strong>:Sample farm</li>
+	  <li><strong>User</strong>:manager1</li>
+	  <li><strong>Language</strong>:English</li>
+
+	  <br>
+
+	  <li><strong>Start</strong>:{{ start }}</li>
+	  <li><strong>End</strong>:{{ end }}</li>
+	  <li><strong>Crop</strong>:{{ selectCrop }}</li>
+    </ul>
+
+<br>
+<table border = "1">
+  <tr>
+    <td>Date</td>
+    <td>Area</td>
+    <td>Crop</td>
+    <td>Yield</td>
+    <td>Units</td>
+  </tr>
+  <tr v-for = "i in logs">
+    <td>{{i.date}}</td>
+    <td>{{i.area}}</td>
+    <td>{{i.crop}}</td>
+    <td>{{i.yield}}</td>
+    <td>{{i.units}}</td>
+  </tr>
+
+</table>
+
+</div>	
+  </body>
+  <script>
+	let form = new Vue({
+		el: '#form',
+		data:{
+			title: 'My Sample Harvest Report',
+			start: "2020-05-05",
+			end: "2020-05-15",
+			selectCrop: "Kale",
+			crops: [
+				"Broccoli",
+				"Kale",
+				"Peas"
+			],
+			selectField: "All",
+			fields: [
+				"All",
+				"Chuau-1",
+				"SQ7"
+			],
+			logs: [
+				{date: "2018-05-02", area: "Chuau-1", crop: "Kale", yield: 50, units: "Bunches"},
+				{date: "2020-08-15", area: "SQ7", crop: "Peas", yield: 84, units: "Bunches"},
+			],
+		},
+	})
+	Vue.config.devtools = true;
+   </script>
+
+   </script>   
+</html>
+

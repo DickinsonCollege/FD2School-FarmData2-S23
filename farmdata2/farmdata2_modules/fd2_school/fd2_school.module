@@ -53,7 +53,7 @@ function fd2_school_menu() {
   );
 
   $items['farm/fd2-school/html'] = array(
-    'title' => 'Nathan',
+    'title' => 'HTML',
     'type' => MENU_LOCAL_TASK,
     'page callback' => 'fd2_school_view',
     'page arguments' => array('HTML'),
@@ -61,10 +61,18 @@ function fd2_school_menu() {
     'weight' => 110,
   );
   $items['farm/fd2-school/Vue1'] = array(
-    'title' => 'Nathan',
+    'title' => 'Vue1',
     'type' => MENU_LOCAL_TASK,
     'page callback' => 'fd2_school_view',
     'page arguments' => array('Vue1'),
+    'access arguments' => array('view fd2 school'),
+    'weight' => 110,
+  );
+  $items['farm/fd2-school/Vue2'] = array(
+    'title' => 'Vue2',
+    'type' => MENU_LOCAL_TASK,
+    'page callback' => 'fd2_school_view',
+    'page arguments' => array('Vue2'),
     'access arguments' => array('view fd2 school'),
     'weight' => 110,
   );
