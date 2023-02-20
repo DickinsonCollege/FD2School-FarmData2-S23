@@ -16,10 +16,10 @@
     </div>
     <div>
       <label for="start-date">Start:</label>
-      <input type="date" id="start-date" name="start-date" min="2014-01-01" max="2022-01-01" v-model="startDate"/>
+      <input type="date" id="start-date" name="start-date" min="2014-01-01" max="2022-01-01" :max="endDate" v-model="startDate"/>
 
       <label for="end-date">End:</label>
-      <input type="date" id="end-date" name="end-date" min="2020-05-05" max="2022-01-01" v-model="endDate"/>
+      <input type="date" id="end-date" name="end-date" min="2020-05-05" max="2022-01-01" :min="startDate"v-model="endDate"/>
       
     </div>
     <div>
