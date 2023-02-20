@@ -38,7 +38,6 @@
 
    <br>
    
-
 	<button type="button" v-on:click='saveItems'>Generate Report</button>
     <hr style="width:100%;text-align:left;margin-left:0">
  
@@ -60,13 +59,15 @@
 <br>
 <table border = "1">
   <tr>
+	<td>Row</td>
     <td>Date</td>
     <td>Area</td>
     <td>Crop</td>
     <td>Yield</td>
     <td>Units</td>
   </tr>
-  <tr v-for = "i in logs">
+  <tr v-for = "(i, index) in logs">
+	<td>{{index+1}}</td>
     <td>{{i.date}}</td>
     <td>{{i.area}}</td>
     <td>{{i.crop}}</td>
@@ -98,6 +99,9 @@
 				"SQ7"
 			],
 			logs: [
+			{date:"2018-05-01",area:"Orion-3",crop:"Kale",yield:12,units:"Bunches"},
+			{date:"2018-05-01",area:"Orion-3",crop:"Kale",yield:12,units:"Bunches"},
+			{date:"2018-05-01",area:"Orion-3",crop:"Kale",yield:12,units:"Bunches"}
 			],
 		},
 		methods: {
