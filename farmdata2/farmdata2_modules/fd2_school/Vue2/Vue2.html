@@ -27,13 +27,13 @@
    
 	<label for="startDate">Start:</label>
 	<input type="date" v-model="start" name="Start"
-       min="2014-01-01" max="2022-01-01">
+       min="2014-01-01" :max="end">
    <br>
 
    <label for="end">End:</label>
 
    <input type="date" v-model="end" name="End"
-       min="2020-05-05" max="2022-01-01">
+       :min="start" max="2022-01-01">
    <br>
 
    <br>
@@ -57,7 +57,7 @@
     </ul>
 
 <br>
-<table border = "1">
+<table v-if="logs.length > 0" border = "1">
   <tr>
 	<td>Row</td>
     <td>Date</td>
@@ -65,6 +65,7 @@
     <td>Crop</td>
     <td>Yield</td>
     <td>Units</td>
+	<td>Delete</td>
   </tr>
   <tr v-for = "(i, index) in logs">
 	<td>{{index+1}}</td>
@@ -73,9 +74,13 @@
     <td>{{i.crop}}</td>
     <td>{{i.yield}}</td>
     <td>{{i.units}}</td>
+	<td>
+		<button type="button" @click="deleteLog(index)">Delete</button>
+	</td>
   </tr>
 
 </table>
+<p v-else>No matching records</p>
 
 </div>	
   </body>
@@ -107,7 +112,11 @@
 		methods: {
               saveItems: function(){
                 this.logs.push({date: "2018-05-18", area: "Orion-3", crop: "Kale", yield: 12, units: "Bunches"});
-            }
+            },
+			deleteLog: function(logIndex){
+
+				this.logs.splice(logIndex, 1);
+			}
         }
 	})
 	Vue.config.devtools = true;
