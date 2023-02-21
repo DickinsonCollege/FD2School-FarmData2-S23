@@ -27,41 +27,47 @@
         </select>
         <br> <br>
           
-        <button class="btn btn-primary" @click='genReport'>Generate Report</button>
-    <hr>    
-    <h2 v-cloak> {{ rptTitle ? rptTitle: "Mock Harvest Report" }} </h2>
-        <p> Details: </p>
-        <ul>
-            <li><b>Farm</b>:Sample Farm</li>
-            <li><b>User</b>:manager1</li>
-            <li><b>Language</b>:English</li><br>
-            <li><b>Start</b>:{{ rptStart }}</li>
-            <li><b>End</b>:{{ rptEnd }}</li>
-            <li><b>Crop</b>:{{ rptCrop }}</li>
-        </ul>
-        <table border="1">
-            <tr>
-                <th>Row</th>
-                <th>Date</th>
-                <th>Area</th>
-                <th>Crop</th>
-                <th>Yield</th>
-                <th>Units</th>
-            </tr>
-            <tr v-for = "(data,index) in tables">
-                <td >{{index + 1}}</td>
-                <td >{{data.date}}</td>
-                <td >{{data.area}}</td>
-                <td >{{data.crop}}</td>
-                <td >{{data.yield}}</td>
-                <td >{{data.units}}</td>
-            </tr>
-        </table>
+        <button v-if="state === 'hidden'" class="btn btn-primary" @click='genReport'>Generate Report</button>
+        <button v-else class="btn btn-secondary" @click="changeState('hidden')">Generate Another Report</button>
+    <hr> 
+        <div v-if="state === 'reveal'">
+            <h2 v-cloak> {{ rptTitle ? rptTitle: "Mock Harvest Report" }} </h2>
+                <p> Details: </p>
+                <ul>
+                    <li><b>Farm</b>:Sample Farm</li>
+                    <li><b>User</b>:manager1</li>
+                    <li><b>Language</b>:English</li><br>
+                    <li><b>Start</b>:{{ rptStart }}</li>
+                    <li><b>End</b>:{{ rptEnd }}</li>
+                    <li><b>Crop</b>:{{ rptCrop }}</li>
+                </ul>
+        
+            <table v-if="tables.length > 0" border="1">
+                <tr>
+                    <th>Row</th>
+                    <th>Date</th>
+                    <th>Area</th>
+                    <th>Crop</th>
+                    <th>Yield</th>
+                    <th>Units</th>
+                </tr>
+                <tr v-for = "(data,index) in tables">
+                    <td >{{index + 1}}</td>
+                    <td >{{data.date}}</td>
+                    <td >{{data.area}}</td>
+                    <td >{{data.crop}}</td>
+                    <td >{{data.yield}}</td>
+                    <td >{{data.units}}</td>
+                </tr>
+            </table>
+            <p v-else>There are no matching records!</p>
+        </div>
   </div>      
   <script>
     var vueHarv = new Vue ({
         el: '#vue-harv',
         data: {
+            state: 'hidden',
             rptTitle: null,
             rptStart: 'mm/dd/yyyy',
             rptEnd: 'mm/dd/yyyy',
@@ -82,8 +88,17 @@
         },
         methods: {
             genReport: function() {
-                this.tables.push({date:"2020-05-05", area:"Chuau-1", crop:"Kale", yield:10, units:"Bunches"});
-            } 
+                if(this.state === 'hidden'){
+                    this.state = 'reveal'
+                }
+                else{
+                    this.tables.push({date:"2020-05-05", area:"Chuau-1", crop:"Kale", yield:10, units:"Bunches"});
+                }
+            },
+            changeState: function(newState){
+                this.state = newState;
+    
+            },
         }
     });
     Vue.config.devtools = true; 
