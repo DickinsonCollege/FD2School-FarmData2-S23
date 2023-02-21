@@ -52,7 +52,9 @@
         
     </ul>
     <br />
-    <table border = "1">
+    <p v-if = "harvestLog.length===0">No matching Records</p>
+    <table v-if = "harvestLog.length>0" border = "1">
+        
         <th><strong>Row</strong></th>
         <th><strong>Date</strong></th>
         <th><strong>Area</strong></th>
