@@ -1,0 +1,85 @@
+<html>
+  <div id="vue-harv" v-cloak>  
+    <h1> Harvest Report </h1>
+        <p> This page is a <i>mockup</i> of a simplified harvest report.</p>
+        <label for="title">Title:</label>
+        <input type="text" id="title" name="title" v-model="rptTitle"/> <br> <br>
+       
+        <form>
+            <label>
+              Start:
+              <input type="date" name="start" v-model="rptStart" min="2014-01-01" max="2021-01-01" />
+            </label> 
+            <label>
+                End:
+                <input type="date" name="end" v-model="rptEnd" min="2020-05-05" max="2022-01-01" />
+              </label>
+        </form><br>
+          
+
+        <label for="crop">Crop:</label>
+        <select id="crop" name="crop" v-model="rptCrop">
+            <option v-for="crop in crops">{{crop}}</option>  
+        </select>
+        <label for="field">Field:</label>
+        <select id="field" name="field">
+            <option v-for = "area in areas">{{area}}</option> 
+        </select>
+        <br> <br>
+          
+        <button type="button">Generate Report</button>
+    <hr>    
+    <h2 v-cloak> {{ rptTitle ? rptTitle: "Mock Harvest Report" }} </h2>
+        <p> Details: </p>
+        <ul>
+            <li><b>Farm</b>:Sample Farm</li>
+            <li><b>User</b>:manager1</li>
+            <li><b>Language</b>:English</li><br>
+            <li><b>Start</b>:{{ rptStart }}</li>
+            <li><b>End</b>:{{ rptEnd }}</li>
+            <li><b>Crop</b>:{{ rptCrop }}</li>
+        </ul>
+        <table border="1">
+            <tr>
+                <th>Date</th>
+                <th>Area</th>
+                <th>Crop</th>
+                <th>Yield</th>
+                <th>Units</th>
+            </tr>
+            <tr v-for = "data in tables">
+                <td >{{data.date}}</td>
+                <td >{{data.area}}</td>
+                <td >{{data.crop}}</td>
+                <td >{{data.yield}}</td>
+                <td >{{data.units}}</td>
+            </tr>
+        </table>
+  </div>      
+  <script>
+    var vueHarv = new Vue ({
+        el: '#vue-harv',
+        data: {
+            rptTitle: null,
+            rptStart: 'mm/dd/yyyy',
+            rptEnd: 'mm/dd/yyyy',
+            rptCrop: 'Kale',
+            crops: [
+                "Kale",
+                "Broccoli",
+                "Peas"
+            ],
+            areas: [
+                "All",
+                "Chuau-1",
+                "SQ7"
+            ],
+            tables: [
+                {date: "2020-05-05", area: "Chuau-1", crop: "Kale", yield: 10, units: "Bunches"},
+                {date: "2020-15-05", area: "SQ7", crop: "Kale", yield: 7, units: "Bunches"},
+            ]
+        }
+    });
+    Vue.config.devtools = true; 
+</script>
+</html>
