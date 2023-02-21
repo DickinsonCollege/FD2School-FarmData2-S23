@@ -57,19 +57,14 @@
             <th>Yield</th>
             <th>Units</th>
         </tr>
-        <tr>
-        <td>05/02/2018</td>
-        <td>Chuau-1</td>
-        <td>Kale</td>
-        <td>10</td>
-        <td>Bunches</td>
-        </tr>
-        <tr>
-        <td>05/05/2018</td>
-        <td>SQ7</td>
-        <td>Kale</td>
-        <td>7</td>
-        <td>Bunches</td>
+
+        <tr v-for="c in harvestLog">
+
+            <td>{{ c.date }}</td>
+            <td>{{ c.area }}</td>
+            <td>{{ c.crop }}</td>
+            <td>{{ c.yield }}</td>
+            <td>{{ c.units }}</td>
         </tr>
     </table>
 </div>
@@ -82,7 +77,10 @@
             endDate: '2020-05-15',
             cropSelect: 'Kale',
             crops: ["Broccoli", "Kale", "Peas"] ,
-            areas: ["All", "Chuau-1", "SQ7"]
+            areas: ["All", "Chuau-1", "SQ7"],
+            harvestLog: [
+                  {id: 1, date: "05/02/2018", area: "Chuau-1", crop: "Kale", yield: "10", units: "Bunches"},
+                  {id : 2, date: "05/05/2018", area: "SQ7", crop: "Kale", yield: "7", units: "Bunches"}]
         }
     });
 </script>
