@@ -8,11 +8,11 @@
         <form>
             <label>
               Start:
-              <input type="date" name="start" v-model="rptStart" min="2014-01-01" max="2021-01-01" />
+              <input type="date" name="start" v-model="rptStart" min="2014-01-01" v-bind:max="rptEnd" />
             </label> 
             <label>
                 End:
-                <input type="date" name="end" v-model="rptEnd" min="2020-05-05" max="2022-01-01" />
+                <input type="date" name="end" v-model="rptEnd" v-bind:min="rptStart" max="2022-01-01" />
               </label>
         </form><br>
           
@@ -69,8 +69,8 @@
         data: {
             state: 'hidden',
             rptTitle: null,
-            rptStart: 'mm/dd/yyyy',
-            rptEnd: 'mm/dd/yyyy',
+            rptStart: '2020-05-05',
+            rptEnd: '2020-05-15',
             rptCrop: 'Kale',
             crops: [
                 "Kale",
