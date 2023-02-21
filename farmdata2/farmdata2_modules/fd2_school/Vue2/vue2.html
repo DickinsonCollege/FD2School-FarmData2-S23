@@ -27,7 +27,7 @@
         </select>
         <br> <br>
           
-        <button class="btn btn-primary" @click='tables.push({date:"2020-05-05", area:"Chuau-1", crop:"Kale", yield:10, units:"Bunches"})'>Generate Report</button>
+        <button class="btn btn-primary" @click='genReport'>Generate Report</button>
     <hr>    
     <h2 v-cloak> {{ rptTitle ? rptTitle: "Mock Harvest Report" }} </h2>
         <p> Details: </p>
@@ -77,6 +77,11 @@
             tables: [
                 { },
             ]
+        },
+        methods: {
+            genReport: function() {
+                this.tables.push({date:"2020-05-05", area:"Chuau-1", crop:"Kale", yield:10, units:"Bunches"});
+            } 
         }
     });
     Vue.config.devtools = true; 
