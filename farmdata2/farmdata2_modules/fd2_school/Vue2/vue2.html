@@ -9,13 +9,13 @@
     <label>
         Start:
         <input type="date" v-model="startDate" id="start" name="start"
-            min="2014-01-01" max="2022-01-01">
+            min="2014-01-01" :max="endDate">
     </label>
 
     <label>
         End:
         <input type="date" v-model="endDate" id="end" name="end"
-           min="2020-05-05" max="2022-01-01">
+           :min="startDate" max="2022-01-01">
     </label>
       
     <br>
