@@ -42,24 +42,27 @@
     </div>
     <br><br>
     </ul>
-    <table border=1>
-    <tr>
-        <th>Row</th>
-        <th>Date</th>
-        <th>Area</th>
-        <th>Crop</th>
-        <th>Yeild</th>
-        <th>Units</th>
-    </tr>
-    <tr v-for="(log,index) in harvestlogs">
-        <th>{{ index+1 }}</th>
-        <th>{{ log.date }}</th>
-        <th>{{ log.area }}</th>
-        <th>{{ log.crop }}</th>
-        <th>{{ log.yield }}</th>
-        <th>{{ log.units }}</th>
-    </tr>
-    </table>
+    <div>
+        <table border=1 >
+            <p v-if="harvestlogs.length === 0">No matching records</p>
+            <tr v-if="harvestlogs.length !== 0">
+                <th>Row</th>
+                <th>Date</th>
+                <th>Area</th>
+                <th>Crop</th>
+                <th>Yeild</th>
+                <th>Units</th>
+            </tr>
+            <tr v-for="(log,index) in harvestlogs">
+                <th>{{ index+1 }}</th>
+                <th>{{ log.date }}</th>
+                <th>{{ log.area }}</th>
+                <th>{{ log.crop }}</th>
+                <th>{{ log.yield }}</th>
+                <th>{{ log.units }}</th>
+            </tr>
+        </table>
+    </div>
 </div>
 
 <script>
