@@ -31,7 +31,7 @@
       </select>  
     <br>
     <br>
-    <button type="button" @click="reportLogs.push({date: '2018-05-01', area:'Orion-3', crop: 'Kale', yield:'12', units:'Bunches'})">Generate Report</button>
+    <button type="button" @click="saveLog">Generate Report</button>
     <hr>
         <h1>{{reportTitle == ""? "Mock Harvest Report":reportTitle}}</h1>
     <p>Details:</p>
@@ -62,7 +62,11 @@
       var reportVar = new Vue({el: '#SampleHarvestReport', data: {
         reportTitle: "My Sample Harvest Report", reportStartDate: "2020-05-05", reportEndDate: "2020-05-15", reportCrop: "Kale",
       reportCrops: ["Broccoli", "Kale", "Peas"], reportFields: ["All", "CHUAU-1", "SQ7"], 
-    reportLogs: []},})
+    reportLogs: []}, methods: {
+      saveLog : function() {
+        this.reportLogs.push({date: '2018-05-01', area:'Orion-3', crop: 'Kale', yield:'12', units:'Bunches'})
+      }
+    }})
     Vue.config.devtools = true;
     </script>
   </body>
