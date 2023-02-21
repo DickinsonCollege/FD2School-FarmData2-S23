@@ -29,9 +29,9 @@
             </select>
         </div>
         <br>
-        <button @click="harvestLogs.push({date: '2018-05-01', area: 'Orion-3', crop: 'Kale', yield: '12', units: 'Bunches'})">Generate Report</button>
+        
     </form>
-   
+    <button @click="logHarvest">Generate Report</button>
     
 
     <hr>
@@ -87,6 +87,18 @@
             ],
             harvestLogs: [],
         },
+        methods: {
+            logHarvest: function() {
+                if (this.harvestLogs.length === 0) {
+                    this.harvestLogs.push({date: '2018-05-01', area: 'Orion-3', crop: 'Kale', yield: '12', units: 'Bunches'})
+                } else if (this.harvestLogs.length === 1) {
+                    this.harvestLogs.push({date: '2020-03-02', area: 'Chuau-1', crop: 'Broccoli', yield: '6', units: 'Bunches'})
+                } else if (this.harvestLogs.length === 2) {
+                    this.harvestLogs.push({date: '2019-04-21', area: 'Orion-2', crop: 'Cabbage', yield: '18', units: 'Bunches'})
+                }
+               
+            }
+        }
     }) 
     Vue.config.devtools = true
 </script>
