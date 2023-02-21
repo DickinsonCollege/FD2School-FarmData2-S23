@@ -24,7 +24,7 @@
     </select>
 
     <br><br>
-    <button type="btn btn-primary" value="Generate Report" id="Generate Report Button" v-on:click="harvestlogs.push({date: '2018-05-02', area: 'Chuau-1', crop: 'Kale', yield: 10, units: 'Bunches'})">Generate Report</button>
+    <button type="btn btn-primary" value="Generate Report" id="Generate Report Button" @click="saveReport">Generate Report</button>
     <hr></hr>
     <h1>{{ header == null ? "Mock Harvest Report" : header }}</h1>
     <br>
@@ -71,7 +71,12 @@
             crops: [ "broccoli", "kale", "Peas"],
             areas: [ "All", "Chaua-1", "SQ7",],
             harvestlogs: [],
-            }
+            },
+            methods: {
+                    saveReport: function() {
+                        this.harvestlogs.push({date: '2018-05-02', area: 'Chuau-1', crop: 'Kale', yield: 10, units: 'Bunches'})
+                    }
+                }
         })
         Vue.config.devtools = true;
 </script>
