@@ -53,12 +53,14 @@
     </ul>
     <br />
     <table border = "1">
+        <th><strong>Row</strong></th>
         <th><strong>Date</strong></th>
         <th><strong>Area</strong></th>
         <th><strong>Crop</strong></th>
         <th><strong>Yield</strong></th>
         <th><strong>Units</strong></th>
-        <tr v-for = "harvest in harvestLog">
+        <tr v-for = "(harvest, index) in harvestLog">
+            <td>{{index+1}}</td>
             <td>{{harvest.date}}</td>
             <td>{{harvest.area}}</td>
             <td>{{harvest.crop}}</td>
