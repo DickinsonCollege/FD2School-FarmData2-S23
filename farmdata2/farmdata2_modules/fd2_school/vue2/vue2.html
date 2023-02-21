@@ -31,7 +31,7 @@
         </select>
         <br>
         <br>
-        <button type="anonymous button">Generate Report</button>
+        <button type="anonymous button" @click='logs.push({date: "2019-02-04", area: "Chuau-1", crop: "Kale", yield: 9, units: "Bunches"})'>Generate Report</button>
 
         <hr>
 
@@ -84,9 +84,9 @@
                     "Chuau-1",
                     "SQ7",
                 ],
+                
                 logs: [
-                    {date: "2019-02-04", area: "Chuau-1", crop: "Kale", yield: 9, units: "Bunches"},
-                    {date: "2020-11-09", area: "SQ7", crop: "Spinach", yield: 12, units: "Bunches"}
+                    
                 ]
             }
         });
