@@ -57,14 +57,16 @@
 
             <table border="1" style="width: 30%">
                 <tr>
+                    <th scope="col">Row</th>
                     <th scope="col">Date</th>
                     <th scope="col">Area</th>
                     <th scope="col">Crop</th>
                     <th scope="col">Yield</th>
                     <th scope="col">Units</th>
                 </tr>
-                <tr v-for="t in table">
-                    <td >{{ t.date }}</td>
+                <tr v-for="(t,index) in table">
+                    <td>{{ index + 1 }}</td>
+                    <td>{{ t.date }}</td>
                     <td>{{ t.area }}</td>
                     <td>{{ t.crop }}</td>
                     <td>{{ t.yield }}</td>
@@ -88,7 +90,9 @@
             } ,
             methods:{
                 cropDetail: function(){
-                        this.table.push({date:"2018-05-01" , area:"Orion-3" , crop:"Kale" , yield:"10" , units:"Bunches"});
+                        this.table.push({date:"2018-05-01" , area:"Orion-3" , crop:"Kale" , yield:"10" , units:"Bunches"},
+                                        {date:"2018-05-01" , area:"Orion-3" , crop:"Kale" , yield:"10" , units:"Bunches"},
+                                        {date:"2018-05-01" , area:"Orion-3" , crop:"Kale" , yield:"10" , units:"Bunches"});
                     
                 }
             }
