@@ -31,7 +31,7 @@
         </select>
         <br>
         <br>
-        <button type="anonymous" @click='logs.push({date: "2019-02-05", area: "Chuau-1", crop: "Kale", yield: 9, units: "Bunches"})'>Generate Report</button>
+        <button type="anonymous" @click='addLog'>Generate Report</button>
 
         <hr>
 
@@ -49,7 +49,7 @@
         <br>
         <table border="1px">
             <p v-if="logs.length === 0">No logs available</p>
-            <tr v-else>
+            <tr v-if="logs.length > 0">
                 <th>Row</th>
                 <th>Date</th>
                 <th>Area</th>
@@ -89,13 +89,14 @@
                     "Chuau-1",
                     "SQ7",
                 ],
-                  
+
+                nextLog: '',
                 logs: [
-                    
+                   {date: "2019-02-05", area: "Chuau-1", crop: "Kale", yield: 9, units: "Bunches"},
                 ],
                 methods: {
                     addLog: function() {
-                        this.logs.push({date: "2019-02-05", area: "Chuau-1", crop: "Kale", yield: 9, units: "Bunches"});
+                        this.logs.push(nextLog);
                     }
                 }
                 
