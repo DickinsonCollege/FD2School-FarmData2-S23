@@ -31,7 +31,7 @@
         </select>
         <br>
         <br>
-        <button type="anonymous button" @click='addLog'>Generate Report</button>
+        <button type="anonymous" @click='logs.push({date: "2019-02-05", area: "Chuau-1", crop: "Kale", yield: 9, units: "Bunches"})'>Generate Report</button>
 
         <hr>
 
@@ -49,13 +49,16 @@
         <br>
         <table border="1px">
             <tr>
+                <th>Row</th>
                 <th>Date</th>
                 <th>Area</th>
                 <th>Crop</th>
                 <th>Yield</th>
                 <th>Units</th> 
             
-            <tr v-for="log in logs">{{ <td>{{log.date}}</td> 
+            <tr v-for="log in logs">{{ 
+                <td v-for="(log,index) in logs">{{ index+1 }}</td>
+                <td>{{log.date}}</td> 
                 <td>{{log.area}}</td>
                 <td>{{log.crop}}</td>
                 <td>{{log.yield}}</td>
@@ -88,13 +91,17 @@
                 logs: [
                     
                 ],
-
-
                 methods: {
                     addLog: function() {
                         this.logs.push({date: "2019-02-05", area: "Chuau-1", crop: "Kale", yield: 9, units: "Bunches"});
-                    },
-                },
+                    }
+                }
+                
+                    
+                        
+                    
+                
+                
             }
         });
         Vue.config.devtools = true;
