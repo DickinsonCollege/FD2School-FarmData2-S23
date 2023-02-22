@@ -36,46 +36,49 @@
             <br>
         </div>
 
-        <br><button class="btn btn-primary" id="button" @click="cropDetail">Generate Report</button>
+        <br><button class="report-button" id="button" @click="cropDetail">Generate Report</button>
         <hr>
 
-        <h1>{{ header && header.trim() != '' ? header : 'Mock Harvest Report'}}</h1>
 
-        <div id="reportDetails">
-            <p>Details:</p>
-            <ul>
-                <li><strong>Farm: </strong>Sample Farm</li>
-                <li><strong>User: </strong>manager1</li>
-                <li><strong>Language: </strong>English</li><br>
+        <div class="reportDetail" v-if="reportVis === 'true'">
+            <h1>{{ header && header.trim() != '' ? header : 'Mock Harvest Report'}}</h1>
 
-                <li><strong>Start: </strong>{{ reportStartDate }}</li>
-                <li><strong>End: </strong>{{ reportEndDate }}</li>
-                <li><strong>Crop: </strong>{{ reportCrop }}</li><br>
-            </ul>
+            <div id="reportDetails">
+                <p>Details:</p>
+                <ul>
+                    <li><strong>Farm: </strong>Sample Farm</li>
+                    <li><strong>User: </strong>manager1</li>
+                    <li><strong>Language: </strong>English</li><br>
+
+                    <li><strong>Start: </strong>{{ reportStartDate }}</li>
+                    <li><strong>End: </strong>{{ reportEndDate }}</li>
+                    <li><strong>Crop: </strong>{{ reportCrop }}</li><br>
+                </ul>
+            </div>
+                
+
+                <table border="1" style="width: 30%" v-if="table.length > 0">
+                    <tr>
+                        <th scope="col">Row</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">Area</th>
+                        <th scope="col">Crop</th>
+                        <th scope="col">Yield</th>
+                        <th scope="col">Units</th>
+                        <th scope="col">Delete</th>
+                    </tr>
+                    <tr v-for="(t,index) in table">
+                        <td>{{ index+1 }}</td>
+                        <td>{{ t.date }}</td>
+                        <td>{{ t.area }}</td>
+                        <td>{{ t.crop }}</td>
+                        <td>{{ t.yield }}</td>
+                        <td>{{ t.units }}</td>
+                        <td><button type="button" @click="deleteReport">Delete</button></td>
+                    </tr>
+                </table>
+                <p v-else>No matching records!</p>
         </div>
-            
-
-            <table border="1" style="width: 30%" v-if="table.length > 0">
-                <tr>
-                    <th scope="col">Row</th>
-                    <th scope="col">Date</th>
-                    <th scope="col">Area</th>
-                    <th scope="col">Crop</th>
-                    <th scope="col">Yield</th>
-                    <th scope="col">Units</th>
-                    <th scope="col">Delete</th>
-                </tr>
-                <tr v-for="(t,index) in table">
-                    <td>{{ index+1 }}</td>
-                    <td>{{ t.date }}</td>
-                    <td>{{ t.area }}</td>
-                    <td>{{ t.crop }}</td>
-                    <td>{{ t.yield }}</td>
-                    <td>{{ t.units }}</td>
-                    <td><button type="button" @click="deleteReport">Delete</button></td>
-                </tr>
-            </table>
-            <p v-else>No matching records!</p>
     </div>
 
     <script>
@@ -83,6 +86,7 @@
             el: '#reportTitle',
             data:{
                 header:'' ,
+                reportVis: 'false' ,
                 reportStartDate: '' ,
                 reportEndDate: '' ,
                 reportCrop: '' ,
@@ -93,10 +97,13 @@
             } ,
             methods:{
                 cropDetail: function(){
+                    if (this.reportVis === 'false'){
+                        this.reportVis = 'true'; //when the generate button is clicked.
+                    }else{
                         this.table.push({date:"2018-05-01" , area:"Orion-3" , crop:"Kale" , yield:"10" , units:"Bunches"},
                                         {date:"2018-05-01" , area:"Orion-3" , crop:"Kale" , yield:"10" , units:"Bunches"},
                                         {date:"2018-05-01" , area:"Orion-3" , crop:"Kale" , yield:"10" , units:"Bunches"});
-                    
+                    }
                 } ,
                 deleteReport: function(index){
                     this.table.splice(index,1);
