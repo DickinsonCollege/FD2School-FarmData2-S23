@@ -48,13 +48,15 @@
         </ul>
         <br>
         <table border="1px">
-            <tr>
+            <p v-if="logs.length === 0">No logs available</p>
+            <tr v-else>
                 <th>Row</th>
                 <th>Date</th>
                 <th>Area</th>
                 <th>Crop</th>
                 <th>Yield</th>
                 <th>Units</th> 
+            </tr>
             
             <tr v-for="log in logs">{{ 
                 <td v-for="(log,index) in logs">{{ index+1 }}</td>
