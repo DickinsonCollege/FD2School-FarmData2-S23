@@ -33,7 +33,7 @@
             <br><br>
     </body>
     <hr>
-      <h2>{{ Title }}</h2>
+      <h2>{{ Title ? Title : 'Mock Harvest Report'}}</h2>
     <p>Details:</p>
     <body>   
         <ul>
@@ -73,7 +73,7 @@
           var vueTitle = new Vue({
             el:'#vue',
             data:{
-              Title:"My Sample Harvest Report",
+              Title:null,
               Sdate:"2018-05-01",
               Edate:"2018-05-15",
               crop:"Kalr",
