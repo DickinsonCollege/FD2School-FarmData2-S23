@@ -71,7 +71,7 @@ function fd2_school_menu() {
   );
 
   $items['farm/fd2-school/vue1'] = array(
-    'title' => 'VUE1',
+    'title' => 'Vue1',
     'type' => MENU_LOCAL_TASK,
     'page callback' => 'fd2_school_view',
     'page arguments' => array('vue1'),
