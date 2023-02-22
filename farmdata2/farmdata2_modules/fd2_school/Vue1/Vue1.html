@@ -10,18 +10,22 @@
     <label for="endDate">End:</label>
     <input type="date" id="endDate" v-model="endDate" min="2020-05-05" max="2022-01-01"></input>
     <br><br>
-    <label for="cropDropDown">Crop:</label>
-    <select id="cropDropDown" v-model="crop">
-        <option v-for="crop in cropList">{{ crop }}</option>
+    <label for="cropList">Crop:</label>
+    <select id="cropList">
+        <option>Broccoli</option>
+        <option selected>Kale</option>
+        <option>Peas</option>
     </select>
-    <label for="areaDropDown">Area:</label>
-    <select id="areaDropDown">
-        <option v-for="area in areaList">{{ area }}</option>
+    <label for="areaList">Area:</label>
+    <select id="areaList">
+        <option selected>All</option>
+        <option>Chuau-1</option>
+        <option>SQ7</option>
     </select>
     <br><br>
     <input type="button" value="Generate Report"></input>
     <hr>
-    <h1>{{ reportTitle=="" ? "Mock Harvest Report" : reportTitle }}</h1>
+    <h1>My Sample Harvest Report</h1>
     <p>Details:</p>
     <ul>
         <li><strong>Farm:</strong> Sample Farm</li>
@@ -65,13 +69,6 @@
             startDate: "2020-05-05",
             endDate: "2020-05-15",
             crop: "Kale",
-            cropList: ["Broccoli", "Kale", "Peas"],
-            areaList: ["All", "Chuau-1", "SQ7"],
-            harvestList: [
-                { date: "2018-05-02", area: "Chuau-1", crop: "Kale", yield: 10, units: "Bunches" },
-                { date: "2018-05-05", area: "SQ7", crop: "Kale", yield: 7, units: "Bunches" }
-            ],
         },
     });
-    Vue.config.devtools = true;
 </script>
