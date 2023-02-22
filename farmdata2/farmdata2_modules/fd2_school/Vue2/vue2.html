@@ -63,14 +63,16 @@
                     <th scope="col">Crop</th>
                     <th scope="col">Yield</th>
                     <th scope="col">Units</th>
+                    <th scope="col">Delete</th>
                 </tr>
                 <tr v-for="(t,index) in table">
-                    <td>{{ index + 1 }}</td>
+                    <td>{{ index+1 }}</td>
                     <td>{{ t.date }}</td>
                     <td>{{ t.area }}</td>
                     <td>{{ t.crop }}</td>
                     <td>{{ t.yield }}</td>
                     <td>{{ t.units }}</td>
+                    <td><button type="button" @click="deleteReport">Delete</button></td>
                 </tr>
             </table>
     </div>
@@ -94,6 +96,9 @@
                                         {date:"2018-05-01" , area:"Orion-3" , crop:"Kale" , yield:"10" , units:"Bunches"},
                                         {date:"2018-05-01" , area:"Orion-3" , crop:"Kale" , yield:"10" , units:"Bunches"});
                     
+                } ,
+                deleteReport: function(index){
+                    this.table.splice(index,1);
                 }
             }
         });
