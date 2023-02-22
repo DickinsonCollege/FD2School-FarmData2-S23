@@ -55,7 +55,7 @@
         </div>
             
 
-            <table border="1" style="width: 30%">
+            <table border="1" style="width: 30%" v-if="table.length > 0">
                 <tr>
                     <th scope="col">Row</th>
                     <th scope="col">Date</th>
@@ -75,6 +75,7 @@
                     <td><button type="button" @click="deleteReport">Delete</button></td>
                 </tr>
             </table>
+            <p v-else>No matching records!</p>
     </div>
 
     <script>
