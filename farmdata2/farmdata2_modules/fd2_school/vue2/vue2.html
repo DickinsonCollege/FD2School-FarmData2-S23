@@ -46,8 +46,9 @@
     </ul>
     <br>
     <br>
+    <p v-if="reportLogs.length === 0">There are no matching records</p>
     <table border="1">
-        <tr>
+        <tr v-if="reportLogs.length > 0">
             <th>Row</th>
             <th>Date</th>
             <th>Area</th>
