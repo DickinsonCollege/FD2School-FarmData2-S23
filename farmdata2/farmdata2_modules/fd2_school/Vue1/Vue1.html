@@ -1,98 +1,77 @@
-<!DOCTYPE html>
-<html>
-
-<head>
-    <style>
-        th,
-        td {
-            border: solid 1px black;
-        }
-    </style>
-</head>
-
-<body>
+<div id="mockHarvestReport" v-cloak>
     <h1>Harvest Report</h1>
-
-    <p>This page is a <i>mockup</i> of a simplified harvest report.</p>
-    <div id="vuecontent" v-cloak>
-        <form>
-            <label for="title">Title: </label>
-            <input type="text" name="title" v-model="rptTitle" id="title" value="Mock Harvest Report">
-            <br><br>
-            <label for="startdate">Start: </label>
-            <input type="date" min="2014-01-01" v-model="rptStartDate" max="2022-01-01" value="2020-05-05">
-            <label for="enddate">End: </label>
-            <input type="date" min="2020-05-05" v-model="rptEndDate" max="2022-01-01" value="2020-05-15"> <br><br>
-            <label for="crop">Crop: </label>
-            <select name="crop" v-model="rptCrop" id="crop">
-                <option>Broccoli</option>
-                <option selected>Kale</option>
-                <option>Peas</option>
-            </select>
-            <label for="field">Area: </label>
-            <select name="field" id="field">
-                <option selected>All</option>
-                <option>Chuau-1</option>
-                <option>SQ7</option>
-            </select>
-            <br><br>
-
-            <input type="button" value="Generate Report">
-        </form>
-
-        <hr>
-        <h1>{{rptTitle}}</h1>
-        <p>Details: </p>
-        <ul>
-            <li><b>Farm:</b>Sample Farm</li>
-            <li><b>User:</b>manager1</li>
-            <li><b>Language:</b>English</li>
-        </ul>
+    <p>This page is a mockup of a simplified harvest report.</p>
+    <br>
+    <label for="rptTitle">Title:</label>
+    <input type="text" id="rptTitle" v-model="reportTitle"></input>
+    <br><br>
+    <label for="startDate">Start:</label>
+    <input type="date" id="startDate" v-model="startDate" min="2014-01-01" max="2022-01-01"></input>
+    <label for="endDate">End:</label>
+    <input type="date" id="endDate" v-model="endDate" min="2020-05-05" max="2022-01-01"></input>
+    <br><br>
+    <label for="cropDropDown">Crop:</label>
+    <select id="cropDropDown" v-model="crop">
+        <option v-for="crop in cropList">{{ crop }}</option>
+    </select>
+    <label for="areaDropDown">Area:</label>
+    <select id="areaDropDown">
+        <option v-for="area in areaList">{{ area }}</option>
+    </select>
+    <br><br>
+    <input type="button" value="Generate Report"></input>
+    <hr>
+    <h1>{{ reportTitle=="" ? "Mock Harvest Report" : reportTitle }}</h1>
+    <p>Details:</p>
+    <ul>
+        <li><strong>Farm:</strong> Sample Farm</li>
+        <li><strong>User:</strong> manager1</li>
+        <li><strong>Language:</strong> English</li>
         <br>
-        <form>
-            <ul>
-                <li><b>Start:</b>{{rptStartDate}}</li>
-                <li><b>End:</b>{{rptEndDate}}</li>
-                <li><b>Crop:</b>{{rptCrop}}</li>
-            </ul>
-        </form>
-        <table>
-            <tr>
-                <th>Date</th>
-                <th>Area</th>
-                <th>Crop</th>
-                <th>Yield</th>
-                <th>Units</th>
-            </tr>
-            <tr>
-                <td>05/02/2018</td>
-                <td>Chuau-1</td>
-                <td>Kale</td>
-                <td>10</td>
-                <td>Bunches</td>
-            </tr>
-            <tr>
-                <td>05/05/2018</td>
-                <td>SQ7</td>
-                <td>Kale</td>
-                <td>7</td>
-                <td>Bunches</td>
-            </tr>
-        </table>
-    </div>
-    <script>
-        var vuecontent = new Vue(
-            {
-                el: '#vuecontent',
-                data: {
-                    rptTitle: "Mock Harvest Report",
-                    rptStartDate: '2020-01-01',
-                    rptEndDate: '2020-01-01',
-                    rptCrop: '',
-                }
-            }
-        )
-    </script>
-</body>
-
-</html>
+        <li><strong>Start:</strong> {{ startDate }}</li>
+        <li><strong>End:</strong> {{ endDate }}</li>
+        <li><strong>Crop:</strong> {{ crop }}</li>
+    </ul>
+    <br>
+    <table border="1">
+        <tr>
+            <th>Date</th>
+            <th>Area</th>
+            <th>Crop</th>
+            <th>Yield</th>
+            <th>Units</th>
+        </tr>
+        <tr>
+            <td>05/02/2018</td>
+            <td>Chuau-1</td>
+            <td>Kale</td>
+            <td>10</td>
+            <td>Bunches</td>
+        </tr>
+        <tr>
+            <td>05/05/2018</td>
+            <td>SQ7</td>
+            <td>Kale</td>
+            <td>7</td>
+            <td>Bunches</td>
+        </tr>
+    </table>
+</div>
+<script>
+    let spike = new Vue({
+        el: "#mockHarvestReport",
+        data: {
+            reportTitle: "My Sample Report",
+            startDate: "2020-05-05",
+            endDate: "2020-05-15",
+            crop: "Kale",
+            cropList: ["Broccoli", "Kale", "Peas"],
+            areaList: ["All", "Chuau-1", "SQ7"],
+            harvestList: [
+                { date: "2018-05-02", area: "Chuau-1", crop: "Kale", yield: 10, units: "Bunches" },
+                { date: "2018-05-05", area: "SQ7", crop: "Kale", yield: 7, units: "Bunches" }
+            ],
+        },
+    });
+    Vue.config.devtools = true;
+</script>
