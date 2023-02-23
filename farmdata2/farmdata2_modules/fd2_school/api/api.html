@@ -98,6 +98,9 @@
                 addHarvestLog: function(){
                     if(this.showReport === "false"){
                         this.showReport = 'true'
+                        this.$data.reportFarm = "Sample Farm"
+                        this.$data.reportUser = "manager1"
+                        this.$data.reportLanguage = "English"
                     }
                     else{
                         if(this.harvestLogList.length==0){
