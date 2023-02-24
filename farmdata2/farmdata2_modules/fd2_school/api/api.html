@@ -27,7 +27,7 @@
         </select>
         <label for="field">Field:</label>
         <select id="field" name="field">
-            <option selected v-for="area in areaList">{{area}}</option>
+            <option selected v-for="area in areaNames">{{area}}</option>
         </select>
         <br><br>
         <input type="button" value="Generate Report" @click="addHarvestLog">
@@ -80,6 +80,14 @@
                     console.log("Error Occurred")
                     console.log(error)
                 })
+                getIDToAreaMap()
+                .then((theMap) => {
+                    this.$data.idToAreaMap = theMap
+                })
+                .catch((err) => {
+                    console.log("Error Occurred")
+                    console.log(error)
+                })
             },
             data:{
                 reportTitle: "My Sample Report",
@@ -89,21 +97,18 @@
                 reportFarm: "",
                 reportUser: "",
                 reportLanguage: "",
-                
-                areaList: [
-                    "All",
-                    "Chuau-1",
-                    "SQ7"
-                ],
                 harvestLogList:[
-  
                 ],
                 showReport: "false",
                 idToCropMap: new Map(),
+                idToAreaMap: new Map(),
             },
             computed:{
                 cropNames(){
                     return Array.from(this.$data.idToCropMap.values());
+                },
+                areaNames(){
+                    return Array.from(this.$data.idToAreaMap.values());
                 }
             },
             methods:{
