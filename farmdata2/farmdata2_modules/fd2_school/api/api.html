@@ -25,7 +25,7 @@
       <br><br>
       <label for="crop">Crop:</label>
       <select v-model="crop" name="crop" id="crop">
-        <option v-for="crop in cropList">{{crop}}</option>
+        <option v-for="crop in reverseCropIDandName">{{crop}}</option>
         
       </select>
       <label for="field">Field:</label>
@@ -72,6 +72,7 @@
    
   
   </table>
+  <p>{{reverseCropIDandName}}</p>
   </div>
   </body>
   <script>
@@ -79,6 +80,7 @@
         el:'#vuespike',
         
                  data:{
+                  idToCropMap: new Map(),
                   farm:"",
                   user:"",
                   language:"",
@@ -96,7 +98,33 @@
             header:'Vue',
             
         },
+        created() {
+          getIDToCropMap()
+.then((theMap) => {
+  console.log(theMap);
+    this.idToCropMap=theMap;
+})
+.catch((err) => {
+    console.log(err);
+})
+	console.log("HarvestReport Vue instance created!")
+},
+computed :{
+  reverseCropIDandName(){
+//     var reverse= new Map()
+//     for (let[key,val] of this.idToCropMap){
+      
+// reverse.set(val,key)
 
+//     }
+reverse=[]
+for (let[key,val] of this.idToCropMap){
+    reverse.push(val)
+    
+  }
+  return reverse
+},
+},
         methods : {
 addReport: function(){
   axios.get('/farm.json')  // this line sends the request.
