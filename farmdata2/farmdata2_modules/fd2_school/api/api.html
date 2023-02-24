@@ -97,10 +97,17 @@
             methods:{
                 addHarvestLog: function(){
                     if(this.showReport === "false"){
+                        axios.get('/farm.json')
+                        .then((response) => {
+                            this.$data.reportFarm = response.data.name
+                            this.$data.reportUser = response.data.user.name
+                            this.$data.reportLanguage = response.data.languages.en.name
+                        })
+                        .catch((error) => {
+                            console.log("Error Occurred")
+                            console.log(error)
+                        })
                         this.showReport = 'true'
-                        this.$data.reportFarm = "Sample Farm"
-                        this.$data.reportUser = "manager1"
-                        this.$data.reportLanguage = "English"
                     }
                     else{
                         if(this.harvestLogList.length==0){
