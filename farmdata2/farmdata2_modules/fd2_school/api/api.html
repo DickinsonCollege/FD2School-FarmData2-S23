@@ -36,9 +36,9 @@
         <h2>{{ reportTitle ? reportTitle : "Mock Harvest Report" }}</h2>
         <p>Details:</p>
         <ul>
-            <li><strong>Farm:</strong>Sample Farm</li>
-            <li><strong>User:</strong>manager1</li>
-            <li><strong>Language:</strong>English</li>
+            <li><strong>Farm:</strong>{{ farm }}</li>
+            <li><strong>User:</strong>{{ user }}</li>
+            <li><strong>Language:</strong>{{ language }}</li>
             <br>
             <li><strong>Start:</strong>{{ reportStartDate }}</li>
             <li><strong>End:</strong>{{ reportEndDate }}</li>
@@ -83,7 +83,10 @@
             crops: ["Brocoli" ,"Kale", "Peas"],
             areas: ["All", "Chuau-1", "SQ7"],
             harvestLog: [],
-            reportState: "notGenerated"
+            reportState: "notGenerated",
+            farm: "Sample Farm",
+            user: "manager1",
+            language: "English",
         },
         methods: {
             generateReport: function(){
@@ -109,6 +112,3 @@
     });
     Vue.config.devtools = true;
 </script>
-
- <!-- {date: "2018-05-02", area: "Chuau-1", crop: "Kale", yield: 10, units: "Bunches"}, -->
-<!-- {date: "2018-05-05", area: "SQ7", crop: "Kale", yield: 7, units: "Bunches"} -->
