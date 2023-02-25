@@ -20,7 +20,7 @@
             </select>
         <g>Field: </g>
             <select id="field" v-model = "selectedArea">
-                <option v-for = 'areas in areas'> {{ areas }} </option>
+                <option v-for = 'areas in areaNames'> {{ areas }} </option>
             </select>
         </p>
         <br>
@@ -69,6 +69,7 @@
             el:'#exampleReport',
             data: {
                 idToCropMap: new Map(),
+                idToAreaMap: new Map(),
                 farmName: '',
                 currentUser: '',
                 language: '',
@@ -77,16 +78,15 @@
                 end_date: '',
                 selectedCrop : '', 
                 selectedArea : '',
-                 areas: [
-                 'Chuau-1',
-                 'SQ7'
-                 ],
                  harvestLogs: [
                  ],
             },
             computed:{
                 cropNames(){
                     return Array.from(this.$data.idToCropMap.values());
+                },
+                areaNames(){
+                    return Array.from(this.$data.idToAreaMap.values());
                 }
             },
             methods: {
@@ -113,6 +113,13 @@
 	            getIDToCropMap()
                 .then((crop_map) => {
                     this.$data.idToCropMap = crop_map
+                })
+                .catch((error) => {
+                    console.log("Error Occurred", error)
+                })
+                getIDToAreaMap()
+                .then((area_map) => {
+                    this.$data.idToAreaMap = area_map
                 })
                 .catch((error) => {
                     console.log("Error Occurred", error)
