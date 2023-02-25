@@ -16,7 +16,7 @@
 
         <p>Crop: 
             <select id="crop-select" v-model = "selectedCrop">
-                <option v-for = 'crops in corps'>{{ crops }}</option>
+                <option v-for = 'crops in cropNames'>{{ crops }}</option>
             </select>
         <g>Field: </g>
             <select id="field" v-model = "selectedArea">
@@ -68,6 +68,7 @@
         var harvestReport = new Vue({
             el:'#exampleReport',
             data: {
+                idToCropMap: new Map(),
                 farmName: '',
                 currentUser: '',
                 language: '',
@@ -76,17 +77,17 @@
                 end_date: '',
                 selectedCrop : '', 
                 selectedArea : '',
-                corps: [
-                 'Kale',
-                 'Broccoli', 
-                 'Peas',
-                 ],
                  areas: [
                  'Chuau-1',
                  'SQ7'
                  ],
                  harvestLogs: [
                  ],
+            },
+            computed:{
+                cropNames(){
+                    return Array.from(this.$data.idToCropMap.values());
+                }
             },
             methods: {
             generateTable: function() {
@@ -107,6 +108,15 @@
                     this.language = response.data.languages.en.name
                 })
             }
+            },
+            created() {
+	            getIDToCropMap()
+                .then((crop_map) => {
+                    this.$data.idToCropMap = crop_map
+                })
+                .catch((error) => {
+                    console.log("Error Occurred", error)
+                })
             }
         });
         Vue.config.devtools = true;
