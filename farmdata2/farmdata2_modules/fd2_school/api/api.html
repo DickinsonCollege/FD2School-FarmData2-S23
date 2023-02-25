@@ -25,7 +25,7 @@
         </p>
         <br>
 
-        <button type="button" @click=generateTable>Generate Report</button>
+        <button type="button" @click=generateTable >Generate Report</button>
         
         <hr>
 
@@ -33,9 +33,9 @@
             <h1>{{ reportTitle ? reportTitle : "Mock Harvest Report" }}</h1>
             <p>Details:</p>
             <UL>
-                <LI><b>Farm:</b>: Sample Farm </LI>
-                <LI><b>User</b>: manager1 </LI>
-                <LI><b>Language</b>: English</LI>
+                <LI><b>Farm:</b>: {{ farmName }}</LI>
+                <LI><b>User</b>: {{ currentUser }} </LI>
+                <LI><b>Language</b>: {{ language }} </LI>
                 <br>
                 <LI><b>Start</b>: {{start_date}}</LI>
                 <LI><b>End</b>: {{end_date}} </LI>
@@ -68,9 +68,9 @@
         var harvestReport = new Vue({
             el:'#exampleReport',
             data: {
-                Farm: '',
-                User: '',
-                Language: '',
+                farmName: '',
+                currentUser: '',
+                language: '',
                 reportTitle: '',
                 start_date: '',
                 end_date: '',
@@ -90,6 +90,7 @@
             },
             methods: {
             generateTable: function() {
+                this.generateReport();
                 this.harvestLogs.push({
                     date: '2022-02-18',
                     area: 'Chuau-1',
@@ -97,8 +98,16 @@
                     yield: 15,
                     units: 'Bunches'
                     });
+            },
+            generateReport: function() {
+                axios.get('/farm.json')
+                .then((response) => {
+                    this.farmName = response.data.name
+                    this.currentUser = response.data.user.name
+                    this.language = response.data.languages.en.name
+                })
             }
-          }
+            }
         });
         Vue.config.devtools = true;
     </script>
