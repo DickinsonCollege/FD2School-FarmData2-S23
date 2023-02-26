@@ -24,7 +24,7 @@
     
     <label for = "field">Area</label>
     <select id = "field" name = "field" >
-        <option v-for ="area in areas">{{area}}</option>
+        <option v-for ="area in areaNames">{{area}}</option>
     </select>
     <br >
     <br />
@@ -83,19 +83,24 @@
                     rptCrop: "Kale",
     
                     
-                    areas:["All","Chuau-1", "SQ7"],
+                    
                     harvestLog: [],
                     farm:"",
                     user:"",
                     language:"",
                     idToCropMap: new Map(),
+                    idToAreaMap: new Map(),
 
                     
                 },
                 computed:{
                     cropNames(){
                         return Array.from(this.idToCropMap.values());
+                    },
+                    areaNames(){
+                        return Array.from(this.idToAreaMap.values());
                     }
+
                 },
 
                 methods:{
@@ -128,6 +133,16 @@
                     })
                     .catch((error)=>{
                         console.log(error)
+                    })
+
+                    getIDToAreaMap()
+                    .then((theMap)=>{
+                        console.log(theMap);
+                        this.idToAreaMap = theMap;
+                        
+                    })
+                    .catch((error)=> {
+                        console.log(error);
                     })
                 },
 
