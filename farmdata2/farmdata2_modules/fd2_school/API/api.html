@@ -46,9 +46,9 @@
             <div id="reportDetails">
                 <p>Details:</p>
                 <ul>
-                    <li><strong>Farm: </strong>Sample Farm</li>
-                    <li><strong>User: </strong>manager1</li>
-                    <li><strong>Language: </strong>English</li><br>
+                    <li><strong>Farm: </strong>{{reportFarmName}}</li>
+                    <li><strong>User: </strong>{{reportUser}}</li>
+                    <li><strong>Language: </strong>{{reportLanguage}}</li><br>
 
                     <li><strong>Start: </strong>{{ reportStartDate }}</li>
                     <li><strong>End: </strong>{{ reportEndDate }}</li>
@@ -94,6 +94,9 @@
                 crops: ['Broccoli' , 'Kale' , 'Peas'] ,
                 areas: ['Chuau-1' , 'All' , 'SQ7'] ,
                 table:[],
+                reportLanguage: '' ,
+                reportUser: '' ,
+                reportFarmName: '' ,
             } ,
             methods:{
                 cropDetail: function(){
