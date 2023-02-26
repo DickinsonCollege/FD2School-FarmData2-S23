@@ -37,9 +37,9 @@
   <dd>Details:</dd>
   <br>
   <ul>
-      <li><strong>Farm</strong>: Sample Farm</li>
-      <li><strong>User</strong>: Manager 1</li>
-      <li><strong>Language</strong>: English</li>
+      <li><strong>Farm</strong>: {{Farm}}</li>
+      <li><strong>User</strong>: {{User}}</li>
+      <li><strong>Language</strong>: {{Language}}</li>
       <br>
       <li><strong>Start</strong>: {{startdate}}</li>
       <li><strong>End</strong>: {{enddate}}</li>
@@ -94,6 +94,10 @@
       cropList: ["Brocoli", "Kale", "Peas"],
       areaList: ["All", "Chuau", "SQ7"],
       harvestLogs: [ ],
+      Farm: "",
+      User: "",
+      Language: "",
+
     },
     methods: {
       generate: function() {
