@@ -104,9 +104,16 @@
         if(this.harvestLogs.length <3 && this.rpStat){
           this.harvestLogs.push({date: "2018-05-02", area: "Chuau-1", crop: "Kale", yield: 10, units: "Bunches"});
         } else {
-          this.Farm = "Sample Farm";
-          this.User = "Manager 1";
-          this.Language = "English";
+          axios.get('/farm.json')
+          .then((res) => {
+            this.Farm = res.data.name;
+            this.User = res.data.user.name;
+            this.Language = res.data.languages.en.name;
+          })
+          .catch((error) => {
+            console.log("Error Occurs");
+            console.log(error);
+          });
           this.rpStat = true;
         }
       },
