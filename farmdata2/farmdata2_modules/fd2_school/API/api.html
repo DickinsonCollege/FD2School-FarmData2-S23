@@ -100,21 +100,31 @@
             } ,
             methods:{
                 cropDetail: function(){
+                    axios.get('/farm.json ')
+                    .then((response) => {
+                        //Block A
+                        this.reportFarmName = response.data.name
+                        this.reportLanguage = response.data.languages.en.name
+                        this.reportUser = response.data.user.name 
+                    })
+                    .catch((error) => {
+                        //Block B
+                        console.log("Error Occurred")
+                        console.log(error)
+                    })
+                    //Block C
                     if (this.reportVis === false){
                         this.reportVis = true; //when the generate button is clicked.
-
-                        this.reportUser = "manager1";
-                        this.reportFarmName = "Sample Farm";
-                        this.reportLanguage = "English";
 
                         this.table.push({date:"2018-05-01" , area:"Orion-3" , crop:"Kale" , yield:"10" , units:"Bunches"},
                                         {date:"2018-05-01" , area:"Orion-3" , crop:"Kale" , yield:"10" , units:"Bunches"},
                                         {date:"2018-05-01" , area:"Orion-3" , crop:"Kale" , yield:"10" , units:"Bunches"});
                     }
                 } ,
+                //when report is deleted its updates the index
                 deleteReport: function(index){
                     this.table.splice(index,1);
-                }
+                } 
             }
         });
         Vue.config.devtools = true;
