@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Harvest Report</title>
+</head>
+<body>
+    <div id="reportTitle" v-cloak>
+            <h1>Harvest Report</h1>
+            <p>This page is a <em>mockup</em> of a simplified harvest report.</p>
+            <label for="title">Title: <input type="text"  v-model="header" placeholder="Mock Harvest Report"/> </label>
+            <br>
+
+        <div id="reportDate" v-cloak> 
+            <br><label for="start">Start: </label>
+            <input type="date" id="start" v-model="reportStartDate" min="2014-01-01" :max="reportEndDate"/> 
+
+            <label for="end">End: </label>
+            <input type="date" id="end" v-model="reportEndDate" :min="reportStartDate" max="2022-01-01"/> 
+            <br>
+        </div>
+
+
+        <div id="reportCropArea">
+            <br><label for="crop">Crop: </label> 
+            <select id="simple" v-model="reportCrop">
+                <option v-for="crop in crops">{{ crop }}</option>
+            </select>
+
+            <label for="field">Area: </label> 
+            <select id="simple" v-model="reportArea">
+                <option v-for="area in areas">{{ area }}</option>
+            </select>
+            <br>
+        </div>
+
+        <br><button class="report-button" id="button" @click="cropDetail">Generate Report</button>
+        <hr>
+
+
+        <div class="reportDetail" v-if="reportVis === 'true'">
+            <h1>{{ header && header.trim() != '' ? header : 'Mock Harvest Report'}}</h1>
+
+            <div id="reportDetails">
+                <p>Details:</p>
+                <ul>
+                    <li><strong>Farm: </strong>Sample Farm</li>
+                    <li><strong>User: </strong>manager1</li>
+                    <li><strong>Language: </strong>English</li><br>
+
+                    <li><strong>Start: </strong>{{ reportStartDate }}</li>
+                    <li><strong>End: </strong>{{ reportEndDate }}</li>
+                    <li><strong>Crop: </strong>{{ reportCrop }}</li><br>
+                </ul>
+            </div>
+                
+
+                <table border="1" style="width: 30%" v-if="table.length > 0">
+                    <tr>
+                        <th scope="col">Row</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">Area</th>
+                        <th scope="col">Crop</th>
+                        <th scope="col">Yield</th>
+                        <th scope="col">Units</th>
+                        <th scope="col">Delete</th>
+                    </tr>
+                    <tr v-for="(t,index) in table">
+                        <td>{{ index+1 }}</td>
+                        <td>{{ t.date }}</td>
+                        <td>{{ t.area }}</td>
+                        <td>{{ t.crop }}</td>
+                        <td>{{ t.yield }}</td>
+                        <td>{{ t.units }}</td>
+                        <td><button type="button" @click="deleteReport">Delete</button></td>
+                    </tr>
+                </table>
+                <p v-else>No matching records!</p>
+        </div>
+    </div>
+
+    <script>
+        let reportView = new Vue({
+            el: '#reportTitle',
+            data:{
+                header:'' ,
+                reportVis: 'false' ,
+                reportStartDate: '' ,
+                reportEndDate: '' ,
+                reportCrop: '' ,
+                reportArea: '' ,
+                crops: ['Broccoli' , 'Kale' , 'Peas'] ,
+                areas: ['Chuau-1' , 'All' , 'SQ7'] ,
+                table:[],
+            } ,
+            methods:{
+                cropDetail: function(){
+                    if (this.reportVis === 'false'){
+                        this.reportVis = 'true'; //when the generate button is clicked.
+                    }else{
+                        this.table.push({date:"2018-05-01" , area:"Orion-3" , crop:"Kale" , yield:"10" , units:"Bunches"},
+                                        {date:"2018-05-01" , area:"Orion-3" , crop:"Kale" , yield:"10" , units:"Bunches"},
+                                        {date:"2018-05-01" , area:"Orion-3" , crop:"Kale" , yield:"10" , units:"Bunches"});
+                    }
+                } ,
+                deleteReport: function(index){
+                    this.table.splice(index,1);
+                }
+            }
+        });
+        Vue.config.devtools = true;
+    </script>
+</body>
+</html>
