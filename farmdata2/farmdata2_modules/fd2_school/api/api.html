@@ -18,7 +18,7 @@
     <br />
     <label for = "crop">Crop</label>
     <select id = "crop" name = "crop" v-model = "rptCrop">
-        <option v-for = "crop in crops">{{crop}}</option>
+        <option v-for = "crop in cropNames">{{crop}}</option>
     
     </select>
     
@@ -82,14 +82,20 @@
                     rptEndDate : "2020-05-15",
                     rptCrop: "Kale",
     
-                    crops:["Kale", "Broccoli", "Peas"],
+                    
                     areas:["All","Chuau-1", "SQ7"],
                     harvestLog: [],
                     farm:"",
                     user:"",
                     language:"",
+                    idToCropMap: new Map(),
 
                     
+                },
+                computed:{
+                    cropNames(){
+                        return Array.from(this.idToCropMap.values());
+                    }
                 },
 
                 methods:{
@@ -97,8 +103,6 @@
 
                         axios.get('/farm.json')
                         .then((response) =>{
-                            console.log('Got Response')
-                            console.log(response)
                             this.farm = response.data.name;
                             this.user = response.data.user.name;
                             this.language =response.data.languages.en.name;
@@ -113,6 +117,18 @@
                         
                       
                     },
+                },
+
+                created(){
+                    getIDToCropMap()
+                    .then((theMap)=>{
+                        //console.log(theMap);
+                        this.idToCropMap = theMap;
+                        
+                    })
+                    .catch((error)=>{
+                        console.log(error)
+                    })
                 },
 
             });
