@@ -40,7 +40,7 @@
         <hr>
 
 
-        <div class="reportDetail" v-if="reportVis === 'true'">
+        <div class="reportDetail" v-if="reportVis === true">
             <h1>{{ header && header.trim() != '' ? header : 'Mock Harvest Report'}}</h1>
 
             <div id="reportDetails">
@@ -57,7 +57,7 @@
             </div>
                 
 
-                <table border="1" style="width: 30%" v-if="table.length > 0">
+                <table border="1" style="width: 26%" v-if="table.length > 0">
                     <tr>
                         <th scope="col">Row</th>
                         <th scope="col">Date</th>
@@ -86,7 +86,7 @@
             el: '#reportTitle',
             data:{
                 header:'' ,
-                reportVis: 'false' ,
+                reportVis: false ,
                 reportStartDate: '' ,
                 reportEndDate: '' ,
                 reportCrop: '' ,
@@ -100,9 +100,13 @@
             } ,
             methods:{
                 cropDetail: function(){
-                    if (this.reportVis === 'false'){
-                        this.reportVis = 'true'; //when the generate button is clicked.
-                    }else{
+                    if (this.reportVis === false){
+                        this.reportVis = true; //when the generate button is clicked.
+
+                        this.reportUser = "manager1";
+                        this.reportFarmName = "Sample Farm";
+                        this.reportLanguage = "English";
+
                         this.table.push({date:"2018-05-01" , area:"Orion-3" , crop:"Kale" , yield:"10" , units:"Bunches"},
                                         {date:"2018-05-01" , area:"Orion-3" , crop:"Kale" , yield:"10" , units:"Bunches"},
                                         {date:"2018-05-01" , area:"Orion-3" , crop:"Kale" , yield:"10" , units:"Bunches"});
