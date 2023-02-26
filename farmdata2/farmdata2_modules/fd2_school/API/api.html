@@ -18,7 +18,7 @@
 
 <label for="Crop">Crop:</label> 
 <select id="crops" name="crops" v-model="crop">
-    <option v-for="crop in cropList">{{crop}}</option>
+    <option v-for="x in cropName">{{x}}</option>
 </select>
 <label for="Field">Field:</label> 
 <select id="fields" name="fields">
@@ -91,15 +91,34 @@
       startdate: "2020-05-05",
       enddate: "2020-05-15",
       crop: "Kale",
-      cropList: ["Brocoli", "Kale", "Peas"],
       areaList: ["All", "Chuau", "SQ7"],
       harvestLogs: [ ],
       Farm: "",
       User: "",
       Language: "",
+      IdToCropMap: new Map(),
 
     },
+
+    created() {
+      getIDToCropMap()
+      .then((theMap) => {
+        this.IdToCropMap = theMap;
+      })
+      .catch((error) => {
+        console.log("Error");
+        console.log(error);
+      });
+      },
+    
+    computed: {
+      cropName() {
+        return Array.from(this.IdToCropMap.values());
+      },
+    },
+
     methods: {
+      
       generate: function() {
         if(this.harvestLogs.length <3 && this.rpStat){
           this.harvestLogs.push({date: "2018-05-02", area: "Chuau-1", crop: "Kale", yield: 10, units: "Bunches"});
