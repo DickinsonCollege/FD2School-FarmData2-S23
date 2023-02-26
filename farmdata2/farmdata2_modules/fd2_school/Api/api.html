@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        th, td {
+            border: solid 1px black;
+        }
+    </style>
+</head>
+<body>
+    <h1>Harvest Report</h1>
+    
+    <p>This page is a <i>mockup</i> of a simplified harvest report.</p>
+    <div id="vuecontent" v-cloak>
+    <form>
+        <label for="title">Title: </label>
+        <input type="text" name="title" v-model="rptTitle" id="title" value="Mock Harvest Report"> 
+        <br><br>
+        <label for="startdate">Start: </label>
+        <input type="date" min="2014-01-01" v-model="rptStartDate" v-bind:max="rptEndDate" value="2020-05-05">
+        <label for="enddate">End: </label>
+        <input type="date" v-bind:min="rptStartDate" v-model="rptEndDate" max="2022-01-01" value="2020-05-15"> <br><br>
+        <label for="crop">Crop: </label>
+        <select name="crop" v-model="rptCrop" id="crop">
+            <option v-for="item in cropNames">{{item}}</option>
+            </select>
+        <label for="field">Area: </label>
+        <select name="field" id="field">
+            <option v-for="item in fields">{{item}}</option>
+        </select>
+        <br><br>
+
+        <input type="button" value="Generate Report" @click="generateRpt">
+    </form>
+
+    <hr>
+    <h1>{{rptTitle}}</h1>
+    <p>Details: </p>
+    <ul>
+        <li><b>Farm:</b>{{rptFarm}}</li>
+        <li><b>User:</b>{{rptUser}}</li>
+        <li><b>Language:</b>{{rptLanguage}}</li>
+    </ul>
+    <br>
+    <form>
+    <ul>
+        <li><b>Start:</b>{{rptStartDate}}</li>
+        <li><b>End:</b>{{rptEndDate}}</li>
+        <li><b>Crop:</b>{{rptCrop}}</li>
+    </ul>
+    </form>
+    <p style="color: red;" v-if="hlogs.length === 0">No matching records</p>
+    <table v-else>
+        <tr>
+            <th>Row</th>
+            <th>Date</th>
+            <th>Area</th>
+            <th>Crop</th>
+            <th>Yield</th>
+            <th>Units</th>
+        </tr>
+        <tr v-for="(log,index) in hlogs">
+            <td>{{index + 1}}</td>
+            <td v-for="item in log">{{item}}</td>
+        </tr>
+    </table>
+</div>
+    <script>
+        Vue.config.devtools = true;
+        var vuecontent = new Vue(
+            {
+                el:'#vuecontent',
+                created(){
+                        console.log("HarvestReport Vue instance created!")
+                        getIDToCropMap()
+                        .then((theMap) => {
+                            this.idToCropMap = theMap;
+                            console.log(theMap);
+                        })
+                        .catch((error) => {
+                            console.log("Error Occured")
+                            console.log(error)
+                        })
+                    },
+                data: {
+                    idToCropMap: new Map(),
+                    rptTitle: "Mock Harvest Report",
+                    rptStartDate:'2020-01-01',
+                    rptEndDate:'2020-01-01',
+                    rptCrop:'',
+                    rptFarm:'',
+                    rptUser:'',
+                    rptLanguage:'',
+                    fields: ["All", "Chuau-1", "SQ7"],
+                    hlogs : [],
+                    
+                } ,
+                computed: {
+                    cropNames (){ 
+                        return Array.from(this.idToCropMap.values())
+                        
+                    }
+                },
+                methods: {
+                    
+                    generateRpt: function(){
+                        //Axios
+                        axios.get('http://fd2_farmdata2/farm.json')  // this line sends the request.
+                        .then((response) => {
+                            this.rptFarm =response.data.name;
+                            this.rptUser=response.data.user.name;
+                            this.rptLanguage=response.data.languages.en.name;
+                        })
+                        .catch((error) => {
+                            console.log("Error Occured")
+                            console.log(error)
+                        })
+                        
+                        this.hlogs.push({ date:'2018-05-01', area:'Orion-3', crop:'Kale', yield:'12', units:'Bunches'})
+
+                    }
+                }
+                
+            }
+        )
+    </script>
+</body>
+</html>
