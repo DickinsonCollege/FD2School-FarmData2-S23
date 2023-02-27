@@ -45,9 +45,9 @@
 
 <p>details</p>
   <ul>
-    <li><strong>Farm: </strong>{{selectedField}}</li>
-    <li><strong>User: </strong>manager1</li>
-    <li><strong>Language: </strong>English</li>
+    <li><strong>Farm: </strong>{{farm}}</li>
+    <li><strong>User: </strong>{{user}}</li>
+    <li><strong>Language: </strong>{{language}}</li>
     <li><strong>Start: </strong>{{startDate}}</li>
     <li><strong>End: </strong>{{endDate}}</li>
     <li><strong>Crop: </strong> {{selectedCrop}}</li>
@@ -77,6 +77,9 @@
             endDate:'',
             selectedCrop: 'Kale',
             selectedField: 'All',
+            farm: '',
+            user: '',
+            language: '',
             crops: ['Kale', 'Broccoli', 'Peas'],
             fields: ['All', 'Chuau-1', 'SQ7'],
             table: [
@@ -90,6 +93,9 @@
             this.endDate = '';
             this.selectedCrop = 'Kale';
             this.selectedField  = 'All';
+            this.farm = 'SampleFarm';
+            this.user = 'manager1';
+            this.language = 'English';
           }
         },
   
