@@ -37,7 +37,7 @@
             <p>
                 <label for="crop">Crop:</label>
                 <select id="crop" name="crop" v-model="cropSelect">
-                    <option v-for="crop in crops" :value="crop.value">{{crop.text}}</option>
+                    <option selected v-for="crop in cropNames">{{crop}}</option>
                 </select>
 
                 <label for="area">Area:</label>
@@ -132,6 +132,11 @@
                         currentUser: "",
                         language: "",
                         idToCropMap: new Map(),
+                    },
+                    computed: {
+                        cropNames() {
+                            return Array.from(this.$data.idToCropMap.values());
+                        }
                     },
                     methods: {
                         generateReport: function() {
