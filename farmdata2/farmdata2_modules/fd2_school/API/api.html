@@ -48,7 +48,7 @@
             <br>        
             <p>
                 <button type=button
-                        v-on:click="addHarvestLog">
+                        v-on:click="generateReport">
                         <strong>Generate Report</strong>
                 </button>
             </p>
@@ -133,11 +133,20 @@
                         language: "",
                     },
                     methods: {
-                        addHarvestLog: function() {
+                        generateReport: function() {
+
+                            axios.get('/farm.json')  // this line sends the request.
+                            .then((response) => {
+                                this.farmName = response.data.name;
+                                this.currentUser = response.data.user.name;
+                                this.language = response.data.languages.en.name;
+                            })
+                            .catch((error) => {
+                                console.log("Error occurred.")
+                                console.log(error)
+                            })
+
                             this.harvestLogs.push({date:'05/08/2020',area:'Orion-3',crop:'Kale',yield:12,units:'Bunches'});
-                            this.farmName = "Sample Farm";
-                            this.currentUser = "manager1";
-                            this.language = "English"
                         },
                         deleteHarvestLog: function(hLogIndex) {
                             this.harvestLogs.splice(hLogIndex, 1);
