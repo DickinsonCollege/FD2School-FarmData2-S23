@@ -88,14 +88,23 @@
         },
         methods: {
           generateReportData: function() {
+
+            axios.get('/farm.json')
+            .then(response => {
+              this.farm = response.data.name;
+              this.user = response.data.user.name;
+              this.language = response.data.languages.en.name;
+            })
+            .catch(error => {
+              console.log("Error Occurred");
+              console.log(error);
+            }); 
             this.table.push({date: this.startDate, area: this.selectedField, crop: this.selectedCrop, yield: "12", units: "Bunches"});
             this.startDate = '';
             this.endDate = '';
             this.selectedCrop = 'Kale';
             this.selectedField  = 'All';
-            this.farm = 'SampleFarm';
-            this.user = 'manager1';
-            this.language = 'English';
+
           }
         },
   
