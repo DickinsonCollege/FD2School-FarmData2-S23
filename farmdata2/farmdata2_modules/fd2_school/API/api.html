@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>AndrewScheiner-04-Vue2</title>
+        <title>AndrewScheiner-05-API</title>
     </head>
     <body>
         <h1>Harvest Report</h1>
@@ -59,13 +59,13 @@
             <p>Details:</p>
             <ul>
                 <li>
-                    <strong>Farm:</strong>Sample Farm
+                    <strong>Farm:</strong>{{farmName}}
                 </li>
                 <li>
-                    <strong>User:</strong>manager1
+                    <strong>User:</strong>{{currentUser}}
                 </li>
                 <li>
-                    <strong>Language:</strong>English
+                    <strong>Language:</strong>{{language}}
                 </li>
             </ul>
             <br>
@@ -126,7 +126,11 @@
                             {text: "SQ7", value: "SQ7"},
                         ],
                         harvestLogs: [],
-                        reportVisState: 'hide',
+
+                        //API
+                        farmName: "",
+                        currentUser: "",
+                        language: "",
                     },
                     methods: {
                         addHarvestLog: function() {
