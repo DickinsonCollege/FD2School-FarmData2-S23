@@ -131,6 +131,7 @@
                         farmName: "",
                         currentUser: "",
                         language: "",
+                        idToCropMap: new Map(),
                     },
                     methods: {
                         generateReport: function() {
@@ -151,6 +152,15 @@
                         deleteHarvestLog: function(hLogIndex) {
                             this.harvestLogs.splice(hLogIndex, 1);
                         },
+                    },
+                    created() {
+                        getIDToCropMap()
+                        .then((theMap) => {
+                            this.idToCropMap = theMap;
+                        })
+                        .catch((err) => {
+                            console.log("getIDToCropMap caught an error.")
+                        })
                     },
                 });
                 Vue.config.devtools = true;
