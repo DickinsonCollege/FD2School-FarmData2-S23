@@ -58,8 +58,8 @@
                 <th>Units</th> 
             </tr>
             
-            <tr v-for="log in logs">{{ 
-                <td v-for="(log,index) in logs">{{ index+1}}</td>
+            <tr v-for="(log,index) in logs" v-for="log in logs">{{ 
+                <td>{{ index+1 }}</td>
                 <td>{{log.date}}</td> 
                 <td>{{log.area}}</td>
                 <td>{{log.crop}}</td>
