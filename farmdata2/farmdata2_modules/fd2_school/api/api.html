@@ -14,7 +14,7 @@
 	   <br>
 	   <label for="crop">Crop: </label>
 	   <select v-model = "selectCrop" id="crop" name="Crop">
-        <option v-for = "crop in crops">{{crop}}</option>
+		<option v-for="crop in cropNames">{{ crop }}</option>
 	   </select>
 	   
 	   <label for="field">Field: </label>
@@ -95,11 +95,6 @@
 			reportFarm: "",
             reportUser: "",
             reportLanguage: "",
-			crops: [
-				"Broccoli",
-				"Kale",
-				"Peas"
-			],
 			selectField: "All",
 			fields: [
 				"All",
@@ -111,7 +106,23 @@
 			{date:"2018-05-01",area:"Orion-3",crop:"Kale",yield:12,units:"Bunches"},
 			{date:"2018-05-01",area:"Orion-3",crop:"Kale",yield:12,units:"Bunches"}
 			],
+			idToCropMap: new Map(),
 		},
+		computed:{
+            cropNames(){
+                return Array.from(this.idToCropMap.values());
+            }
+		},
+		created() {
+	        getIDToCropMap()
+            .then((theMap) => {
+                this.idToCropMap = theMap;
+            })
+            .catch((err) => {
+                console.log("Error Occurred")
+                console.log(error)
+            })
+    	},
 		methods: {
             saveItems: function(){
 				axios.get('/farm.json')
