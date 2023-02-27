@@ -91,6 +91,16 @@ function fd2_school_menu() {
         'access arguments' => array('view fd2 school'),
         'weight' => 140,
     );
+
+    // Add a sub-tab named API with content in ./api/api.html.
+    $items['farm/fd2-school/api'] = array(
+        'title' => 'API',
+        'type' => MENU_LOCAL_TASK,
+        'page callback' => 'fd2_school_view',
+        'page arguments' => array('api'),
+        'access arguments' => array('view fd2 school'),
+        'weight' => 150,
+    );
   return $items;
 };
 
