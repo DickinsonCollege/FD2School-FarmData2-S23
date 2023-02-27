@@ -42,7 +42,7 @@
 
                 <label for="area">Area:</label>
                 <select id="area" name="area" v-model="areaSelect">
-                    <option v-for="area in areas" :value="area.value">{{area.text}}</option>
+                    <option v-for="area in areaNames">{{area}}</option>
                 </select>
             </p>
             <br>        
@@ -117,6 +117,13 @@
                         .catch((err) => {
                             console.log("getIDToCropMap caught an error.")
                         })
+                        getIDToAreaMap()
+                        .then((theMap) => {
+                            this.idToAreaMap = theMap;
+                        })
+                        .catch((err) => {
+                            console.log("getIDToAreaMap caught an error.")
+                        })
                     },
                     data: {
                         reportTitle: "My Sample Harvest Report",
@@ -141,10 +148,14 @@
                         currentUser: "",
                         language: "",
                         idToCropMap: new Map(),
+                        idToAreaMap: new Map(),
                     },
                     computed: {
                         cropNames() {
                             return Array.from(this.$data.idToCropMap.values());
+                        },
+                        areaNames() {
+                            return Array.from(this.$data.idToAreaMap.values());
                         }
                     },
                     methods: {
