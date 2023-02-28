@@ -23,7 +23,7 @@
         <br>
         <label for="crop">Crop:</label>
         <select name="crop" id="crop" v-model="crop">
-            <option v-for="c in crops">{{ c }}</option> 
+            <option v-for="c in cropNames">{{ c }}</option> 
         </select>
         <label for="field">Field:</label>
         <select name="field" id="field">
@@ -74,6 +74,7 @@
         var harvReport = new Vue({
             el: '#harvest-report',
             data: {
+                idToCropMap: new Map(),
                 repTitle: 'My Sample Harvest Report',
                 startDate: "2020-05-05",
                 endDate: "2020-05-15",
@@ -104,6 +105,14 @@
                 user: "",
                 language: "",
             },
+
+            computed: {
+
+                cropNames() {
+                    return Array.from(this.idToCropMap.values());
+                },
+
+            },
                 methods: {
                     genReport: function() {
                         axios.get('/farm.json ')  // this line sends the request.
@@ -132,7 +141,25 @@
                         this.logs.push(this.nextLog);
                                             },
                                             
-                }
+                },
+                created() {
+	                console.log("HarvestReport Vue instance created!")
+                    getIDToCropMap()
+                    .then((theMap) => {
+                        // Process the map.
+                        // Typically it is stored in the Vue data for later use.
+                        this.idToCropMap = theMap;
+                        console.log("Map worked");
+                    })
+                    .catch((err) => {
+                        // An error occurred during the request, process it here.
+                        console.log("Error with map");
+                        console.log(error);
+                    })
+                    // Execution continues here immediately after the request is made.
+                    // Note that the Map will not be available until the then() executes.
+                },
+
                 
                     
                         
