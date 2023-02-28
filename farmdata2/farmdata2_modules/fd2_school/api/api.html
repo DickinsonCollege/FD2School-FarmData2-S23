@@ -31,7 +31,7 @@
         </select>
         <br>
         <br>
-        <button type="anonymous" @click='addLog'>Generate Report</button> 
+        <button type="anonymous" @click='genReport' >Generate Report</button> 
 
         <hr>
 
@@ -96,15 +96,22 @@
                    {date: "2019-03-05", area: "Chuau-1", crop: "Spinach", yield: 9, units: "Bunches"},
                 ],
 
+                farms: [
+                    "Sample Farm",
+                ],
+
                 farm: "",
                 user: "",
                 language: "",
             },
                 methods: {
-                    addLog: function() {
+                    GenReport: function() {
                         this.logs.push(this.nextLog);
-                        
-                    }
+                        this.farm = "Sample Farm";
+                        this.user = "worker1";
+                        this.language = "English";
+                    },
+                    
                 }
                 
                     
