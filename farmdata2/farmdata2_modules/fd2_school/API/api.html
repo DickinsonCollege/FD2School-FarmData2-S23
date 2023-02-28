@@ -31,7 +31,7 @@
 
             <label for="field">Area: </label> 
             <select id="simple" v-model="reportArea">
-                <option v-for="area in areas">{{ area }}</option>
+                <option v-for="area in areaNames">{{ area }}</option>
             </select>
             <br>
         </div>
@@ -85,6 +85,7 @@
         let reportView = new Vue({
             el: '#reportTitle',
             created(){
+                //get key, value pair for all crops
                 getIDToCropMap() 
                     .then((theMap) => {
                         this.idToCropMap = theMap
@@ -92,8 +93,16 @@
                     .catch((err) => {
                         console.log("Error Occurred")
                         console.log(err)
+                    }) 
+                //get key, value pair for all areas
+                getIDToAreaMap()
+                    .then((theMap) => {
+                        this.idToAreaMap = theMap
                     })
-                    // console.log("HarvestReport Vue Instance created!") 
+                    .catch((err) => {
+                        console.log("Error Occurred")
+                        console.log(err)
+                    })
             } ,
             data:{
                 header:'' ,
@@ -102,17 +111,21 @@
                 reportEndDate: '' ,
                 reportCrop: '' ,
                 reportArea: '' ,
-                areas: ['Chuau-1' , 'All' , 'SQ7'] ,
                 table:[],
                 reportLanguage: '' ,
                 reportUser: '' ,
                 reportFarmName: '' ,
                 idToCropMap: new Map() ,
+                idToAreaMap: new Map() ,
             } ,
             computed: {
                 //Show crop names without the associated key.
                 cropNames: function(){
                     return Array.from(this.idToCropMap.values())
+                } ,
+                //Show area names without the associated key.
+                areaNames: function(){
+                    return Array.from(this.idToAreaMap.values())
                 }
             } ,
             methods:{
