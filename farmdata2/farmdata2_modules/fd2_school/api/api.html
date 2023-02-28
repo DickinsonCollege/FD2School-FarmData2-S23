@@ -38,9 +38,9 @@
         <h1>My Sample Harvest Report</h1>
         <p>Details:</p>
         <ul>
-            <li><strong>Farm:</strong>Sample Farm</li>
-            <li><strong>User:</strong>manager1</li>
-            <li><strong>Language</strong>English</li>
+            <li><strong>Farm:</strong>{{ farm }}</li>
+            <li><strong>User:</strong>{{ user }}</li>
+            <li><strong>Language</strong>{{ language }}</li>
             <br>
             <li><strong>Start</strong>{{ startDate }}</li>
             <li><strong>End</strong>{{ endDate }}</li>
@@ -95,6 +95,10 @@
                    {date: "2019-02-05", area: "Chuau-1", crop: "Kale", yield: 9, units: "Bunches"},
                    {date: "2019-03-05", area: "Chuau-1", crop: "Spinach", yield: 9, units: "Bunches"},
                 ],
+
+                farm: "",
+                user: "",
+                language: "",
             },
                 methods: {
                     addLog: function() {
