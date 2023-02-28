@@ -27,7 +27,7 @@
         </select>
         <label for="field">Field:</label>
         <select name="field" id="field">
-            <option v-for="f in fields">{{ f }}</option> 
+            <option v-for="f in areaNames">{{ f }}</option> 
         </select>
         <br>
         <br>
@@ -75,6 +75,7 @@
             el: '#harvest-report',
             data: {
                 idToCropMap: new Map(),
+                idToAreaMap: new Map(),
                 repTitle: 'My Sample Harvest Report',
                 startDate: "2020-05-05",
                 endDate: "2020-05-15",
@@ -110,6 +111,10 @@
 
                 cropNames() {
                     return Array.from(this.idToCropMap.values());
+                },
+
+                areaNames() {
+                    return Array.from(this.idToAreaMap.values());
                 },
 
             },
@@ -149,15 +154,28 @@
                         // Process the map.
                         // Typically it is stored in the Vue data for later use.
                         this.idToCropMap = theMap;
-                        console.log("Map worked");
+                        console.log("crop Map worked");
                     })
                     .catch((err) => {
                         // An error occurred during the request, process it here.
-                        console.log("Error with map");
+                        console.log("Error with crop map");
                         console.log(error);
                     })
                     // Execution continues here immediately after the request is made.
                     // Note that the Map will not be available until the then() executes.
+                    
+                    getIDToAreaMap()
+                    .then((theMap) => {
+                        // Process the map.
+                        // Typically it is stored in the Vue data for later use.
+                        this.idToAreaMap = theMap;
+                        console.log("area Map worked");
+                    })
+                    .catch((err) => {
+                        // An error occurred during the request, process it here.
+                        console.log("Error with area map");
+                        console.log(error);
+                    })
                 },
 
                 
