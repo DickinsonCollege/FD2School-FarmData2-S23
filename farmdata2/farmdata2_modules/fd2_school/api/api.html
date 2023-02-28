@@ -30,7 +30,7 @@
         </div>
         <br>
     </form>
-    <button @click="logHarvest(); changeReportState('show')">Generate Report</button>
+    <button @click="logHarvest(); changeReportState('show'); setFarmUserLan()">Generate Report</button>
     
 
     <hr>
@@ -115,6 +115,11 @@
             },
             changeReportState: function(newState) {
                 this.reportState = newState
+            },
+            setFarmUserLan: function() {
+                this.farm = 'Sample Farm'
+                this.user = 'manager1'
+                this.language = 'English'
             }
         }
     }) 
