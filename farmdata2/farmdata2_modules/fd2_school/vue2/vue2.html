@@ -27,7 +27,7 @@
     <br>
     <br>
 
-    <button @click="changeState('generated')">Generate Report</button>
+    <button @click="generateReport">Generate Report</button>
     
     
     <div v-if="reportState==='generated'">
@@ -83,7 +83,7 @@
             crops: ["Brocoli" ,"Kale", "Peas"],
             areas: ["All", "Chuau-1", "SQ7"],
             harvestLog: [],
-            reportState: "notGenerated"
+            reportState: "generated"
         },
         methods: {
             generateReport: function(){
