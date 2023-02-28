@@ -34,9 +34,9 @@
             <h2 v-cloak> {{ rptTitle ? rptTitle: "Mock Harvest Report" }} </h2>
                 <p> Details: </p>
                 <ul>
-                    <li><b>Farm</b>:Sample Farm</li>
-                    <li><b>User</b>:manager1</li>
-                    <li><b>Language</b>:English</li><br>
+                    <li><b>Farm</b>:{{ farm }}</li>
+                    <li><b>User</b>:{{ user }}</li>
+                    <li><b>Language</b>:{{ language }}</li><br>
                     <li><b>Start</b>:{{ rptStart }}</li>
                     <li><b>End</b>:{{ rptEnd }}</li>
                     <li><b>Crop</b>:{{ rptCrop }}</li>
@@ -67,6 +67,9 @@
     var vueHarv = new Vue ({
         el: '#vue-harv',
         data: {
+            farm: " ",
+            user: " ",
+            language: " ",
             state: 'hidden',
             rptTitle: null,
             rptStart: '2020-05-05',
