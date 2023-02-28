@@ -105,13 +105,33 @@
                 language: "",
             },
                 methods: {
-                    GenReport: function() {
+                    genReport: function() {
+                        axios.get('/farm.json ')  // this line sends the request.
+                        .then((response) => {
+                            // Block A:
+                            console.log("Got Response");
+                            console.log(response);
+                            this.farm = response.data.name;
+                            this.user = response.data.user.name;
+                            this.language = response.data.languages.en.name;
+                            // Code here executes when the response is received.
+                            // response is an Object created from the “Response Body” JSON.
+                        })
+                        .catch((error) => {
+                            // Block B:
+                            console.log("Error Occurred");
+                            console.log(error);
+                            // Code here executes if an error occurs processing the request.
+                            // error is an Object describing the error that occurred.
+                        })
+                        // Block C: 
+                            // Code here runs immediately after the request is sent,
+                            // which will be before the code in then() or catch(),
+                            // and before the response is received.
+
                         this.logs.push(this.nextLog);
-                        this.farm = "Sample Farm";
-                        this.user = "worker1";
-                        this.language = "English";
-                    },
-                    
+                                            },
+                                            
                 }
                 
                     
