@@ -39,9 +39,9 @@
         <h1>{{reportTitle ? reportTitle : 'Mock Harvest Report'}}</h1>
         <div>Details:</div>
         <ul>
-            <li><b>Farm</b>:Sample Farm</li>
-            <li><b>User</b>:worker1</li>
-            <li><b>Language</b>:English</li>
+            <li><b>Farm</b>: {{farm}}</li>
+            <li><b>User</b>: {{user}}</li>
+            <li><b>Language</b>: {{language}}</li>
             <br>
             <li><b>Start</b>:{{reportStartDate}}</li>
             <li><b>End</b>:{{reportEndDate}}</li>
@@ -78,6 +78,9 @@
     const report = new Vue({
         el: "#report",
         data: {
+            farm: '',
+            user: '',
+            language: '',
             reportState: 'default',
             reportTitle: "",
             reportStartDate: "",
