@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang=""en-US">
+    <head>
+      <h1>Harvest Report</h1>
+    </head>
+    <body>
+      <div id="vue">
+        <p>This page is a <i>mockup</i> of a simplified harvest report.</p> 
+            <label for=”title”>Title: </label>
+              <input type="text" id="title" name="title" v-model="Title" />
+            <br><br>
+            <label for="start">Start:</label>
+            <input type="date" id="start" name="start date" v-model="Sdate" 
+            min="2014-01-01" max="2022-01-01">
+            <label for="end">End:</label>
+            <input type="date" id="end" name="end date" v-model="Edate"
+            min="2020-05-05" max="2022-01-01">
+            <br><br>
+            <label for=”crop”>Crop: </label>
+            <select id="crop" name="crop" v-model="crop">  
+              <option v-for="crop in crops">{{ crop }}</option>       
+            </select> 
+            <label for=”field”>Area: </label>
+            <select id="field" name="field" v-model="area">
+                <option v-for="area in areas">{{ area }}</option>
+            </select>
+            <br><br>
+            <button type="button">Generate Report</button>
+            <br><br>
+    </body>
+    <hr>
+      <h2>{{ Title ? Title : 'Mock Harvest Report'}}</h2>
+    <p>Details:</p>
+    <body>   
+        <ul>
+            <li><strong>Farm</strong>:Sample Farm</li>
+            <li><strong>User</strong>:manager1</li>
+            <li><strong>Language</strong>:English</li><br>
+            <li><strong>Start</strong>{{ Sdate }}</li>
+            <li><strong>End</strong>:{{ Edate }}</li>
+            <li><strong>Crop</strong>:{{ crop }}</li>
+        </ul>
+        <br><br>
+        <table border="1">
+          <tr>
+            <td><strong>Date</strong></td>
+            <td><strong>Area</strong></td>
+            <td><strong>Crop</strong></td>
+            <td><strong>Yield</strong></td>
+            <td><strong>Units</strong></td>
+          </tr>
+          <tr v-for="l in log">
+            <td>{{ l.date }}</td>
+            <td>{{ l.area }}</td>
+            <td>{{ l.crop }}</td>
+            <td>{{ l.yield }}</td>
+            <td>{{ l.units }}</td>
+          </tr>
+        </table> 
+      </div>
+        <script>
+          var Vue1 = new Vue({
+            el:'#vue',
+            data:{
+              Title:"My Sample Harvest Report",
+              Sdate:"2018-05-01",
+              Edate:"2018-05-15",
+              crop:'Kale',
+              area:'All',
+              crops: [
+                'Broccoli',
+                'Kale',
+                'Peas',
+              ],
+              areas: [
+                'All',
+                'CHUAU-1',
+                'SQ7',
+              ],
+              log: [
+              {date: "2018-05-02", area: "Chuau-1", crop: "Kale", yield: 10, units: "Bunches"},
+              {date: "2018-05-05", area: "SQ7", crop: "Kale", yield: 7, units: "Bunches"},
+              ],
+            }
+          });
+          Vue.config.devtools = true;
+        </script>
+    </body>
+
+</html>
