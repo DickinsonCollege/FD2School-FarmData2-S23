@@ -31,7 +31,7 @@
       </select>  
     <br>
     <br>
-    <button type="button" @click="saveLog">Generate Report</button>
+    <button type="button" @click="generateLog">Generate Report</button>
     <hr>
         <h1>{{reportTitle == ""? "Mock Harvest Report":reportTitle}}</h1>
     <p>Details:</p>
@@ -75,8 +75,11 @@
         reportUserName: "",
         reportLanguage: "",}, 
       methods: {
-        saveLog : function() {
+        generateLog : function() {
           this.reportLogs.push({date: '2018-05-01', area:'Orion-3', crop: 'Kale', yield:'12', units:'Bunches'})
+          this.reportFarmName = "Sample Farm"
+          this.reportUserName = "manager1"
+          this.reportLanguage = "English"
       }
     }})
     Vue.config.devtools = true;
