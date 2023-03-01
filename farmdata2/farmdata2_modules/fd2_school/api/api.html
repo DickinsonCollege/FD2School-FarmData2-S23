@@ -25,13 +25,13 @@
     <div>
       <label for="crop">Crop: </label>
       <select id="crop" name="Crop" v-model="selectedCrop"/>
-        <option v-for="crop in crops">{{crop}}</option>
+        <option v-for="crop in cropMapToArray">{{crop}}</option>
 
       
       </select>
       <label for="crop">Field: </label>
       <select id="field" name="Field" v-model="selectedField"/>
-        <option v-for="field in fields">{{field}}</option>
+        <option v-for="field in areaMapToArray">{{field}}</option>
       </select>
       <br>
       <button class="btn btn-primary" v-on:click='generateReportData'>Generate Report</button>
@@ -69,8 +69,28 @@
 </div>
   </body>
   <script>
+    
     var mockupVue = new Vue({
+      
         el: "#app",
+        created() {
+          getIDToCropMap()
+          .then((theMap) => {
+            this.idToCropMap = theMap;
+          })
+          .catch((err)=>{
+            console.log("Error on getIDToCropMap @ created");
+            console.log(err);
+          }),
+          getIDToAreaMap()
+          .then((theMap) => {
+            this.idToAreaMap = theMap;
+          })
+          .catch((err)=>{
+            console.log("Error on getIDToAreaMap @ created");
+            console.log(err);
+          });
+        },
         data: {
             header: '',
             startDate:'',
@@ -80,11 +100,20 @@
             farm: '',
             user: '',
             language: '',
-            crops: ['Kale', 'Broccoli', 'Peas'],
-            fields: ['All', 'Chuau-1', 'SQ7'],
             table: [
 
-              ]
+            ],
+            idToCropMap: new Map(),
+            idToAreaMap: new Map(),
+
+        },
+        computed: {
+          cropMapToArray(){
+            return Array.from(this.idToCropMap.values());
+          },
+          areaMapToArray(){
+            return Array.from(this.idToAreaMap.values());
+          },
         },
         methods: {
           generateReportData: function() {
@@ -107,8 +136,7 @@
 
           }
         },
-  
     });
-    Vue.congif.devtools = true;
+    Vue.config.devtools = true;
   </script>
 </html>
