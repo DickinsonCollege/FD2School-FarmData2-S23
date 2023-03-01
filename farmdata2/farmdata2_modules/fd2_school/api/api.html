@@ -22,7 +22,7 @@
 
     <label for="field">Field: </label>
     <select id="field">
-        <option v-for="area in areas">{{ area }}</option>
+        <option v-for="area in areaNameToArray">{{ area }}</option>
     </select>
     <br>
     <br>
@@ -83,6 +83,14 @@
                 .catch((err) => {
                     console.log("Error Occurred");
                     console.log(err);
+                }),
+
+            getIDToAreaMap()
+                .then((theMap) => {
+                    this.idToAreaMap = theMap;
+                })
+                .catch((err) => {
+                    console.log(err);
                 })
         },
 
@@ -94,6 +102,7 @@
             reportCrop: "",
             areas: ["All", "Chuau-1", "SQ7"],
             harvestLog: [],
+            idToAreaMap: new Map(),
             reportState: "generated",
             farm: "",
             user: "",
@@ -104,6 +113,10 @@
             cropNameToArray(){
                 return Array.from(this.idToCropMap.values());
             },
+
+            areaNameToArray(){
+                return Array.from(this.idToAreaMap.values());
+            }
         },
 
         methods: {
