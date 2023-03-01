@@ -19,7 +19,7 @@
 
         <label for="crop">Crop:</label>
         <select id="crop" name="crop" v-model="rptCrop">
-            <option v-for="crop in crops">{{crop}}</option>  
+            <option selected v-for="crop in cropNames">{{crop}}</option>  
         </select>
         <label for="field">Field:</label>
         <select id="field" name="field">
@@ -85,6 +85,12 @@
             farmName: '',
             userID: '',
             language: '',
+            idToCropMap: new Map(),
+        },
+        computed: {
+            cropNames() {
+                return Array.from(this.$data.idToCropMap.values());
+            }
         },
         methods: {
             genReport: function() {
@@ -94,8 +100,6 @@
                     this.farmName = response.data.name;
                     this.userID = response.data.user.name;
                     this.language = response.data.languages.en.name;
-                    console.log('Got Response')
-                    console.log(response)
                 })
                 .catch((error) =>{
                     console.log('Error Occured')
@@ -105,9 +109,17 @@
             },
             changeState: function(newState){
                 this.state = newState;
-    
             },
-        }
+        },
+        created() { 
+            getIDToCropMap()
+            .then((theMap) => {
+                this.idToCropMap = theMap;
+            })
+            .catch((error) => {
+                console.log("getIDToCropMap caught an error.")
+            })
+        }, 
     });
     Vue.config.devtools = true; 
 </script>
