@@ -88,10 +88,20 @@
         },
         methods: {
             genReport: function() {
+
+                axios.get('/farm.json')
+                .then((response) => {
+                    this.farmName = response.data.name;
+                    this.userID = response.data.user.name;
+                    this.language = response.data.languages.en.name;
+                    console.log('Got Response')
+                    console.log(response)
+                })
+                .catch((error) =>{
+                    console.log('Error Occured')
+                    console.log(error)
+                })
                     this.tables.push({date:"2020-05-05", area:"Chuau-1", crop:"Kale", yield:10, units:"Bunches"});
-                    this.farmName = 'Sample Farm';
-                    this.userID = 'manager1';
-                    this.language = 'English';
             },
             changeState: function(newState){
                 this.state = newState;
