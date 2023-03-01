@@ -20,12 +20,12 @@
         <div>
             <label for="crop">Crop: </label>
             <select name="crop" id="crop" v-model="reportCrop">
-                <option v-for="crop in crops" :value="crop">{{crop}}</option>
+                <option v-for="crop in cropNames" :value="crop">{{crop}}</option>
             </select>
 
             <label for="area">Area: </label>
             <select name="area" id="crop">
-                <option v-for="area in areas" :value="area">{{area}}</option>
+                <option v-for="area in areaNames" :value="area">{{area}}</option>
             </select>
         </div>
         <br>
@@ -97,6 +97,24 @@
                 "SQ7",
             ],
             harvestLogs: [],
+            idToCropMap: new Map(),
+            idToAreaMap: new Map(),
+        },
+        computed: {
+            cropNames() {
+                cropNames = []
+                for (const name of this.idToCropMap.values()) {
+                    cropNames.push(name)
+                }
+                return cropNames
+            },
+            areaNames() {
+                areaNames = []
+                for (const name of this.idToAreaMap.values()) {
+                    areaNames.push(name)
+                }
+                return areaNames
+            }
         },
         methods: {
             logHarvest: function() {
@@ -122,13 +140,30 @@
                     this.farm = response.data.name
                     this.user = response.data.user.name
                     this.language = response.data.languages.en.name
-                    console.log(response)
                 })
                 .catch((error) => {
                     console.log("Error Occurred")
                     console.log(error)
                 })
             }
+        },
+        created() {
+            getIDToCropMap()
+            .then((theMap) => {
+                this.idToCropMap = theMap
+            })
+            .catch((error) => {
+                console.log("Error occurs")
+                console.log(error)
+            }),
+            getIDToAreaMap()
+            .then((theMap) => {
+                this.idToAreaMap = theMap
+            })
+            .catch((error) => {
+                console.log("Error occurs")
+                console.log(error)
+            })
         }
     }) 
     Vue.config.devtools = true
