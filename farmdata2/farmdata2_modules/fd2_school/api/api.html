@@ -36,9 +36,9 @@
         <h1>{{reportTitle == ""? "Mock Harvest Report":reportTitle}}</h1>
     <p>Details:</p>
     <ul>
-        <li><strong>Farm:</strong>Sample Farm</li>
-        <li><strong>User:</strong>manager1</li>
-        <li><strong>Language:</strong>English</li>
+        <li><strong>Farm:</strong>{{reportFarmName}}</li>
+        <li><strong>User:</strong>{{reportUserName}}</li>
+        <li><strong>Language:</strong>{{reportLanguage}}</li>
         <br>
         <li><strong>Start:</strong>{{reportStartDate}}</li>
         <li><strong>End:</strong>{{reportEndDate}}</li>
@@ -62,12 +62,21 @@
     </table>
   </div>
     <script>
-      var reportVar = new Vue({el: '#SampleHarvestReport', data: {
-        reportTitle: "My Sample Harvest Report", reportStartDate: "2020-05-05", reportEndDate: "2020-05-15", reportCrop: "Kale",
-      reportCrops: ["Broccoli", "Kale", "Peas"], reportFields: ["All", "CHUAU-1", "SQ7"], 
-    reportLogs: []}, methods: {
-      saveLog : function() {
-        this.reportLogs.push({date: '2018-05-01', area:'Orion-3', crop: 'Kale', yield:'12', units:'Bunches'})
+      var reportVar = new Vue({el: '#SampleHarvestReport', 
+      data: {
+        reportTitle: "My Sample Harvest Report", 
+        reportStartDate: "2020-05-05", 
+        reportEndDate: "2020-05-15", 
+        reportCrop: "Kale",
+        reportCrops: ["Broccoli", "Kale", "Peas"], 
+        reportFields: ["All", "CHUAU-1", "SQ7"], 
+        reportLogs: [],
+        reportFarmName: "",
+        reportUserName: "",
+        reportLanguage: "",}, 
+      methods: {
+        saveLog : function() {
+          this.reportLogs.push({date: '2018-05-01', area:'Orion-3', crop: 'Kale', yield:'12', units:'Bunches'})
       }
     }})
     Vue.config.devtools = true;
