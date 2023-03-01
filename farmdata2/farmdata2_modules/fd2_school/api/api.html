@@ -27,22 +27,22 @@
         </select>
         <br> <br>
           
-        <button v-if="state === 'hidden'" class="btn btn-primary" @click='genReport'>Generate Report</button>
-        <button v-else class="btn btn-secondary" @click="changeState('hidden')">Generate Another Report</button>
+        <button type="button" class="btn btn-primary" @click='genReport'>Generate Report</button>
     <hr> 
-        <div v-if="state === 'reveal'">
+
+        <p v-if="tables.length === 0">There are no matching records!</p>
+        <div v-if="tables.length !== 0">
             <h2 v-cloak> {{ rptTitle ? rptTitle: "Mock Harvest Report" }} </h2>
                 <p> Details: </p>
                 <ul>
-                    <li><b>Farm</b>:{{ farm }}</li>
-                    <li><b>User</b>:{{ user }}</li>
+                    <li><b>Farm</b>:{{ farmName }}</li>
+                    <li><b>User</b>:{{ userID }}</li>
                     <li><b>Language</b>:{{ language }}</li><br>
                     <li><b>Start</b>:{{ rptStart }}</li>
                     <li><b>End</b>:{{ rptEnd }}</li>
                     <li><b>Crop</b>:{{ rptCrop }}</li>
                 </ul>
-        
-            <table v-if="tables.length > 0" border="1">
+            <table border="1">
                 <tr>
                     <th>Row</th>
                     <th>Date</th>
@@ -60,16 +60,12 @@
                     <td >{{data.units}}</td>
                 </tr>
             </table>
-            <p v-else>There are no matching records!</p>
         </div>
   </div>      
   <script>
     var vueHarv = new Vue ({
         el: '#vue-harv',
         data: {
-            farm: " ",
-            user: " ",
-            language: " ",
             state: 'hidden',
             rptTitle: null,
             rptStart: '2020-05-05',
@@ -85,18 +81,17 @@
                 "Chuau-1",
                 "SQ7"
             ],
-            tables: [
-                
-            ],
+            tables: [ ],
+            farmName: '',
+            userID: '',
+            language: '',
         },
         methods: {
             genReport: function() {
-                if(this.state === 'hidden'){
-                    this.state = 'reveal'
-                }
-                else{
                     this.tables.push({date:"2020-05-05", area:"Chuau-1", crop:"Kale", yield:10, units:"Bunches"});
-                }
+                    this.farmName = 'Sample Farm';
+                    this.userID = 'manager1';
+                    this.language = 'English';
             },
             changeState: function(newState){
                 this.state = newState;
