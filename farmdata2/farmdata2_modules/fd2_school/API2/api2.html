@@ -142,8 +142,8 @@
             tableRows.push(tableRow)
           }
 	      }
-	return tableRows
-}
+	      return tableRows
+      }
 
 
     },
@@ -151,6 +151,7 @@
     methods: {
       
       generate: function() {
+        this.result = [];
         let endTime = dayjs(this.enddate).unix();
         let startTime = dayjs(this.startdate).unix();
         let query = "/log.json?type=farm_harvest&timestamp[ge]="+ startTime+ "&timestamp[le]="+endTime
