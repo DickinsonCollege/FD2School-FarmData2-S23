@@ -49,7 +49,7 @@
 
   <table border = 1>
 
-    <tr v-if="harvestLogs.length>0">
+    <tr v-if="harvestReportRows.length>0">
       <th>Row</th>
       <th>Date</th>
       <th>Area</th>
@@ -62,7 +62,7 @@
       <th>No record</th>
     </tr>
 
-    <tr v-for="(r,index) in harvestLogs">
+    <tr v-for="(r,index) in harvestReportRows">
       <td>{{index+1}}</td>
       <td>{{r.date}}</td>
       <td>{{r.area}}</td>
@@ -90,7 +90,7 @@
       titlerp: "My Sample Harvest Report",
       startdate: "2020-05-05",
       enddate: "2020-05-15",
-      crop: "Kale",
+      crop: "",
       harvestLogs: [ ],
       Farm: "",
       User: "",
@@ -126,7 +126,26 @@
       },
       areaName() {
         return Array.from(this.IdToAreaMap.values());
-      }
+      },
+      harvestReportRows() {
+        let tableRows = []
+        for(let log of this.result) {
+          if (this.IdToCropMap.get(log.data.crop_tid) === this.crop | this.crop === "" ) {
+            let tableRow = {
+              date: dayjs.unix(log.timestamp).format('DD/MM/YYYY'),
+              area: log.area[0].name,
+              crop: this.IdToCropMap.get(log.data.crop_tid),
+              yield: log.quantity[0].value,
+              units:log.quantity[0].unit.name,
+
+            }
+            tableRows.push(tableRow)
+          }
+	      }
+	return tableRows
+}
+
+
     },
 
     methods: {
