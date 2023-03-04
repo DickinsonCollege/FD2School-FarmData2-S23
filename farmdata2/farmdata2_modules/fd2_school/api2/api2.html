@@ -123,6 +123,7 @@ for (let[key,val] of this.idToCropMap){
 harvestReportRows() {
 	let tableRows = []
 	for(let log of this.result) {
+    
 		let tableRow = {
 			date: dayjs.unix(log.timestamp).format('DD/MM/YYYY'),
       area:log.area[0].name,
@@ -130,7 +131,10 @@ harvestReportRows() {
       units:log.quantity[0].unit.name,
       crop: this.idToCropMap.get(log.data.crop_tid)
 		}
-		tableRows.push(tableRow)
+    if (tableRow.crop===this.crop){
+      tableRows.push(tableRow)
+    }
+	
 	}
 	return tableRows
 }
