@@ -35,7 +35,7 @@
             <option v-for="item in areas">{{item}}</option>
         </select>
         <br> 
-        <input type="button" value="Generate Report" @click="addhlogs"></input>
+        <input type="button" value="Generate Report" v-on:click="addhlogs"></input>
         </form>
 
 
@@ -86,6 +86,11 @@
              crops:["Brocoli", "Kale", "Peas"],
              areas: ["All", "Chuau-1", "SQ7"],
              hlogs : [],
+          },
+          method:{
+            addhlogs: function(){
+                this.hlogs.push({date:'2018-05-01', area: 'Orion-3', crop: 'Kale', yield: '12',unites: 'Bunches'})
+            }
           }
         })
         Vue.config.devtools = true;
