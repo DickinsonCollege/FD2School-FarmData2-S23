@@ -80,6 +80,7 @@
         el:'#vuespike',
         
                  data:{
+                  result:[],
                   idToCropMap: new Map(),
                   farm:"",
                   user:"",
@@ -111,12 +112,7 @@
 },
 computed :{
   reverseCropIDandName(){
-//     var reverse= new Map()
-//     for (let[key,val] of this.idToCropMap){
-      
-// reverse.set(val,key)
 
-//     }
 reverse=[]
 for (let[key,val] of this.idToCropMap){
     reverse.push(val)
@@ -127,18 +123,34 @@ for (let[key,val] of this.idToCropMap){
 },
         methods : {
 addReport: function(){
-  axios.get('/farm.json')  // this line sends the request.
-.then((response) => {
-	
-  this.farm=response.data.name;
-  this.user=response.data.user.name;
-  this.language=response .data.user.language;
+  let startday=dayjs(this.startDate).unix();
+  let endday=dayjs(this.endDate).unix();
+console.log(startday);
+console.log(endday);
 
+let request= "/log.json?type=farm_harvest&timestamp[ge]="+startday+"&timestamp[le]="+endday
+console.log(request)
+getAllPages(request, this.result)
+.then(() => {
+    // All of the requested records have now been added to result.
+    // Additional processing can happen here if necessary,
+    // or then may be omitted.
 })
-.catch((error) => {
-	console.log("Error Occured")
-  console.log(error)
+.catch((err) => {
+    console.log(err)
 })
+//   axios.get('/farm.json')  // this line sends the request.
+// .then((response) => {
+	
+//   this.farm=response.data.name;
+//   this.user=response.data.user.name;
+//   this.language=response .data.user.language;
+
+// })
+// .catch((error) => {
+// 	console.log("Error Occured")
+//   console.log(error)
+// })
 
   
 
