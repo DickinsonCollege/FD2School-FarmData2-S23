@@ -35,8 +35,9 @@
             <option v-for="item in areas">{{item}}</option>
         </select>
         <br> 
-        <input type="button" value="Generate Report">
+        <input type="button" value="Generate Report" @click="addhlogs"></input>
         </form>
+
 
         <hr>
         <h1>{{rptTitle}}</h1>
@@ -58,12 +59,18 @@
         <br>
         <table border="1">
             <tr><th>Date</th><th>Area </th><th>Crop</th><th>Yield</th><th>Units</th></tr>
-            <tr><td>05/02/2018 </td><td>Chuau-1 </td><td>Kale</td><td>10</td><td>Bunches</td></tr>
-            <tr><td>05/05/2018 </td><td>SQ7</td><td>Kale</td><td>7</td><td>Bunches</td></tr>
+            <tr v-for="(harvest, index) in hlogs">
+                <td>{{index + 1}}</td>
+                <td>{{harvest.date}}</td>
+                <td>{{harvest.area}}</td>
+                <td>{{harvest.crop}}</td>
+                <td>{{harvest.yield}}</td>
+                <td>{{harvest.units}}</td>
+            </tr>
+            <tr v-for="log in hlogs">
+                <td v-for="item in log">{{item}}</td>
+            </tr>
         </table> 
-        <tr v-for="log in hlogs">
-            <td v-for="item in log">{{item}}</td>
-        </tr> 
     </div>  
     <script src="https://unpkg.com/vue@2"></script>
     <script>
@@ -78,8 +85,7 @@
              rptArea: '',
              crops:["Brocoli", "Kale", "Peas"],
              areas: ["All", "Chuau-1", "SQ7"],
-             hlogs : [{date: "2018-05-02", area: "Chuau-1", crop: "Kale", yield: 10, units: "Bunches"},
-             {date: "2018-05-05", area: "SQ7", crop: "Kale", yield: 7, units: "Bunches"},],
+             hlogs : [],
           }
         })
         Vue.config.devtools = true;
