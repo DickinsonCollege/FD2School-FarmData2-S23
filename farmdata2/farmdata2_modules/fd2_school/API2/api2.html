@@ -97,6 +97,7 @@
       Language: "",
       IdToCropMap: new Map(),
       IdToAreaMap: new Map(),
+      result: [],
     },
 
     created() {
@@ -131,6 +132,17 @@
     methods: {
       
       generate: function() {
+        let endTime = dayjs(this.enddate).unix();
+        let startTime = dayjs(this.startdate).unix();
+        let query = "/log.json?type=farm_harvest&timestamp[ge]="+ startTime+ "&timestamp[le]="+endTime
+        console.log(query);
+        getAllPages(query, this.result)
+        .catch((error) => {
+          console.log("Error");
+          console.log(error);
+        });
+
+
         if(this.harvestLogs.length <3 && this.rpStat){
           this.harvestLogs.push({date: "2018-05-02", area: "Chuau-1", crop: "Kale", yield: 10, units: "Bunches"});
         } else {
