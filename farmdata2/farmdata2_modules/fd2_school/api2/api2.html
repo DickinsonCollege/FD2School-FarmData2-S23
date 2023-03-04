@@ -59,20 +59,20 @@
       <th>Yield</th>
       <th>Units</th>
     </tr>
-    <tr v-for="(log,index) in harvestLog">
-      <td>{{index+1}}</td>
-      <td>{{log.date}}</td>
-      <td>{{log.area}}</td>
-      <td>{{log.crop}}</td>
-      <td>{{log.yield}}</td>
-      <td>{{log.units}}</td>
+    <tr v-for="(log,index) in harvestReportRows">
+      <td>   {{index+1}} </td>
+      <td>  {{log.date}}  </td>
+      <td>  {{log.area}}  </td>
+      <td> {{log.crop}} </td>
+      <td>  {{log.yield}} </td>
+      <td>  {{log.units}}  </td>
       <td><button type="button" v-on:click="harvestLog.splice(index,1)">Delete</button></td>
     </tr>
     
    
   
   </table>
-  <p>{{reverseCropIDandName}}</p>
+  <!-- <p>{{reverseCropIDandName}}</p> -->
   </div>
   </body>
   <script>
@@ -120,6 +120,21 @@ for (let[key,val] of this.idToCropMap){
   }
   return reverse
 },
+harvestReportRows() {
+	let tableRows = []
+	for(let log of this.result) {
+		let tableRow = {
+			date: dayjs.unix(log.timestamp).format('DD/MM/YYYY'),
+      area:log.area[0].name,
+      yield:log.quantity[0].value,
+      units:log.quantity[0].unit.name,
+      crop: this.idToCropMap.get(log.data.crop_tid)
+		}
+		tableRows.push(tableRow)
+	}
+	return tableRows
+}
+
 },
         methods : {
 addReport: function(){
@@ -132,9 +147,7 @@ let request= "/log.json?type=farm_harvest&timestamp[ge]="+startday+"&timestamp[l
 console.log(request)
 getAllPages(request, this.result)
 .then(() => {
-    // All of the requested records have now been added to result.
-    // Additional processing can happen here if necessary,
-    // or then may be omitted.
+    
 })
 .catch((err) => {
     console.log(err)
@@ -154,8 +167,7 @@ getAllPages(request, this.result)
 
   
 
-  this.harvestLog.push( {date:this.startDate  ,area:this.area,  crop:this.crop,yield:"12",units:"Bunches"})
-  // this.harvestLog.push( {date:"2018-05-01"  ,area:"Orion-3",  crop:"Kale",yield:"12",units:"Bunches"})
+  
 }
         }
 
