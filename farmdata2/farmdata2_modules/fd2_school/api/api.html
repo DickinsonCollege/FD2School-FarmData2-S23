@@ -31,9 +31,9 @@
     <div>
     <p>Details:</p>
         <ul>
-            <li><b>Farm</b>:Sample Farm</li>
-            <li><b>User</b>:manager1</li>
-            <li><b>Language</b>:English</li>
+            <li><b>Farm</b>:{{ farm }}</li>
+            <li><b>User</b>: {{ user }}</li>
+            <li><b>Language</b>: {{ language }}</li>
         </ul>
         <ul>
             <li><b>Start</b>:{{ startdate }}</li>
@@ -76,6 +76,9 @@
             crops: [ "broccoli", "kale", "Peas"],
             areas: [ "All", "Chaua-1", "SQ7",],
             harvestlogs: [],
+            farm: "",
+            user: "",
+            language: "",
             },
             methods: {
                     saveReport: function() {
