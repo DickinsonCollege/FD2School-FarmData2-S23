@@ -21,7 +21,7 @@
     <option v-for="x in cropName">{{x}}</option>
 </select>
 <label for="Field">Field:</label> 
-<select id="fields" name="fields">
+<select id="fields" name="fields" v-model="field">
     <option v-for="x in areaName">{{x}}</option>
 </select>
 
@@ -90,7 +90,8 @@
       titlerp: "My Sample Harvest Report",
       startdate: "2020-05-05",
       enddate: "2020-05-15",
-      crop: "",
+      crop: "All",
+      field: "All",
       harvestLogs: [ ],
       Farm: "",
       User: "",
@@ -122,22 +123,27 @@
     
     computed: {
       cropName() {
-        return Array.from(this.IdToCropMap.values());
+        let crops = Array.from(this.IdToCropMap.values());
+        crops.unshift("All");
+        return crops;
       },
       areaName() {
-        return Array.from(this.IdToAreaMap.values());
+        let areas = Array.from(this.IdToAreaMap.values());
+        areas.unshift("All")
+        return areas;
       },
       harvestReportRows() {
         let tableRows = []
         for(let log of this.result) {
-          if (this.IdToCropMap.get(log.data.crop_tid) === this.crop | this.crop == "" ) {
+          if ((this.IdToCropMap.get(log.data.crop_tid) === this.crop & log.area[0].name ===this.field ) | 
+          (this.crop == "All" & log.area[0].name ===this.field) | (this.IdToCropMap.get(log.data.crop_tid) === this.crop & this.field === "All") |
+          (this.crop === "All" & this.field === "All") ) {
             let tableRow = {
               date: dayjs.unix(log.timestamp).format('DD/MM/YYYY'),
               area: log.area[0].name,
               crop: this.IdToCropMap.get(log.data.crop_tid),
               yield: log.quantity[0].value,
               units:log.quantity[0].unit.name,
-
             }
             tableRows.push(tableRow)
           }
@@ -155,7 +161,6 @@
         let endTime = dayjs(this.enddate).unix();
         let startTime = dayjs(this.startdate).unix();
         let query = "/log.json?type=farm_harvest&timestamp[ge]="+ startTime+ "&timestamp[le]="+endTime
-        console.log(query);
         getAllPages(query, this.result)
         .catch((error) => {
           console.log("Error");
