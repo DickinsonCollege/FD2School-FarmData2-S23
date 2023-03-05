@@ -45,7 +45,7 @@
                     <li><strong>Crop:</strong>{{reportCrop}}</li>
                 </ul>
             </p>
-            <table v-if="harvestLogList.length > 0" border = 1>
+            <table v-if="harvestReportRows.length > 0" border = 1>
                 <tr>
                     <th>Row</th>
                     <th>Date</th>
@@ -55,14 +55,14 @@
                     <th>Unit</th>
                     <th>Delete</th>
                 </tr>
-                <tr v-for="(harvestLog,index) in harvestLogList">
+                <tr v-for="(harvestLog,index) in harvestReportRows">
                     <td>{{index+1}}</td>
                     <td>{{harvestLog.date}}</td>
                     <td>{{harvestLog.area}}</td>
                     <td>{{harvestLog.crop}}</td>
                     <td>{{harvestLog.yield}}</td>
                     <td>{{harvestLog.units}}</td>
-                    <td><button type="button" @click="harvestLogList.splice(index, 1)">Delete</button></td>
+                    <td><button type="button" @click="harvestReportRows.splice(index, 1)">Delete</button></td>
                 </tr>
             </table>
             <p v-else>No matching records found</p>
@@ -101,7 +101,7 @@
                 showReport: "false",
                 idToCropMap: new Map(),
                 idToAreaMap: new Map(),
-                allHarvestLogs: [],
+                harvestLogs: [],
             },
             computed:{
                 cropNames(){
@@ -109,6 +109,20 @@
                 },
                 areaNames(){
                     return Array.from(this.$data.idToAreaMap.values());
+                },
+                harvestReportRows() {
+	                let tableRows = []
+	                for(let log of this.harvestLogs) {
+		                let tableRow = {
+			                date: dayjs.unix(log.timestamp).format('YYYY-MM-DD'),
+                            area: log.area[0].name,
+                            yield: log.quantity[0].value,
+                            units: log.quantity[0].unit.name,
+                            crop: this.idToCropMap.get(log.data.crop_tid)
+		                }
+		                tableRows.push(tableRow)
+	                }
+	                return tableRows
                 }
             },
             methods:{
@@ -128,12 +142,9 @@
 
                         let startDate = dayjs(this.$data.reportStartDate).unix();
                         let endDate = dayjs(this.$data.reportEndDate).unix();
-                        console.log(startDate);
-                        console.log(endDate);
                         let request = "/log.json?type=farm_harvest&timestamp[ge]="+startDate+"&timestamp[le]="+endDate;
-                        console.log(request)
 
-                        getAllPages(request, this.$data.allHarvestLogs)
+                        getAllPages(request, this.$data.harvestLogs)
                         .then(() => {
                         })
                         .catch((err) => {
@@ -141,15 +152,16 @@
                         })
                     }
                     else{
-                        if(this.harvestLogList.length==0){
-                            this.harvestLogList.push({date:"2018-05-01", area:"Orion-3", crop:"Kale", yield:12, units:"Bunches"});
-                        }      
-                        else if (this.harvestLogList.length==1){
-                            this.harvestLogList.push({date:"2018-05-01", area:"Orion-3", crop:"Carrots", yield:10, units:"Bunches"});
-                        }
-                        else if (this.harvestLogList.length==2){
-                            this.harvestLogList.push({date:"2018-05-01", area:"Orion-3", crop:"Spinach", yield:1, units:"Bunches"});
-                        }
+                        let startDate = dayjs(this.$data.reportStartDate).unix();
+                        let endDate = dayjs(this.$data.reportEndDate).unix();
+                        let request = "/log.json?type=farm_harvest&timestamp[ge]="+startDate+"&timestamp[le]="+endDate;
+
+                        getAllPages(request, this.$data.harvestLogs)
+                        .then(() => {
+                        })
+                        .catch((err) => {
+                        console.log(err)
+                        })
                     }
                 }
             }
