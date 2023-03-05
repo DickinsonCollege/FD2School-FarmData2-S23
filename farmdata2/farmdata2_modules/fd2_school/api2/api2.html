@@ -97,11 +97,11 @@
                 reportFarm: "",
                 reportUser: "",
                 reportLanguage: "",
-                harvestLogList:[
-                ],
+                harvestLogList:[],
                 showReport: "false",
                 idToCropMap: new Map(),
                 idToAreaMap: new Map(),
+                allHarvestLogs: [],
             },
             computed:{
                 cropNames(){
@@ -125,6 +125,20 @@
                             console.log(error)
                         })
                         this.showReport = 'true'
+
+                        let startDate = dayjs(this.$data.reportStartDate).unix();
+                        let endDate = dayjs(this.$data.reportEndDate).unix();
+                        console.log(startDate);
+                        console.log(endDate);
+                        let request = "/log.json?type=farm_harvest&timestamp[ge]="+startDate+"&timestamp[le]="+endDate;
+                        console.log(request)
+
+                        getAllPages(request, this.$data.allHarvestLogs)
+                        .then(() => {
+                        })
+                        .catch((err) => {
+                        console.log(err)
+                        })
                     }
                     else{
                         if(this.harvestLogList.length==0){
