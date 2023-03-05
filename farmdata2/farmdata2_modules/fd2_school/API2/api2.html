@@ -9,10 +9,10 @@
 <br>
 <label for="start">Start:</label>
 <input type="date" id="start" name="start"
-       value ="2020-05-05" min="2014-01-01" max="2022-01-01" v-model="startdate">
+       value ="2020-05-05" min="2014-01-01" max="2022-01-01" v-model="startdate" @click="rpStat = false">
 <label for="End">End:</label>
 <input type="date" id="end" name="end" value="2020-05-15"
-                          v-bind:min="startdate" max="2022-01-01" v-model="enddate">
+                          v-bind:min="startdate" max="2022-01-01" v-model="enddate" @click="rpStat = false">
 
 <br><br>
 
