@@ -138,12 +138,13 @@
           if ((this.IdToCropMap.get(log.data.crop_tid) === this.crop & log.area[0].name ===this.field ) | 
           (this.crop == "All" & log.area[0].name ===this.field) | (this.IdToCropMap.get(log.data.crop_tid) === this.crop & this.field === "All") |
           (this.crop === "All" & this.field === "All") ) {
+            let loca = quantityLocation(log.quantity, "Harvest");
             let tableRow = {
               date: dayjs.unix(log.timestamp).format('DD/MM/YYYY'),
               area: log.area[0].name,
               crop: this.IdToCropMap.get(log.data.crop_tid),
-              yield: log.quantity[0].value,
-              units:log.quantity[0].unit.name,
+              yield: log.quantity[loca].value,
+              units:log.quantity[loca].unit.name,
             }
             tableRows.push(tableRow)
           }
