@@ -28,7 +28,7 @@
 
 <br><br>
 
-<input type="button" value="Generate Report" @click='generate'/>
+<input type="button" value="Generate Report" @click='generate' v-bind:disabled="inValidDate"/>
 
 <hr>
 
@@ -122,6 +122,14 @@
       },
     
     computed: {
+      inValidDate() {
+        let inval = false;
+        if (!this.enddate | !this.startdate) {
+          inval = true;
+        }
+        return inval;
+      },
+
       cropName() {
         let crops = Array.from(this.IdToCropMap.values());
         crops.unshift("All");
@@ -186,7 +194,7 @@
         }
       },
       deleteRecord: function(index) {
-        this.harvestLogs.splice(index, 1);
+        this.result.splice(index, 1);
       }
     }
   });
