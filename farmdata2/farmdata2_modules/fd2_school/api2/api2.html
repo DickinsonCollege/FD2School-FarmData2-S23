@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>HTML</title>
+  </head>
+  <body>
+    <div id="harvest-report" v-cloak>
+        <h1>{{ repTitle ? repTitle:"Mock Harvest Report" }}</h1>
+        <p>This page is <i>mockup</i> of a simplified harvest report.</p>
+        <label for="title">Title:</label>
+        <input type="text" id="title" v-model='repTitle' />
+        <br>
+        <br>
+        <label for="start">Start:</label>
+        <input type="date" id="start" v-model='startDate'
+        min="2014-01-01" v-bind:max="endDate">
+        <label for="end">End:</label>
+        <input type="date" id="end" v-model="endDate"
+        v-bind:min="startDate" max="2021-01-01">
+        <br>
+        <br>
+        <label for="crop">Crop:</label>
+        <select name="crop" id="crop" v-model="crop">
+            <option v-for="c in cropNames">{{ c }}</option> 
+        </select>
+        <label for="field">Field:</label>
+        <select name="field" id="field">
+            <option v-for="f in areaNames">{{ f }}</option> 
+        </select>
+        <br>
+        <br>
+        <button type="anonymous" @click='genReport' >Generate Report</button> 
+
+        <hr>
+
+        <h1>My Sample Harvest Report</h1>
+        <p>Details:</p>
+        <ul>
+            <li><strong>Farm:</strong>{{ farm }}</li>
+            <li><strong>User:</strong>{{ user }}</li>
+            <li><strong>Language</strong>{{ language }}</li>
+            <br>
+            <li><strong>Start</strong>{{ startDate }}</li>
+            <li><strong>End</strong>{{ endDate }}</li>
+            <li><strong>Crop</strong>{{ crop }}</li>
+        </ul>
+        <br>
+        <table border="1px">
+            <p v-if="logs.length === 0">No logs available</p>
+            <tr v-if="logs.length > 0">
+                <th>Row</th>
+                <th>Date</th>
+                <th>Area</th>
+                <th>Crop</th>
+                <th>Yield</th>
+                <th>Units</th> 
+            </tr>
+            
+            <tr v-for="(log,index) in logs" v-for="log in logs">{{ 
+                <td>{{ index+1 }}</td>
+                <td>{{log.date}}</td> 
+                <td>{{log.area}}</td>
+                <td>{{log.crop}}</td>
+                <td>{{log.yield}}</td>
+                <td>{{log.units}}</td> 
+            }}</tr>
+        
+        </table>
+    </div>
+    <script src="https://unpkg.com/vue@2"></script>
+    <script>
+        var harvReport = new Vue({
+            el: '#harvest-report',
+            data: {
+                idToCropMap: new Map(),
+                idToAreaMap: new Map(),
+                repTitle: 'My Sample Harvest Report',
+                startDate: "2020-05-05",
+                endDate: "2020-05-05",
+                crop: "Kale",
+                crops: [
+                    "Kale",
+                    "Broccoli",
+                    "Peas",
+                    "Spinach",
+                ],
+                fields: [
+                    "All", 
+                    "Chuau-1",
+                    "SQ7",
+                ],
+
+                nextLog: '',
+                logs: [
+                   {date: "2019-02-05", area: "Chuau-1", crop: "Kale", yield: 9, units: "Bunches"},
+                   {date: "2019-03-05", area: "Chuau-1", crop: "Spinach", yield: 9, units: "Bunches"},
+                ],
+
+                farms: [
+                    "Sample Farm",
+                ],
+
+                farm: "",
+                user: "",
+                language: "",
+                dateString: "",
+                dateRange: [
+
+                ],
+
+            
+            },
+
+            computed: {
+
+                cropNames() {
+                    return Array.from(this.idToCropMap.values());
+                },
+
+                areaNames() {
+                    return Array.from(this.idToAreaMap.values());
+                },
+
+            },
+                methods: {
+                    genReport: function() {
+                        axios.get('/farm.json ')  // this line sends the request.
+                        .then((response) => {
+                            // Block A:
+                            console.log("Got Response");
+                            console.log(response);
+                            this.farm = response.data.name;
+                            this.user = response.data.user.name;
+                            this.language = response.data.languages.en.name;
+
+                            let startTimestamp = dayjs(this.startDate).unix();
+                            let endTimestamp = dayjs(this.endDate).unix();
+                            console.log(startTimestamp);
+                            console.log(endTimestamp);
+
+                            this.dateString="/log.json?type=farm_harvest&timestamp[ge]="+startTimestamp+"&timestamp[le]="+endTimestamp;
+                            console.log(this.dateString);
+
+                            getAllPages(this.dateString, this.dateRange)
+                            .then(() => {
+                                // All of the requested records have now been added to result.
+                                // Additional processing can happen here if necessary,
+                                // or then may be omitted.
+                                console.log("success with creating date range");
+                            })
+                            .catch((err) => {
+                                console.log("error with creating date range");
+                                 // An error occurred during the requests, process it here.
+                            })
+                            // Code here executes when the response is received.
+                            // response is an Object created from the “Response Body” JSON.
+
+                            
+                        })
+                        .catch((error) => {
+                            // Block B:
+                            console.log("Error Occurred");
+                            console.log(error);
+                            // Code here executes if an error occurs processing the request.
+                            // error is an Object describing the error that occurred.
+                        })
+                        // Block C: 
+                            // Code here runs immediately after the request is sent,
+                            // which will be before the code in then() or catch(),
+                            // and before the response is received.
+
+                        this.logs.push(this.nextLog);
+                                            },
+                                            
+                },
+                created() {
+	                console.log("HarvestReport Vue instance created!")
+                    getIDToCropMap()
+                    .then((theMap) => {
+                        // Process the map.
+                        // Typically it is stored in the Vue data for later use.
+                        this.idToCropMap = theMap;
+                        console.log("crop Map worked");
+                    })
+                    .catch((err) => {
+                        // An error occurred during the request, process it here.
+                        console.log("Error with crop map");
+                        console.log(error);
+                    })
+                    // Execution continues here immediately after the request is made.
+                    // Note that the Map will not be available until the then() executes.
+                    
+                    getIDToAreaMap()
+                    .then((theMap) => {
+                        // Process the map.
+                        // Typically it is stored in the Vue data for later use.
+                        this.idToAreaMap = theMap;
+                        console.log("area Map worked");
+                    })
+                    .catch((err) => {
+                        // An error occurred during the request, process it here.
+                        console.log("Error with area map");
+                        console.log(error);
+                    })
+                },
+
+                
+                    
+                        
+                    
+                
+                
+            
+        });
+        Vue.config.devtools = true;
+    </script>
+    
+  </body>
+</html>
