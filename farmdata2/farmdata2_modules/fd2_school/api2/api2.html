@@ -97,7 +97,6 @@
                 reportFarm: "",
                 reportUser: "",
                 reportLanguage: "",
-                harvestLogList:[],
                 showReport: "false",
                 idToCropMap: new Map(),
                 idToAreaMap: new Map(),
@@ -120,7 +119,9 @@
                             units: log.quantity[0].unit.name,
                             crop: this.idToCropMap.get(log.data.crop_tid)
 		                }
-		                tableRows.push(tableRow)
+                        if(tableRow.crop == this.reportCrop){
+                            tableRows.push(tableRow)
+                        }
 	                }
 	                return tableRows
                 }
