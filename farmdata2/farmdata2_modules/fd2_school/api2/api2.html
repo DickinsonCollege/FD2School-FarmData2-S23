@@ -108,6 +108,7 @@
             user: "",
             language: "",
             idToCropMap: new Map(),
+            result: [],
         },
         computed: {
             cropNameToArray(){
@@ -132,7 +133,21 @@
                     console.log("Error Occurred!");
                     console.log(error);
                 })
-           
+
+                let startDateTimestamp = dayjs(this.reportStartDate).unix();
+                let endDateTimestamp = dayjs(this.reportEndDate).unix();
+                let requestString = "/log.json?type=farm_harvest&timestamp[ge]=" + startDateTimestamp.toString() + "&timestamp[le]="+ endDateTimestamp.toString();
+                
+                getAllPages(requestString, this.result)
+                .then(() => {
+                    
+                })
+                .catch((err) => {
+                    console.log(err);
+                })
+
+                //console.log(requestString);
+
                 if (this.harvestLog.length == 0){
                     this.harvestLog.push({date: "2018-05-01", area: "Orion-3", crop: "Kale", yield: 12, units: "Bunches"});
                 }
@@ -156,6 +171,3 @@
     });
     Vue.config.devtools = true;
 </script>
-
- <!-- {date: "2018-05-02", area: "Chuau-1", crop: "Kale", yield: 10, units: "Bunches"}, -->
-<!-- {date: "2018-05-05", area: "SQ7", crop: "Kale", yield: 7, units: "Bunches"} -->
