@@ -91,7 +91,7 @@
 			title: 'My Sample Harvest Report',
 			start: "2020-05-05",
 			end: "2020-05-15",
-			selectCrop: "Kale",
+			selectCrop: "",
 			reportFarm: "",
             reportUser: "",
             reportLanguage: "",
@@ -118,7 +118,9 @@
 						units: log.quantity[0].unit.name,
 						crop: this.idToCropMap.get(log.data.crop_tid)
 					}
-					tableRows.push(tableRow)
+					if(tableRow.crop == this.selectCrop){
+                        tableRows.push(tableRow)
+                    }
 				}
 				return tableRows
 			}
