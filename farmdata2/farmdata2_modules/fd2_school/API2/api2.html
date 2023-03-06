@@ -195,6 +195,7 @@
 
                             let req = "/log.json?type=farm_harvest&timestamp[ge]="+srtDateTS+"&timestamp[le]="+endDateTS;
 
+                            this.harvLogsFromAPI = [];
                             getAllPages(req, this.harvLogsFromAPI)
                             .then(() => {
                                 //currently left blank on purpose
