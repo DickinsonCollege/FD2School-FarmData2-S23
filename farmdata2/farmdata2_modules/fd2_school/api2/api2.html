@@ -107,6 +107,7 @@
 			{date:"2018-05-01",area:"Orion-3",crop:"Kale",yield:12,units:"Bunches"}
 			],
 			idToCropMap: new Map(),
+			allHarvestLogs: [],
 		},
 		computed:{
             cropNames(){
@@ -136,6 +137,20 @@
                 console.log(error);
                 })
 				this.logs.push({date: "2018-05-18", area: "Orion-3", crop: "Kale", yield: 12, units: "Bunches"});
+
+				let startDate = dayjs(this.start).unix();
+                let endDate = dayjs(this.end).unix();
+                console.log(startDate, endDate);
+
+	            let request = "/log.json?type=farm_harvest&timestamp[ge]="+startDate+"&timestamp[le]="+endDate;
+                console.log(request)
+
+                getAllPages(request, this.allHarvestLogs)
+                .then(() => {
+                })
+                .catch((err) => {
+                	console.log(err)
+                })
             },
 			deleteLog: function(logIndex){
 
