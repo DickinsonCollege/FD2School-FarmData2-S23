@@ -57,7 +57,7 @@
     </ul>
 
 <br>
-<table v-if="logs.length > 0" border = "1">
+<table v-if="harvestReportRows.length > 0" border = 1>
   <tr>
 	<td>Row</td>
     <td>Date</td>
@@ -67,15 +67,15 @@
     <td>Units</td>
 	<td>Delete</td>
   </tr>
-  <tr v-for = "(i, index) in logs">
+  <tr v-for="(allHarvestLogs,index) in harvestReportRows">
 	<td>{{index+1}}</td>
-    <td>{{i.date}}</td>
-    <td>{{i.area}}</td>
-    <td>{{i.crop}}</td>
-    <td>{{i.yield}}</td>
-    <td>{{i.units}}</td>
+    <td>{{allHarvestLogs.date}}</td>
+    <td>{{allHarvestLogs.area}}</td>
+    <td>{{allHarvestLogs.crop}}</td>
+    <td>{{allHarvestLogs.yield}}</td>
+    <td>{{allHarvestLogs.units}}</td>
 	<td>
-		<button type="button" @click="deleteLog(index)">Delete</button>
+		<button type="button" @click="harvestReportRows.splice(index, 1)">Delete</button>
 	</td>
   </tr>
 
@@ -101,18 +101,27 @@
 				"Chuau-1",
 				"SQ7"
 			],
-			logs: [
-			{date:"2018-05-01",area:"Orion-3",crop:"Kale",yield:12,units:"Bunches"},
-			{date:"2018-05-01",area:"Orion-3",crop:"Kale",yield:12,units:"Bunches"},
-			{date:"2018-05-01",area:"Orion-3",crop:"Kale",yield:12,units:"Bunches"}
-			],
 			idToCropMap: new Map(),
 			allHarvestLogs: [],
 		},
 		computed:{
             cropNames(){
                 return Array.from(this.idToCropMap.values());
-            }
+            },
+			harvestReportRows() {
+				let tableRows = []
+				for(let log of this.allHarvestLogs) {
+					let tableRow = {
+						date: dayjs.unix(log.timestamp).format('YYYY-MM-DD'),
+						area: log.area[0].name,
+						yield: log.quantity[0].value,
+						units: log.quantity[0].unit.name,
+						crop: this.idToCropMap.get(log.data.crop_tid)
+					}
+					tableRows.push(tableRow)
+				}
+				return tableRows
+			}
 		},
 		created() {
 	        getIDToCropMap()
@@ -136,7 +145,6 @@
                 console.log("Error Occurred");
                 console.log(error);
                 })
-				this.logs.push({date: "2018-05-18", area: "Orion-3", crop: "Kale", yield: 12, units: "Bunches"});
 
 				let startDate = dayjs(this.start).unix();
                 let endDate = dayjs(this.end).unix();
