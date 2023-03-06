@@ -80,8 +80,8 @@
                     <strong>Crop:</strong>{{cropSelect}}
                 </li>
             </ul>
-            <p v-if="harvestLogs.length===0">No matching records!</p>
-            <div v-if="harvestLogs.length!==0">
+            <p v-if="harvestReportRows.length===0">No matching records!</p>
+            <div v-if="harvestReportRows.length!==0">
                 <table border="1">
                     <tr>
                         <th>Row</th>
@@ -92,7 +92,7 @@
                         <th>Units</th>
                         <th>Delete</th>
                     </tr>
-                    <tr v-for="(hLog, index) in harvestLogs">
+                    <tr v-for="(hLog, index) in harvestReportRows">
                         <td>{{index+1}}</td>
                         <td>{{hLog.date}}</td>
                         <td>{{hLog.area}}</td>
@@ -141,7 +141,6 @@
                             {text: "Chuau-1", value: "Chuau-1"},
                             {text: "SQ7", value: "SQ7"},
                         ],
-                        harvestLogs: [],
                         harvLogsFromAPI: [],
 
                         //API
@@ -157,7 +156,21 @@
                         },
                         areaNames() {
                             return Array.from(this.$data.idToAreaMap.values());
-                        }
+                        },
+                        harvestReportRows() {
+                            let tableRows = []
+                            for(let log of this.harvLogsFromAPI) {
+                                let tableRow = {
+                                    date: dayjs.unix(log.timestamp).format('YYYY-MM-DD'),
+                                    area: log.area[0].name,
+                                    crop: this.idToCropMap.get(log.data.crop_tid),
+                                    yield: log.quantity[0].value,
+                                    units: log.quantity[0].unit.name,
+                                }
+                                tableRows.push(tableRow)
+                            }
+                            return tableRows
+                        },
                     },
                     methods: {
                         generateReport: function() {
@@ -173,15 +186,11 @@
                                 console.log(error)
                             })
 
-                            this.harvestLogs.push({date:'05/08/2020',area:'Orion-3',crop:'Kale',yield:12,units:'Bunches'});
-
                             //API2
                             let srtDateTS = dayjs(this.startDate).unix();
                             let endDateTS = dayjs(this.endDate).unix();
-                            console.log(srtDateTS, endDateTS)
 
                             let req = "/log.json?type=farm_harvest&timestamp[ge]="+srtDateTS+"&timestamp[le]="+endDateTS;
-                            console.log(req)
 
                             getAllPages(req, this.harvLogsFromAPI)
                             .then(() => {
@@ -192,7 +201,7 @@
                             })
                         },
                         deleteHarvestLog: function(hLogIndex) {
-                            this.harvestLogs.splice(hLogIndex, 1);
+                            this.harvLogsFromAPI.splice(hLogIndex, 1);
                         },
                     },
                 });
