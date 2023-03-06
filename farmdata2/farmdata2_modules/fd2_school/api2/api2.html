@@ -1,0 +1,151 @@
+	<html>
+	  <head>
+	    <h1>Harvest Report</h1>
+	  </head>
+	  <body>
+	   <p>This page is a <i>mockup</i> of a simplified harvest report.</p>
+	   <div id = "form" v-cloak>
+	   <label for="title">Title: <input type = "text" v-model="title"/></label>
+	   
+		
+	
+	   <br>
+
+	   <br>
+	   <label for="crop">Crop: </label>
+	   <select v-model = "selectCrop" id="crop" name="Crop">
+		<option v-for="crop in cropNames">{{ crop }}</option>
+	   </select>
+	   
+	   <label for="field">Field: </label>
+	   <select v-model = "selectField" id="field" name="Field">
+	   <option v-for = "field in fields">{{field}}</option>
+	   </select>
+	   <br>
+
+   <br>
+   
+	<label for="startDate">Start:</label>
+	<input type="date" v-model="start" name="Start"
+       min="2014-01-01" :max="end">
+   <br>
+
+   <label for="end">End:</label>
+
+   <input type="date" v-model="end" name="End"
+       :min="start" max="2022-01-01">
+   <br>
+
+   <br>
+   
+	<button type="button" v-on:click='saveItems'>Generate Report</button>
+    <hr style="width:100%;text-align:left;margin-left:0">
+ 
+	<h1> {{ title && title.trim() !== '' ? title : 'Mock Harvest Report'}} </h1>
+	
+    <p>Details:</p>
+    <ul>
+	  <li><strong>Farm</strong>:{{reportFarm}}</li>
+	  <li><strong>User</strong>:{{reportUser}}</li>
+	  <li><strong>Language</strong>:{{reportLanguage}}</li>
+
+	  <br>
+
+	  <li><strong>Start</strong>:{{ start }}</li>
+	  <li><strong>End</strong>:{{ end }}</li>
+	  <li><strong>Crop</strong>:{{ selectCrop }}</li>
+    </ul>
+
+<br>
+<table v-if="logs.length > 0" border = "1">
+  <tr>
+	<td>Row</td>
+    <td>Date</td>
+    <td>Area</td>
+    <td>Crop</td>
+    <td>Yield</td>
+    <td>Units</td>
+	<td>Delete</td>
+  </tr>
+  <tr v-for = "(i, index) in logs">
+	<td>{{index+1}}</td>
+    <td>{{i.date}}</td>
+    <td>{{i.area}}</td>
+    <td>{{i.crop}}</td>
+    <td>{{i.yield}}</td>
+    <td>{{i.units}}</td>
+	<td>
+		<button type="button" @click="deleteLog(index)">Delete</button>
+	</td>
+  </tr>
+
+</table>
+<p v-else>No matching records</p>
+
+</div>	
+  </body>
+  <script>
+	let form = new Vue({
+		el: '#form',
+		data:{
+			title: 'My Sample Harvest Report',
+			start: "2020-05-05",
+			end: "2020-05-15",
+			selectCrop: "Kale",
+			reportFarm: "",
+            reportUser: "",
+            reportLanguage: "",
+			selectField: "All",
+			fields: [
+				"All",
+				"Chuau-1",
+				"SQ7"
+			],
+			logs: [
+			{date:"2018-05-01",area:"Orion-3",crop:"Kale",yield:12,units:"Bunches"},
+			{date:"2018-05-01",area:"Orion-3",crop:"Kale",yield:12,units:"Bunches"},
+			{date:"2018-05-01",area:"Orion-3",crop:"Kale",yield:12,units:"Bunches"}
+			],
+			idToCropMap: new Map(),
+		},
+		computed:{
+            cropNames(){
+                return Array.from(this.idToCropMap.values());
+            }
+		},
+		created() {
+	        getIDToCropMap()
+            .then((theMap) => {
+                this.idToCropMap = theMap;
+            })
+            .catch((err) => {
+                console.log("Error Occurred")
+                console.log(error)
+            })
+    	},
+		methods: {
+            saveItems: function(){
+				axios.get('/farm.json')
+                .then((response) => {
+                this.reportFarm = response.data.name;
+                this.reportUser = response.data.user.name;
+                this.reportLanguage = response.data.languages.en.name;
+                })
+                .catch((error) => {
+                console.log("Error Occurred");
+                console.log(error);
+                })
+				this.logs.push({date: "2018-05-18", area: "Orion-3", crop: "Kale", yield: 12, units: "Bunches"});
+            },
+			deleteLog: function(logIndex){
+
+				this.logs.splice(logIndex, 1);
+			}
+        }
+	})
+	Vue.config.devtools = true;
+   </script>
+
+   </script>   
+</html>
+
