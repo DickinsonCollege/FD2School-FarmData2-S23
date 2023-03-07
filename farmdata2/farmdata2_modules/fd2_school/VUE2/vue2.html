@@ -16,7 +16,6 @@
             min="2014-01-01" max="2022-01-01"
             v-model="rptTitle"
             value="Mock Harvest Report"/>
-        <p>{{rptTitle}}</p>
 
         <label for="endDate">End:</label>
         <input type="date" id="endDate"
@@ -35,7 +34,7 @@
             <option v-for="item in areas">{{item}}</option>
         </select>
         <br> 
-        <input type="button" value="Generate Report" v-on:click="addhlogs"></input>
+        <input type="button" value="Generate Report" @click="addhlogs"></input> 
         </form>
 
 
@@ -58,18 +57,23 @@
         </ul>
         <br>
         <table border="1">
-            <tr><th>Date</th><th>Area </th><th>Crop</th><th>Yield</th><th>Units</th></tr>
-            <tr v-for="(harvest, index) in hlogs">
+            <tr>
+                <th>Row</th>
+                <th>Date</th>
+                <th>Area </th>
+                <th>Crop</th>
+                <th>Yield</th>
+                <th>Units</th>
+            <tr v-for="(log,index) in hlogs">
                 <td>{{index + 1}}</td>
-                <td>{{harvest.date}}</td>
-                <td>{{harvest.area}}</td>
-                <td>{{harvest.crop}}</td>
-                <td>{{harvest.yield}}</td>
-                <td>{{harvest.units}}</td>
+                <td>{{log.date}}</td>
+                <td>{{log.area}}</td>
+                <td>{{log.crop}}</td>
+                <td>{{log.yield}}</td>
+                <td>{{log.units}}</td>
+
             </tr>
-            <tr v-for="log in hlogs">
-                <td v-for="item in log">{{item}}</td>
-            </tr>
+
         </table> 
     </div>  
     <script src="https://unpkg.com/vue@2"></script>
@@ -78,7 +82,7 @@
         var spike = new Vue({
           el:'#vuecontent',
           data:{
-            rptTitle: 'Mock Harvest Report',
+             rptTitle: 'Mock Harvest Report',
              rptStartDate:'2020-01-01',
              rptEndDate:'2020-01-01',
              rptCrop:'',
@@ -87,11 +91,11 @@
              areas: ["All", "Chuau-1", "SQ7"],
              hlogs : [],
           },
-          method:{
-            addhlogs: function(){
-                this.hlogs.push({date:'2018-05-01', area: 'Orion-3', crop: 'Kale', yield: '12',unites: 'Bunches'})
-            }
-          }
+           methods:{
+             addhlogs: function(){
+                 this.hlogs.push({date:'2018-05-01', area: 'Orion-3', crop: 'Kale', yield: '12',units: 'Bunches'});
+             }
+           }
         })
         Vue.config.devtools = true;
       </script>   
