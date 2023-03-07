@@ -57,13 +57,15 @@
         </ul>
         <br>
         <table border="1">
-            <tr>
+            <tr v-if="hlogs.length!=0">
                 <th>Row</th>
                 <th>Date</th>
                 <th>Area </th>
                 <th>Crop</th>
                 <th>Yield</th>
                 <th>Units</th>
+            </tr>
+            <tr v-else><th>No matching records!</th></tr>
             <tr v-for="(log,index) in hlogs">
                 <td>{{index + 1}}</td>
                 <td>{{log.date}}</td>
