@@ -29,7 +29,8 @@
             <br><br>
     </body>
     <hr>
-      <h2>{{ Title ? Title : 'Mock Harvest Report'}}</h2>
+      <h2 v-if="harvestLog.length === 0">No result matches</h2>
+      <h2 v-else>{{ Title ? Title : 'Mock Harvest Report'}}</h2>
     <p>Details:</p>
     <body>   
         <ul>
@@ -70,6 +71,7 @@
               crop:'Kale',
               area:'All',
               log:'',
+              state:'default',
               crops: [
                 'Broccoli',
                 'Kale',
