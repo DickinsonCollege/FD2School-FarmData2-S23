@@ -43,13 +43,15 @@
         <br><br>
         <table border="1">
           <tr>
+            <td><strong>Row</strong></td>
             <td><strong>Date</strong></td>
             <td><strong>Area</strong></td>
             <td><strong>Crop</strong></td>
             <td><strong>Yield</strong></td>
             <td><strong>Units</strong></td>
           </tr>
-          <tr v-for="l in harvestLog">
+          <tr v-for="(l,index) in harvestLog">
+            <td>{{ index }}</td>
             <td>{{ l.date }}</td>
             <td>{{ l.area }}</td>
             <td>{{ l.crop }}</td>
@@ -79,7 +81,7 @@
                 'SQ7',
               ],
               harvestLog: [
-
+    
               ]
             },
             methods: {
