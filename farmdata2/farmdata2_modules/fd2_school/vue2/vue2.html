@@ -11,10 +11,10 @@
             <br><br>
             <label for="start">Start:</label>
             <input type="date" id="start" name="start date" v-model="Sdate" 
-            min="2014-01-01" max="2022-01-01">
+            v-bind:disabled='Sdate > Edate' min="2014-01-01" max="2022-01-01">
             <label for="end">End:</label>
             <input type="date" id="end" name="end date" v-model="Edate"
-            min="2020-05-05" max="2022-01-01">
+            v-bind:disabled='Edate < Sdate' min="2020-05-05" max="2022-01-01">
             <br><br>
             <label for=”crop”>Crop: </label>
             <select id="crop" name="crop" v-model="crop">  
