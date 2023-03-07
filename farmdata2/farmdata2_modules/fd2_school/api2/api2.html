@@ -122,9 +122,10 @@
             harvestReportRows() {
                 let tableRows = []
                 for(let log of this.result) {
+                    let timestampDate = log.timestamp
                     let tableRow = {
                         
-                        date: log.timestamp,
+                        date: dayjs.unix(timestampDate),
                         area: log.area[0].name,
                         crop: this.idToCropMap.get(log.data.crop_tid),
                         yield: log.quantity[0].value,
