@@ -15,7 +15,7 @@
     <br><br>
     <label for="crop">Choose a crop:</label>
     <select v-model="cropselect" name="crop" id="crop">
-        <option v-for="crop in crops">{{ crop }}</option>
+        <option v-for="crop in getCropNames">{{ crop }}</option>
     </select>
     <br>
     <label for="field">Field:</label>
@@ -68,17 +68,32 @@
 <script>
     var form = new Vue({
         el: '#reportform',
+        created() {
+            getIDToCropMap()
+            .then((theMap) => {
+                this.idToCropMap = theMap
+            })
+            .catch((err) => {
+                console.log("error occurred getting IDToCropMap")
+                console.log(error)
+            })
+        },
         data: {
             header: null,
             startdate:"2020-05-15",
             enddate:"2020-05-15",
             cropselect: "Kale",
-            crops: [ "broccoli", "kale", "Peas"],
             areas: [ "All", "Chaua-1", "SQ7",],
             harvestlogs: [],
             farm: "",
             user: "",
             language: "",
+            idToCropMap: new Map(),
+            },
+            computed: {
+                getCropNames() {
+                    return this.idToCropMap.values()
+                }
             },
             methods: {
                     saveReport: function() {
