@@ -48,8 +48,8 @@
         </ul>
         <br>
         <table border="1px">
-            <p v-if="logs.length === 0">No logs available</p>
-            <tr v-if="logs.length > 0">
+            <p v-if="harvestReportRows.length === 0">No logs available</p>
+            <tr v-if="harvestReportRows.length > 0">
                 <th>Row</th>
                 <th>Date</th>
                 <th>Area</th>
@@ -58,7 +58,7 @@
                 <th>Units</th> 
             </tr>
             
-            <tr v-for="(log,index) in logs" v-for="log in logs">{{ 
+            <tr v-for="(log,index) in harvestReportRows">{{ 
                 <td>{{ index+1 }}</td>
                 <td>{{log.date}}</td> 
                 <td>{{log.area}}</td>
@@ -93,10 +93,6 @@
                 ],
 
                 nextLog: '',
-                logs: [
-                   {date: "2019-02-05", area: "Chuau-1", crop: "Kale", yield: 9, units: "Bunches"},
-                   {date: "2019-03-05", area: "Chuau-1", crop: "Spinach", yield: 9, units: "Bunches"},
-                ],
 
                 farms: [
                     "Sample Farm",
@@ -110,7 +106,9 @@
 
                 ],
 
-            
+                tableRows: [
+
+                ],
             },
 
             computed: {
@@ -123,35 +121,49 @@
                     return Array.from(this.idToAreaMap.values());
                 },
 
+                harvestReportRows() {
+                    let tableRows = []
+                    
+                    for(let log of this.dateRange) {
+                        let theDate = dayjs.unix(log.timestamp);
+                        let tableRow = {
+                            date: theDate.format('DD/MM/YYYY'),
+                            area: log.area[0].name,
+                            crop: this.idToCropMap.get(log.data.crop_tid),
+                            yield: log.quantity[0].value,
+                            units: log.quantity[0].unit.name,
+                        }
+                        tableRows.push(tableRow)
+                    }
+                    return tableRows
+                },
+
             },
                 methods: {
                     genReport: function() {
                         axios.get('/farm.json ')  // this line sends the request.
                         .then((response) => {
                             // Block A:
-                            console.log("Got Response");
-                            console.log(response);
+                           
                             this.farm = response.data.name;
                             this.user = response.data.user.name;
                             this.language = response.data.languages.en.name;
 
                             let startTimestamp = dayjs(this.startDate).unix();
                             let endTimestamp = dayjs(this.endDate).unix();
-                            console.log(startTimestamp);
-                            console.log(endTimestamp);
-
+                            
                             this.dateString="/log.json?type=farm_harvest&timestamp[ge]="+startTimestamp+"&timestamp[le]="+endTimestamp;
-                            console.log(this.dateString);
+                            
 
                             getAllPages(this.dateString, this.dateRange)
                             .then(() => {
                                 // All of the requested records have now been added to result.
                                 // Additional processing can happen here if necessary,
                                 // or then may be omitted.
-                                console.log("success with creating date range");
+                               
                             })
                             .catch((err) => {
-                                console.log("error with creating date range");
+                               
                                  // An error occurred during the requests, process it here.
                             })
                             // Code here executes when the response is received.
@@ -161,8 +173,7 @@
                         })
                         .catch((error) => {
                             // Block B:
-                            console.log("Error Occurred");
-                            console.log(error);
+                           
                             // Code here executes if an error occurs processing the request.
                             // error is an Object describing the error that occurred.
                         })
@@ -182,12 +193,11 @@
                         // Process the map.
                         // Typically it is stored in the Vue data for later use.
                         this.idToCropMap = theMap;
-                        console.log("crop Map worked");
+                        
                     })
                     .catch((err) => {
                         // An error occurred during the request, process it here.
-                        console.log("Error with crop map");
-                        console.log(error);
+                        
                     })
                     // Execution continues here immediately after the request is made.
                     // Note that the Map will not be available until the then() executes.
@@ -197,12 +207,11 @@
                         // Process the map.
                         // Typically it is stored in the Vue data for later use.
                         this.idToAreaMap = theMap;
-                        console.log("area Map worked");
+                        
                     })
                     .catch((err) => {
                         // An error occurred during the request, process it here.
-                        console.log("Error with area map");
-                        console.log(error);
+                        
                     })
                 },
 
