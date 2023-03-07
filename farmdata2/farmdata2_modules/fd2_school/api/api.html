@@ -83,9 +83,20 @@
             methods: {
                     saveReport: function() {
                         this.harvestlogs.push({date: '2018-05-02', area: 'Chuau-1', crop: 'Kale', yield: 10, units: 'Bunches'})
-                        this.farm = "Sample Farm"
-                        this.user = "manager1"
-                        this.language = "english"
+                        axios.get('/Farm.json')
+                            .then((response) => {
+                                this.farm = response.data.name
+                                this.user = response.data.user.name
+                                this.language = response.data.languages.en.name
+                            })
+                            .catch((error) => {
+                                console.log("error occurred")
+                                console.log(error)
+                            })
+                        // Block C: 
+                            // Code here runs immediately after the request is sent,
+                            // which will be before the code in then() or catch(),
+                            // and before the response is received.
                     }
                 }
         })
