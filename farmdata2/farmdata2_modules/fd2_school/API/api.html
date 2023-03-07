@@ -1,5 +1,5 @@
-YPE html>
-<html lang=""en-US">
+<!DOCTYPE html>
+<html lang='en-US'>>
     <head>
       <h1>Harvest Report</h1>
     </head>
@@ -34,10 +34,10 @@ YPE html>
     <p>Details:</p>
     <body>   
         <ul>
-            <li><strong>Farm</strong>:Sample Farm</li>
-            <li><strong>User</strong>:manager1</li>
-            <li><strong>Language</strong>:English</li><br>
-            <li><strong>Start</strong>{{ Sdate }}</li>
+            <li><strong>Farm</strong>:{{ Farm }}</li>
+            <li><strong>User</strong>:{{User}}</li>
+            <li><strong>Language</strong>:{{Language}}</li><br>
+            <li><strong>Start</strong>:{{ Sdate }}</li>
             <li><strong>End</strong>:{{ Edate }}</li>
             <li><strong>Crop</strong>:{{ crop }}</li>
         </ul>
@@ -65,6 +65,9 @@ YPE html>
           var Vue1 = new Vue({
             el:'#vue',
             data:{
+              Farm:'',
+              User:'',
+              Language:'',
               Title:"My Sample Harvest Report",
               Sdate:"2018-05-01",
               Edate:"2018-05-15",
