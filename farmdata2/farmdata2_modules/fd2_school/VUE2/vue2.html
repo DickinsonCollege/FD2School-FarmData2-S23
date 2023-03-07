@@ -14,14 +14,16 @@
         <input type="date" id="startDate"
             value="2020-05-05"
             min="2014-01-01" max="2022-01-01"
-            v-model="rptTitle"
+            v-bind:max="rptEndDate"
+            v-model="rptStartDate"
             value="Mock Harvest Report"/>
 
         <label for="endDate">End:</label>
         <input type="date" id="endDate"
             value="2020-05-15"
             min="2020-05-05" max="2022-01-01"
-            v-model="rptTitle"
+            v-bind:min="rptStartDate"
+            v-model="rptEndDate"
             value="Mock Harvest Report">
         <br>
         <label for="cropList">Crop:</label>
