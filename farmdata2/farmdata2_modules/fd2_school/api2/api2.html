@@ -23,7 +23,7 @@
         <br>
         <label for="crop">Crop:</label>
         <select name="crop" id="crop" v-model="crop">
-            <option v-for="c in cropNames">{{ c }}</option> 
+            <option v-for="c in cropNames" @click="setCrop">{{ c }}</option> 
         </select>
         <label for="field">Field:</label>
         <select name="field" id="field">
@@ -31,7 +31,7 @@
         </select>
         <br>
         <br>
-        <button type="anonymous" @click='genReport' >Generate Report</button> 
+        <button type="anonymous" @click='genReport(c)' >Generate Report</button> 
 
         <hr>
 
@@ -79,13 +79,13 @@
                 repTitle: 'My Sample Harvest Report',
                 startDate: "2020-05-05",
                 endDate: "2020-05-05",
-                crop: "Kale",
-                crops: [
-                    "Kale",
-                    "Broccoli",
-                    "Peas",
-                    "Spinach",
-                ],
+                crop: "",
+                // crops: [
+                //     "Kale",
+                //     "Broccoli",
+                //     "Peas",
+                //     "Spinach",
+                // ],
                 fields: [
                     "All", 
                     "Chuau-1",
@@ -125,6 +125,7 @@
                     let tableRows = []
                     
                     for(let log of this.dateRange) {
+                        if(this.idToCropMap.get(log.data.crop_tid) == this.crop){
                         let theDate = dayjs.unix(log.timestamp);
                         let tableRow = {
                             date: theDate.format('DD/MM/YYYY'),
@@ -134,12 +135,15 @@
                             units: log.quantity[0].unit.name,
                         }
                         tableRows.push(tableRow)
-                    }
+                    }}
                     return tableRows
                 },
 
             },
                 methods: {
+                    setCrop: function(c){
+                        this.crop == c;
+                    },
                     genReport: function() {
                         axios.get('/farm.json ')  // this line sends the request.
                         .then((response) => {
