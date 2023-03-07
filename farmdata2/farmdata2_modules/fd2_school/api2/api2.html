@@ -45,8 +45,8 @@
             <li><strong>Crop:</strong>{{ reportCrop }}</li>
         </ul>
 
-        <p v-if="harvestLog.length === 0">There is no harvest logs to display.</p>
-        <div v-if="harvestLog.length !== 0">
+        <p v-if="harvestReportRows.length === 0">There is no harvest logs to display.</p>
+        <div v-if="harvestReportRows.length !== 0">
             <table border="1">
                 <tr>
                     <th>Row</th>
@@ -57,7 +57,7 @@
                     <th>Units</th>
                     <th>Delete</th>
                 </tr>
-                <tr v-for="(log, index) in harvestLog">
+                <tr v-for="(log, index) in harvestReportRows">
                     <td>{{ index+1 }}</td>
                     <td>{{ log.date }}</td>
                     <td>{{ log.area }}</td>
@@ -117,7 +117,24 @@
 
             areaNameToArray(){
                 return Array.from(this.idToAreaMap.values());
-            }
+            },
+
+            harvestReportRows() {
+                let tableRows = []
+                for(let log of this.result) {
+                    let tableRow = {
+                        
+                        date: log.timestamp,
+                        area: log.area[0].name,
+                        crop: this.idToCropMap.get(log.data.crop_tid),
+                        yield: log.quantity[0].value,
+                        units: log.quantity[0].unit.name,
+                    }
+                    tableRows.push(tableRow)
+                }
+                return tableRows
+            },
+
         },
 
         methods: {
@@ -147,7 +164,8 @@
                 })
 
                 //console.log(requestString);
-
+                /**
+            
                 if (this.harvestLog.length == 0){
                     this.harvestLog.push({date: "2018-05-01", area: "Orion-3", crop: "Kale", yield: 12, units: "Bunches"});
                 }
@@ -157,6 +175,7 @@
                 else if (this.harvestLog.length == 2){
                     this.harvestLog.push({date: "2020-05-05", area: "Chuau-1", crop: "Kale", yield: 10, units: "Bunches"});
                 }
+                */
 
             },
 
