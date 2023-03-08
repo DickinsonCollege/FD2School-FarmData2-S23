@@ -120,7 +120,7 @@
         },
         methods: {
           generateReportData: function() {
-            let harvestLogAPIRequest = 'http://fd2_farmadata2/log.json?type=farm_harvest&timestamp[ge]=PUTSTARTHERE&timestamp[le]=PUTENDHERE';
+            let harvestLogAPIRequest = '/log.json?type=farm_harvest&timestamp[ge]=PUTSTARTHERE&timestamp[le]=PUTENDHERE';
             let timestampStart = dayjs(this.startDate).unix();
             let timestampEnd = dayjs(this.endDate).unix();
             console.log(timestampStart);
@@ -132,6 +132,7 @@
             .then((res) => {
                 // res is a newly created array that is
                 // filled with all of the requested records.
+                console.log(res);
                 this.harvestPages = res;
             })
             .catch((err) => {
