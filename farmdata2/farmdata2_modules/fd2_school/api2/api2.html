@@ -81,7 +81,7 @@
                 "Chuau-1",
                 "SQ7"
             ],
-            // tables: [ ],
+
             tablesFromAPI: [],
             farmName: '',
             userID: '',
@@ -95,14 +95,16 @@
             harvestReportRows() {
                 let tableRows = []
                 for(let log of this.tablesFromAPI) {
-                    let tableRow = {
-                        date: dayjs.unix(log.timestamp).format('YYYY-MM-DD'),
-                        area: log.area[0].name,
-                        crop: this.idToCropMap.get(log.data.crop_tid),
-                        yield: log.quantity[0].value,
-                        units: log.quantity[0].unit.name,
+                    if(this.idToCropMap.get(log.data.crop_tid) == this.rptCrop){
+                        let tableRow = {
+                            date: dayjs.unix(log.timestamp).format('YYYY-MM-DD'),
+                            area: log.area[0].name,
+                            crop: this.idToCropMap.get(log.data.crop_tid),
+                            yield: log.quantity[0].value,
+                            units: log.quantity[0].unit.name,
+                        }
+                        tableRows.push(tableRow)
                     }
-                    tableRows.push(tableRow)
                 }
                 return tableRows
             },
@@ -120,7 +122,6 @@
                     console.log('Error Occured')
                     console.log(error)
                 })
-                    // this.tables.push({date:"2020-05-05", area:"Chuau-1", crop:"Kale", yield:10, units:"Bunches"});
 
                     let srtDateTS = dayjs(this.rptStart).unix();
                     let endDateTS = dayjs(this.rptEnd).unix();
