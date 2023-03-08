@@ -102,7 +102,9 @@
                     units: log.quantity[0].unit.name,
                     crop: this.reportIDToCropMap.get(log.data.crop_tid)
 		        }
-		        tableRows.push(tableRow)
+                if(tableRow.crop == this.reportCrop){
+                    tableRows.push(tableRow)
+                }
 	        }
 	        return tableRows
         },
