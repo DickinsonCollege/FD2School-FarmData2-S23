@@ -129,13 +129,13 @@
             harvestLogAPIRequest= harvestLogAPIRequest.replace('PUTENDHERE', timestampEnd);
             console.log(harvestLogAPIRequest);
             getAllPages(harvestLogAPIRequest)
-            .then((res) => {
+            .then(res => {
                 // res is a newly created array that is
                 // filled with all of the requested records.
                 console.log(res);
                 this.harvestPages = res;
             })
-            .catch((err) => {
+            .catch(error => {
                 // An error occurred during the requests, process it here.
             });
             axios.get('/farm.json')
