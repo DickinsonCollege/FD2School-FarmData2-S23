@@ -82,6 +82,7 @@
                 "SQ7"
             ],
             tables: [ ],
+            tablesFromAPI: [],
             farmName: '',
             userID: '',
             language: '',
@@ -106,6 +107,22 @@
                     console.log(error)
                 })
                     this.tables.push({date:"2020-05-05", area:"Chuau-1", crop:"Kale", yield:10, units:"Bunches"});
+
+                    let srtDateTS = dayjs(this.rptStart).unix();
+                    let endDateTS = dayjs(this.rptEnd).unix();
+                    console.log(srtDateTS, endDateTS)
+
+                    let req = "/log.json?type=farm_harvest&timestamp[ge]="+srtDateTS+"&timestamp[le]="+endDateTS;
+                    console.log(req)
+
+
+                    getAllPages(req, this.tablesFromAPI)
+                    .then(() => {
+                        //currently left blank on purpose
+                    })
+                    .catch((err) => {
+                         console.log("Error in getAllPages step.")
+                    })
             },
             changeState: function(newState){
                 this.state = newState;
