@@ -117,7 +117,14 @@
         },
         methods: {
           generateReportData: function() {
-
+            let harvestLogAPIRequest = '/log.json?type=farm_harvest&timestamp[ge]=PUTSTARTHERE&timestamp[le]=PUTENDHERE';
+            let timestampStart = dayjs(this.startDate).unix();
+            let timestampEnd = dayjs(this.endDate).unix();
+            console.log(timestampStart);
+            console.log(timestampEnd);
+            harvestLogAPIRequest.replace('PUTSTARTHERE',timestampStart);
+            harvestLogAPIRequest.replace('PUTENDHERE', timestampEnd);
+            console.log(harvestLogAPIRequest);
             axios.get('/farm.json')
             .then(response => {
               this.farm = response.data.name;
@@ -129,10 +136,7 @@
               console.log("Error Occurred");
               console.log(error);
             }); 
-            let timestampStart = dayjs(this.startDate).unix();
-              let timestampEnd = dayjs(this.endDate).unix();
-              console.log(timestampStart);
-              console.log(timestampEnd);
+           
             this.table.push({date: this.startDate, area: this.selectedField, crop: this.selectedCrop, yield: "12", units: "Bunches"});
             this.startDate = '';
             this.endDate = '';
