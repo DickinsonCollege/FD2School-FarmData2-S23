@@ -46,9 +46,9 @@
     </ul>
     <br>
     <br>
-    <p v-if="reportLogs.length === 0">There are no matching records</p>
+    <p v-if="harvestReportRows.length === 0">There are no matching records</p>
     <table border="1">
-        <tr v-if="reportLogs.length > 0">
+        <tr v-if="harvestReportRows.length > 0">
             <th>Row</th>
             <th>Date</th>
             <th>Area</th>
@@ -56,7 +56,7 @@
             <th>Yield</th>
             <th>Units</th>
         </tr>
-        <tr v-for="(log, index) in reportLogs">{{
+        <tr v-for="(log, index) in harvestReportRows">{{
           <td>{{index+1}}</td>
           <td v-for="entry in log">{{entry}}</td>}}</tr>
     </table>
@@ -81,7 +81,6 @@
         reportEndDate: "2020-05-15", 
         reportCrop: "Kale",
         reportFields: ["All", "CHUAU-1", "SQ7"], 
-        reportLogs: [],
         reportFarmName: "",
         reportUserName: "",
         reportLanguage: "",
@@ -92,6 +91,22 @@
         cropNames : function() {
             return Array.from(this.reportIDToCropMap.values())
         },
+
+        harvestReportRows() {
+	        let tableRows = []
+	        for(let log of this.reportLogArray) {
+		        let tableRow = {
+			        date: dayjs.unix(log.timestamp).format("YYYY-MM-DD"),
+                    area: log.area[0].name,
+                    yield: log.quantity[0].value,
+                    units: log.quantity[0].unit.name,
+                    crop: this.reportIDToCropMap.get(log.data.crop_tid)
+		        }
+		        tableRows.push(tableRow)
+	        }
+	        return tableRows
+        },
+
       },
     
       methods: {
@@ -106,13 +121,9 @@
 	            console.log("Error Occurred")
                 console.log(error)
             })
-            this.reportLogs.push({date: '2018-05-01', area:'Orion-3', crop: 'Kale', yield:'12', units:'Bunches'})
             let startTimestamp = dayjs(this.reportStartDate).unix()
             let endTimestamp = dayjs(this.reportEndDate).unix()
-            console.log("Report start date is", startTimestamp)
-            console.log("Report end date is", endTimestamp)
             let logDateQuery = "/log.json?type=farm_harvest&timestamp[ge]="+startTimestamp+"&timestamp[le]="+endTimestamp
-            console.log("Query is", logDateQuery)
             
             getAllPages(logDateQuery, this.reportLogArray)
             .then(() => {
