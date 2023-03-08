@@ -122,8 +122,8 @@
             let timestampEnd = dayjs(this.endDate).unix();
             console.log(timestampStart);
             console.log(timestampEnd);
-            harvestLogAPIRequest.replace('PUTSTARTHERE',timestampStart);
-            harvestLogAPIRequest.replace('PUTENDHERE', timestampEnd);
+            harvestLogAPIRequest= harvestLogAPIRequest.replace('PUTSTARTHERE',timestampStart);
+            harvestLogAPIRequest= harvestLogAPIRequest.replace('PUTENDHERE', timestampEnd);
             console.log(harvestLogAPIRequest);
             axios.get('/farm.json')
             .then(response => {
