@@ -103,6 +103,9 @@
             table: [
 
             ],
+            result: [
+
+            ],
             idToCropMap: new Map(),
             idToAreaMap: new Map(),
 
@@ -125,6 +128,16 @@
             harvestLogAPIRequest= harvestLogAPIRequest.replace('PUTSTARTHERE',timestampStart);
             harvestLogAPIRequest= harvestLogAPIRequest.replace('PUTENDHERE', timestampEnd);
             console.log(harvestLogAPIRequest);
+            getAllPages(harvestLogAPIRequest, this.result)
+            .then(() => {
+                // All of the requested records have now been added to result.
+                // Additional processing can happen here if necessary,
+                // or then may be omitted.
+            })
+            .catch((err) => {
+                // An error occurred during the requests, process it here.
+                console.log(err);
+            })
             axios.get('/farm.json')
             .then(response => {
               this.farm = response.data.name;
