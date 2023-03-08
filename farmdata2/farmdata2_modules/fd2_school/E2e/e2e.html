@@ -30,11 +30,12 @@
         </select>
         <br><br>
 
-        <input type="button" value="Generate Report" @click="generateRpt">
+        <input type="button" value="Generate Report" @click="generateRpt" data-cy="generate-button">
     </form>
 
     <hr>
-    <h1>{{rptTitle}}</h1>
+    <div v-if="genState === true">
+    <h1 data-cy="generate-title">{{rptTitle==""? "Mock Harvest Report" : rptTitle}}</h1>
     <p>Details: </p>
     <ul>
         <li><b>Farm:</b>{{rptFarm}}</li>
@@ -49,6 +50,7 @@
         <li><b>Crop:</b>{{rptCrop}}</li>
     </ul>
     </form>
+    
     <p style="color: red;" v-if="harvestReportRows.length === 0">No matching records</p>
     <table v-else>
         <tr>
@@ -64,6 +66,7 @@
             <td v-for="item in log">{{item}}</td>
         </tr>
     </table>
+    </div>
 </div>
     <script>
         Vue.config.devtools = true;
@@ -82,8 +85,9 @@
                         })
                     },
                 data: {
+                    genState: false,
                     idToCropMap: new Map(),
-                    rptTitle: "Mock Harvest Report",
+                    rptTitle: "",
                     rptStartDate:'2020-05-05',
                     rptEndDate:'2020-05-15',
                     rptCrop:'',
@@ -123,6 +127,7 @@
                 methods: {
                     
                     generateRpt: function(){
+                        this.genState = true;
                         //Axios
                         timestampStart = dayjs(this.rptStartDate).unix();
                         timestampEnd = dayjs(this.rptEndDate).unix();
@@ -140,6 +145,7 @@
                             this.rptFarm =response.data.name;
                             this.rptUser=response.data.user.name;
                             this.rptLanguage=response.data.languages.en.name;
+                            
                         })
                         .catch((error) => {
                             console.log("Error Occured")
