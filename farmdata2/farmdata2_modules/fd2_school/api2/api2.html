@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Harvest Report Mockup</title>
+    <h1><strong>Harvest Report</strong></h1>
+    <p>
+        This page is a <i>mockup</i> of a simplified harvest report
+    </p>
+  </head>
+  <body>
+    <div id="app">
+    <div id="inputTitle">
+      <label for="title">Title: </label>
+      <input id="title" type="text" v-model="header">
+      
+    </div>
+    <div>
+      <label for="start-date">Start:</label>
+      <input type="date" id="start-date" name="start-date" min="2014-01-01" max="2022-01-01" :max="endDate" v-model="startDate"/>
+
+      <label for="end-date">End:</label>
+      <input type="date" id="end-date" name="end-date" min="2020-05-05" max="2022-01-01" :min="startDate"v-model="endDate"/>
+      
+    </div>
+    <div>
+      <label for="crop">Crop: </label>
+      <select id="crop" name="Crop" v-model="selectedCrop"/>
+        <option v-for="crop in cropMapToArray">{{crop}}</option>
+
+      
+      </select>
+      <label for="crop">Field: </label>
+      <select id="field" name="Field" v-model="selectedField"/>
+        <option v-for="field in areaMapToArray">{{field}}</option>
+      </select>
+      <br>
+      <button class="btn btn-primary" v-on:click='generateReportData'>Generate Report</button>
+    </div>
+<hr>
+<div v-cloak>
+  <h1>{{header ? header : 'Mock Harvest Report'}}</h1>
+  
+</div>
+
+
+<p>details</p>
+  <ul>
+    <li><strong>Farm: </strong>{{farm}}</li>
+    <li><strong>User: </strong>{{user}}</li>
+    <li><strong>Language: </strong>{{language}}</li>
+    <li><strong>Start: </strong>{{startDate}}</li>
+    <li><strong>End: </strong>{{endDate}}</li>
+    <li><strong>Crop: </strong> {{selectedCrop}}</li>
+  </ul>
+  <p v-if="table.length === 0">No harvest logs to show</p>
+  <table border="1" v-if="table.length !== 0">
+    <tr>
+      <th>Row </th><th>Date </th><th>Area </th><th>Crop </th><th>Yield</th><th>Units</th>
+    </tr>
+    <tr v-for="(item, index) in table">
+      <td>{{ index + 1 }}</td>
+      <td>{{item.date}}</td>
+      <td>{{item.area}}</td>
+      <td>{{item.crop}}</td>
+      <td>{{item.yield}}</td>
+      <td>{{item.units}}</td>
+    </tr>
+  </table>
+</div>
+  </body>
+  <script>
+    
+    var mockupVue = new Vue({
+      
+        el: "#app",
+        created() {
+          getIDToCropMap()
+          .then((theMap) => {
+            this.idToCropMap = theMap;
+          })
+          .catch((err)=>{
+            console.log("Error on getIDToCropMap @ created");
+            console.log(err);
+          }),
+          getIDToAreaMap()
+          .then((theMap) => {
+            this.idToAreaMap = theMap;
+          })
+          .catch((err)=>{
+            console.log("Error on getIDToAreaMap @ created");
+            console.log(err);
+          });
+        },
+        data: {
+            header: '',
+            startDate:'',
+            endDate:'',
+            selectedCrop: 'Kale',
+            selectedField: 'All',
+            farm: '',
+            user: '',
+            language: '',
+            table: [
+
+            ],
+            idToCropMap: new Map(),
+            idToAreaMap: new Map(),
+
+        },
+        computed: {
+          cropMapToArray(){
+            return Array.from(this.idToCropMap.values());
+          },
+          areaMapToArray(){
+            return Array.from(this.idToAreaMap.values());
+          },
+        },
+        methods: {
+          generateReportData: function() {
+
+            axios.get('/farm.json')
+            .then(response => {
+              this.farm = response.data.name;
+              this.user = response.data.user.name;
+              this.language = response.data.languages.en.name;
+            })
+            .catch(error => {
+              console.log("Error Occurred");
+              console.log(error);
+            }); 
+            this.table.push({date: this.startDate, area: this.selectedField, crop: this.selectedCrop, yield: "12", units: "Bunches"});
+            this.startDate = '';
+            this.endDate = '';
+            this.selectedCrop = 'Kale';
+            this.selectedField  = 'All';
+
+          }
+        },
+    });
+    Vue.config.devtools = true;
+  </script>
+</html>
