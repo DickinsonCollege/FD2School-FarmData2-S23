@@ -53,7 +53,7 @@
     </ul>
     <br />
     <p v-if = "harvestLog.length===0">No matching Records</p>
-    <table v-if = "harvestLog.length>0" border = "1">
+    <table v-if = "harvestReportRows.length>0" border = "1">
         
         <th><strong>Row</strong></th>
         <th><strong>Date</strong></th>
@@ -61,13 +61,15 @@
         <th><strong>Crop</strong></th>
         <th><strong>Yield</strong></th>
         <th><strong>Units</strong></th>
-        <tr v-for = "(harvest, index) in harvestLog">
-            <td>{{index+1}}</td>
-            <td>{{harvest.date}}</td>
-            <td>{{harvest.area}}</td>
-            <td>{{harvest.crop}}</td>
-            <td>{{harvest.yield}}</td>
-            <td>{{harvest.units}}</td>
+        <tr v-for = "(harvestRow, index) in harvestReportRows">
+            <td>{{index}}</td>
+            <td>{{harvestRow.date}}</td>
+            <td>{{harvestRow.area}}</td>
+            <td>{{harvestRow.crop}}</td>
+            <td>{{harvestRow.yield}}</td>
+            <td>{{harvestRow.units}}</td>
+
+          
         </tr>
       
     </table>
@@ -101,6 +103,22 @@
                     },
                     areaNames(){
                         return Array.from(this.idToAreaMap.values());
+                    },
+
+                    harvestReportRows(){
+                        let tableRows = []
+                        for(let log of this.allHarvestPage){
+                            let tableRow={
+                                date: dayjs.unix(log.timestamp).format('DD/MM/YYYY'),
+                                area: log.area[0].name,
+                                units: log.quantity[0].unit.name,
+                                yield: log.quantity[0].value,
+                                crop: this.idToCropMap.get(log.data.crop_tid),
+
+                            }
+                            tableRows.push(tableRow)
+                        }
+                        return tableRows
                     }
 
                 },
