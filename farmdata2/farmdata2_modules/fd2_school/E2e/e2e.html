@@ -38,9 +38,9 @@
     <h1 data-cy="generate-title">{{rptTitle==""? "Mock Harvest Report" : rptTitle}}</h1>
     <p>Details: </p>
     <ul>
-        <li><b>Farm:</b>{{rptFarm}}</li>
-        <li><b>User:</b>{{rptUser}}</li>
-        <li><b>Language:</b>{{rptLanguage}}</li>
+        <li><b>Farm:</b><span data-cy="farm-name">{{rptFarm}}</span></li>
+        <li><b>User:</b><span data-cy="farm-user">{{rptUser}}</span></li>
+        <li><b>Language:</b><span data-cy="farm-language">{{rptLanguage}}</span></li>
     </ul>
     <br>
     <form>
