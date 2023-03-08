@@ -30,8 +30,8 @@
         <button type="button" class="btn btn-primary" @click='genReport'>Generate Report</button>
     <hr> 
 
-        <p v-if="tables.length === 0">There are no matching records!</p>
-        <div v-if="tables.length !== 0">
+        <p v-if="harvestReportRows.length === 0">There are no matching records!</p>
+        <div v-if="harvestReportRows.length !== 0">
             <h2 v-cloak> {{ rptTitle ? rptTitle: "Mock Harvest Report" }} </h2>
                 <p> Details: </p>
                 <ul>
@@ -51,7 +51,7 @@
                     <th>Yield</th>
                     <th>Units</th>
                 </tr>
-                <tr v-for = "(data,index) in tables">
+                <tr v-for = "(data,index) in harvestReportRows">
                     <td >{{index + 1}}</td>
                     <td >{{data.date}}</td>
                     <td >{{data.area}}</td>
@@ -81,7 +81,7 @@
                 "Chuau-1",
                 "SQ7"
             ],
-            tables: [ ],
+            // tables: [ ],
             tablesFromAPI: [],
             farmName: '',
             userID: '',
@@ -91,7 +91,21 @@
         computed: {
             cropNames() {
                 return Array.from(this.$data.idToCropMap.values());
-            }
+            },
+            harvestReportRows() {
+                let tableRows = []
+                for(let log of this.tablesFromAPI) {
+                    let tableRow = {
+                        date: dayjs.unix(log.timestamp).format('YYYY-MM-DD'),
+                        area: log.area[0].name,
+                        crop: this.idToCropMap.get(log.data.crop_tid),
+                        yield: log.quantity[0].value,
+                        units: log.quantity[0].unit.name,
+                    }
+                    tableRows.push(tableRow)
+                }
+                return tableRows
+            },
         },
         methods: {
             genReport: function() {
@@ -106,19 +120,16 @@
                     console.log('Error Occured')
                     console.log(error)
                 })
-                    this.tables.push({date:"2020-05-05", area:"Chuau-1", crop:"Kale", yield:10, units:"Bunches"});
+                    // this.tables.push({date:"2020-05-05", area:"Chuau-1", crop:"Kale", yield:10, units:"Bunches"});
 
                     let srtDateTS = dayjs(this.rptStart).unix();
                     let endDateTS = dayjs(this.rptEnd).unix();
-                    console.log(srtDateTS, endDateTS)
 
                     let req = "/log.json?type=farm_harvest&timestamp[ge]="+srtDateTS+"&timestamp[le]="+endDateTS;
-                    console.log(req)
-
 
                     getAllPages(req, this.tablesFromAPI)
                     .then(() => {
-                        //currently left blank on purpose
+                      
                     })
                     .catch((err) => {
                          console.log("Error in getAllPages step.")
