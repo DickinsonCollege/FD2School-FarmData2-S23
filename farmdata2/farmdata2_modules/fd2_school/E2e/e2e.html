@@ -21,7 +21,7 @@
         <label for="enddate">End: </label>
         <input type="date" v-bind:min="rptStartDate" v-model="rptEndDate" max="2022-01-01" value="2020-05-15" data-cy="end-date"> <br><br>
         <label for="crop">Crop: </label>
-        <select name="crop" v-model="rptCrop" id="crop">
+        <select name="crop" v-model="rptCrop" id="crop" data-cy="crop-list">
             <option v-for="item in cropNames">{{item}}</option>
             </select>
         <label for="field">Area: </label>
