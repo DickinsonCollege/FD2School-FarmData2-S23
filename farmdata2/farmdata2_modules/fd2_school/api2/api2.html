@@ -131,6 +131,8 @@
             this.table.push({date: this.startDate, area: this.selectedField, crop: this.selectedCrop, yield: "12", units: "Bunches"});
             this.startDate = '';
             this.endDate = '';
+            let timestamp = dayjs(myDate).unix();
+            console.log(timestamp);
             this.selectedCrop = 'Kale';
             this.selectedField  = 'All';
 
