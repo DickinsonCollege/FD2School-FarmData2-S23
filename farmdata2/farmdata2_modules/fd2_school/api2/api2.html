@@ -128,11 +128,12 @@
             harvestLogAPIRequest= harvestLogAPIRequest.replace('PUTSTARTHERE',timestampStart);
             harvestLogAPIRequest= harvestLogAPIRequest.replace('PUTENDHERE', timestampEnd);
             console.log(harvestLogAPIRequest);
-            getAllPages(harvestLogAPIRequest, this.harvestPages)
+            getAllPages(harvestLogAPIRequest, result)
               .then(() => {
                   // All of the requested records have now been added to result.
                   // Additional processing can happen here if necessary,
                   // or then may be omitted.
+                  this.harvestPages = result;
               })
               .catch((err) => {
                   console.log(err);
