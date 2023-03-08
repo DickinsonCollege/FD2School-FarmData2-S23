@@ -61,7 +61,7 @@
         <th><strong>Crop</strong></th>
         <th><strong>Yield</strong></th>
         <th><strong>Units</strong></th>
-        <tr v-for = "(harvestRow, index) in harvestReportRows">
+        <tr v-for = "(harvestRow, index) in harvestReportRows" v-if ="rptCrop==harvestRow.crop">
             <td>{{index}}</td>
             <td>{{harvestRow.date}}</td>
             <td>{{harvestRow.area}}</td>
@@ -136,9 +136,7 @@
                             console.log('Error Occurred')
                             console.log(error)
                         })
-                        if(this.harvestLog.length==0){
-                            this.harvestLog.push({date: "2018-05-01",area: "Orion-3", crop: "Kale",yield:12, units: "Bunches"})
-                        }
+                       
 
                         let startTimeStamp = dayjs(this.rptStartDate).unix();
                         let endTimeStamp = dayjs(this.rptEndDate).unix();
@@ -147,7 +145,7 @@
                         console.log(x);
                         getAllPages(x,this.allHarvestPage)
                         .then(()=>{
-                            //console.log(this.allHarvestPage);
+                           
                            
                             
                         })
@@ -162,7 +160,7 @@
                 created(){
                     getIDToCropMap()
                     .then((theMap)=>{
-                        //console.log(theMap);
+                       
                         this.idToCropMap = theMap;
                         
                     })
@@ -172,7 +170,7 @@
 
                     getIDToAreaMap()
                     .then((theMap)=>{
-                        //console.log(theMap);
+                       
                         this.idToAreaMap = theMap;
                         
                     })
