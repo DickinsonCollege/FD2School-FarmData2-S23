@@ -8,7 +8,7 @@
     </style>
 </head>
 <body>
-    <h1>Harvest Report</h1>
+    <h1 data-cy="page-header">Harvest Report</h1>
     
     <p>This page is a <i>mockup</i> of a simplified harvest report.</p>
     <div id="vuecontent" v-cloak>
@@ -17,9 +17,9 @@
         <input type="text" name="title" v-model="rptTitle" id="title" value="Mock Harvest Report"> 
         <br><br>
         <label for="startdate">Start: </label>
-        <input type="date" min="2014-01-01" v-model="rptStartDate" v-bind:max="rptEndDate" value="2020-05-05">
+        <input type="date" min="2014-01-01" v-model="rptStartDate" v-bind:max="rptEndDate" value="2020-05-05" data-cy="start-date">
         <label for="enddate">End: </label>
-        <input type="date" v-bind:min="rptStartDate" v-model="rptEndDate" max="2022-01-01" value="2020-05-15"> <br><br>
+        <input type="date" v-bind:min="rptStartDate" v-model="rptEndDate" max="2022-01-01" value="2020-05-15" data-cy="end-date"> <br><br>
         <label for="crop">Crop: </label>
         <select name="crop" v-model="rptCrop" id="crop">
             <option v-for="item in cropNames">{{item}}</option>
@@ -84,8 +84,8 @@
                 data: {
                     idToCropMap: new Map(),
                     rptTitle: "Mock Harvest Report",
-                    rptStartDate:'2020-01-01',
-                    rptEndDate:'2020-01-01',
+                    rptStartDate:'2020-05-05',
+                    rptEndDate:'2020-05-15',
                     rptCrop:'',
                     rptFarm:'',
                     rptUser:'',
