@@ -26,12 +26,12 @@
         <div id="reportCropArea">
             <br><label for="crop">Crop: </label> 
             <select id="simple" v-model="reportCrop">
-                <option v-for="crop in cropNames">{{ crop }}</option>
+                <option v-for="c in cropNames">{{ c }}</option>
             </select>
 
             <label for="field">Area: </label> 
             <select id="simple" v-model="reportArea">
-                <option v-for="area in areaNames">{{ area }}</option>
+                <option v-for="a in areaNames">{{ a }}</option>
             </select>
             <br>
         </div>
@@ -111,7 +111,6 @@
                 reportEndDate: '' ,
                 reportCrop: '' ,
                 reportArea: '' ,
-                table:[],
                 reportLanguage: '' ,
                 reportUser: '' ,
                 reportFarmName: '' ,
@@ -138,9 +137,10 @@
                             yield: log.quantity[0].value,
                             units: log.quantity[0].unit.name,
                             crop: this.idToCropMap.get(log.data.crop_tid)
-
                         }
-                        tableRows.push(tableRow)
+                        if (tableRow.crop == this.reportCrop){
+                            tableRows.push(tableRow)
+                        }
                     }
                     return tableRows
                 }
