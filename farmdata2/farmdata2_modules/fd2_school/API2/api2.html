@@ -115,6 +115,8 @@
                 reportLanguage: '' ,
                 reportUser: '' ,
                 reportFarmName: '' ,
+                myDate: '' ,
+                allHarvestLogs:[] ,
                 idToCropMap: new Map() ,
                 idToAreaMap: new Map() ,
             } ,
@@ -146,9 +148,26 @@
                     if (this.reportVis === false){
                         this.reportVis = true; //when the generate button is clicked.
 
-                        this.table.push({date:"2018-05-01" , area:"Orion-3" , crop:"Kale" , yield:"10" , units:"Bunches"},
-                                        {date:"2018-05-01" , area:"Orion-3" , crop:"Kale" , yield:"10" , units:"Bunches"},
-                                        {date:"2018-05-01" , area:"Orion-3" , crop:"Kale" , yield:"10" , units:"Bunches"});
+                        this.table.push({date:"2018-05-01" , area:"Orion-3" , crop:"Kale" , yield:"10" , units:"Bunches"});
+
+                        //convert the dates to timestamp
+                        let startDate = dayjs(this.reportStartDate).unix();
+                        let endDate = dayjs(this.reportEndDate).unix();
+                        //display converted timestamp
+                        console.log(startDate);
+                        console.log(endDate);
+
+                        let requestLog = "/log.json?type=farm_harvest&timestamp[ge]=" + startDate + "& timestamp[le]=" + endDate;
+                        console.log(requestLog);
+
+                        getAllPages(requestLog, this.allHarvestLogs)
+                        .then(() => {
+                        // All of the requested records have now been added to result.
+                        })
+                        .catch((error) => {
+                            console.log("Error occurred in getting allPages")
+                            console.log(error)
+                        })
                     }
                 } ,
                 //when report is deleted its updates the index
