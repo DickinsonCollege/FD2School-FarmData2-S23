@@ -57,7 +57,7 @@
             </div>
                 
 
-                <table border="1" style="width: 26%" v-if="table.length > 0">
+                <table border="1" style="width: 35%" v-if="harvestReportRows.length > 0">
                     <tr>
                         <th scope="col">Row</th>
                         <th scope="col">Date</th>
@@ -67,7 +67,7 @@
                         <th scope="col">Units</th>
                         <th scope="col">Delete</th>
                     </tr>
-                    <tr v-for="(t,index) in table">
+                    <tr v-for="(t,index) in harvestReportRows">
                         <td>{{ index+1 }}</td>
                         <td>{{ t.date }}</td>
                         <td>{{ t.area }}</td>
@@ -128,7 +128,23 @@
                 //Show area names without the associated key.
                 areaNames: function(){
                     return Array.from(this.idToAreaMap.values())
+                } ,
+                harvestReportRows() {
+                    let tableRows = []
+                    for(let log of this.allHarvestLogs) {
+                        let tableRow = {
+                            date: dayjs.unix(log.timestamp).format("YYYY-MM-DD"),
+                            area: log.area[0].name,
+                            yield: log.quantity[0].value,
+                            units: log.quantity[0].unit.name,
+                            crop: this.idToCropMap.get(log.data.crop_tid)
+
+                        }
+                        tableRows.push(tableRow)
+                    }
+                    return tableRows
                 }
+
             } ,
             methods:{
                 cropDetail: function(){
@@ -148,17 +164,11 @@
                     if (this.reportVis === false){
                         this.reportVis = true; //when the generate button is clicked.
 
-                        this.table.push({date:"2018-05-01" , area:"Orion-3" , crop:"Kale" , yield:"10" , units:"Bunches"});
-
                         //convert the dates to timestamp
                         let startDate = dayjs(this.reportStartDate).unix();
                         let endDate = dayjs(this.reportEndDate).unix();
-                        //display converted timestamp
-                        console.log(startDate);
-                        console.log(endDate);
 
                         let requestLog = "/log.json?type=farm_harvest&timestamp[ge]=" + startDate + "& timestamp[le]=" + endDate;
-                        console.log(requestLog);
 
                         getAllPages(requestLog, this.allHarvestLogs)
                         .then(() => {
@@ -172,7 +182,7 @@
                 } ,
                 //when report is deleted its updates the index
                 deleteReport: function(index){
-                    this.table.splice(index,1);
+                    this.harvestReportRows.splice(index,1);
                 } 
             }
         });
