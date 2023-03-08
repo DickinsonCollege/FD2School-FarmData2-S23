@@ -90,6 +90,8 @@
                     language:"",
                     idToCropMap: new Map(),
                     idToAreaMap: new Map(),
+                    //allPages:["ds"],
+                    allHarvestPage:[],
 
                     
                 },
@@ -119,8 +121,23 @@
                         if(this.harvestLog.length==0){
                             this.harvestLog.push({date: "2018-05-01",area: "Orion-3", crop: "Kale",yield:12, units: "Bunches"})
                         }
+
+                        let startTimeStamp = dayjs(this.rptStartDate).unix();
+                        let endTimeStamp = dayjs(this.rptEndDate).unix();
+
+                        let x = "/log.json?type=farm_harvest&timestamp[ge]="+startTimeStamp+"&timestamp[le]="+endTimeStamp;
+                        console.log(x);
+                        getAllPages(x,this.allHarvestPage)
+                        .then(()=>{
+                            //console.log(this.allHarvestPage);
+                           
+                            
+                        })
+                        .catch((error)=>{
+                            console.log(error);
+                        })
+
                         
-                      
                     },
                 },
 
@@ -137,7 +154,7 @@
 
                     getIDToAreaMap()
                     .then((theMap)=>{
-                        console.log(theMap);
+                        //console.log(theMap);
                         this.idToAreaMap = theMap;
                         
                     })
