@@ -151,10 +151,9 @@
               result[1] = result[1].replace("log?","log.json?");
               const numArr = result[1].split("page=");
               let numPages = numArr[1];
-              console.log(numPages);
-              this.harvestPages = result;
+              //console.log(numPages);
               for(var i = 0; i < numPages; i++){
-                console.log(numArr[0] + "page=" + i);
+                this.harvestPages.push("" + numArr[0] + "page=" + i);
               }
             
             })
