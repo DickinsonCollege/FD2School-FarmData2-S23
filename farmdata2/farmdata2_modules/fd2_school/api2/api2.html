@@ -129,7 +129,7 @@
             harvestLogAPIRequest= harvestLogAPIRequest.replace('PUTSTARTHERE',timestampStart);
             harvestLogAPIRequest= harvestLogAPIRequest.replace('PUTENDHERE', timestampEnd);
             console.log(harvestLogAPIRequest);
-            let result = [];
+            let result = [2];
            
                     
             axios.get('/farm.json')
@@ -145,9 +145,8 @@
             }); 
             axios.get(harvestLogAPIRequest)
             .then(response => {
-              this.harvestPages[0] = response.data.first;
-              this.harvestPages[1] = response.data.last;
-
+              console.log(response.data.first);
+            
             })
             .catch(error => {
               console.log("Error Occurred");
