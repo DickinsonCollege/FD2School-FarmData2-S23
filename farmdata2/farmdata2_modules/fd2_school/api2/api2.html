@@ -117,6 +117,16 @@
           areaMapToArray(){
             return Array.from(this.idToAreaMap.values());
           },
+          harvestReportRows() {
+            let tableRows = []
+            for(let log of this.harvestLogs) {
+              let tableRow = {
+                date: log.timestamp,
+              }
+              tableRows.push(tableRow)
+            }
+            return tableRows
+          },
         },
         methods: {
           generateReportData: function() {
