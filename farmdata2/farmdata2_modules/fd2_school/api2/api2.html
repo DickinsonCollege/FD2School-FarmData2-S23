@@ -128,7 +128,7 @@
             harvestLogAPIRequest= harvestLogAPIRequest.replace('PUTSTARTHERE',timestampStart);
             harvestLogAPIRequest= harvestLogAPIRequest.replace('PUTENDHERE', timestampEnd);
             console.log(harvestLogAPIRequest);
-            getAllPages(harvestLogAPIRequest, this.harvestPages)
+            getAllPages('/log.json?type=farm_harvest&timestamp[ge]=1625544000&timestamp[le]=1640149200', this.harvestPages)
               .then(()=> {
                   console.log(this.harvestPages);
 
