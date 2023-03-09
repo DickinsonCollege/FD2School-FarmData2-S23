@@ -145,7 +145,8 @@
             }); 
             axios.get(harvestLogAPIRequest)
             .then(response => {
-              this.harvestPages = response.Array;
+              this.harvestPages[0] = response.data.first;
+              this.harvestPages[1] = response.data.last;
 
             })
             .catch(error => {
