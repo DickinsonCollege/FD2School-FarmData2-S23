@@ -129,50 +129,18 @@
             harvestLogAPIRequest= harvestLogAPIRequest.replace('PUTSTARTHERE',timestampStart);
             harvestLogAPIRequest= harvestLogAPIRequest.replace('PUTENDHERE', timestampEnd);
             console.log(harvestLogAPIRequest);
-            axios.get(harvestLogAPIRequest)
-            .then(response => {
-             response.data.list.map(log => {
-
-                if (log.data != null) {
-
-                    log.data = JSON.parse(log.data)
-
-                }
-
-                })
-
-                arr.push.apply(arr,response.data.list)
-
-                return response.data
-
-                })
-
-                .then(function(data) {
-
-                if (!data.hasOwnProperty('next')) {
-
-                resolve(arr)
-
-                }
-
-                else {
-
-                return getAllPages(data.next, arr)
-
-                .then(function() {
-
-                    resolve(arr)
-
-                })
-
-                }
-                console.log(arr);
-
-            })
-            .catch(error => {
-              console.log("Error Occurred");
-              console.log(error);
-            }); 
+            let result = [];
+            getAllPages(harvestLogAPIRequest, result)
+                    .then(() => {
+                        // All of the requested records have now been added to result.
+                        // Additional processing can happen here if necessary,
+                        // or then may be omitted.
+                        console.log(result);
+                    })
+                    .catch((err) => {
+                        // An error occurred during the requests, process it here.
+                    });
+                    
             axios.get('/farm.json')
             .then(response => {
               this.farm = response.data.name;
