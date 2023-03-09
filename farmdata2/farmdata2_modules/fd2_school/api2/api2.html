@@ -130,16 +130,7 @@
             harvestLogAPIRequest= harvestLogAPIRequest.replace('PUTENDHERE', timestampEnd);
             console.log(harvestLogAPIRequest);
             let result = [];
-            getAllPages(harvestLogAPIRequest, result)
-                    .then(() => {
-                        // All of the requested records have now been added to result.
-                        // Additional processing can happen here if necessary,
-                        // or then may be omitted.
-                        console.log(result);
-                    })
-                    .catch((err) => {
-                        // An error occurred during the requests, process it here.
-                    })
+           
                     
             axios.get('/farm.json')
             .then(response => {
@@ -152,7 +143,15 @@
               console.log("Error Occurred");
               console.log(error);
             }); 
-           
+            axios.get(harvestLogAPIRequest)
+            .then(response => {
+              this.harvestPages = response.Array;
+
+            })
+            .catch(error => {
+              console.log("Error Occurred");
+              console.log(error);
+            }); 
             this.table.push({date: this.startDate, area: this.selectedField, crop: this.selectedCrop, yield: "12", units: "Bunches"});
             this.startDate = '';
             this.endDate = '';
