@@ -120,7 +120,7 @@
         },
         methods: {
           generateReportData: function() {
-            let harvestLogAPIRequest = 'http://fd2_farmdata2/log.json?type=farm_harvest&timestamp[ge]=PUTSTARTHERE&timestamp[le]=PUTENDHERE';
+            let harvestLogAPIRequest = '/log.json?type=farm_harvest&timestamp[ge]=PUTSTARTHERE&timestamp[le]=PUTENDHERE';
             let timestampStart = dayjs(this.startDate).unix();
             let timestampEnd = dayjs(this.endDate).unix();
             console.log(timestampStart);
@@ -132,6 +132,8 @@
               .then((response)=> {
                   this.harvestPages = response;
                   console.log(response);
+                  console.log(response.Array);
+                  console.log(response.Map);
                   // All of the requested records have now been added to result.
                   // Additional processing can happen here if necessary,
                   // or then may be omitted.
