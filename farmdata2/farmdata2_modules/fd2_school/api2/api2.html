@@ -147,8 +147,8 @@
             .then(response => {
               result[0] = response.data.first;
               result[1] = response.data.last;
-              result[0].replace("log?","log?.json");
-              result[1].replace("log?","log?.json");
+              result[0] = result[0].replace("log?","log?.json");
+              result[1] = result[1].replace("log?","log?.json");
               console.log(result[0]);
               console.log(result[1]);
             
