@@ -153,6 +153,9 @@
               let numPages = numArr[1];
               console.log(numPages);
               this.harvestPages = result;
+              for(var i = 0; i < numPages; i++){
+                console.log(numArr[0] + "page=" + i);
+              }
             
             })
             .catch(error => {
