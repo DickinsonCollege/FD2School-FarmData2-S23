@@ -149,6 +149,9 @@
               result[1] = response.data.last;
               result[0] = result[0].replace("log?","log.json?");
               result[1] = result[1].replace("log?","log.json?");
+              const numArr = result[1].split("page=");
+              let numPages = numArr[1];
+              console.log(numPages);
               this.harvestPages = result;
             
             })
