@@ -155,31 +155,12 @@
               console.log("Error Occurred");
               console.log(error);
             }); 
-            axios.get(harvestLogAPIRequest)
-            .then(response => {
-              result[0] = response.data.first;
-              result[1] = response.data.last;
-              result[0] = result[0].replace("log?","log.json?");
-              result[1] = result[1].replace("log?","log.json?");
-              const numArr = result[1].split("page=");
-              let numPages = numArr[1];
-              //console.log(numPages);
-              for(var i = 0; i < numPages; i++){
-
-                this.harvestPages.push("" + numArr[0].replace("", "") + "page=" + i);
-              }
-            
-            })
-            .catch(error => {
-              console.log("Error Occurred");
-              console.log(error);
-            }); 
              getAllPages(harvestLogAPIRequest)
               .then((res) => {
                 console.log(res);
 
                   // res is a newly created array that is
-                this.planting = res;
+                this.harvestPages = res;
                   // filled with all of the requested records.
 
               })
