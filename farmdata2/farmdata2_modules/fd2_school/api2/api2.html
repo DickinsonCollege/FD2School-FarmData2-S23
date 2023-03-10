@@ -122,14 +122,17 @@
             for(let log of this.harvestPages) {
               let tableRow = {
                 
-                date: log.timestamp,
+                date: dayjs.unix(log.timestamp).format('DD/MM/YYYY'),
                 area: log.area[0].name,
                 yield: log.quantity[0].value,
                 unit: log.quantity[0].unit.name,
                 crop: this.idToCropMap.get(log.data.crop_tid)
                  
               }
-              tableRows.push(tableRow)
+              if(crop == selectedCrop){
+                tableRows.push(tableRow)
+              }
+              
             }
             return tableRows
           },
