@@ -129,7 +129,7 @@
                 crop: this.idToCropMap.get(log.data.crop_tid)
                  
               }
-              let cropStr = crop;
+              let cropStr = this.idToCropMap.get(log.data.crop_tid);
               let selectedCropStr = this.selectedCrop;
               
               console.log(cropStr);
