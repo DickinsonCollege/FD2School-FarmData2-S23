@@ -124,8 +124,8 @@
                 
                 date: log.timestamp,
                 area: log.area[0].name,
-                yield: log.area[0].quantity.id,
-                unit: log.area[0].quantity.unit,
+                yield: log.quantity.id,
+                unit: log.quantity.unit,
                 crop: this.idToCropMap.get(log.data.crop_tid)
                  
               }
