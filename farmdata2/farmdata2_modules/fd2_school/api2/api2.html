@@ -106,6 +106,7 @@
             harvestPages: [
 
             ],
+            planting: [],
             idToCropMap: new Map(),
             idToAreaMap: new Map(),
 
@@ -121,6 +122,7 @@
             let tableRows = []
             for(let log of this.harvestPages) {
               let tableRow = {
+                
                 date: log.timestamp,
               }
               tableRows.push(tableRow)
@@ -172,6 +174,20 @@
               console.log("Error Occurred");
               console.log(error);
             }); 
+             getAllPages('/farm_asset.json?type=planting')
+              .then((res) => {
+
+                  // res is a newly created array that is
+                this.planting = res;
+                  // filled with all of the requested records.
+
+              })
+
+              .catch((err) => {
+
+                  // An error occurred during the requests, process it here.
+
+              })
             this.table.push({date: this.startDate, area: this.selectedField, crop: this.selectedCrop, yield: "12", units: "Bunches"});
             this.startDate = '';
             this.endDate = '';
