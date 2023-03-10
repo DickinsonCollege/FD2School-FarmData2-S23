@@ -132,9 +132,10 @@
               let cropStr = this.idToCropMap.get(log.data.crop_tid);
               let selectedCropStr = this.selectedCrop;
               
-              console.log(cropStr);
-              console.log(selectedCropStr);
+             
+              if(cropStr == selectedCropStr){
               tableRows.push(tableRow);
+              }
               
               
             }
