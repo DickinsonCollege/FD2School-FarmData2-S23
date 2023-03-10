@@ -95,7 +95,7 @@
             header: '',
             startDate:'',
             endDate:'',
-            selectedCrop: 'Kale',
+            selectedCrop: '',
             selectedField: 'All',
             farm: '',
             user: '',
@@ -129,7 +129,7 @@
                 crop: this.idToCropMap.get(log.data.crop_tid)
                  
               }
-              if(crop == selectedCrop){
+              if(crop == this.selectedCrop){
                 tableRows.push(tableRow)
               }
               
