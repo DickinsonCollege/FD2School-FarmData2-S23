@@ -52,12 +52,12 @@
     <li><strong>End: </strong>{{endDate}}</li>
     <li><strong>Crop: </strong> {{selectedCrop}}</li>
   </ul>
-  <p v-if="table.length === 0">No harvest logs to show</p>
-  <table border="1" v-if="table.length !== 0">
+  <p v-if="harvestPageslength === 0">No harvest logs to show</p>
+  <table border="1" v-if="harvestPages.length !== 0">
     <tr>
       <th>Row </th><th>Date </th><th>Area </th><th>Crop </th><th>Yield</th><th>Units</th>
     </tr>
-    <tr v-for="(item, index) in table">
+    <tr v-for="(item, index) in harvestPages">
       <td>{{ index + 1 }}</td>
       <td>{{item.date}}</td>
       <td>{{item.area}}</td>
