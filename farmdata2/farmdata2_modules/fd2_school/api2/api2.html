@@ -176,9 +176,10 @@
             }); 
              getAllPages('/farm_asset.json?type=planting')
               .then((res) => {
+                console.log(res);
 
                   // res is a newly created array that is
-                this.planting = res.data;
+                this.planting = res;
                   // filled with all of the requested records.
 
               })
