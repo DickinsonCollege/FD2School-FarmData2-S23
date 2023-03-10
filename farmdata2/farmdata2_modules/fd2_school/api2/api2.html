@@ -63,7 +63,7 @@
       <td>{{item.area}}</td>
       <td>{{item.crop}}</td>
       <td>{{item.yield}}</td>
-      <td>{{item.units}}</td>
+      <td>{{item.unit}}</td>
     </tr>
   </table>
 </div>
@@ -125,6 +125,8 @@
                 date: log.timestamp,
                 area: log.area[0].name,
                 yield: log.area[0].quantity.id,
+                unit: log.area[0].quantity.unit,
+                crop: this.idToCropMap.get(log.data.crop_tid)
                  
               }
               tableRows.push(tableRow)
