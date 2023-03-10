@@ -52,7 +52,7 @@
     <li><strong>End: </strong>{{endDate}}</li>
     <li><strong>Crop: </strong> {{selectedCrop}}</li>
   </ul>
-  <p v-if="harvestPageslength === 0">No harvest logs to show</p>
+  <p v-if="harvestPages.length === 0">No harvest logs to show</p>
   <table border="1" v-if="harvestPages.length !== 0">
     <tr>
       <th>Row </th><th>Date </th><th>Area </th><th>Crop </th><th>Yield</th><th>Units</th>
