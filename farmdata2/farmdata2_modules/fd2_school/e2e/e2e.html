@@ -22,7 +22,7 @@
                 :min="reportStartDate" max="2022-01-01" data-cy="end-date">
         <br><br>
         <label for="crop">Crop:</label>
-        <select id="crop" name="crop" v-model="reportCrop">
+        <select id="crop" name="crop" v-model="reportCrop" data-cy="crop-dropdown">
             <option selected v-for="crop in cropNames">{{crop}}</option>
         </select>
         <label for="field">Field:</label>
