@@ -30,10 +30,10 @@
             <option selected v-for="area in areaNames">{{area}}</option>
         </select>
         <br><br>
-        <input type="button" value="Generate Report" @click="addHarvestLog">
+        <input type="button" value="Generate Report" @click="addHarvestLog" data-cy="generate-report-button">
         <div v-if="showReport === 'true'">
             <hr>
-            <h1>{{reportTitle ? reportTitle:"Mock Harvest Report"}}</h1>
+            <h1 data-cy="report-title">{{reportTitle ? reportTitle:"Mock Harvest Report"}}</h1>
             <p>Details:
                 <ul> 
                     <li><strong>Farm:</strong>{{reportFarm}}</li>
