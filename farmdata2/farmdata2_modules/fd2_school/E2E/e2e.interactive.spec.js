@@ -17,4 +17,14 @@ describe("Test the harvest report interactive values", () => {
         cy.get("[data-cy=language]").should("have.text", "English");
     });
 
+    it("Check date input change", () => {
+        cy.get("[data-cy=start-date]").should("have.value", "2020-05-05");
+        cy.get("[data-cy=end-date]").should("have.value", "2020-05-15");
+        cy.get("[data-cy=crop-drop]").should("have.value", "All");
+        cy.get("[data-cy=start-date]").type("2020-07-07").should("have.value", "2020-07-07");
+        cy.get("[data-cy=end-date]").type("2020-08-08").should("have.value", "2020-08-08");
+        cy.get("[data-cy=crop-drop]").select("CHARD").should("have.value", "CHARD")
+    });
+
+
 });
