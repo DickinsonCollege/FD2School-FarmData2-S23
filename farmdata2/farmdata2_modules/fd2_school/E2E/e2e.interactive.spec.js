@@ -33,5 +33,14 @@ describe("Test the harvest report interactive values", () => {
         cy.get("[data-cy=report-title]").should("have.text", "Testing");
     });
 
+    it("Check No Harvest Display", () => {
+        cy.get("[data-cy=generate-button]").click();
+        cy.get("[data-cy=no-record]").should("not.exist");
+        cy.get("[data-cy=start-date]").type("2021-07-07");
+        cy.get("[data-cy=end-date]").type("2021-07-08");
+        cy.get("[data-cy=generate-button]").click();
+        cy.get("[data-cy=no-record]").should("be.visible");
+    });
+
 
 });
