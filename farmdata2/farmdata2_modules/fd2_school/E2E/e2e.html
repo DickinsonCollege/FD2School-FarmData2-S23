@@ -29,12 +29,12 @@
 
 <br><br>
 
-<input type="button" value="Generate Report" @click='generate' v-bind:disabled="inValidDate"/>
+<input data-cy="generate-button" type="button" value="Generate Report" @click='generate' v-bind:disabled="inValidDate"/>
 
 <hr>
 
 <div v-if="rpStat">
-  <h1>{{titlerp ? titlerp : "Mock Harvest Report"}}</h1>
+  <h1 data-cy="report-title">{{titlerp ? titlerp : "Mock Harvest Report"}}</h1>
   <dd>Details:</dd>
   <br>
   <ul>
