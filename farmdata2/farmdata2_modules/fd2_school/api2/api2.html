@@ -101,6 +101,7 @@
             farm: '',
             user: '',
             language: '',
+            selectedCropForRows: '',
             table: [
 
             ],
@@ -131,10 +132,10 @@
                  
               }
               let cropStr = this.idToCropMap.get(log.data.crop_tid);
-              let selectedCropStr = this.selectedCrop;
+             
               
              
-              if(cropStr == selectedCropStr){
+              if(cropStr == this.selectedCropForRows){
               tableRows.push(tableRow);
               }
               
@@ -186,7 +187,7 @@
             this.table.push({date: this.startDate, area: this.selectedField, crop: this.selectedCrop, yield: "12", units: "Bunches"});
             this.startDate = '';
             this.endDate = '';
-            
+            this.selectedCropForRows = this.selectedCrop;
             
             this.selectedCrop = 'Kale';
             this.selectedField  = 'All';
