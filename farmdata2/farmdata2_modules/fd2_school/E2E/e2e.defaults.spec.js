@@ -19,4 +19,9 @@ describe("Test the harvest report default values", () => {
         cy.get("[data-cy=crop-drop]").children().eq(111).should("have.value", "ZUCCHINI");
         cy.get("[data-cy=crop-drop]").children().should("have.length", 112);
     });
+
+    it("Check Default Value of Crop Dropdown", () => {
+        cy.get("[data-cy=crop-drop]").should("have.value", "All");
+    });
+
 });
