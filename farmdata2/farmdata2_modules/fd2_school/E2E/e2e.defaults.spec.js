@@ -24,4 +24,11 @@ describe("Test the harvest report default values", () => {
         cy.get("[data-cy=crop-drop]").should("have.value", "All");
     });
 
+    it("Testing Area Dropdown", () => {
+        cy.get("[data-cy=area-drop]").children().eq(1).should("have.value", "A");
+        cy.get("[data-cy=area-drop]").children().eq(5).should("have.value", "ALF-3");
+        cy.get("[data-cy=area-drop]").children().eq(70).should("have.value", "Z");
+        cy.get("[data-cy=area-drop]").children().should("have.length", 71);
+    });
+
 });
