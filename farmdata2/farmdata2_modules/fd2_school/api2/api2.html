@@ -150,11 +150,10 @@
             let timestampStart = dayjs(this.startDate).unix();
             let timestampEnd = dayjs(this.endDate).unix();
             let arr = [];
-            console.log(timestampStart);
-            console.log(timestampEnd);
+            
             harvestLogAPIRequest= harvestLogAPIRequest.replace('PUTSTARTHERE',timestampStart);
             harvestLogAPIRequest= harvestLogAPIRequest.replace('PUTENDHERE', timestampEnd);
-            console.log(harvestLogAPIRequest);
+            
             let result = [2];
            
                     
@@ -171,7 +170,7 @@
             }); 
              getAllPages(harvestLogAPIRequest)
               .then((res) => {
-                console.log(res);
+                
 
                   // res is a newly created array that is
                 this.harvestPages = res;
@@ -180,7 +179,8 @@
               })
 
               .catch((err) => {
-
+                onsole.log("Error Occurred");
+              console.log(err);
                   // An error occurred during the requests, process it here.
 
               })
