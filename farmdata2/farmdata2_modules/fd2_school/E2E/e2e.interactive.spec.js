@@ -26,5 +26,12 @@ describe("Test the harvest report interactive values", () => {
         cy.get("[data-cy=crop-drop]").select("CHARD").should("have.value", "CHARD")
     });
 
+    it("Check title bound", () =>{
+        cy.get("[data-cy=generate-button]").click();
+        cy.get("[data-cy=report-title]").should("have.text", "My Sample Harvest Report");
+        cy.get("[data-cy=input-title]").clear().type("Testing");
+        cy.get("[data-cy=report-title]").should("have.text", "Testing");
+    });
+
 
 });
