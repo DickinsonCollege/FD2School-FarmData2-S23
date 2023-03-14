@@ -96,10 +96,11 @@
             //crops: ["Broccoli", "Kale", "Peas"] ,
             areas: ["All", "Chuau-1", "SQ7"],
             harvestLog: [],
+            result: [],
             farm:"",
             user:"",
             language: "",
-            idToCropMap: new Map()
+            idToCropMap: new Map(),
         },
         computed: {
             cropNames(){
@@ -108,6 +109,18 @@
         },
         methods: {
             addLog: function(){
+
+                let startTimestamp = dayjs(this.startDate).unix();
+                let endTimestamp = dayjs(this.endDate).unix();
+
+                // Display timestamps in console
+                console.log("Start timestamp:", startTimestamp);
+                console.log("End timestamp:", endTimestamp);
+
+                // Convert start and end dates to timestamps
+                let request = `/log.json?type=farm_harvest&timestamp[ge]=${startTimestamp}&timestamp[le]=${endTimestamp}`;
+                console.log(request);
+                
                 axios.get('/farm.json')  // this line sends the request.
                 .then((response) => {
                     this.farm = response.data.name;
@@ -119,8 +132,21 @@
                     console.log(error)
                 })
                 this.harvestLog.push({date:"2018-05-01", area:"Orion-3", crop:"Kale", yield:"12", units:"Bunches"});
-            }
-            
+
+                 // Assumes that result is an existing array
+                getAllPages('/log.json?type=farm_harvest&timestamp[ge]=1588651200&timestamp[le]=1589515200', this.result)
+                .then(() => {
+                // All of the requested records have now been added to result.
+                // Additional processing can happen here if necessary,
+                // or then may be omitted.
+                })
+                .catch((err) => {
+                // An error occurred during the requests, process it here.
+                })
+                // Execution continues here immediately after the request is made.
+                // Result will not yet contain records but will be filled as responses are received.
+                // The result will contain all records when then() is invoked.
+                }
         }
     });
     Vue.config.devtools = true;
