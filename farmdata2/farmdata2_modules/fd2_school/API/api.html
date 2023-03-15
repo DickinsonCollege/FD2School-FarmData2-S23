@@ -75,6 +75,7 @@
               farm: '',
               user: '',
               language: '',
+              farmInfo: '',
               crops: [
                 'Broccoli',
                 'Kale',
@@ -87,17 +88,24 @@
               ],
               harvestLog: [
     
-              ]
+              ],
             },
             methods: {
               Newlog: function() {
-                this.harvestLog.push(this.log);
-                this.farm='Sample Farm';
-                this.user = 'manager1';
-                this.language = 'English';
-                this.log='';
-          }
-        }
+                axios.get('/farm.json')
+                            .then((response) => {
+                              this.farmName = response.data.name;
+                              this.currentUser = response.data.user.name;
+                              this.language = response.data.languages.en.name;
+                            })
+                            .catch((error) => {
+                              console.log("Error occurred.")
+                              console.log(error)
+                            })
+
+                            this.harvestLog.push({date:'05/08/2020',area:'Orion-3',crop:'Kale',yield:12,units:'Bunches'});
+                        },
+            }
           });
           Vue.config.devtools = true;
         </script>
