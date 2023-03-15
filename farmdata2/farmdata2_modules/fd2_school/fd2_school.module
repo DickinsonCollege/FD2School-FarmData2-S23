@@ -111,7 +111,7 @@ function fd2_school_menu() {
     'title' => 'e2e',
     'type' => MENU_LOCAL_TASK,
     'page callback' => 'fd2_school_view',
-    'page arguments' => array('e2e'),
+    'page arguments' => array('cypress/e2e'),
     'access arguments' => array('view fd2 school'),
     'weight' => 110,
   );
