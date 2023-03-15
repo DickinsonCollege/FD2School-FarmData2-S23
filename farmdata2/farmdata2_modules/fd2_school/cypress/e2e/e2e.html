@@ -1,0 +1,169 @@
+<h1>Harvest Report</h1>
+<p>This page is a <em>mockup</em> of a simplified harvest report.</p>
+
+<div id="harvestReport" v-cloak>
+    <label for="textfield">Title:</label>
+    <input type="text" v-model="header">
+    <br>
+    <br>
+    <label>
+        Start:
+        <input type="date" v-model="startDate" id="start" name="start"
+            min="2014-01-01" :max="endDate">
+    </label>
+
+    <label>
+        End:
+        <input type="date" v-model="endDate" id="end" name="end"
+           :min="startDate" max="2022-01-01">
+    </label>
+      
+    <br>
+    <br>
+    <label for="Crop">Crop:</label>
+    <select id="Crop" v-model="cropSelect" name="Crop">
+        <option v-for="item in cropNames">{{ item }}</option>
+    </select>
+
+    <label for="Field">Field:</label>
+    <select id="Field" name="Field">
+        <option v-for="item in areas">{{ item }}</option>
+    </select>
+  
+    <br>
+    <br>
+    <button type="button" @click="addLog">Generate Report</button>
+    <hr>
+
+    <h1>{{ header ? header : 'Mock Harvest Report' }}</h1>
+
+    <p>Details:</p>
+
+    <ul>
+        <li><b>Farm</b>:{{ farm }}</li>
+        <li><b>User</b>:{{ user }}</li>
+        <li><b>Language</b>:{{ language }} </li>
+        <br>
+        <li><b>Start</b>:{{ startDate }}</li>
+        <li><b>End</b>:{{ endDate }}</li>
+        <li><b>Crop</b>:{{ cropSelect }}</li>
+    </ul>
+    
+
+    <p v-if="result.length === 0">No matching records!</p>
+    <table v-else border=1>
+        <tr>
+            <th>Row</th>
+            <th>Date</th>
+            <th>Area</th>
+            <th>Crop</th>
+            <th>Yield</th>
+            <th>Units</th>
+        </tr>
+
+        <tr v-for="(c,index) in result">
+
+            <td>{{ index + 1 }}</td>
+            <td>{{ result[index].timestamp }}</td>
+            <td>{{ result[index].area[0].name }}</td>
+            <td>{{ idToCropMap.get(result[index].data.crop_tid) }}</td>
+            <td>{{ result[index].quantity[0].value }}</td>
+            <td>{{ result[index].quantity[0].unit.name }}</td>
+
+        </tr>
+    </table>
+</div>
+<script>
+    var shoppingList = new Vue({
+        el: '#harvestReport',
+        created() {
+            console.log("HarvestReport Vue instance created!")
+            getIDToCropMap()
+            .then((theMap) => {
+                this.idToCropMap = theMap;
+            })
+            .catch((err) => {
+                console.log("Error Occurred");
+                console.log(err);
+            })
+            // Execution continues here immediately after the request is made.
+            // Note that the Map will not be available until the then() executes.
+        },
+        
+        data: {
+            header: 'My Sample Harvest Report',
+            startDate: '2020-05-05',
+            endDate: '2020-05-15',
+            cropSelect: 'Kale',
+            //crops: ["Broccoli", "Kale", "Peas"] ,
+            areas: ["All", "Chuau-1", "SQ7"],
+            harvestLog: [],
+            result: [],
+            farm:"",
+            user:"",
+            language: "",
+            idToCropMap: new Map(),
+        },
+        computed: {
+            cropNames(){
+                return Array.from(this.idToCropMap.values());
+            },
+            harvestReportRows() {
+            let tableRows = []
+            for(let log of this.result) {
+                let tableRow = {
+                    date: log.timestamp,
+                }
+                tableRows.push(tableRow)
+            }
+            return tableRows
+            },
+
+            cropNames2(){
+                return Array.from(this.idToCropMap.get("102"));
+            },
+        },
+        methods: {
+            addLog: function(){
+
+                let startTimestamp = dayjs(this.startDate).unix();
+                let endTimestamp = dayjs(this.endDate).unix();
+
+                // Display timestamps in console
+                console.log("Start timestamp:", startTimestamp);
+                console.log("End timestamp:", endTimestamp);
+
+                // Convert start and end dates to timestamps
+                let request = `/log.json?type=farm_harvest&timestamp[ge]=${startTimestamp}&timestamp[le]=${endTimestamp}`;
+                console.log(request);
+                
+                axios.get('/farm.json')  // this line sends the request.
+                .then((response) => {
+                    this.farm = response.data.name;
+                    this.user = response.data.user.name;
+                    this.language = response.data.languages.en.name;
+                })
+                .catch((error) => {
+                    console.log("Error Occurred")
+                    console.log(error)
+                })
+                this.harvestLog.push({date:"2018-05-01", area:"Orion-3", crop:"Kale", yield:"12", units:"Bunches"});
+
+                 // Assumes that result is an existing array
+                getAllPages(request, this.result)
+                .then(() => {
+                // All of the requested records have now been added to result.
+                // Additional processing can happen here if necessary,
+                // or then may be omitted.
+                })
+                .catch((err) => {
+                // An error occurred during the requests, process it here.
+                })
+                // Execution continues here immediately after the request is made.
+                // Result will not yet contain records but will be filled as responses are received.
+                // The result will contain all records when then() is invoked.
+                }
+        }
+    });
+    Vue.config.devtools = true;
+</script>
