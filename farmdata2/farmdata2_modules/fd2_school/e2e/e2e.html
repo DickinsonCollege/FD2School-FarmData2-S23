@@ -21,7 +21,7 @@
     <br>
     <br>
     <label for="Crop">Crop:</label>
-    <select id="Crop" v-model="cropSelect" name="Crop">
+    <select data-cy="crop-select" id="Crop" v-model="cropSelect" name="Crop">
         <option v-for="item in cropNames">{{ item }}</option>
     </select>
 
