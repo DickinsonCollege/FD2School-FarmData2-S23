@@ -14,4 +14,16 @@ describe("Test values once generate report button clicked", () => {
         cy.get("[data-cy=report-title]")
           .should("be.visible")
     })
+
+    it("Check that report information is valid", () => {
+        cy.get("[data-cy=generate-report-button]").click()
+        cy.get("[data-cy=farm-name]")
+          .should("contains.text", "Sample Farm")
+        cy.get("[data-cy=username]")
+          .should("contains.text", "manager1")
+        cy.get("[data-cy=language]")
+          .should("contains.text", "English")
+        //all of my values for these three info points
+        //had \n's so I used contains.text to check them instead.
+    })
 })

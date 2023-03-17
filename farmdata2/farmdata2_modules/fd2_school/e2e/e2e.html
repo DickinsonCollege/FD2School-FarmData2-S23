@@ -63,13 +63,19 @@
                 <p>Details:</p>
                 <ul>
                     <li>
-                        <strong>Farm:</strong>{{farmName}}
+                        <strong>Farm:</strong>
+                        <span data-cy="farm-name">
+                            {{farmName}}
+                        </span>
                     </li>
-                    <li>
+                    <li data-cy="username">
                         <strong>User:</strong>{{currentUser}}
                     </li>
                     <li>
-                        <strong>Language:</strong>{{language}}
+                        <strong>Language:</strong>
+                        <span data-cy="language">
+                            {{ language }}
+                        </span>
                     </li>
                 </ul>
                 <br>
