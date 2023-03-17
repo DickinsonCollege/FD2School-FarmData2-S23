@@ -60,7 +60,7 @@ function fd2_school_menu() {
     'weight' => -100,
   );
 
-  // Add items blocks for HTML sub-tabs here.
+  // Add items blocks for HTML sub-tab here.
   $items['farm/fd2-school/HTML'] = array(
     'title' => 'HTML',
     'type' => MENU_LOCAL_TASK,
@@ -70,7 +70,7 @@ function fd2_school_menu() {
     'weight' => 100,
   );
 
-  // Add items blocks for Vue1 sub-tabs here.
+  // Add items blocks for Vue1 sub-tab here.
   $items['farm/fd2-school/Vue1'] = array(
     'title' => 'Vue1',
     'type' => MENU_LOCAL_TASK,
@@ -80,7 +80,7 @@ function fd2_school_menu() {
     'weight' => 100,
   );
 
-  // Add items blocks for Vue2 sub-tabs here.
+  // Add items blocks for Vue2 sub-tab here.
   $items['farm/fd2-school/Vue2'] = array(
     'title' => 'Vue2',
     'type' => MENU_LOCAL_TASK,
@@ -90,7 +90,7 @@ function fd2_school_menu() {
     'weight' => 100,
   );
 
-  // Add items blocks for API sub-tabs here.
+  // Add items blocks for API sub-tab here.
   $items['farm/fd2-school/API'] = array(
     'title' => 'API',
     'type' => MENU_LOCAL_TASK,
@@ -100,7 +100,7 @@ function fd2_school_menu() {
     'weight' => 100,
   );
 
-   // Add items blocks for API2 sub-tabs here.
+   // Add items blocks for API2 sub-tab here.
    $items['farm/fd2-school/API2'] = array(
     'title' => 'API2',
     'type' => MENU_LOCAL_TASK,
@@ -108,6 +108,16 @@ function fd2_school_menu() {
     'page arguments' => array('API2'),
     'access arguments' => array('view fd2 school'),
     'weight' => 100,
+  );
+
+  // Add items blocks for E2E sub-tab here.
+  $items['farm/fd2-school/E2E'] = array(
+    'title' => 'E2E',
+    'type' => MENU_LOCAL_TASK,
+    'page callback' => 'fd2_school_view',
+    'page arguments' => array('E2E'),
+    'access arguments' => array('view fd2 school'),
+    'weight' => 110,
   );
 
   return $items;
