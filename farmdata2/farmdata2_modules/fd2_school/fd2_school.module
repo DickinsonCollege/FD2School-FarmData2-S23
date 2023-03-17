@@ -104,7 +104,7 @@ function fd2_school_menu() {
       'weight' => 140,
   );
 
-  // Add a sub-tab named API
+  // Add a sub-tab named API2
   // AndrewScheiner-06-API2
   $items['farm/fd2-school/API2'] = array(
       'title' => 'API2',
@@ -113,6 +113,17 @@ function fd2_school_menu() {
       'page arguments' => array('API2'),
       'access arguments' => array('view fd2 school'),
       'weight' => 150,
+  );
+
+  // Add a sub-tab named E2E
+  // AndrewS-07-E2E
+  $items['farm/fd2-school/e2e'] = array(
+      'title' => 'E2E',
+      'type' => MENU_LOCAL_TASK,
+      'page callback' => 'fd2_school_view',
+      'page arguments' => array('E2E'),
+      'access arguments' => array('view fd2 school'),
+      'weight' => 160,
   );
 
   // Add items blocks for new sub-tabs here.
