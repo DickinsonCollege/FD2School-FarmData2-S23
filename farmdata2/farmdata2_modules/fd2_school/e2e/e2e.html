@@ -32,10 +32,11 @@
   
     <br>
     <br>
-    <button type="button" @click="addLog">Generate Report</button>
+    <button data-cy=generate-button type="button" @click="addLog">Generate Report</button>
+    <div id="show/hide" v-if="showReport">
     <hr>
 
-    <h1>{{ header ? header : 'Mock Harvest Report' }}</h1>
+    <h1 data-cy=report-header>{{ header ? header : 'Mock Harvest Report' }}</h1>
 
     <p>Details:</p>
 
@@ -73,6 +74,7 @@
         </tr>
     </table>
 </div>
+</div>
 <script>
     var shoppingList = new Vue({
         el: '#harvestReport',
@@ -103,6 +105,7 @@
             user:"",
             language: "",
             idToCropMap: new Map(),
+            showReport: false
         },
         computed: {
             cropNames(){
@@ -125,6 +128,8 @@
         },
         methods: {
             addLog: function(){
+
+                this.showReport = true
 
                 let startTimestamp = dayjs(this.startDate).unix();
                 let endTimestamp = dayjs(this.endDate).unix();
