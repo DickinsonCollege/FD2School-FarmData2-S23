@@ -15,10 +15,10 @@
         <br>
         <label for="start">Start:</label>
         <input type="date" id="start" v-model='startDate'
-        min="2014-01-01" v-bind:max="endDate">
+        min="2014-01-01" v-bind:max="endDate" data-cy="start-date">
         <label for="end">End:</label>
         <input type="date" id="end" v-model="endDate"
-        v-bind:min="startDate" max="2021-01-01">
+        v-bind:min="startDate" max="2021-01-01" data-cy="end-date">
         <br>
         <br>
         <label for="crop">Crop:</label>
@@ -78,7 +78,7 @@
                 idToAreaMap: new Map(),
                 repTitle: 'My Sample Harvest Report',
                 startDate: "2020-05-05",
-                endDate: "2020-05-05",
+                endDate: "2020-05-15",
                 crop: "",
                 // crops: [
                 //     "Kale",
