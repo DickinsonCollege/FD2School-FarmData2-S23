@@ -57,7 +57,7 @@
             </div>
                 
 
-                <table border="1" style="width: 35%" v-if="harvestReportRows.length > 0">
+                <table border="1" style="width: 30%" v-if="harvestReportRows.length > 0">
                     <tr>
                         <th scope="col">Row</th>
                         <th scope="col">Date</th>
@@ -111,6 +111,7 @@
                 reportEndDate: '' ,
                 reportCrop: '' ,
                 reportArea: '' ,
+                reportAll: 'All',
                 reportLanguage: '' ,
                 reportUser: '' ,
                 reportFarmName: '' ,
@@ -128,6 +129,7 @@
                 areaNames: function(){
                     return Array.from(this.idToAreaMap.values())
                 } ,
+                //Display table with harvest logs requested from API
                 harvestReportRows() {
                     let tableRows = []
                     for(let log of this.allHarvestLogs) {
@@ -138,7 +140,7 @@
                             units: log.quantity[0].unit.name,
                             crop: this.idToCropMap.get(log.data.crop_tid)
                         }
-                        if (tableRow.crop == this.reportCrop){
+                        if (tableRow.crop == this.reportCrop && tableRow.area == this.reportArea){
                             tableRows.push(tableRow)
                         }
                     }
