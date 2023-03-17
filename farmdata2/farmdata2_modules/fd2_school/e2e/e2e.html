@@ -41,9 +41,9 @@
     <p>Details:</p>
 
     <ul>
-        <li><b>Farm</b>:{{ farm }}</li>
-        <li><b>User</b>:{{ user }}</li>
-        <li><b>Language</b>:{{ language }} </li>
+        <li data-cy="farm-name"><b>Farm</b>:{{ farm }}</li>
+        <li data-cy="user-name"><b>User</b>:{{ user }}</li>
+        <li><b>Language</b>:<span data-cy="language">{{ language }}</span></li>
         <br>
         <li><b>Start</b>:{{ startDate }}</li>
         <li><b>End</b>:{{ endDate }}</li>
