@@ -16,10 +16,15 @@
         :min="startDate" 
         max="2022-01-01"></input>
     <br><br>
-    <label for="cropDropDown">Crop:</label>
-    <select id="cropDropDown" data-cy="crop-dropdown" v-model="crop">
-        <option v-for="crop in cropNames">{{ crop }}</option>
-    </select>
+    <dropdown-with-all data-cy="crop-dropdown" 
+        includes-all
+        :selected-val="crop"
+        :dropdown-list="cropNames"
+        :disabled="false"
+        @selection-changed="cropChanged">
+        Crop: 
+    </dropdown-with-all>
+
     <label for="areaDropDown">Area:</label>
     <select id="areaDropDown">
         <option v-for="area in areaNames">{{ area }}</option>
@@ -70,11 +75,14 @@
 <script>
     let spike = new Vue ({
         el: "#mockHarvestReport",
+        components: {
+            'dropdown-with-all': DropdownWithAllComponent,
+        },
         data: {
             reportTitle: "My Sample Report",
             startDate: "2020-05-05",
             endDate: "2020-05-15",
-            crop: "KALE",
+            crop: "All",
             harvestList: [],
             reportVisible: false,
             farmName: "",
@@ -113,6 +121,9 @@
             },
         },
         methods: {
+            cropChanged: function(newCrop) {
+                this.crop = newCrop
+            },
             generateReport: function() {
                 // Request the farm information from the server.
                 axios.get('/farm.json') 
@@ -127,13 +138,10 @@
                 })
 
                 let start = dayjs(this.startDate).unix();
-                console.log(start);
                 let end = dayjs(this.endDate).unix();
-                console.log(end);
                 let request = 
                     "/log.json?type=farm_harvest&timestamp[ge]=" + start + 
                     "&timestamp[le]=" + end
-                console.log(request)
 
                 getAllPages(request, this.harvestLogs)
                 .catch((err) => {
