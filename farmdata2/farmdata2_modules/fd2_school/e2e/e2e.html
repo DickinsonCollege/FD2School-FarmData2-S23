@@ -38,10 +38,10 @@
 
    <br>
    
-	<button type="button" v-on:click='saveItems'>Generate Report</button>
+	<button data-cy="generate-report-button" type="button" v-on:click='saveItems'>Generate Report</button>
     <hr style="width:100%;text-align:left;margin-left:0">
  
-	<h1> {{ title && title.trim() !== '' ? title : 'Mock Harvest Report'}} </h1>
+	<h1 data-cy="report-title"> {{ title ? title : 'Mock Harvest Report' }} </h1>
 	
     <p>Details:</p>
     <ul>
