@@ -104,7 +104,7 @@
                 for(let log of this.harvestLogs) {
                     let cropName = this.idToCropMap.get(log.data.crop_tid);
 
-                    if (cropName === this.crop) {
+                    if (this.crop === "All" || cropName === this.crop) {
                         let date = dayjs.unix(log.timestamp);
                         let dateStr = date.format("MM/DD/YYYY");
                         let tableRow = {
