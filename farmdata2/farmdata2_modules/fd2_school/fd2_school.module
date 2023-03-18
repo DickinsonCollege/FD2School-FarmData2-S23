@@ -103,6 +103,15 @@ function fd2_school_menu() {
         'access arguments' => array('view fd2 school'),
         'weight' => 110,
     );
+
+  $items['farm/fd2-school/e2e/e2e.html'] = array(
+    'title' => 'e2e',
+    'type' => MENU_LOCAL_TASK,
+    'page callback' => 'fd2_school_view',
+    'page arguments' => array('e2e'),
+    'access arguments' => array('view fd2 school'),
+    'weight' => 110,
+);
   return $items;
 };
 
