@@ -4,9 +4,9 @@ describe("Test the harvest report default values", () => {
     cy.visit("/farm/fd2-school/e2e");
   });
 
-  // it("Report title should not be generated", () => {
-  //   cy.get("[data-cy=report-title]").should("not.exist");
-  // });
+  it("Report title should not be generated", () => {
+    cy.get("[data-cy=report-title]").should("not.exist");
+  });
 
   it("Report title appears once clicked", () => {
     cy.get("[data-cy=generate-report-button]").click();
