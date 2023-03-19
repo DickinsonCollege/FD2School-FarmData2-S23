@@ -60,7 +60,7 @@
             </tr>
             <p v-else>There are no matching records</p>
     
-            <tr v-for="(harvestLog, index) in harvestLogs">
+            <tr v-for="(harvestLog, index) in harvestReportRows">
                 <td>{{index + 1}}</td>
                 <td>{{harvestLog.date}}</td>
                 <td>{{harvestLog.area}}</td>
@@ -114,20 +114,32 @@
                     areaNames.push(name)
                 }
                 return areaNames
+            },
+            harvestReportRows() {
+                let tableRows = []
+                getIDToCropMap()
+                .then((theMap) => {
+                    this.idToCropMap = theMap
+                })
+                .catch((err) => {
+                    console.log(err)
+                })
+        
+                for(let log of this.harvestLogs) {
+                    let tableRow = {
+                        date: dayjs.unix(log.timestamp).format('DD/MM/YYYY'),
+                        area: log.area[0].name,
+                        yield: log.quantity[0].value,
+                        units: log.quantity[0].unit.name,
+                        crop: this.idToCropMap.get(log.data.crop_tid),
+                    }
+                    tableRows.push(tableRow)
+                }
+                return tableRows
             }
+
         },
         methods: {
-            logHarvest: function() {
-                if (this.reportState !== 'default') {
-                    if (this.harvestLogs.length === 0) {
-                        this.harvestLogs.push({date: '2018-05-01', area: 'Orion-3', crop: 'Kale', yield: '12', units: 'Bunches'})
-                    } else if (this.harvestLogs.length === 1) {
-                        this.harvestLogs.push({date: '2020-03-02', area: 'Chuau-1', crop: 'Broccoli', yield: '6', units: 'Bunches'})
-                    } else if (this.harvestLogs.length === 2) {
-                        this.harvestLogs.push({date: '2019-04-21', area: 'Orion-2', crop: 'Cabbage', yield: '18', units: 'Bunches'})
-                    }
-                }
-            },
             deleteHarvest: function(harvestIndex) {
                 this.harvestLogs.splice(harvestIndex, 1)
             },
