@@ -30,7 +30,7 @@
         </div>
         <br>
     </form>
-    <button @click="logHarvest(); changeReportState('show'); setFarmUserLan(); makeRequest()">Generate Report</button>
+    <button @click=" makeRequest(); logHarvest(); changeReportState('show'); setFarmUserLan()">Generate Report</button>
     
 
     <hr>
@@ -49,7 +49,7 @@
         </ul>
         <br>
         <table border="1">
-            <tr v-if="harvestLogs.length > 0">
+            <tr v-if="harvestReportRows.length > 0">
                 <th>Row</th>
                 <th>Date</th>
                 <th>Area</th>
@@ -124,7 +124,6 @@
                 .catch((err) => {
                     console.log(err)
                 })
-        
                 for(let log of this.harvestLogs) {
                     let tableRow = {
                         date: dayjs.unix(log.timestamp).format('DD/MM/YYYY'),
@@ -133,13 +132,26 @@
                         units: log.quantity[0].unit.name,
                         crop: this.idToCropMap.get(log.data.crop_tid),
                     }
-                    tableRows.push(tableRow)
+
+                    if (tableRow.crop.toUpperCase() === this.reportCrop) {
+                        tableRows.push(tableRow)
+                    }
                 }
                 return tableRows
             }
-
         },
         methods: {
+            logHarvest: function() {
+                if (this.reportState !== 'default') {
+                    if (this.harvestLogs.length === 0) {
+                        this.harvestLogs.push({date: '2018-05-01', area: 'Orion-3', crop: 'Kale', yield: '12', units: 'Bunches'})
+                    } else if (this.harvestLogs.length === 1) {
+                        this.harvestLogs.push({date: '2020-03-02', area: 'Chuau-1', crop: 'Broccoli', yield: '6', units: 'Bunches'})
+                    } else if (this.harvestLogs.length === 2) {
+                        this.harvestLogs.push({date: '2019-04-21', area: 'Orion-2', crop: 'Cabbage', yield: '18', units: 'Bunches'})
+                    }
+                }
+            },
             deleteHarvest: function(harvestIndex) {
                 this.harvestLogs.splice(harvestIndex, 1)
             },
