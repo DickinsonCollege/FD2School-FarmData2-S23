@@ -40,10 +40,12 @@
     <h1 data-cy="tittleReport" v-if="cropdoc.titleReport">{{cropdoc.titleReport}}</h1>
     <!-- <h1 v-else>no matching record</h1> -->
    <p>Details:</p>
-   <ul>
-    <li> <strong>Farm:</strong> {{farm}}</li>
-    <li><strong>User:</strong>{{user}}</li>
-    <li><strong>Language:</strong>{{language}}</li>
+   <span data-cy="test-span">test span</span>
+   <ul >
+
+    <li> data-cy="farm" <strong>Farm:</strong> {{farm}}</li>
+    <li data-cy="user"> <strong>User: </strong>{{user}}</li>
+    <li> <strong>Language:</strong><span data-cy="language" > {{language}}</span> </li>
     <br>
     <li><strong>Start:</strong> {{cropdoc.startDate}}</li>
     <li><strong>End:</strong> {{cropdoc.endDate}}</li>
@@ -82,15 +84,19 @@
                  data:{
                   result:[],
                   idToCropMap: new Map(),
-                  farm:"",
-                  user:"",
-                  language:"",
+                  farm:"Sample farm",
+                  user:"worker1",
+                  language:"English",
              cropdoc:{
                             titleReport:"",
                           startDate:"",
                           endDate:"",
                          crop:"",
-                         field:""
+                         field:"",
+                         farm:"",
+                         user:"",
+                         language:""
+
              },
 
               titleReport:'',  
@@ -162,6 +168,9 @@ generateReport: function(){
   this.cropdoc.endDate=this.endDate
   this.cropdoc.crop=this.crop
   this.cropdoc.field=this.field
+  this.cropdoc.user=this.user
+  this.cropdoc.language=this.language
+  this.cropdoc.farm=this.farm
   
 
 },

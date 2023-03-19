@@ -18,6 +18,9 @@ describe("Test the generate report function", () => {
     it("Check the report title which  exist ", () => {
         cy.get("[data-cy=generate-report-button]").click()
         cy.get("[data-cy=tittleReport]").should("be.visible")
+        cy.get("[data-cy=user]").should("contain.text","worker1")
+    
+        cy.get("[data-cy=language]").should("have.text","English")
     })
     
 
