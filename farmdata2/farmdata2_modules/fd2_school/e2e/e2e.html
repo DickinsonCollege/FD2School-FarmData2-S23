@@ -8,11 +8,11 @@
         <form>
             <label>
               Start:
-              <input type="date" name="start" v-model="rptStart" min="2014-01-01" v-bind:max="rptEnd" />
+              <input data-cy="start-date" type="date" name="start" v-model="rptStart" min="2014-01-01" v-bind:max="rptEnd" />
             </label> 
             <label>
                 End:
-                <input type="date" name="end" v-model="rptEnd" v-bind:min="rptStart" max="2022-01-01" />
+                <input data-cy="end-date" type="date" name="end" v-model="rptEnd" v-bind:min="rptStart" max="2022-01-01" />
               </label>
         </form><br>
           
