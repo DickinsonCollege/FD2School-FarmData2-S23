@@ -30,7 +30,7 @@
         </div>
         <br>
     </form>
-    <button @click="logHarvest(); changeReportState('show'); setFarmUserLan()">Generate Report</button>
+    <button @click="logHarvest(); changeReportState('show'); setFarmUserLan(); makeRequest()">Generate Report</button>
     
 
     <hr>
@@ -145,8 +145,20 @@
                     console.log("Error Occurred")
                     console.log(error)
                 })
+            },
+            makeRequest: function() {
+                let startDate = dayjs(this.reportStartDate).unix()
+                let endDate = dayjs(this.reportEndDate).unix()
+                let request = `/log.json?type=farm_harvest&timestamp[ge]=${startDate}&timestamp[le]=${endDate}`
+                getAllPages(request, this.harvestLogs)
+                .then(() => {
+                    console.log('working')
+                })
+                .catch((err) => {
+                    console.log(err)
+                })
             }
-        },
+         },
         created() {
             getIDToCropMap()
             .then((theMap) => {
