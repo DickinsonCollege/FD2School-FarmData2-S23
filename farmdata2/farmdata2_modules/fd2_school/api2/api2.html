@@ -25,7 +25,7 @@
         </p>
         <br>
 
-        <button type="button" @click=generateTable >Generate Report</button>
+        <button type="button" @click="generateTable(); generateRequest()"  >Generate Report</button>
         
         <hr>
 
@@ -106,6 +106,18 @@
                     this.farmName = response.data.name
                     this.currentUser = response.data.user.name
                     this.language = response.data.languages.en.name
+                })
+            },
+            generateRequest: function() {
+                let startDate = dayjs(this.start_date).unix()
+                let endDate = dayjs(this.end_date).unix()
+                let request = `/log.json?type=farm_harvest&timestamp[ge]=${startDate}&timestamp[le]=${endDate}`
+                getAllPages(request, this.harvestLogs)
+                .then(() => {
+                    console.log('received')
+                })
+                .catch((err) => {
+                    console.log(err)
                 })
             }
             },
