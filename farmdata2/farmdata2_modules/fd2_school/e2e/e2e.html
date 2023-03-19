@@ -15,7 +15,7 @@
     <p>This page is a <i>mock up</i>  of a simplified harvest report</p>
     <form>
       <label for="title">Title:</label>
-      <input v-model="titleReport" type="text" id="title" name="title" >
+      <input v-model="titleReport" type="text" id="title" name="title" placeholder="harvest sample report" >
       <br><br>
       <label for="start">Start:</label>
       <input data-cy="start-date" v-model="startDate"  type="date" id="start" name="date"   min="2014-01-01" v-bind:max="endDate" > 
@@ -35,19 +35,19 @@
   </select>
     </form>
     <br>
-    <button type="button" v-on:click='addReport'>Generate Report</button>
+    <button data-cy="generate-report-button" type="button" v-on:click='generateReport'>Generate Report</button>
     <hr>
-    <h1 v-if="harvestLog.length!=0">{{titleReport}}</h1>
-    <h1 v-else>no matching record</h1>
+    <h1 data-cy="tittleReport" v-if="cropdoc.titleReport">{{cropdoc.titleReport}}</h1>
+    <!-- <h1 v-else>no matching record</h1> -->
    <p>Details:</p>
    <ul>
     <li> <strong>Farm:</strong> {{farm}}</li>
     <li><strong>User:</strong>{{user}}</li>
     <li><strong>Language:</strong>{{language}}</li>
     <br>
-    <li><strong>Start:</strong> {{startDate}}</li>
-    <li><strong>End:</strong> {{endDate}}</li>
-    <li><strong>Crop:</strong>{{crop}}</li>
+    <li><strong>Start:</strong> {{cropdoc.startDate}}</li>
+    <li><strong>End:</strong> {{cropdoc.endDate}}</li>
+    <li><strong>Crop:</strong>{{cropdoc.crop}}</li>
    </ul>
    <table  >
   
@@ -85,9 +85,17 @@
                   farm:"",
                   user:"",
                   language:"",
+             cropdoc:{
+                            titleReport:"",
+                          startDate:"",
+                          endDate:"",
+                         crop:"",
+                         field:""
+             },
+
+              titleReport:'',  
              
-              titleReport:'My sample harvest report',  
-                          maxStartDate:""        , 
+                                
                            startDate:"2020-05-05" ,
                            endDate:"2020-05-15" ,
                           
@@ -141,9 +149,27 @@ harvestReportRows() {
 
 },
         methods : {
-addReport: function(){
+generateReport: function(){
+  console.log(this.endDate)
+  if (this.titleReport!=""){
+    this.cropdoc.titleReport=this.titleReport
+  }
+  else{
+    this.cropdoc.titleReport="mock report"
+  }
+ 
+  this.cropdoc.startDate=this.startDate
+  this.cropdoc.endDate=this.endDate
+  this.cropdoc.crop=this.crop
+  this.cropdoc.field=this.field
+  
+
+},
+
+findReport: function(){
   let startday=dayjs(this.startDate).unix();
   let endday=dayjs(this.endDate).unix();
+
 console.log(startday);
 console.log(endday);
 
