@@ -24,7 +24,7 @@
       <input data-cy="end-date" v-model="endDate" type="date" id="end" name="date" v-bind:min="startDate" max="2022-01-01" >
       <br><br>
       <label for="crop">Crop:</label>
-      <select v-model="crop" name="crop" id="crop">
+      <select data-cy="crop-item" v-model="crop" name="crop" id="crop">
         <option v-for="crop in reverseCropIDandName">{{crop}}</option>
         
       </select>
