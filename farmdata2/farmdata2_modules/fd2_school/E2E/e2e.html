@@ -8,17 +8,17 @@
 </head>
 <body>
     <div id="reportTitle" v-cloak>
-            <h1>Harvest Report</h1>
+            <h1 data-cy="page-header">Harvest Report</h1>
             <p>This page is a <em>mockup</em> of a simplified harvest report.</p>
             <label for="title">Title: <input type="text"  v-model="header" placeholder="Mock Harvest Report"/> </label>
             <br>
 
         <div id="reportDate" v-cloak> 
             <br><label for="start">Start: </label>
-            <input type="date" id="start" v-model="reportStartDate" min="2014-01-01" :max="reportEndDate"/> 
+            <input type="date" id="start" v-model="reportStartDate" data-cy="start-date" min="2014-01-01" :max="reportEndDate"/> 
 
             <label for="end">End: </label>
-            <input type="date" id="end" v-model="reportEndDate" :min="reportStartDate" max="2022-01-01"/> 
+            <input type="date" id="end" v-model="reportEndDate" data-cy="end-date" :min="reportStartDate" max="2022-01-01"/> 
             <br>
         </div>
 
@@ -107,8 +107,8 @@
             data:{
                 header:'' ,
                 reportVis: false ,
-                reportStartDate: '' ,
-                reportEndDate: '' ,
+                reportStartDate: '2020-05-05' ,
+                reportEndDate: '2020-05-15' ,
                 reportCrop: '' ,
                 reportArea: '' ,
                 reportAll: 'All',
