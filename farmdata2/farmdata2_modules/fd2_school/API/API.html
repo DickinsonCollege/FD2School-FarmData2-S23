@@ -12,11 +12,11 @@
     <br><br>
     <label for="cropDropDown">Crop:</label>
     <select id="cropDropDown" v-model="crop">
-        <option v-for="crop in cropList">{{ crop }}</option>
+        <option v-for="crop in cropNames">{{ crop }}</option>
     </select>
     <label for="areaDropDown">Area:</label>
     <select id="areaDropDown">
-        <option v-for="area in areaList">{{ area }}</option>
+        <option v-for="area in areaNames">{{ area }}</option>
     </select>
     <br><br>
     <input type="button" value="Generate Report" @click='generateReport'></input>
@@ -70,6 +70,16 @@
             farmName: "",
             currentUser: "",
             language: "",
+            idToCropMap: new Map(),
+            idToAreaMap: new Map(),
+        },
+        computed: {
+            cropNames: function() {
+                return Array.from(this.idToCropMap.values());
+            },
+            areaNames: function() {
+                return Array.from(this.idToAreaMap.values());
+            },
         },
         methods: {
             generateReport: function () {
@@ -103,6 +113,23 @@
                     }
                 }
             }
+        },
+         created() {
+            getIDToCropMap()
+                .then((theMap) => {
+                    this.idToCropMap = theMap
+                })
+                .catch((err) => {
+                    console.log("Error requesting the id to Crop Map")
+                })
+
+            getIDToAreaMap()
+                .then((theMap) => {
+                    this.idToAreaMap = theMap
+                })
+                .catch((err) => {
+                    console.log("Error requesting the id to Area Map")
+                })
         }
     });
     Vue.config.devtools = true;
