@@ -34,20 +34,24 @@
     </ul>
     <br>
     <table border="1">
-        <tr>
+        <tr v-if="harvestList.length!=0">
+            <th>Row</th>
             <th>Date</th>
             <th>Area</th>
             <th>Crop</th>
             <th>Yield</th>
             <th>Units</th>
         </tr>
-        <tr v-for="harvest in harvestList">
-            <td>{{ harvest.date }}</td>
-            <td>{{ harvest.area }}</td>
-            <td>{{ harvest.crop }}</td>
-            <td>{{ harvest.yield }}</td>
-            <td>{{ harvest.units }}</td>
-        </tr>
+        <tr v-else><th>No Harvest Logs to Display!</th></tr>
+            <tr v-for="(harvest,index) in harvestList">
+                <td>{{ index + 1 }}</td>
+                <td>{{ harvest.date }}</td>
+                <td>{{ harvest.area }}</td>
+                <td>{{ harvest.crop }}</td>
+                <td>{{ harvest.yield }}</td>
+                <td>{{ harvest.units }}</td>
+                <td><button type="button" @click="deleteHarvestLog(index)">Delete</button></td>
+            </tr>
     </table>
 </div>
 <script>
