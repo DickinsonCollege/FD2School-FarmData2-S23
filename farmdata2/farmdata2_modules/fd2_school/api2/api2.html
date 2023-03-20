@@ -25,7 +25,7 @@
         </p>
         <br>
 
-        <button type="button" @click="generateTable(); generateRequest()"  >Generate Report</button>
+        <button type="button" @click=generateTable()>Generate Report</button>
         
         <hr>
 
@@ -52,7 +52,7 @@
                 <th>Yield</th>
                 <th>Units</th>
                 </tr>
-                <tr v-for = "(log, index) in harvestLogs">
+                <tr v-for = "(log, index) in harvestReportRows">
                     <td>{{ index + 1 }}</td>
                     <td>{{ log.date }}</td>
                     <td>{{ log.area }}</td>
@@ -78,8 +78,7 @@
                 end_date: '',
                 selectedCrop : '', 
                 selectedArea : '',
-                 harvestLogs: [
-                 ],
+                harvestLogsAPI: [],
             },
             computed:{
                 cropNames(){
@@ -87,18 +86,26 @@
                 },
                 areaNames(){
                     return Array.from(this.$data.idToAreaMap.values());
-                }
+                },
+                harvestReportRows() {
+                    let tableRows = []
+                    for(let log of this.harvestLogsAPI) {
+                        let tableRow = {
+                            date: dayjs.unix(log.timestamp).format('YYYY-MM-DD'),
+                            area: log.area[0].name,
+                            crop: this.idToCropMap.get(log.data.crop_tid),
+                            yield: log.quantity[0].value,
+                            units: log.quantity[0].unit.name,
+                        }
+                        tableRows.push(tableRow)
+                    }
+                    return tableRows
+                },
             },
             methods: {
             generateTable: function() {
                 this.generateReport();
-                this.harvestLogs.push({
-                    date: '2022-02-18',
-                    area: 'Chuau-1',
-                    crop: 'Peas',
-                    yield: 15,
-                    units: 'Bunches'
-                    });
+                this.generateRequest();
             },
             generateReport: function() {
                 axios.get('/farm.json')
@@ -112,7 +119,7 @@
                 let startDate = dayjs(this.start_date).unix()
                 let endDate = dayjs(this.end_date).unix()
                 let request = `/log.json?type=farm_harvest&timestamp[ge]=${startDate}&timestamp[le]=${endDate}`
-                getAllPages(request, this.harvestLogs)
+                getAllPages(request, this.harvestLogsAPI)
                 .then(() => {
                     console.log('received')
                 })
