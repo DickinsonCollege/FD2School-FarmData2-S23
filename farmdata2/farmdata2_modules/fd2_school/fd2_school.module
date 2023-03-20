@@ -67,7 +67,7 @@ function fd2_school_menu() {
     'page callback' => 'fd2_school_view',
     'page arguments' => array('HTML'),
     'access arguments' => array('view fd2 school'),
-    'weight' => 100,
+    'weight' => -90,
   );
 
   // Add items blocks for Vue1 sub-tab here.
@@ -77,7 +77,7 @@ function fd2_school_menu() {
     'page callback' => 'fd2_school_view',
     'page arguments' => array('Vue1'),
     'access arguments' => array('view fd2 school'),
-    'weight' => 100,
+    'weight' => -80,
   );
 
   // Add items blocks for Vue2 sub-tab here.
@@ -87,7 +87,7 @@ function fd2_school_menu() {
     'page callback' => 'fd2_school_view',
     'page arguments' => array('Vue2'),
     'access arguments' => array('view fd2 school'),
-    'weight' => 100,
+    'weight' => -70,
   );
 
   // Add items blocks for API sub-tab here.
@@ -97,7 +97,7 @@ function fd2_school_menu() {
     'page callback' => 'fd2_school_view',
     'page arguments' => array('API'),
     'access arguments' => array('view fd2 school'),
-    'weight' => 100,
+    'weight' => -60,
   );
 
    // Add items blocks for API2 sub-tab here.
@@ -107,7 +107,7 @@ function fd2_school_menu() {
     'page callback' => 'fd2_school_view',
     'page arguments' => array('API2'),
     'access arguments' => array('view fd2 school'),
-    'weight' => 100,
+    'weight' => -50,
   );
 
   // Add items blocks for E2E sub-tab here.
@@ -117,7 +117,7 @@ function fd2_school_menu() {
     'page callback' => 'fd2_school_view',
     'page arguments' => array('E2E'),
     'access arguments' => array('view fd2 school'),
-    'weight' => 110,
+    'weight' => -40,
   );
 
   return $items;
