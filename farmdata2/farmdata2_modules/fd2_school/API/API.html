@@ -19,7 +19,7 @@
         <option v-for="area in areaList">{{ area }}</option>
     </select>
     <br><br>
-    <input type="button" value="Generate Report" @click='addHarvestLog'></input>
+    <input type="button" value="Generate Report" @click='generateReport'></input>
     <hr>
     <h1>{{ reportTitle=="" ? "Mock Harvest Report" : reportTitle }}</h1>
     <p>Details:</p>
@@ -79,26 +79,31 @@
                         this.currentUser = response.data.user.name
                         this.language = response.data.languages.en.name
                     })
-                addHarvestLog: function () {
-                    if (!this.reportVisible) {
-                        this.reportVisible = true;
+                    .catch((error) => {
+                        console.log("Error Occurred")
+                        console.log(error)
+                    })
+
+                if (!this.reportVisible) {
+                    this.reportVisible = true;
+
+                }
+                else {
+                    if (this.harvestList.length == 0) {
+                        this.harvestList.push(
+                            { date: "2018-05-01", area: "Orion-3", crop: "Kale", yield: 12, units: "Bunches" })
                     }
-                    else {
-                        if (this.harvestList.length == 0) {
-                            this.harvestList.push(
-                                { date: "2018-05-01", area: "Orion-3", crop: "Kale", yield: 12, units: "Bunches" })
-                        }
-                        else if (this.harvestList.length == 1) {
-                            this.harvestList.push(
-                                { date: "2018-05-02", area: "Chuau-1", crop: "Kale", yield: 9, units: "Bunches" })
-                        }
-                        else if (this.harvestList.length == 2) {
-                            this.harvestList.push(
-                                { date: "2018-05-03", area: "Alf-2", crop: "Kale", yield: 12, units: "Bunches" })
-                        }
+                    else if (this.harvestList.length == 1) {
+                        this.harvestList.push(
+                            { date: "2018-05-02", area: "Chuau-1", crop: "Kale", yield: 9, units: "Bunches" })
                     }
-                },
+                    else if (this.harvestList.length == 2) {
+                        this.harvestList.push(
+                            { date: "2018-05-03", area: "Alf-2", crop: "Kale", yield: 12, units: "Bunches" })
+                    }
+                }
             }
-        });
+        }
+    });
     Vue.config.devtools = true;
 </script>
