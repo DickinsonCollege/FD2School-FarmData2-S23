@@ -97,7 +97,9 @@
                             yield: log.quantity[0].value,
                             units: log.quantity[0].unit.name,
                         }
-                        tableRows.push(tableRow)
+                        if(tableRow.crop == this.selectedCrop && tableRow.area == this.selectedArea){
+                            tableRows.push(tableRow)
+                        }
                     }
                     return tableRows
                 },
