@@ -26,7 +26,8 @@ catch(err) {
  * <tr><td>hi</td>                   <td>The ith th element, i=0,1,2...</td></tr>
  * <tr><td>edit-header</td>          <td>The th element for the edit button column</td></tr>
  * <tr><td>save-header</td>          <td>The th element for the save button column</td></tr>
- * <tr><td>ri-cbutton</tc>           <td>The td element containing the checkbox for the ith table row if it appears. i=0,1,2...</td></tr>
+ * <tr><td>table-body</td>           <td>The table body that contains all of the table rows</td></tr>
+ * <tr><td>ri-cbutton</td>           <td>The td element containing the checkbox for the ith table row if it appears. i=0,1,2...</td></tr>
  * <tr><td>ri-cbuttonCheckbox</td>   <td>The checkbox element for the ith table row if custom buttons or deleting is enabled, i=0,1,2,...</td></tr>
  * <tr><td>ri</td>                   <td>The tr element for the ith table row, i=0,1,2,...</td></tr>
  * <tr><td>td-ricj</td>              <td>The td element in the ith row and jth column, i,j=0,1,2...</td></tr>
@@ -62,7 +63,7 @@ catch(err) {
  * <DD>The value in the column is edited using a check box.
  * </DL>
  * </UL>
- * <p>For example, the following object provides the column information for a table with three columns:
+ * <p>For example, the following array provides the column information for a table with three columns:
  * <br><pre>
  * [ {header: "Clothing", visibility: true, inputType: {type: "text"}},
  *   {header: "Size", visibility: true, inputType: {type: "dropdown", value: ["S", "M", "L"]}},
@@ -78,11 +79,11 @@ catch(err) {
  * It is returned in event payloads to indicate to which row of the table the event occurred. 
  * <LI><code>data</code>: The data for the row as an array.  Each element of the array holds the value for one column in the table. 
  * </UL>
- * <p>For example, the following object would provide data for a table with three rows and three columns:
+ * <p>For example, the following array would provide data for a table with three rows and three columns:
  * <br><pre>
- * [ {id: 1, data:["Shirt", "S", "01/10/2019"]},
- *   {id: 2, data:["Dress", "M", "05/22/2020"]},
- *   {id: 3, data:["Pants", "L", "04/20/2019"]}
+ * [ {id: 1, data:["Shirt", "S", "2019-01-10"]},
+ *   {id: 2, data:["Dress", "M", "2020-05-22"]},
+ *   {id: 3, data:["Pants", "L", "2019-04-20"]}
  * ]
  * </pre>
  * 
@@ -207,7 +208,7 @@ let CustomTableComponent = {
                         <th data-cy="save-header" width=55 v-if="canEdit && currentlyEditing">Save</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody data-cy="table-body">
                     <tr class="table-text" 
                     v-for="(row, ri) in rows"
                     :data-cy="'r'+ri">
