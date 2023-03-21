@@ -8,9 +8,9 @@
         </p>
         <br>
         <p> Start Date:
-            <input type="date" id="start_date" v-model="start_date" min="2014-01-01" max="2022-01-01">
+            <input type="date" id="start_date" v-model="start_date" min="2014-01-01" max="2022-01-01" data-cy="start-date">
             <d>End Date: </d><input type="date" id="end_date" v-model = "end_date"
-         min="2020-05-05" max="2022-01-01">
+         min="2020-05-05" max="2022-01-01" data-cy="end-date">
         </p>
         <br>
 
@@ -74,8 +74,8 @@
                 currentUser: '',
                 language: '',
                 reportTitle: '',
-                start_date: '',
-                end_date: '',
+                start_date: '2020-05-05',
+                end_date: '2020-05-15',
                 selectedCrop : '', 
                 selectedArea : '',
                 harvestLogsAPI: [],
