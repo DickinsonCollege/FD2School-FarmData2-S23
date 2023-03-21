@@ -28,12 +28,15 @@
     </select>
     <br >
     <br />
-    <button type = "submit" @click = 'saveHarvest'> Generate Report </button>
+    <button data-cy = "generate-report-button"type = "submit" @click = 'reportHarvest'> Generate Report </button>
     <br />
     <br />
     <hr />
     
-    <h1>{{ rptTitle== ''?'Mock Harvest Report':rptTitle }}</h1>
+    <div v-if = "rptButtonClicked===true">
+
+   
+    <h1  data-cy="report-title">{{ rptTitle== ''?'Mock Harvest Report':rptTitle }}</h1>
     
     
     <br />
@@ -52,7 +55,7 @@
         
     </ul>
     <br />
-    <p v-if = "harvestLog.length===0">No matching Records</p>
+    <p v-if = "harvestReportRows===0">No matching Records</p>
     <table v-if = "harvestReportRows.length>0" border = "1">
         
         <th><strong>Row</strong></th>
@@ -72,6 +75,7 @@
       
     </table>
     </div>
+    </div>
     <script>
     
         var myPage = new Vue({
@@ -89,6 +93,7 @@
                     idToAreaMap: new Map(),
                     //allPages:["ds"],
                     allHarvestPage:[],
+                    rptButtonClicked : false,
                 },
                 computed:{
                     cropNames(){
@@ -116,7 +121,7 @@
                 },
 
                 methods:{
-                    saveHarvest: function(){
+                    reportHarvest: function(){
 
                         axios.get('/farm.json')
                         .then((response) =>{
@@ -141,7 +146,7 @@
                         .catch((error)=>{
                             console.log(error);
                         })
-
+                        this.rptButtonClicked = true;
                         
                     },
                 },
