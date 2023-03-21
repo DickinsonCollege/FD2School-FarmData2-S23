@@ -49,34 +49,19 @@
             <li><strong>Crop:</strong> {{ crop }}</li>
         </ul>
         <br>
-        <table border="1">
-            <tr v-if="harvestReportRows.length!=0">
-                <th>Row</th>
-                <th>Date</th>
-                <th>Area</th>
-                <th>Crop</th>
-                <th>Yield</th>
-                <th>Units</th>
-                <th>Delete</th>
-            </tr>
-            <tr v-else><th>No Harvest Logs to Display!</th></tr>
-            <tr v-for="(harvest,index) in harvestReportRows">
-                <td>{{ index + 1 }}</td>
-                <td>{{ harvest.date }}</td>
-                <td>{{ harvest.area }}</td>
-                <td>{{ harvest.crop }}</td>
-                <td>{{ harvest.yield }}</td>
-                <td>{{ harvest.units }}</td>
-                <td><button type="button" @click="deleteHarvestLog(index)">Delete</button></td>
-            </tr>
-        </table>
+        <report-table 
+            data-cy="harvest-log-table"
+            :columns="reportColumns"
+            :rows="reportRows"
+        ></report-table>
     </div>
 </div>
 <script>
     let spike = new Vue ({
         el: "#mockHarvestReport",
         components: {
-            'dropdown-with-all': DropdownWithAllComponent,
+            "dropdown-with-all": DropdownWithAllComponent,
+            "report-table": CustomTableComponent,
         },
         data: {
             reportTitle: "My Sample Report",
@@ -91,6 +76,13 @@
             idToCropMap: new Map(),
             idToAreaMap: new Map(),
             harvestLogs: [],
+            reportColumns: [
+                {header: "Date", visible: true, inputType: {type: "no input"}},
+                {header: "Area", visible: true, inputType: {type: "no input"}},
+                {header: "Crop", visible: true, inputType: {type: "no input"}},
+                {header: "Yield", visible: true, inputType: {type: "no input"}},
+                {header: "Units", visible: true, inputType: {type: "no input"}},
+            ],
         },
         computed: {
             cropNames: function() {
@@ -98,8 +90,8 @@
             },
             areaNames: function() {
                 return Array.from(this.idToAreaMap.values());
-            },
-            harvestReportRows() {
+            },            
+            reportRows() {
                 let tableRows = []
                 for(let log of this.harvestLogs) {
                     let cropName = this.idToCropMap.get(log.data.crop_tid);
@@ -107,12 +99,16 @@
                     if (this.crop === "All" || cropName === this.crop) {
                         let date = dayjs.unix(log.timestamp);
                         let dateStr = date.format("MM/DD/YYYY");
+
                         let tableRow = {
-                            date: dateStr,
-                            area: log.area[0].name,
-                            crop: cropName,
-                            yield: log.quantity[0].value,
-                            units: log.quantity[0].unit.name,
+                            id: log.id,
+                            data: [
+                                dateStr,
+                                log.area[0].name,
+                                cropName,
+                                log.quantity[0].value,
+                                log.quantity[0].unit.name
+                            ]
                         }
                         tableRows.push(tableRow)
                     }
@@ -152,9 +148,6 @@
                 if (!this.reportVisible) {
                     this.reportVisible = true;
                 }
-            },
-            deleteHarvestLog: function(row) {
-                this.harvestList.splice(row,1)
             },
         },
         created() {
