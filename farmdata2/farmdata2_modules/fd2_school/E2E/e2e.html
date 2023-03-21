@@ -30,7 +30,7 @@
             </select>
 
             <label for="field">Area: </label> 
-            <select id="simple" v-model="reportArea">
+            <select id="simple" v-model="reportArea" data-cy="area-dropdown">
                 <option v-for="a in areaNames">{{ a }}</option>
             </select>
             <br>
@@ -46,9 +46,9 @@
             <div id="reportDetails">
                 <p>Details:</p>
                 <ul>
-                    <li><strong>Farm: </strong><span data-cy="farm-name">{{reportFarmName}}</span></li>
-                    <li><strong>User: </strong>{{reportUser}}</li>
-                    <li><strong>Language: </strong>{{reportLanguage}}</li><br>
+                    <li data-cy="farm-name"><strong>Farm: </strong>{{reportFarmName}}</li>
+                    <li data-cy="farm-user"><strong>User: </strong>{{reportUser}}</li>
+                    <li><strong>Language: </strong><span data-cy="farm-language">{{reportLanguage}}</span></li><br>
 
                     <li><strong>Start: </strong>{{ reportStartDate }}</li>
                     <li><strong>End: </strong>{{ reportEndDate }}</li>
