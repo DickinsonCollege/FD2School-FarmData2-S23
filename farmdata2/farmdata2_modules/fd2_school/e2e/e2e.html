@@ -22,11 +22,11 @@
         <br>
         <br>
         <label for="crop">Crop:</label>
-        <select name="crop" id="crop" v-model="crop">
+        <select name="crop" id="crop" v-model="crop" data-cy="crop-drop-down">
             <option v-for="c in cropNames" @click="setCrop">{{ c }}</option> 
         </select>
         <label for="field">Field:</label>
-        <select name="field" id="field">
+        <select name="field" id="field" data-cy="area-dropdown">
             <option v-for="f in areaNames">{{ f }}</option> 
         </select>
         <br>
