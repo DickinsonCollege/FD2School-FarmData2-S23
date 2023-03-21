@@ -25,7 +25,7 @@
 
         <div id="reportCropArea">
             <br><label for="crop">Crop: </label> 
-            <select id="simple" v-model="reportCrop">
+            <select id="simple" v-model="reportCrop" data-cy="crop-dropdown">
                 <option v-for="c in cropNames">{{ c }}</option>
             </select>
 
