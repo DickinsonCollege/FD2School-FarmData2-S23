@@ -44,16 +44,16 @@
     </ul>
     <div>
         <table border=1 >
-            <p v-if="harvestlogs.length === 0">No matching records</p>
-            <tr v-if="harvestlogs.length !== 0">
+            <p v-if="result.length === 0">No matching records</p>
+            <tr v-if="result.length !== 0">
                 <th>Row</th>
                 <th>Date</th>
                 <th>Area</th>
                 <th>Crop</th>
-                <th>Yeild</th>
+                <th>Yield</th>
                 <th>Units</th>
             </tr>
-            <tr v-for="(log,index) in harvestlogs">
+            <tr v-for="(log,index) in harvestReportRows">
                 <th>{{ index+1 }}</th>
                 <th>{{ log.date }}</th>
                 <th>{{ log.area }}</th>
@@ -80,11 +80,14 @@
         },
         data: {
             header: null,
-            startdate:"2020-05-15",
+            startdate:"2020-05-05",
             enddate:"2020-05-15",
             cropselect: "Kale",
             areas: [ "All", "Chaua-1", "SQ7",],
             harvestlogs: [],
+            timestampStart: "",
+            timestampEnd: "",
+            result: [],
             farm: "",
             user: "",
             language: "",
@@ -93,10 +96,37 @@
             computed: {
                 getCropNames() {
                     return this.idToCropMap.values()
-                }
+                },
+                harvestReportRows() {
+                    let tableRows = []
+                    for(let log of this.result) {
+                        let tableRow = {
+                            date: dayjs.unix(log.timestamp).format('MM/DD/YYYY'),
+                            area: log.area[0].name,
+                            crop: this.idToCropMap.get(log.data.crop_tid),
+                            yield: log.quantity[0].value,
+                            units: log.quantity[0].unit.name,
+                        }
+                        tableRows.push(tableRow)
+                    }
+                    return tableRows
+                },
             },
             methods: {
                     saveReport: function() {
+                        this.timestampStart = dayjs(this.startdate).unix()
+                        this.timestampEnd = dayjs(this.enddate).unix()
+                        let query = "/log.json?type=farm_harvest&timestamp[ge]="+this.timestampStart+"&timestamp[le]="+this.timestampEnd
+                        console.log(query)
+                        getAllPages(query, this.result)
+                        .then(() => {
+                            
+                        })
+                        .catch((err) => {
+                            console.log("An error occurred during the requests")
+                        })
+
+
                         this.harvestlogs.push({date: '2018-05-02', area: 'Chuau-1', crop: 'Kale', yield: 10, units: 'Bunches'})
                         axios.get('/Farm.json')
                             .then((response) => {
