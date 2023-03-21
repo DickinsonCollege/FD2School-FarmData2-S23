@@ -1,6 +1,6 @@
-<h2>Harvest Report</h2>
+<h1 data-cy="page-header">Harvest Report</h1>
 <p>This page is a <i>mockup</i> of a simplified harvest report.</p>
-
+    
 <div v-cloak id="vueReport">
     
     <label for="title">Title: </label>
@@ -9,9 +9,9 @@
     <br>
 
     <label for="start-date">Start: </label>
-    <input type="date" id="start-date" min="2014-01-01" :max="reportEndDate" v-model="reportStartDate">
+    <input data-cy="start-date" type="date" id="start-date" min="2014-01-01" :max="reportEndDate" v-model="reportStartDate">
     <label for="end-date">End: </label>
-    <input type="date" id="end-date" :min="reportStartDate" max="2022-01-01" v-model="reportEndDate">
+    <input data-cy="end-date" type="date" id="end-date" :min="reportStartDate" max="2022-01-01" v-model="reportEndDate">
     <br>
     <br>
 
