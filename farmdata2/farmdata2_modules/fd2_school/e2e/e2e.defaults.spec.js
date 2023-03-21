@@ -5,6 +5,6 @@ describe("Test the harvest report default values", () =>{
 
     })
     it("Check the page Header", () =>{
-        
+        cy.get("[data-cy=page-header]").should('have.text', "Harvest Report")
     })
 })
