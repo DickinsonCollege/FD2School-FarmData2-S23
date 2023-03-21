@@ -106,6 +106,15 @@ function fd2_school_menu() {
         'weight' => 150,
     );
 
+    $items['farm/fd2-school/e2e'] = array(
+        'title' => 'e2e',
+        'type' => MENU_LOCAL_TASK,
+        'page callback' => 'fd2_school_view',
+        'page arguments' => array('e2e'),
+        'access arguments' => array('view fd2 school'),
+        'weight' => 160,
+    );
+
   return $items;
 };
 
