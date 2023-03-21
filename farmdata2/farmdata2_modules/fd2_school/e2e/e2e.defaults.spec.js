@@ -21,7 +21,8 @@ describe("Test the harvest report default values", () =>{
             .should("have.value", "BEAN-FAVA")
         cy.get("[data-cy=crop-drop-down]").children().eq(110)
             .should("have.value", "ZUCCHINI")
-        cy.get("[data-cy=crop-drop-down]").children().should("have.length", 111)
+        cy.get("[data-cy=crop-drop-down]").children()
+            .should("have.length", 111)
     
     })
 

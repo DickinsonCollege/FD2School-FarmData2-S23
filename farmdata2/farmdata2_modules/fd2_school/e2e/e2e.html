@@ -27,13 +27,13 @@
     <br>
     <br>
 
-    <button @click="generateReport" >Generate Report</button>
+    <button data-cy="generate-button" @click="generateReport" >Generate Report</button>
     
     
     <div v-if="reportState==='generated'">
         <hr>
         
-        <h2>{{ reportTitle ? reportTitle : "Mock Harvest Report" }}</h2>
+        <h2 data-cy="report-title">{{ reportTitle ? reportTitle : "Mock Harvest Report" }}</h2>
         <p>Details:</p>
         <ul>
             <li><strong>Farm:</strong>{{ farm }}</li>
