@@ -33,9 +33,9 @@
             <h1 data-cy="report-title" v-cloak> {{ rptTitle=="" ? "Mock Harvest Report" : rptTitle}} </h1>
                 <p> Details: </p>
                 <ul>
-                    <li><b>Farm</b>:{{ farmName }}</li>
-                    <li><b>User</b>:{{ userID }}</li>
-                    <li><b>Language</b>:{{ language }}</li><br>
+                    <li data-cy="farm-name"><b>Farm</b>:{{ farmName }}</li>
+                    <span data-cy="user-id"><b>User</b>:{{ userID }}</span>
+                    <span data-cy="language"><b>Language</b>:{{ language }}</span><br>
                     <li><b>Start</b>:{{ rptStart }}</li>
                     <li><b>End</b>:{{ rptEnd }}</li>
                     <li><b>Crop</b>:{{ rptCrop }}</li>
@@ -83,9 +83,9 @@
             ],
 
             tablesFromAPI: [],
-            farmName: '',
+            farmName: 'Sample FarmName',
             userID: '',
-            language: '',
+            language: 'English',
             idToCropMap: new Map(),
             showReport: "hidden",
         },
