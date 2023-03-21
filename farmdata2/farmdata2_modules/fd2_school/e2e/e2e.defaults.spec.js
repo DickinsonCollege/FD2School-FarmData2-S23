@@ -12,6 +12,9 @@ describe("Test the harvest report default values", () =>{
         cy.get("[data-cy=end-date]").should('have.value', "2020-05-15")
     })
     it("Check the crop dropdown list", () => {
-        cy.get("[data-cy=crop-dropdown]").children().eq(0).should("have.value", "ARUGALA")
+        cy.get("[data-cy=crop-dropdown]").children().eq(0).should("have.value", "ARUGULA")
+        cy.get("[data-cy=crop-dropdown]").children().eq(4).should("have.value", "BEAN-FAVA")
+        cy.get("[data-cy=crop-dropdown]").children().eq(110).should("have.value", "ZUCCHINI")
+        cy.get("[data-cy=crop-dropdown]").children().should("have.length", "111")
     })
 })
