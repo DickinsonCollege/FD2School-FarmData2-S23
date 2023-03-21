@@ -75,6 +75,8 @@
       
         el: "#app",
         created() {
+          this.startDate = "2020-05-05";
+          this.endDate = "2020-05-15";
           getIDToCropMap()
           .then((theMap) => {
             this.idToCropMap = theMap;
