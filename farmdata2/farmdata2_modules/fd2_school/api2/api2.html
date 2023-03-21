@@ -82,7 +82,7 @@
             header: null,
             startdate:"2020-05-05",
             enddate:"2020-05-15",
-            cropselect: "Kale",
+            cropselect: "KALE",
             areas: [ "All", "Chaua-1", "SQ7",],
             harvestlogs: [],
             timestampStart: "",
@@ -100,14 +100,16 @@
                 harvestReportRows() {
                     let tableRows = []
                     for(let log of this.result) {
-                        let tableRow = {
+                        console.log(this.idToCropMap.get(log.data.crop_tid) + " " + this.cropselect)
+                        if(this.idToCropMap.get(log.data.crop_tid) === this.cropselect){
+                            let tableRow = {
                             date: dayjs.unix(log.timestamp).format('MM/DD/YYYY'),
                             area: log.area[0].name,
                             crop: this.idToCropMap.get(log.data.crop_tid),
                             yield: log.quantity[0].value,
                             units: log.quantity[0].unit.name,
                         }
-                        tableRows.push(tableRow)
+                        tableRows.push(tableRow)} 
                     }
                     return tableRows
                 },
@@ -117,7 +119,6 @@
                         this.timestampStart = dayjs(this.startdate).unix()
                         this.timestampEnd = dayjs(this.enddate).unix()
                         let query = "/log.json?type=farm_harvest&timestamp[ge]="+this.timestampStart+"&timestamp[le]="+this.timestampEnd
-                        console.log(query)
                         getAllPages(query, this.result)
                         .then(() => {
                             
@@ -126,8 +127,6 @@
                             console.log("An error occurred during the requests")
                         })
 
-
-                        this.harvestlogs.push({date: '2018-05-02', area: 'Chuau-1', crop: 'Kale', yield: 10, units: 'Bunches'})
                         axios.get('/Farm.json')
                             .then((response) => {
                                 this.farm = response.data.name
