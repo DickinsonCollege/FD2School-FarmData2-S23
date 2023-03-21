@@ -25,12 +25,12 @@
         </p>
         <br>
 
-        <button type="button" @click=generateTable()>Generate Report</button>
+        <button type="button" @click=generateTable() data-cy="generate-report-button">Generate Report</button>
         
         <hr>
 
-        <div id="exampleReport" v-cloak>
-            <h1>{{ reportTitle ? reportTitle : "Mock Harvest Report" }}</h1>
+        <div id="exampleReport" v-if="showReport === 'true'" v-cloak>
+            <h1 data-cy="report-title">{{ reportTitle ? reportTitle : "Mock Harvest Report" }}</h1>
             <p>Details:</p>
             <UL>
                 <LI><b>Farm</b>: {{ farmName }}</LI>
@@ -74,6 +74,7 @@
                 currentUser: '',
                 language: '',
                 reportTitle: '',
+                showReport: 'false',
                 start_date: '2020-05-05',
                 end_date: '2020-05-15',
                 selectedCrop : '', 
@@ -110,12 +111,15 @@
                 this.generateRequest();
             },
             generateReport: function() {
+                if(this.showReport === "false"){
                 axios.get('/farm.json')
                 .then((response) => {
                     this.farmName = response.data.name
                     this.currentUser = response.data.user.name
                     this.language = response.data.languages.en.name
                 })
+                this.showReport = 'true'
+                }
             },
             generateRequest: function() {
                 let startDate = dayjs(this.start_date).unix()
