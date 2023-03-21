@@ -36,12 +36,12 @@
             <br>
         </div>
 
-        <br><button class="report-button" id="button" @click="cropDetail">Generate Report</button>
+        <br><button class="report-button" id="button" @click="cropDetail" data-cy="generate-report-button">Generate Report</button>
         <hr>
 
 
         <div class="reportDetail" v-if="reportVis === true">
-            <h1>{{ header && header.trim() != '' ? header : 'Mock Harvest Report'}}</h1>
+            <h1 data-cy="report-header">{{ header && header.trim() != '' ? header : 'Mock Harvest Report'}}</h1>
 
             <div id="reportDetails">
                 <p>Details:</p>
