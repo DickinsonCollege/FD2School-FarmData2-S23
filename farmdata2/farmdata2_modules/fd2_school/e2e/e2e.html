@@ -7,11 +7,11 @@
     <br />
     <br />
     <label for="start">Start</label>
-    <input type="date" id="start" name="Start Date"
+    <input data-cy="start-date"  type="date" id="start" name="Start Date"
            v-model = "rptStartDate"
            min="2014-01-01" :max="rptEndDate">
     <label for="end">End</label>
-    <input type="date" id="end" name="End-Date"
+    <input data-cy="end-date" type="date" id="end" name="End-Date"
            v-model = "rptEndDate"
            :min="rptStartDate" max="2022-01-01">
     <br />
