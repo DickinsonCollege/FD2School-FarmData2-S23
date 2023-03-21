@@ -24,14 +24,14 @@
     </div>
     <div>
       <label for="crop">Crop: </label>
-      <select id="crop" name="Crop" v-model="selectedCrop"/>
+      <select data-cy="crop-dropdown" id="crop" name="Crop" v-model="selectedCrop"/>
         <option v-for="crop in cropMapToArray">{{crop}}</option>
 
       
         
       </select>
-      <label for="crop">Field: </label>
-      <select id="field" name="Field" v-model="selectedField"/>
+      <label for="field">Field: </label>
+      <select  id="field" name="Field" v-model="selectedField"/>
         <option v-for="field in areaMapToArray">{{field}}</option>
       </select>
       <br>
