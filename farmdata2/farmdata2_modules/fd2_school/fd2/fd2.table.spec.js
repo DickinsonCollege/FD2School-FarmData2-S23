@@ -20,6 +20,10 @@ describe("Test the harvest report table", () => {
         cy.get("[data-cy=crop-dropdown] > [data-cy=dropdown-input").select("ASPARAGUS")
         cy.get("[data-cy=table-body]").children().should("have.length", 5)
         cy.get("[data-cy=r0-Crop]").should("have.text", "ASPARAGUS")
+        
+        // Fully nested alternative...
+        cy.get("[data-cy=table] > [data-cy=table-body] > [data-cy=r1] > [data-cy=td-r1c2] > [data-cy=r1-Crop").should("have.text", "ASPARAGUS")
+
         cy.get("[data-cy=r1-Crop]").should("have.text", "ASPARAGUS")
         cy.get("[data-cy=r2-Crop]").should("have.text", "ASPARAGUS")
         cy.get("[data-cy=r3-Crop]").should("have.text", "ASPARAGUS")

@@ -18,6 +18,10 @@ describe("Test the harvest report default values", () => {
 
     it("Check the crops in the crop drop down", () => {
         cy.get("[data-cy=crop-dropdown] > [data-cy=dropdown-input] > [data-cy=option0]").should("have.text","All")
+
+        // Non-nested alternative that works if there is no other DropdownWithAllComponent
+        cy.get("[data-cy=option0]").should("have.text","All")
+
         cy.get("[data-cy=crop-dropdown] > [data-cy=dropdown-input] > [data-cy=option1]").should("have.text","ARUGULA")
         cy.get("[data-cy=crop-dropdown] > [data-cy=dropdown-input] > [data-cy=option4]").should("have.text","BEAN-DRY")
         cy.get("[data-cy=crop-dropdown] > [data-cy=dropdown-input] > [data-cy=option111]").should("have.text","ZUCCHINI")
