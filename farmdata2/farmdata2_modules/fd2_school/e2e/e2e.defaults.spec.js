@@ -3,10 +3,10 @@ describe("Test the harvest report default values", () => {
         cy.login("manager1", "farmdata2")
         cy.visit("/farm/fd2-school/e2e")
     })
-      
+
     it("Check the page header", () => {
         cy.get("[data-cy=page-header]")
-            .should("have.text","Harvest Report")
+            .should("have.text", "Harvest Report")
     })
 
     it("Check the report start and end date", () => {
@@ -29,6 +29,6 @@ describe("Test the harvest report default values", () => {
 
         cy.get("[data-cy=crop-dropdown-menu]").children()
             .should("have.length", "111")
-            
+
     })
 })

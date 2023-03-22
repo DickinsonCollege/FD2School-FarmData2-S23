@@ -3,7 +3,7 @@ describe("Test user interactions in the harvest report", () => {
         cy.login("manager1", "farmdata2")
         cy.visit("/farm/fd2-school/e2e")
     })
-      
+
     it("Test button to generate report", () => {
         cy.get("[data-cy=harvest-report-title]")
             .should("not.exist")
@@ -17,7 +17,7 @@ describe("Test user interactions in the harvest report", () => {
     it("Test button to generate report", () => {
         cy.get("[data-cy=farm-name]")
             .should("not.exist")
-        
+
         cy.get("[data-cy=user-name]")
             .should("not.exist")
 
