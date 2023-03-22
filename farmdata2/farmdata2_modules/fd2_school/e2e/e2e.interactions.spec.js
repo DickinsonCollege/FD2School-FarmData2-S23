@@ -5,6 +5,9 @@ describe("Test user interactions in the harvest report", () => {
     })
       
     it("Test button to generate report", () => {
+        cy.get("[data-cy=harvest-report-title]")
+            .should("not.exist")
+
         cy.get("[data-cy=generate-report-button]").click()
 
         cy.get("[data-cy=harvest-report-title]")
