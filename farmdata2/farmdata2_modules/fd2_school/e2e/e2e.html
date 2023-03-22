@@ -36,11 +36,11 @@
         <hr>
 
         <h1 v-if="title === 'true'" data-cy="report-title">{{ repTitle }}</h1>
-        <p>Details:</p>
-        <ul>
-            <li><strong>Farm:</strong>{{ farm }}</li>
-            <li><strong>User:</strong>{{ user }}</li>
-            <li><strong>Language</strong>{{ language }}</li>
+        <p v-if="title === 'true'">Details:</p>
+        <ul v-if="title === 'true'">
+            <li data-cy="report-farm"><strong>Farm:</strong>{{ farm }}</li>
+            <li data-cy="report-user"><strong>User:</strong>{{ user }}</li>
+            <li><strong>Language</strong><span data-cy="report-language">{{ language }}</span></li>
             <br>
             <li><strong>Start</strong>{{ startDate }}</li>
             <li><strong>End</strong>{{ endDate }}</li>

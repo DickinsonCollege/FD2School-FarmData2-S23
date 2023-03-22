@@ -11,5 +11,12 @@ describe("Test the harvest report dynamic values", () => {
 
   })
 
-  
+  it("Check the generate report button values", () => {
+    cy.get("[data-cy=report-farm]").should("not.exist")
+    cy.get("[data-cy=generate-report-button]").click()
+    cy.get("[data-cy=report-farm]").should("have.text", "Farm:Sample Farm")
+
+    cy.get("[data-cy=report-user]").should("contain.text", "User:")
+    cy.get("[data-cy=report-language]").should("have.text", "English")
+  })
 })
