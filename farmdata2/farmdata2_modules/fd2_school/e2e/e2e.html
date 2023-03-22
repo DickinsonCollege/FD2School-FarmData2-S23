@@ -39,7 +39,7 @@
     </div>
 <hr>
 <div v-cloak>
-  <h1 data-cy="report-header">{{header ? header : ''}}</h1>
+  <h1 data-cy="report-header" v-if="buttonPressed">{{header ? header : 'Mock Harvest Report'}}</h1>
   
 </div>
 
@@ -95,6 +95,7 @@
           });
         },
         data: {
+            buttonPressed: false,
             header: '',
             startDate:'',
             endDate:'',
@@ -148,6 +149,7 @@
         },
         methods: {
           generateReportData: function() {
+            this.buttonPressed = true;
             let harvestLogAPIRequest = '/log.json?type=farm_harvest&timestamp[ge]=PUTSTARTHERE&timestamp[le]=PUTENDHERE';
             let timestampStart = dayjs(this.startDate).unix();
             let timestampEnd = dayjs(this.endDate).unix();
