@@ -31,9 +31,10 @@
       </select>  
     <br>
     <br>
-    <button type="button" @click="generateLog">Generate Report</button>
-    <hr>
-        <h1>{{reportTitle == ""? "Mock Harvest Report":reportTitle}}</h1>
+    <button data-cy = "generate-report-button" type="button" @click="generateLog">Generate Report</button>
+    <div v-if="reportDisplayFlag === true">
+      <hr>
+        <h1 data-cy="harvest-report-title">{{reportTitle == ""? "Mock Harvest Report":reportTitle}}</h1>
     <p>Details:</p>
     <ul>
         <li><strong>Farm:</strong>{{reportFarmName}}</li>
@@ -60,6 +61,8 @@
           <td>{{index+1}}</td>
           <td v-for="entry in log">{{entry}}</td>}}</tr>
     </table>
+    </div>
+
   </div>
     <script>
       var reportVar = new Vue({el: '#SampleHarvestReport',
@@ -85,7 +88,9 @@
         reportUserName: "",
         reportLanguage: "",
         reportLogArray: [],
-        reportIDToCropMap: new Map()}, 
+        reportIDToCropMap: new Map(),
+        reportDisplayFlag: false,
+        }, 
 
       computed: {
         cropNames : function() {
@@ -134,6 +139,7 @@
                 console.log('Error occurred in retrieving data')
                 console.log(err)
             })
+            this.reportDisplayFlag = true
       }
     }})
     Vue.config.devtools = true;
