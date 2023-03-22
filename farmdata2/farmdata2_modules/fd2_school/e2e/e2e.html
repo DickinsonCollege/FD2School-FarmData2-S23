@@ -46,11 +46,11 @@
 
 <p>details</p>
   <ul>
-    <li><strong>Farm: </strong>{{farm}}</li>
-    <li><strong>User: </strong>{{user}}</li>
-    <li><strong>Language: </strong>{{language}}</li>
-    <li><strong>Start: </strong>{{startDate}}</li>
-    <li><strong>End: </strong>{{endDate}}</li>
+    <li data-cy="farm-li" ><strong>Farm: </strong>{{farm}}</li>
+    <li data-cy="user-li"><strong>User: </strong>{{user}}</li>
+    <li><strong>Language: </strong><span data-cy="language-li" >{{language}}</span></li>
+    <li ><strong>Start: </strong>{{startDate}}</li>
+    <li ><strong>End: </strong>{{endDate}}</li>
     <li><strong>Crop: </strong> {{selectedCrop}}</li>
   </ul>
   <p v-if="harvestPages.length === 0">No harvest logs to show</p>
