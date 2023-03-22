@@ -20,10 +20,10 @@
         <input type="date" min="2014-01-01" v-model="rptStartDate" v-bind:max="rptEndDate" value="2020-05-05" data-cy="start-date">
         <label for="enddate">End: </label>
         <input type="date" v-bind:min="rptStartDate" v-model="rptEndDate" max="2022-01-01" value="2020-05-15" data-cy="end-date"> <br><br>
-        <label for="crop">Crop: </label>
-        <select name="crop" v-model="rptCrop" id="crop" data-cy="crop-list">
-            <option v-for="item in cropNames">{{item}}</option>
-            </select>
+
+        <dropdown-with-all :selected-val="rptCrop"  data-cy="crop-list" includes-all :dropdown-list="cropNames" @selection-changed="cropChange" :disabled="false"> Crop: 
+        </dropdown-with-all>
+
         <label for="field">Area: </label>
         <select name="field" id="field">
             <option v-for="item in fields">{{item}}</option>
@@ -73,6 +73,9 @@
         var vuecontent = new Vue(
             {
                 el:'#vuecontent',
+                components: {
+                    'dropdown-with-all': DropdownWithAllComponent,
+                },
                 created(){
                         console.log("HarvestReport Vue instance created!")
                         getIDToCropMap()
@@ -90,7 +93,7 @@
                     rptTitle: "",
                     rptStartDate:'2020-05-05',
                     rptEndDate:'2020-05-15',
-                    rptCrop:'',
+                    rptCrop:'All',
                     rptFarm:'',
                     rptUser:'',
                     rptLanguage:'',
@@ -125,7 +128,9 @@
 
                 },
                 methods: {
-                    
+                    cropChange: function (newCrop){
+                        this.rptCrop = newCrop;
+                    },
                     generateRpt: function(){
                         this.genState = true;
                         //Axios
