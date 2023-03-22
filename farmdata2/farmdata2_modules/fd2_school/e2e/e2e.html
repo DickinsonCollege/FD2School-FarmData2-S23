@@ -22,7 +22,7 @@
     <br>
     <br>
     <label for="reportCrops">Crop: </label>
-    <select id="reportCrop" name="reportCrop" v-model = "reportCrop">
+    <select data-cy = "crop-dropdown-menu" id="reportCrop" name="reportCrop" v-model = "reportCrop">
         <option v-for="cropName in cropNames">{{cropName}}</option>
       </select>
     <label for="reportFields">Field: </label>
