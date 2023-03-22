@@ -7,7 +7,7 @@
   </head>
   <body>
     <div id="harvest-report" v-cloak>
-        <h1>{{ repTitle ? repTitle:"Mock Harvest Report" }}</h1>
+        <h1 data-cy="page-header" >{{ repTitle ? repTitle:"Mock Harvest Report" }}</h1>
         <p>This page is <i>mockup</i> of a simplified harvest report.</p>
         <label for="title">Title:</label>
         <input type="text" id="title" v-model='repTitle' />
@@ -31,11 +31,11 @@
         </select>
         <br>
         <br>
-        <button type="anonymous" @click='genReport(c)' >Generate Report</button> 
+        <button type="anonymous" @click='genReport(c)' data-cy="generate-report-button">Generate Report</button> 
 
         <hr>
 
-        <h1 data-cy="page-header">Harvest Report</h1>
+        <h1 v-if="title === 'true'" data-cy="report-title">{{ repTitle }}</h1>
         <p>Details:</p>
         <ul>
             <li><strong>Farm:</strong>{{ farm }}</li>
@@ -76,7 +76,7 @@
             data: {
                 idToCropMap: new Map(),
                 idToAreaMap: new Map(),
-                repTitle: 'My Sample Harvest Report',
+                repTitle: 'My Harvest Report',
                 startDate: "2020-05-05",
                 endDate: "2020-05-15",
                 crop: "",
@@ -109,6 +109,8 @@
                 tableRows: [
 
                 ],
+
+                title: "",
             },
 
             computed: {
@@ -152,6 +154,7 @@
                             this.farm = response.data.name;
                             this.user = response.data.user.name;
                             this.language = response.data.languages.en.name;
+                            this.title = "true"
 
                             let startTimestamp = dayjs(this.startDate).unix();
                             let endTimestamp = dayjs(this.endDate).unix();
