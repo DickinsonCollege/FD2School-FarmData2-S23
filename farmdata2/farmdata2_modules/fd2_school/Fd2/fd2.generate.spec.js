@@ -1,7 +1,7 @@
 describe("Test the Generate Button", ()=>{
     beforeEach(()=>{
         cy.login("manager1", "farmdata2")
-        cy.visit("/farm/fd2-school/e2e")
+        cy.visit("/farm/fd2-school/fd2")
     })
 
     it("Check generate button - harvest report title",()=>{
