@@ -14,7 +14,7 @@ describe("Test user interactions in the harvest report", () => {
             .should("be.visible")
     })
 
-    it("Test button to generate report", () => {
+    it("Test farm name, username and language", () => {
         cy.get("[data-cy=farm-name]")
             .should("not.exist")
 
