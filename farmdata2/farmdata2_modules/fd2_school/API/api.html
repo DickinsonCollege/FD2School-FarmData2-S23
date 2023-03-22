@@ -18,11 +18,11 @@
             <br><br>
             <label for=”crop”>Crop: </label>
             <select id="crop" name="crop" v-model="crop">  
-              <option v-for="crop in crops">{{ crop }}</option>       
+              <option v-for="crop in cropsName">{{ crop }}</option>       
             </select> 
             <label for=”field”>Area: </label>
             <select id="field" name="field" v-model="area">
-                <option v-for="area in areas">{{ area }}</option>
+                <option v-for="area in areasName">{{ area }}</option>
             </select>
             <br><br>
             <button type="button" @click='Newlog'>Generate Report</button>
@@ -52,7 +52,7 @@
             <td><strong>Units</strong></td>
           </tr>
           <tr v-for="(l,index) in harvestLog">
-            <td>{{ index }}</td>
+            <td>{{ index+1 }}</td>
             <td>{{ l.date }}</td>
             <td>{{ l.area }}</td>
             <td>{{ l.crop }}</td>
@@ -63,7 +63,23 @@
       </div>
         <script>
           var Vue1 = new Vue({
-            el:'#vue',
+            el: "#vue",
+            created() {
+              getIDToCropMap()
+              .then((theMap) => {
+                this.idToCropMap = theMap;
+              })
+              .catch((err) => {
+                console.log("getIDToCropMap caught an error.")
+              })
+              getIDToAreaMap()
+              .then((theMap) => {
+                this.idToAreaMap = theMap;
+              })
+              .catch((err) => {
+                console.log("getIDToAreaMap caught an error.")
+              })
+            },
             data:{
               Title:"My Sample Harvest Report",
               Sdate:"2018-05-01",
@@ -76,35 +92,44 @@
               user: '',
               language: '',
               farmInfo: '',
+              idToCropMap: new Map(),
+              idToAreaMap: new Map(),
               crops: [
-                'Broccoli',
-                'Kale',
-                'Peas',
+                {text: "Broccoli", value: "Broccoli"},
+                {text: "Kale", value: "Kale"},
+                {text: "Peas", value: "Peas"},
               ],
               areas: [
-                'All',
-                'CHUAU-1',
-                'SQ7',
+                {text: "All", value: "All"},
+                {text: "Chuau-1", value: "Chuau-1"},
+                {text: "SQ7", value: "SQ7"},
               ],
               harvestLog: [
     
               ],
             },
+            computed: {
+              cropsName() {
+                return Array.from(this.$data.idToCropMap.values());
+              },
+              areasName() {
+                return Array.from(this.$data.idToAreaMap.values());
+              }
+            },
             methods: {
               Newlog: function() {
                 axios.get('/farm.json')
-                            .then((response) => {
-                              this.farmName = response.data.name;
-                              this.currentUser = response.data.user.name;
-                              this.language = response.data.languages.en.name;
-                            })
-                            .catch((error) => {
-                              console.log("Error occurred.")
-                              console.log(error)
-                            })
-
-                            this.harvestLog.push({date:'05/08/2020',area:'Orion-3',crop:'Kale',yield:12,units:'Bunches'});
-                        },
+                  .then((response) => {
+                  this.farmName = response.data.name;
+                  this.currentUser = response.data.user.name;
+                  this.language = response.data.languages.en.name;
+                })
+                  .catch((error) => {
+                  console.log("Error occurred.")
+                  console.log(error)
+                })
+                  this.harvestLog.push({date:'05/08/2020',area:'Orion-3',crop:'Kale',yield:12,units:'Bunches'});
+                },
             }
           });
           Vue.config.devtools = true;
