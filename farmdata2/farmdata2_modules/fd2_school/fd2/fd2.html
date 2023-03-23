@@ -24,10 +24,18 @@
       <input data-cy="end-date" v-model="endDate" type="date" id="end" name="date" v-bind:min="startDate" max="2022-01-01" >
       <br><br>
       <label for="crop">Crop:</label>
-      <select data-cy="crop-item" v-model="crop" name="crop" id="crop">
+      <!-- <select data-cy="crop-item" v-model="crop" name="crop" id="crop">
         <option v-for="crop in reverseCropIDandName">{{crop}}</option>
         
-      </select>
+      </select> -->
+      <dropdown-with-all data-cy="crop-dropdown" 
+      includes-all 
+      :selected-val='crop'
+      :dropdown-list='reverseCropIDandName'
+      @selection-changed="cropChange"
+      :disabled="false">
+  Pick a Crop: 
+  </dropdown-with-all>
       <label for="field">Field:</label>
   <select v-model="field" name="field" id="field">
     <option v-for="field in fieldList">{{field}}</option>
@@ -108,7 +116,7 @@
                            cropList:["Kale","Broccoli","Peas"],
                            fieldList:["Chuau-1","Chuau-2","Chuau-3"],
                            field:"Chuau-1",
-                           crop:"Kale",
+                           crop:"All",
                            harvestLog:[{date:"2018-05-01",area:"Orion-3",crop:"Kale",yield:12,units:"Bunches"},{date:"2018-05-01",area:"Orion-3",crop:"Kale",yield:12,units:"Bunches"},{date:"2018-05-01",area:"Orion-3",crop:"Kale",yield:12,units:"Bunches"}],
             header:'Vue',
             
@@ -123,6 +131,9 @@
     console.log(err);
 })
 	console.log("HarvestReport Vue instance created!")
+},
+components:{
+'dropdown-with-all': DropdownWithAllComponent
 },
 computed :{
   reverseCropIDandName(){
@@ -191,22 +202,13 @@ getAllPages(request, this.result)
 .catch((err) => {
     console.log(err)
 })
-//   axios.get('/farm.json')  // this line sends the request.
-// .then((response) => {
-	
-//   this.farm=response.data.name;
-//   this.user=response.data.user.name;
-//   this.language=response .data.user.language;
-
-// })
-// .catch((error) => {
-// 	console.log("Error Occured")
-//   console.log(error)
-// })
 
   
 
   
+},
+cropChange: function (newCrop){
+this.crop=newCrop
 }
         }
 
