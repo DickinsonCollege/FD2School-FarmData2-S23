@@ -38,9 +38,13 @@
             <br>
             <p>
                 <label for="crop">Crop:</label>
-                <select data-cy="crop-select" id="crop" name="crop" v-model="cropSelect">
-                    <option selected v-for="crop in cropNames">{{crop}}</option>
-                </select>
+                <dropdown-with-all
+                    data-cy="crop-select"
+                    includes-all
+                    :selected-val="cropSelect"
+                    :dropdown-list="cropNames"
+                    @selection-changed="cropChanged">
+                </dropdown-with-all>
 
                 <label for="area">Area:</label>
                 <select id="area" name="area" v-model="areaSelect">
@@ -136,11 +140,14 @@
                             console.log("getIDToAreaMap caught an error.")
                         })
                     },
+                    components: {
+                        'dropdown-with-all': DropdownWithAllComponent,
+                    },
                     data: {
                         reportTitle: "My Sample Harvest Report",
                         startDate: "2020-05-05",
                         endDate: "2020-05-15",
-                        cropSelect: "Kale",
+                        cropSelect: "All",
                         areaSelect: "All",
                         harvLogsFromAPI: [],
 
@@ -164,7 +171,7 @@
                         harvestReportRows() {
                             let tableRows = []
                             for(let log of this.harvLogsFromAPI) {
-                                if(this.idToCropMap.get(log.data.crop_tid) == this.cropSelect)
+                                if((this.idToCropMap.get(log.data.crop_tid) == this.cropSelect) | (this.cropSelect == "All" ))
                                 {
                                     let tableRow = {
                                         date: dayjs.unix(log.timestamp).format('YYYY-MM-DD'),
@@ -214,6 +221,11 @@
                         deleteHarvestLog: function(hLogIndex) {
                             this.harvLogsFromAPI.splice(hLogIndex, 1);
                         },
+                        
+                        //FD2 - components spike
+                        cropChanged(newCrop) {
+                            this.cropSelect = newCrop;
+                        }
                     },
                 });
                 Vue.config.devtools = true;
