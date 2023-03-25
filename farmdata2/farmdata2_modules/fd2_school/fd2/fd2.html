@@ -13,10 +13,10 @@
     v-model="reportEndDate">
   <br>
   <br>
-  <label for="reportCrops">Crop: </label>
-  <select data-cy="crop-dropdown-menu" id="reportCrop" name="reportCrop" v-model="reportCrop">
-    <option v-for="cropName in cropNames">{{cropName}}</option>
-  </select>
+  <dropdown-with-all data-cy="crop-dropdown-menu" includes-all :selected-val="reportCrop" :dropdown-list="cropNames"
+    @selection-changed="cropChange">
+    Crop:
+  </dropdown-with-all>
   <label for="reportFields">Field: </label>
   <select id="reportFields" name="reportFields">
     <option v-for="reportField in reportFields">{{reportField}}</option>
@@ -71,11 +71,16 @@
 
     },
 
+    components: {
+      // Register the components used and define the tag name to be used.
+      'dropdown-with-all': DropdownWithAllComponent,
+    },
+
     data: {
       reportTitle: "My Sample Harvest Report",
       reportStartDate: "2020-05-05",
       reportEndDate: "2020-05-15",
-      reportCrop: "Kale",
+      reportCrop: "All",
       reportFields: ["All", "CHUAU-1", "SQ7"],
       reportFarmName: "",
       reportUserName: "",
@@ -100,7 +105,10 @@
             yield: log.quantity[0].value,
             units: log.quantity[0].unit.name,
           }
-          if (tableRow.crop == this.reportCrop) {
+          if (this.reportCrop != "All" && tableRow.crop == this.reportCrop) {
+            tableRows.push(tableRow)
+          }
+          else if (this.reportCrop == "All") {
             tableRows.push(tableRow)
           }
         }
@@ -132,7 +140,11 @@
 
           })
         this.reportDisplayFlag = true
-      }
+      },
+
+      cropChange: function (newCrop) {
+        this.reportCrop = newCrop
+      },
     }
   })
   Vue.config.devtools = true;
