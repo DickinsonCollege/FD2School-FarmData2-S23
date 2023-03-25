@@ -18,9 +18,14 @@
 <br><br>
 
 <label for="Crop">Crop:</label> 
-<select data-cy="crop-drop" id="crops" name="crops" v-model="crop">
-    <option v-for="x in cropName">{{x}}</option>
-</select>
+<dropdown-with-all data-cy="crop-drop"
+              includes-all
+              :selected-val= 'crop'
+              :dropdown-list= 'cropName'
+              @selection-changed = 'cropChange'
+          >
+    <!-- <option v-for="x in cropName">{{x}}</option> -->
+</dropdown-with-all>
 <label for="Field">Field:</label> 
 <select data-cy="area-drop" id="fields" name="fields" v-model="field">
     <option v-for="x in areaName">{{x}}</option>
@@ -86,6 +91,11 @@
 <script>
   let report = new Vue({
     el: '#vue',
+
+    components: {
+      'dropdown-with-all': DropdownWithAllComponent,
+    },
+
     data: {
       rpStat: false,
       titlerp: "My Sample Harvest Report",
@@ -120,8 +130,9 @@
         console.log("Error");
         console.log(error);
       })
-      },
+    },
     
+
     computed: {
       inValidDate() {
         let inval = false;
@@ -160,12 +171,10 @@
 	      }
 	      return tableRows
       }
-
-
     },
 
+
     methods: {
-      
       generate: function() {
         this.result = [];
         let endTime = dayjs(this.enddate).unix();
@@ -176,7 +185,6 @@
           console.log("Error");
           console.log(error);
         });
-
 
         if(this.harvestLogs.length <3 && this.rpStat){
           this.harvestLogs.push({date: "2018-05-02", area: "Chuau-1", crop: "Kale", yield: 10, units: "Bunches"});
@@ -196,7 +204,11 @@
       },
       deleteRecord: function(index) {
         this.result.splice(index, 1);
-      }
+      },
+
+      cropChange(newCrop) {
+        this.crop = newCrop;
+      },
     }
   });
   Vue.config.devtools = true;
