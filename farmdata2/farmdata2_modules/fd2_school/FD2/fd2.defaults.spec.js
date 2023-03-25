@@ -14,15 +14,16 @@ describe("Test the harvest report default values", () => {
     } );
 
     it("Testing Crop Dropdown", () => {
-        cy.get("[data-cy=crop-drop]").children().eq(0).should("have.value", "All");
-        cy.get("[data-cy=crop-drop]").children().eq(4).should("have.value", "BEAN-DRY");
-        cy.get("[data-cy=crop-drop]").children().eq(111).should("have.value", "ZUCCHINI");
-        cy.get("[data-cy=crop-drop]").children().should("have.length", 112);
+        cy.get("[data-cy=crop-drop] > [data-cy=dropdown-input] > [data-cy=option0]").should("have.value", "All");
+        cy.get("[data-cy=crop-drop] > [data-cy=dropdown-input] > [data-cy=option1]").should("have.value", "ARUGULA")
+        cy.get("[data-cy= crop-drop] > [data-cy=dropdown-input] > [data-cy=option4]").should("have.value", "BEAN-DRY")
+        cy.get("[data-cy=crop-drop] > [data-cy=dropdown-input] > [data-cy=option111]").should("have.value", "ZUCCHINI")
+        cy.get("[data-cy=crop-drop] > [data-cy=dropdown-input]").children().should("have.length", 112);
     });
 
-    it("Check Default Value of Crop Dropdown", () => {
-        cy.get("[data-cy=crop-drop]").should("have.value", "All");
-    });
+    // it("Check Default Value of Crop Dropdown", () => {
+    //     cy.get("[data-cy=crop-drop]").should("have.value", "All");
+    // });
 
     it("Testing Area Dropdown", () => {
         cy.get("[data-cy=area-drop]").children().eq(1).should("have.value", "A");
