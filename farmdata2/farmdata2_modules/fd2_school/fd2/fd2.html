@@ -106,7 +106,7 @@
                             yield: log.quantity[0].value,
                             units: log.quantity[0].unit.name,
                         }
-                        if(tableRow.crop == this.selectedCrop && tableRow.area == this.selectedArea){
+                        if((tableRow.crop == this.selectedCrop) | this.selectedCrop == "All"){
                             tableRows.push(tableRow)
                         }
                     }
