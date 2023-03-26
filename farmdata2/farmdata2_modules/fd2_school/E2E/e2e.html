@@ -36,7 +36,7 @@
             <br>
         </div>
 
-        <br><button class="report-button" id="button" @click="cropDetail" data-cy="generate-report-button">Generate Report</button>
+        <br><button class="report-button" id="button" @click="harvestReportDetail" data-cy="generate-report-button">Generate Report</button>
         <hr>
 
 
@@ -115,7 +115,6 @@
                 reportLanguage: '' ,
                 reportUser: '' ,
                 reportFarmName: '' ,
-                myDate: '' ,
                 allHarvestLogs:[] ,
                 idToCropMap: new Map() ,
                 idToAreaMap: new Map() ,
@@ -149,7 +148,7 @@
 
             } ,
             methods:{
-                cropDetail: function(){
+                harvestReportDetail: function(){
                     axios.get('/farm.json ')
                     .then((response) => {
                         //Block A
@@ -169,7 +168,6 @@
                         //convert the dates to timestamp
                         let startDate = dayjs(this.reportStartDate).unix();
                         let endDate = dayjs(this.reportEndDate).unix();
-
                         let requestLog = "/log.json?type=farm_harvest&timestamp[ge]=" + startDate + "& timestamp[le]=" + endDate;
 
                         getAllPages(requestLog, this.allHarvestLogs)
