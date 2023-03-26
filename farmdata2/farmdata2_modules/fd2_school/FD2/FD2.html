@@ -48,42 +48,6 @@
 	<h1 data-cy="report-title"> {{ title ? title : 'Mock Harvest Report' }} </h1>
 	
     <p>Details:</p>
-    <!-- <ul>
-	  <li data-cy="farm-name"><strong>Farm</strong>:{{reportFarm}}</li>
-	  <li data-cy="user-name"><strong>User</strong>:{{reportUser}}</li>
-	  <li><strong>Language</strong>:<span data-cy="language">{{reportLanguage}}</span></li>
-
-	  <br>
-
-	  <li><strong>Start</strong>:{{ start }}</li>
-	  <li><strong>End</strong>:{{ end }}</li>
-	  <li><strong>Crop</strong>:{{ selectCrop }}</li>
-    </ul>
-
-<br>
-<table v-if="harvestReportRows.length > 0" border = 1>
-  <tr>
-	<td>Row</td>
-    <td>Date</td>
-    <td>Area</td>
-    <td>Crop</td>
-    <td>Yield</td>
-    <td>Units</td>
-	<td>Delete</td>
-  </tr>
-  <tr v-for="(allHarvestLogs,index) in harvestReportRows">
-	<td>{{index+1}}</td>
-    <td>{{allHarvestLogs.date}}</td>
-    <td>{{allHarvestLogs.area}}</td>
-    <td>{{allHarvestLogs.crop}}</td>
-    <td>{{allHarvestLogs.yield}}</td>
-    <td>{{allHarvestLogs.units}}</td>
-	<td>
-		<button type="button" @click="harvestReportRows.splice(index, 1)">Delete</button>
-	</td>
-  </tr>
-
-</table> -->
 
 <custom-table 
 	:columns="columns"
