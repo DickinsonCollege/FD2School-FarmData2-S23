@@ -17,13 +17,17 @@ describe("Test the harvest report default values", () => {
     })
 
     it("Check the crop dropdown list", () => {
-        cy.get("[data-cy=crop-select]").children().eq(0)
+        //First element in dropdown should now be All
+        cy.get("[data-cy=crop-select] > [data-cy=dropdown-input] > [data-cy=option0]")
+          .should("have.text","All")
+        cy.get("[data-cy=crop-select] > [data-cy=dropdown-input] > [data-cy=option1]")
           .should("have.text","ARUGULA")
-        cy.get("[data-cy=crop-select]").children().eq(5)
-        .should("have.text","BEAN-LIMA")
-        cy.get("[data-cy=crop-select]").children().eq(110)
-        .should("have.text","ZUCCHINI")
-        cy.get("[data-cy=crop-select]").children()
-        .should("have.length", 111)
+        cy.get("[data-cy=crop-select] > [data-cy=dropdown-input] > [data-cy=option4]")
+          .should("have.text","BEAN-DRY")
+        cy.get("[data-cy=crop-select] > [data-cy=dropdown-input] > [data-cy=option111]")
+          .should("have.text","ZUCCHINI")
+        //Length should be 1 more than last time now that we have added All
+        cy.get("[data-cy=crop-select] > [data-cy=dropdown-input]").children()
+          .should("have.length", 112)
     })
 })
