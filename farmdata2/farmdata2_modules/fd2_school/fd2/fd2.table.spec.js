@@ -18,8 +18,17 @@ describe("Test the harvest report default values", () => {
         .should("have.text","yield")
         cy.get("[data-cy=h4]")
         .should("have.text","unit")
+        cy.get("[data-cy=r0]")
+        .children().should("have.length","6")
+        
 
     
+    })
+    it("check filter crop",()=>{
+
+        cy.get ("[data-cy=crop-dropdown] > [data-cy=dropdown-input] ").select("BEAN-DRY")
+        cy.get("[data-cy=generate-report-button]").click()
+         cy.get ("[data-cy=table]").children().should("have.length","2")
     })
     
 
