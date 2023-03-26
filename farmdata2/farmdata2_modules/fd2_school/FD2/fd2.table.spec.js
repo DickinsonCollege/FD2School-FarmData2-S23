@@ -15,5 +15,13 @@ describe("Testing the datafarm2 table", () => {
     cy.get("[data-cy=table-headers]").children().should("have.length", 8);
   });
 
+  it("Check the Crop filter", () => {
+    cy.get("[data-cy=crop-drop] > [data-cy=dropdown-input]").select("ASPARAGUS");
+    cy.get("[data-cy=generate-button]").click();
+    cy.get("[data-cy=table-body]").children().should("have.length", 5);
+    for (let i = 0; i <5; i++) {
+        cy.get("[data-cy=r"+i+"-Crop]").should("have.text", "ASPARAGUS");
+    }
+  })
   
 });
