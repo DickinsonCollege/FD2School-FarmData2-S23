@@ -15,9 +15,14 @@
         <br>
 
         <p>Crop: 
-            <select id="crop-select" v-model = "selectedCrop" data-cy="crop-selected">
-                <option v-for = 'crops in cropNames'>{{ crops }}</option>
-            </select>
+            <dropdown-with-all 
+                data-cy="crop-select"
+                includes-all
+                :selected-val="selectedCrop"
+                :dropdown-list="cropNames"
+                @selection-changed="cropChanged">
+            </dropdown-with-all>
+
         <g>Field: </g>
             <select id="field" v-model = "selectedArea">
                 <option v-for = 'areas in areaNames'> {{ areas }} </option>
@@ -67,6 +72,9 @@
     <script>
         var harvestReport = new Vue({
             el:'#exampleReport',
+            components: {
+            'dropdown-with-all': DropdownWithAllComponent,
+            },
             data: {
                 idToCropMap: new Map(),
                 idToAreaMap: new Map(),
@@ -77,7 +85,7 @@
                 showReport: 'false',
                 start_date: '2020-05-05',
                 end_date: '2020-05-15',
-                selectedCrop : '', 
+                selectedCrop : 'All', 
                 selectedArea : '',
                 harvestLogsAPI: [],
             },
@@ -106,6 +114,9 @@
                 },
             },
             methods: {
+            cropChanged(newCrop) {
+                this.selectedCrop = newCrop
+            },
             generateTable: function() {
                 this.generateReport();
                 this.generateRequest();
