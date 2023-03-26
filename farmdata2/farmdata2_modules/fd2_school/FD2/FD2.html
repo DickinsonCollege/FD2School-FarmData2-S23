@@ -48,7 +48,7 @@
 	<h1 data-cy="report-title"> {{ title ? title : 'Mock Harvest Report' }} </h1>
 	
     <p>Details:</p>
-    <ul>
+    <!-- <ul>
 	  <li data-cy="farm-name"><strong>Farm</strong>:{{reportFarm}}</li>
 	  <li data-cy="user-name"><strong>User</strong>:{{reportUser}}</li>
 	  <li><strong>Language</strong>:<span data-cy="language">{{reportLanguage}}</span></li>
@@ -83,7 +83,13 @@
 	</td>
   </tr>
 
-</table>
+</table> -->
+
+<custom-table 
+	:columns="columns"
+	:rows="tableRow">
+	
+</custom-table>
 <p v-else>No matching records</p>
 
 </div>	
@@ -93,6 +99,7 @@
 		el: '#form',
 		components: {
 			'dropdown-with-all' : DropdownWithAllComponent,
+			'custom-table' : CustomTableComponent,
 		},
 		data:{
 			title: 'My Sample Harvest Report',
@@ -108,6 +115,14 @@
 				"Chuau-1",
 				"SQ7"
 			],
+			columns: [
+            {"header": 'Date', "visible": true, "inputType": {'type': 'date'}},
+            {"header": 'Area', "visible": true, "inputType": {'type': 'dropdown'}},
+            {"header": 'Crop', "visible": true, "inputType": {'type': 'dropdown'}},
+            {"header": 'Yield', "visible": true, "inputType": {'type': 'text'}},
+            {"header": 'Unit', "visible": true, "inputType": {'type': 'dropdown'}},
+            ],
+
 			idToCropMap: new Map(),
 			allHarvestLogs: [],
 		},
@@ -115,6 +130,22 @@
             cropNames(){
                 return Array.from(this.idToCropMap.values());
             },
+			tableRow() {
+				tableRow = []
+				row = this.harvestReportRows
+				for (let i = 0; i<row.length; i++){
+					rowData = [row[i].date, row[i].area, row[i].crop, row[i].yield, row[i].units]
+
+					rowForm = {
+						id: i,
+						data: rowData,
+					}
+
+					tableRow.push(rowForm)
+				}
+
+				return tableRow
+			},
 			harvestReportRows() {
 				let tableRows = []
 				for(let log of this.allHarvestLogs) {
