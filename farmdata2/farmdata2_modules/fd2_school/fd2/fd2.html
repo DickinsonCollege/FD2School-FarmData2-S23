@@ -106,7 +106,10 @@
                                 log.quantity[0].unit.name           
                         ]               
                         }
-                        if((tableRow.crop == this.selectedCrop) | this.selectedCrop == "All"){
+                        if(this.selectedCrop != "All" && this.idToCropMap.get(log.data.crop_tid) == this.selectedCrop) {
+                            tableRows.push(tableRow)
+                        }
+                        else if (this.selectedCrop == "All"){
                             tableRows.push(tableRow)
                         }
                     }
