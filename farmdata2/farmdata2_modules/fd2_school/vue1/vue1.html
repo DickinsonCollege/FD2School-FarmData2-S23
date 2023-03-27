@@ -25,7 +25,7 @@
         <br><br>
         <input type="button" value="Generate Report" />
     <hr>
-        <h1>{{rptTitle}}</h1>
+        <h1>{{rptTitle==null ? 'Mock Harvest Report'}}</h1>
 
         <p>Details:</p>
         <ul>
@@ -65,7 +65,7 @@
         var sample = new Vue({
           el: '#vuecontent',
           data: {
-            rptTitle: 'My Sample Harvest Report',
+            rptTitle: null,
             rptStart: '02-24-2020',
             rptEnd: '02-25-2020',
             rptCrop: 'Carrot',
