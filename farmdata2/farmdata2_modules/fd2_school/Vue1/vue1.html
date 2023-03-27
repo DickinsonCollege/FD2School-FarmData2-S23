@@ -34,7 +34,7 @@
             <input type="button" value="Generate Report" />
         <hr>
         <div id="title" v-cloak>
-            <h1>{{rptTitle}}</h1>
+            <h1>{{rptTitle ==null ? 'Mock Harvest Report':rptTitle}}</h1>
         </div>
         <div id="Sample Harvest Report" v-cloak>
             <p>Details:</p>
@@ -76,10 +76,11 @@
         var sample = new Vue({
         el: '#title',
         data: {
-            rptTitle: 'My Sample Harvest Report'
+            rptTitle: null,
             rptStart: '02-24-2020',
             rptEnd: '02-25-2020',
             rptCrop: 'Carrot',
+        
          }
         });
      </script>
