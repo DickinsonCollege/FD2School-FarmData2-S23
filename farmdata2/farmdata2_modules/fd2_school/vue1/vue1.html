@@ -41,15 +41,12 @@
               <th>Yield</th>
               <th>Units</th>
             </tr>
-            <tr>
-              <td v-for="e in harvestLogs">{{e.date}}{{e.area}}{{e.crop}}{{e.yield}}{{e.units}}</td>
-            </tr>
-            <tr>
-              <td>05/05/2018</td>
-              <td>SQ7</td>
-              <td>Kale</td>
-              <td>7</td>
-              <td>Bunches</td>
+            <tr v-for="e in harvestLogs">
+              <td >{{e.date}}</td>
+              <td >{{e.area}}</td>
+              <td >{{e.crop}}</td>
+              <td >{{e.yield}}</td>
+              <td >{{e.units}}</td>
             </tr>
           </table>
     </div>
