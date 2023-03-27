@@ -1,5 +1,8 @@
 <html>
-    <h1>Harvest Report</h1>
+    <div id="harvest report title" v-cloak>
+        <h1>Harvest Report</h1>
+    </div>
+    <div id ="harvest report content" v-cloak>
         <p>This page is a <i>mockup</i> of a simplified harvest report.</p>
         <label for=”title”>Title:</label>
         <input type="text" id="title" name="title" value="My Sample Harvest Report" /><br>
@@ -23,8 +26,12 @@
         </select>
         <br><br>
         <input type="button" value="Generate Report" />
+    </div>
     <hr>
-    <h1>My Sample Harvest Report</h1>
+    <div id="title" v-cloak>
+        <h1>{{rptTitle}}</h1>
+    </div>
+    <div id="sample harvest report content" v-cloak>
         <p>Details:</p>
         <ul>
             <li><strong>Farm:</strong>Sample Farm</li>
@@ -58,4 +65,13 @@
               <td>Bunches</td>
             </tr>
           </table>
+    </div>
+    <script>
+        var sample = new Vue({
+          el: '#title',
+          data: {
+            rptTitle: 'My Sample Harvest Report'
+          }
+        });
+      </script>
 </html>
