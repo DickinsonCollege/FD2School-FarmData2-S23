@@ -1,5 +1,5 @@
 <div id="report" v-cloak>
-    <h1>Harvest Report</h1>
+    <h1 data-cy="page-header">Harvest Report</h1>
     <p>This page is a <i>mockup</i> of a simplified harvest report</p>
     <form>
         <div>
@@ -10,11 +10,11 @@
         <div>
             <label for="start">Start: </label>
             <input type="date" id="start" name="start-date" v-bind:min="reportStartDate"
-            v-bind:max="reportEndDate" v-model="reportStartDate"/>
+            v-bind:max="reportEndDate" v-model="reportStartDate" data-cy="start-date"/>
 
             <label for="end">End: </label>
             <input type="date" id="end" name="end-date" v-bind:min="reportStartDate"
-            v-bind:max="reportEndDate" v-model="reportEndDate"/>
+            v-bind:max="reportEndDate" v-model="reportEndDate" data-cy="end-date"/>
         </div>
         <br>
         <div>
@@ -83,8 +83,8 @@
             language: '',
             reportState: 'default',
             reportTitle: "",
-            reportStartDate: "",
-            reportEndDate: "",
+            reportStartDate: "2020-05-05",
+            reportEndDate: "2020-05-15",
             reportCrop: "",
             crops: [
                 "Broccoli",
