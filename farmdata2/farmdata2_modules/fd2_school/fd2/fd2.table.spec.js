@@ -17,5 +17,16 @@ describe("Test contents of harvest report table", () => {
   it("Tests for correct number of columns", () => {
     cy.get("[data-cy=generate-report-button]").click()
     cy.get("[data-cy=table-headers]").children().should("have.length", 6)
+  })
+
+  it("Test for crop filtering", () => {
+    cy.get("[data-cy=crop-selected] > [data-cy=dropdown-input]").select("ASPARAGUS")
+    cy.get("[data-cy=generate-report-button]").click()
+    
+    let len = 5
+    cy.get("[data-cy=table-body]").children().should("have.length", len)
+    for (let i = 0; i < len; i++) {
+        cy.get("[data-cy=r"+i+"-Crop]").should("have.text", "ASPARAGUS")
+    }
 })
 })
