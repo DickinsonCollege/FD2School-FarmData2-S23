@@ -4,8 +4,8 @@
     </div>
     <div id ="harvest report content" v-cloak>
         <p>This page is a <i>mockup</i> of a simplified harvest report.</p>
-        <label for=”title”>Title:</label>
-        <input type="text" id="title" name="title" value="My Sample Harvest Report" /><br>
+        <label for=”reportTitle”>Title:</label>
+        <input type="text" id="reportTitle" name="title" value="My Sample Harvest Report" /><br>
         <br>
         <label for=”start”>Start:</label>
         <input type="date" id="start" name="start" value="2020-05-05" min="2014-01-01" max="2022-01-01">
@@ -28,7 +28,7 @@
         <input type="button" value="Generate Report" />
     </div>
     <hr>
-    <div id="title" v-cloak>
+    <div id="report" v-cloak>
         <h1>{{rptTitle}}</h1>
     </div>
     <div id="sample harvest report content" v-cloak>
@@ -73,5 +73,5 @@
             rptTitle: 'My Sample Harvest Report'
           }
         });
-      </script>
+    </script>
 </html>
