@@ -112,7 +112,7 @@
                         let tableRows = []
                         let count = 1;
                         for(let log of this.hlogs) {
-                            if (this.idToCropMap.get(log.data.crop_tid) === this.rptCrop){
+                            if (this.idToCropMap.get(log.data.crop_tid) === this.rptCrop ){
                                 let date = dayjs.unix(log.timestamp).format('DD/MM/YYYY');
                                 let area = log.area[0].name;
                                 let crop = this.idToCropMap.get(log.data.crop_tid);
@@ -121,11 +121,26 @@
                                 let tableRow = {
                                     id: count,
                                     data:[count, date, area, crop, yield, units],
-                            };
-                            tableRows.push(tableRow);
-                            count++;
+                                };
+                                tableRows.push(tableRow);
+                                count++;
                             }
                             
+                        }
+                        if (this.rptCrop==="All"){
+                            for(let log of this.hlogs){
+                                let date = dayjs.unix(log.timestamp).format('DD/MM/YYYY');
+                                let area = log.area[0].name;
+                                let crop = this.idToCropMap.get(log.data.crop_tid);
+                                let yield = log.quantity[0].value;
+                                let units = log.quantity[0].unit.name;
+                                let tableRow = {
+                                    id: count,
+                                    data:[count, date, area, crop, yield, units],
+                                };
+                                tableRows.push(tableRow);
+                                count++;
+                            }
                         }
                         return tableRows
                     },

@@ -13,7 +13,7 @@ describe("Test the report table", () =>{
 
 
         cy.get("[data-cy=table-headers]").children().should("have.length", 6)
-        cy.get("[data-cy=table]").children().should("have.length", 2)
+        cy.get("[data-cy=table-body]").children().should("have.length", 3)
 
 
         //cy.get("[data-cy=table-rows]").children().should("have.length", 10)
