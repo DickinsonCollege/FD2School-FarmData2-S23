@@ -19,7 +19,7 @@
           <option v-for="area in areas">{{area}}</option>
         </select>
         <br><br>
-        <input type="button" value="Generate Report" @click="harvestLogs.push({date: '2018-05-01', area: 'Orion-3', crop: 'Kale', yield: 12, units: 'Bunches'})"/>
+        <input type="button" value="Generate Report" @click="addLog"/>
     <hr>
         <h1>{{rptTitle=='' ? 'Mock Harvest Report':rptTitle}}</h1>
 
@@ -69,6 +69,11 @@
             'SQ7', 
           ],
           harvestLogs: [],
+        },
+        methods: {
+            addLog: function(){
+                this.harvestLogs.push({date: '2018-05-01', area: 'Orion-3', crop: 'Kale', yield: 12, units: 'Bunches'});
+            }
         }
         });
         Vue.config.devtools = true;
