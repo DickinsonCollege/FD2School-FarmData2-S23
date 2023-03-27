@@ -12,15 +12,11 @@
         <br><br>
         <label for=”crop”>Crop:</label>
         <select id="crop" name="Crop" v-model="rptCrop">
-        <option selected>Kale</option>
-        <option>Broccoli</option>
-        <option>Peas</option>
+          <option v-for="crop in crops">{{crop}}</option>
         </select>
-        <label for=”field”>Area:</label>
-        <select id="field" name="Area">
-        <option selected>All</option>
-        <option>Chuau-1</option>
-        <option>SQ7</option>
+        <label for=”area”>Area:</label>
+        <select id="area" name="Area">
+          <option v-for="area in areas">{{area}}</option>
         </select>
         <br><br>
         <input type="button" value="Generate Report" />
@@ -69,6 +65,16 @@
             rptStart: '02-24-2020',
             rptEnd: '02-25-2020',
             rptCrop: 'Broccoli',
+            crops: [ 
+            'Kale', 
+            'Broccoli', 
+            'Peas',  
+          ],
+            areas: [ 
+              'All', 
+              'Chuau-1', 
+              'SQ7', 
+            ]
           }
         });
     </script>
