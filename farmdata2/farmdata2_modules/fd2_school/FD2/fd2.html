@@ -25,9 +25,12 @@
 
         <div id="reportCropArea">
             <br><label for="crop">Crop: </label> 
-            <select id="simple" v-model="reportCrop" data-cy="crop-dropdown">
-                <option v-for="c in cropNames">{{ c }}</option>
-            </select>
+            <dropdown-with-all data-cy="crop-dropdown" 
+                includes-all 
+                :selected-val='reportCrop'
+                :dropdown-list='cropNames'
+                @selection-changed="cropChange">
+            </dropdown-with-all>
 
             <label for="field">Area: </label> 
             <select id="simple" v-model="reportArea" data-cy="area-dropdown">
@@ -84,6 +87,10 @@
     <script>
         let reportView = new Vue({
             el: '#reportTitle',
+
+            components: {
+                "dropdown-with-all": DropdownWithAllComponent,
+            },
             created(){
                 //get key, value pair for all crops
                 getIDToCropMap() 
@@ -183,7 +190,10 @@
                 //when report is deleted its updates the index
                 deleteReport: function(index){
                     this.harvestReportRows.splice(index,1);
-                } 
+                } ,
+                cropChange(newCrop){
+                    this.reportCrop = newCrop
+                }
             }
         });
         Vue.config.devtools = true;
