@@ -6,12 +6,12 @@
         <input type="text" id="reportTitle" name="title" v-model="rptTitle" value="My Sample Harvest Report" /><br>
         <br>
         <label for=”start”>Start:</label>
-        <input type="date" id="start" name="start" value="2020-05-05" min="2014-01-01" max="2022-01-01">
+        <input type="date" id="start" name="start" v-model="rptStart" value="2020-05-05" min="2014-01-01" max="2022-01-01">
         <label for=”end”>End:</label>
-        <input type="date" id="end" name="end" value="2020-05-15" min="2020-05-05" max="2022-01-01">
+        <input type="date" id="end" name="end" v-model="rptEnd" value="2020-05-15" min="2020-05-05" max="2022-01-01">
         <br><br>
         <label for=”crop”>Crop:</label>
-        <select id="crop" name="Crop">
+        <select id="crop" name="Crop" v-model="rptCrop">
         <option>Kale</option>
         <option>Broccoli</option>
         <option>Peas</option>
@@ -66,6 +66,9 @@
           el: '#vuecontent',
           data: {
             rptTitle: 'My Sample Harvest Report',
+            rptStart: '02-24-2020',
+            rptEnd: '02-25-2020',
+            rptCrop: 'Carrot',
           }
         });
     </script>
