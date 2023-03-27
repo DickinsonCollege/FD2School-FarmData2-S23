@@ -14,7 +14,7 @@
     <div id="vuecontent" v-cloak>
     <form>
         <label for="title">Title: </label>
-        <input type="text" name="title" v-model="rptTitle" id="title" value="Mock Harvest Report"> 
+        <input data-cy="title-field" type="text" name="title" v-model="rptTitle" id="title" value="Mock Harvest Report"> 
         <br><br>
         <label for="startdate">Start: </label>
         <input type="date" min="2014-01-01" v-model="rptStartDate" v-bind:max="rptEndDate" value="2020-05-05" data-cy="start-date">
