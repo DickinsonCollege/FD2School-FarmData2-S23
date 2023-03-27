@@ -42,11 +42,7 @@
               <th>Units</th>
             </tr>
             <tr>
-              <td>05/02/2018</td>
-              <td>Chuau-1</td>
-              <td>Kale</td>
-              <td>10</td>
-              <td>Bunches</td>
+              <td v-for="e in harvestLogs">{{e.date}}{{e.area}}{{e.crop}}{{e.yield}}{{e.units}}</td>
             </tr>
             <tr>
               <td>05/05/2018</td>
@@ -65,17 +61,21 @@
             rptStart: '02-24-2020',
             rptEnd: '02-25-2020',
             rptCrop: 'Broccoli',
-            crops: [ 
+          crops: [ 
             'Kale', 
             'Broccoli', 
             'Peas',  
           ],
-            areas: [ 
-              'All', 
-              'Chuau-1', 
-              'SQ7', 
-            ]
-          }
+          areas: [ 
+            'All', 
+            'Chuau-1', 
+            'SQ7', 
+          ],
+          harvestLogs: [
+          {date: "2018-05-02", area: "Chuau-1", crop: "Kale", yield: 10, units: "Bunches"},
+          {date: "2018-05-05", area: "SQ7", crop: "Kale", yield: 7, units: "Bunches"},
+          ]
+        }
         });
     </script>
 </html>
