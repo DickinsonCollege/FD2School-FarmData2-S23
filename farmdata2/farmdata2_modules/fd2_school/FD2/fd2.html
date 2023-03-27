@@ -116,7 +116,7 @@
                 reportVis: false ,
                 reportStartDate: '2020-05-05' ,
                 reportEndDate: '2020-05-15' ,
-                reportCrop: '' ,
+                reportCrop: 'All' ,
                 reportArea: '' ,
                 reportAll: 'All',
                 reportLanguage: '' ,
@@ -146,7 +146,7 @@
                             units: log.quantity[0].unit.name,
                             crop: this.idToCropMap.get(log.data.crop_tid)
                         }
-                        if (tableRow.crop == this.reportCrop && tableRow.area == this.reportArea){
+                        if ((tableRow.crop == this.reportCrop | this.reportCrop == "All") & tableRow.area == this.reportArea){
                             tableRows.push(tableRow)
                         }
                     }
