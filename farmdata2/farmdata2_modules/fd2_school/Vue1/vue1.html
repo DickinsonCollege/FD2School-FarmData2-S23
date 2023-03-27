@@ -4,12 +4,10 @@
         <div id="vueinfo" v-cloak>
             <h1>Harvest Report</h1>
         </div>
-        <div id ="harvest report content" v-cloak>
             <p>This page is a <i>mockup</i> of a simplified harvest report</p>
             <label for=”title”>Title:</label>
             <input type="text" id="title" name="title" value="My Sample Harvest Report" /><br>
             <input type="button" value="Generate Report" />
-            </div>
             Report" /><br>
             <br>
             <label for=”start”>Start:</label>
@@ -20,21 +18,17 @@
             <br>
             <label for=”crop”>Crop:</label>
             <select id="crop" name="Crop"> v-model="rptCrop">
-            <option>Kale</option>
-            <option>Broccoli</option>
-            <option>Peas</option>
+                option v-for="crop in crops">{{crop}}</select>option>
             </select>
-            <label for=”field”>Area:</label>
-            <select id="field" name="Area">
-            <option selected>All</option>
-            <option>Chuau-1</option>
-            <option>SQ7</option>
+            <label for=”field”>Field:</label>
+            <select id="field" name="field">
+            <option v-for = "area in areas">{{area}}</option>
             </select>
             <br><br>
             <input type="button" value="Generate Report" />
         <hr>
         <div id="title" v-cloak>
-            <h1>{{rptTitle ==null ? 'Mock Harvest Report':rptTitle}}</h1>
+            <h1>{{rptTitle ==' ' ? 'Mock Harvest Report':rptTitle}}</h1>
         </div>
         <div id="Sample Harvest Report" v-cloak>
             <p>Details:</p>
@@ -47,7 +41,7 @@
             <li>End:05/15/2018</li>
             <li>Crop:Kale</li>
         </ul>
-        <table border=2>
+        <table border="1">
             <tr>
               <th>Date</th>
               <th>Area</th>
@@ -55,19 +49,12 @@
               <th>Yield</th>
               <th>Units</th>
             </tr>
-            <tr>
-              <td>05/02/2018</td>
-              <td>Chuau-1</td>
-              <td>Kale</td>
-              <td>10</td>
-              <td>Bunches</td>
-            </tr>
-            <tr>
-              <td>05/05/2018</td>
-              <td>SQ7</td>
-              <td>Kale</td>
-              <td>7</td>
-              <td>Bunches</td>
+            <tr v-for = "d in logs">
+                <td>{{d.date}}</td>
+                <td>{{d.area}}</td>
+                <td>{{d.yield}}</td>
+                <td>{{d.crop}}</td>
+                <td>{{d.units}}</td>
             </tr>
           </table>
     </body>
@@ -76,11 +63,24 @@
         var sample = new Vue({
         el: '#title',
         data: {
-            rptTitle: null,
+            rptTitle: 'Sample Harvest Report',
             rptStart: '02-24-2020',
             rptEnd: '02-25-2020',
-            rptCrop: 'Carrot',
-        
+            rptCrop: 'Kale',
+        crops: [
+            'Kale',
+            'Broccoli',
+            'Peas'
+        ],
+        areas: [
+            'All',
+            'Chuau-1',
+            'SQ7'
+        ],
+        harvestLogs:[
+            {date: "2018-05-02", area: "Chuau-1", crop: "Broccoli", yield: 10, units: "Bunches"}, 
+            {date: "2020-10-15", area: "Chuau-1", crop: "Kale", yield: 120, units: "Bunches"}
+        ]
          }
         });
      </script>
