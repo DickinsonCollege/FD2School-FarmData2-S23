@@ -25,9 +25,9 @@
 
         <p>Details:</p>
         <ul>
-            <li><strong>Farm:</strong>Sample Farm</li>
-            <li><strong>User:</strong>manager1</li>
-            <li><strong>Language:</strong>English</li><br>
+            <li><strong>Farm:</strong>{{farm}}</li>
+            <li><strong>User:</strong>{{user}}</li>
+            <li><strong>Language:</strong>{{language}}</li><br>
 
             <li><strong>Start:</strong>05/01/2018</li>
             <li><strong>End:</strong>05/15/2018</li>
@@ -73,6 +73,9 @@
             'SQ7', 
           ],
           harvestLogs: [],
+          farm: 'Sample Farm',
+          user: 'manager1',
+          language: 'English',
         },
         methods: {
             addLog: function(){
