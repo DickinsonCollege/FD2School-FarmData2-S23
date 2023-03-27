@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>HTML</title>
+  </head>
+  <body>
+    <div id="harvest-report" v-cloak>
+        <h1 data-cy="page-header" >{{ repTitle ? repTitle:"Mock Harvest Report" }}</h1>
+        <p>This page is <i>mockup</i> of a simplified harvest report.</p>
+        <label for="title">Title:</label>
+        <input type="text" id="title" v-model='repTitle' />
+        <br>
+        <br>
+        <label for="start">Start:</label>
+        <input type="date" id="start" v-model='startDate'
+        min="2014-01-01" v-bind:max="endDate" data-cy="start-date">
+        <label for="end">End:</label>
+        <input type="date" id="end" v-model="endDate"
+        v-bind:min="startDate" max="2021-01-01" data-cy="end-date">
+        <br>
+        <br>
+        <label for="crop">Crop:</label>
+        <select name="crop" id="crop" v-model="crop" data-cy="crop-drop-down">
+            <option v-for="c in cropNames" @click="setCrop">{{ c }}</option> 
+        </select>
+        <label for="field">Field:</label>
+        <select name="field" id="field" data-cy="area-dropdown">
+            <option v-for="f in areaNames">{{ f }}</option> 
+        </select>
+        <br>
+        <br>
+        <button type="anonymous" @click='genReport(c)' data-cy="generate-report-button">Generate Report</button> 
+
+        <hr>
+
+        <h1 v-if="title === 'true'" data-cy="report-title">{{ repTitle }}</h1>
+        <p v-if="title === 'true'">Details:</p>
+        <ul v-if="title === 'true'">
+            <li data-cy="report-farm"><strong>Farm:</strong>{{ farm }}</li>
+            <li data-cy="report-user"><strong>User:</strong>{{ user }}</li>
+            <li><strong>Language</strong><span data-cy="report-language">{{ language }}</span></li>
+            <br>
+            <li><strong>Start</strong>{{ startDate }}</li>
+            <li><strong>End</strong>{{ endDate }}</li>
+            <li><strong>Crop</strong>{{ crop }}</li>
+        </ul>
+        <br>
+        <table border="1px">
+            <p v-if="harvestReportRows.length === 0">No logs available</p>
+            <tr v-if="harvestReportRows.length > 0">
+                <th>Row</th>
+                <th>Date</th>
+                <th>Area</th>
+                <th>Crop</th>
+                <th>Yield</th>
+                <th>Units</th> 
+            </tr>
+            
+            <tr v-for="(log,index) in harvestReportRows">{{ 
+                <td>{{ index+1 }}</td>
+                <td>{{log.date}}</td> 
+                <td>{{log.area}}</td>
+                <td>{{log.crop}}</td>
+                <td>{{log.yield}}</td>
+                <td>{{log.units}}</td> 
+            }}</tr>
+        
+        </table>
+    </div>
+    <script src="https://unpkg.com/vue@2"></script>
+    <script>
+        var harvReport = new Vue({
+            el: '#harvest-report',
+            data: {
+                idToCropMap: new Map(),
+                idToAreaMap: new Map(),
+                repTitle: 'My Harvest Report',
+                startDate: "2020-05-05",
+                endDate: "2020-05-15",
+                crop: "",
+                // crops: [
+                //     "Kale",
+                //     "Broccoli",
+                //     "Peas",
+                //     "Spinach",
+                // ],
+                fields: [
+                    "All", 
+                    "Chuau-1",
+                    "SQ7",
+                ],
+
+                nextLog: '',
+
+                farms: [
+                    "Sample Farm",
+                ],
+
+                farm: "",
+                user: "",
+                language: "",
+                dateString: "",
+                dateRange: [
+
+                ],
+
+                tableRows: [
+
+                ],
+
+                title: "",
+            },
+
+            computed: {
+
+                cropNames() {
+                    return Array.from(this.idToCropMap.values());
+                },
+
+                areaNames() {
+                    return Array.from(this.idToAreaMap.values());
+                },
+
+                harvestReportRows() {
+                    let tableRows = []
+                    
+                    for(let log of this.dateRange) {
+                        if(this.idToCropMap.get(log.data.crop_tid) == this.crop){
+                        let theDate = dayjs.unix(log.timestamp);
+                        let tableRow = {
+                            date: theDate.format('DD/MM/YYYY'),
+                            area: log.area[0].name,
+                            crop: this.idToCropMap.get(log.data.crop_tid),
+                            yield: log.quantity[0].value,
+                            units: log.quantity[0].unit.name,
+                        }
+                        tableRows.push(tableRow)
+                    }}
+                    return tableRows
+                },
+
+            },
+                methods: {
+                    setCrop: function(c){
+                        this.crop == c;
+                    },
+                    genReport: function() {
+                        axios.get('/farm.json ')  // this line sends the request.
+                        .then((response) => {
+                            // Block A:
+                           
+                            this.farm = response.data.name;
+                            this.user = response.data.user.name;
+                            this.language = response.data.languages.en.name;
+                            this.title = "true"
+
+                            let startTimestamp = dayjs(this.startDate).unix();
+                            let endTimestamp = dayjs(this.endDate).unix();
+                            
+                            this.dateString="/log.json?type=farm_harvest&timestamp[ge]="+startTimestamp+"&timestamp[le]="+endTimestamp;
+                            
+
+                            getAllPages(this.dateString, this.dateRange)
+                            .then(() => {
+                                // All of the requested records have now been added to result.
+                                // Additional processing can happen here if necessary,
+                                // or then may be omitted.
+                               
+                            })
+                            .catch((err) => {
+                               
+                                 // An error occurred during the requests, process it here.
+                            })
+                            // Code here executes when the response is received.
+                            // response is an Object created from the “Response Body” JSON.
+
+                            
+                        })
+                        .catch((error) => {
+                            // Block B:
+                           
+                            // Code here executes if an error occurs processing the request.
+                            // error is an Object describing the error that occurred.
+                        })
+                        // Block C: 
+                            // Code here runs immediately after the request is sent,
+                            // which will be before the code in then() or catch(),
+                            // and before the response is received.
+
+                        this.logs.push(this.nextLog);
+                                            },
+                                            
+                },
+                created() {
+	                console.log("HarvestReport Vue instance created!")
+                    getIDToCropMap()
+                    .then((theMap) => {
+                        // Process the map.
+                        // Typically it is stored in the Vue data for later use.
+                        this.idToCropMap = theMap;
+                        
+                    })
+                    .catch((err) => {
+                        // An error occurred during the request, process it here.
+                        
+                    })
+                    // Execution continues here immediately after the request is made.
+                    // Note that the Map will not be available until the then() executes.
+                    
+                    getIDToAreaMap()
+                    .then((theMap) => {
+                        // Process the map.
+                        // Typically it is stored in the Vue data for later use.
+                        this.idToAreaMap = theMap;
+                        
+                    })
+                    .catch((err) => {
+                        // An error occurred during the request, process it here.
+                        
+                    })
+                },
+
+                
+                    
+                        
+                    
+                
+                
+            
+        });
+        Vue.config.devtools = true;
+    </script>
+    
+  </body>
+</html>
