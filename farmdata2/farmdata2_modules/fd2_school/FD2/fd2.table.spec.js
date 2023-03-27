@@ -18,4 +18,15 @@ describe("Test functionality and correctness of report table", () => {
         cy.get("[data-cy=generate-report-button]").click()
         cy.get("[data-cy=table-headers]").children().should("have.length", 6)
     })
+
+    it("Test the crop filtering functionality", () => {
+        cy.get("[data-cy=crop-select] > [data-cy=dropdown-input]").select("BOKCHOY")
+        cy.get("[data-cy=generate-report-button]").click()
+        //set expected length
+        let len = 3
+        cy.get("[data-cy=table-body]").children().should("have.length", len)
+        for (let i = 0; i < len; i++) {
+            cy.get("[data-cy=r"+i+"-Crop]").should("have.text", "BOKCHOY")
+        }
+    })
 })
