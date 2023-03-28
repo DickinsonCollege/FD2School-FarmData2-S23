@@ -1,7 +1,7 @@
 describe("Test the generate button", () =>{
     beforeEach(()=>{
         cy.login("manager1", "farmdata2")
-        cy.visit("/farm/fd2-school/e2e/e2e.html")
+        cy.visit("/farm/fd2-school/fd2/fd2.html")
         
     })
 
