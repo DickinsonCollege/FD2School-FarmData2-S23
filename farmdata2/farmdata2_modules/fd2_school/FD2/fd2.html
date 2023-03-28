@@ -57,29 +57,12 @@
                     <li><strong>End: </strong>{{ reportEndDate }}</li>
                     <li><strong>Crop: </strong>{{ reportCrop }}</li><br>
                 </ul>
-            </div>
-                
 
-            <table border="1" style="width: 30%" v-if="harvestReportRows.length > 0">
-               <tr>
-                    <th scope="col">Row</th>
-                    <th scope="col">Date</th>
-                    <th scope="col">Area</th>
-                    <th scope="col">Crop</th>
-                    <th scope="col">Yield</th>
-                    <th scope="col">Units</th>
-                    <th scope="col">Delete</th>
-                </tr>
-                <tr v-for="(t,index) in harvestReportRows">
-                    <td>{{ index+1 }}</td>
-                    <td>{{ t.date }}</td>
-                    <td>{{ t.area }}</td>
-                    <td>{{ t.crop }}</td>
-                    <td>{{ t.yield }}</td>
-                    <td>{{ t.units }}</td>
-                    <td><button type="button" @click="deleteReport">Delete</button></td>
-                </tr>
-            </table>
+                <custom-table data-cy="reportTable"
+                    :columns="columns"
+                    :rows="newTableRow">
+                </custom-table>
+            </div>
             <p v-else>No matching records!</p>
         </div>
     </div>
@@ -90,6 +73,7 @@
 
             components: {
                 "dropdown-with-all": DropdownWithAllComponent,
+                "custom-table": CustomTableComponent
             },
             created(){
                 //get key, value pair for all crops
@@ -117,7 +101,7 @@
                 reportStartDate: '2020-05-05' ,
                 reportEndDate: '2020-05-15' ,
                 reportCrop: 'All' ,
-                reportArea: '' ,
+                reportArea: 'All' ,
                 reportAll: 'All',
                 reportLanguage: '' ,
                 reportUser: '' ,
@@ -125,6 +109,14 @@
                 allHarvestLogs:[] ,
                 idToCropMap: new Map() ,
                 idToAreaMap: new Map() ,
+                columns: [
+                    {"header": "ID", "visible": true, "inputType": {'type': 'no input'}},
+                    {"header": "Date", "visible": true, "inputType": {'type': 'no input'}},
+                    {"header": "Area", "visible": true, "inputType": {'type': 'no input'}},
+                    {"header": "Crop", "visible": true, "inputType": {'type': 'no input'}},
+                    {"header": "Yield", "visible": true, "inputType": {'type': 'no input'}},
+                    {"header": "Units", "visible": true, "inputType": {'type': 'no input'}},
+                ],
             } ,
             computed: {
                 //Show crop names without the associated key.
@@ -136,23 +128,42 @@
                     return Array.from(this.idToAreaMap.values())
                 } ,
                 //Display table with harvest logs requested from API
-                harvestReportRows() {
+                harvestReportRows(){
                     let tableRows = []
                     for(let log of this.allHarvestLogs) {
                         let tableRow = {
-                            date: dayjs.unix(log.timestamp).format("YYYY-MM-DD"),
-                            area: log.area[0].name,
-                            yield: log.quantity[0].value,
-                            units: log.quantity[0].unit.name,
-                            crop: this.idToCropMap.get(log.data.crop_tid)
+                                id: log.id,
+                                date: dayjs.unix(log.timestamp).format("YYYY-MM-DD"),
+                                area: log.area[0].name,
+                                yield: log.quantity[0].value,
+                                units: log.quantity[0].unit.name,
+                                crop: this.idToCropMap.get(log.data.crop_tid)
                         }
                         if ((tableRow.crop == this.reportCrop | this.reportCrop == "All") & tableRow.area == this.reportArea){
                             tableRows.push(tableRow)
                         }
                     }
                     return tableRows
+                } ,
+                //Display table row in proper format for custom-table using harvestReportRows function.
+                newTableRow: function(){
+                    customRows = this.harvestReportRows //get the harvest report function
+                    let tableRows = []
+                    for (let i in customRows){
+                        let tableRow = {
+                           data: [
+                            customRows[i].id,
+                            customRows[i].date, 
+                            customRows[i].area,
+                            customRows[i].crop,
+                            customRows[i].yield,
+                            customRows[i].units,
+                        ]
+                        }
+                        tableRows.push(tableRow)
+                    }
+                    return tableRows
                 }
-
             } ,
             methods:{
                 harvestReportDetail: function(){
@@ -186,10 +197,6 @@
                             console.log(error)
                         })
                     }
-                } ,
-                //when report is deleted its updates the index
-                deleteReport: function(index){
-                    this.harvestReportRows.splice(index,1);
                 } ,
                 cropChange(newCrop){
                     this.reportCrop = newCrop
