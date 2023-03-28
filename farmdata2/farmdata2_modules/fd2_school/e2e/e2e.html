@@ -30,16 +30,16 @@
         </div>
         <br>
     </form>
-    <button @click=" makeRequest(); logHarvest(); changeReportState('show'); setFarmUserLan()">Generate Report</button>
+    <button @click=" makeRequest(); logHarvest(); changeReportState('show'); setFarmUserLan()" data-cy="generate-btn">Generate Report</button>
     
 
     <hr>
 
     <div id="reportDetail" v-if="reportState !== 'default'">
-        <h1>{{reportTitle ? reportTitle : 'Mock Harvest Report'}}</h1>
+        <h1 data-cy="report-title">{{reportTitle ? reportTitle : 'Mock Harvest Report'}}</h1>
         <div>Details:</div>
         <ul>
-            <li><b>Farm</b>: {{farm}}</li>
+            <li><b>Farm</b>: <span data-cy="farm-name">{{farm}}</span></li>
             <li><b>User</b>: {{user}}</li>
             <li><b>Language</b>: {{language}}</li>
             <br>
