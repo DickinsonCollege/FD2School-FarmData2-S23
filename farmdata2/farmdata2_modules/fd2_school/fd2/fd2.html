@@ -22,9 +22,17 @@
         <br>
         <br>
         <label for="crop">Crop:</label>
-        <select name="crop" id="crop" v-model="crop" data-cy="crop-drop-down">
+            <dropdown-with-all data-cy="crop-drop-down" 
+                includes-all 
+                :selected-val='crop'
+                @selection-changed="cropChange"
+                :dropdown-list='cropNames'
+                >
+            </dropdown-with-all>
+
+        <!-- <select name="crop" id="crop" v-model="crop" data-cy="crop-drop-down">
             <option v-for="c in cropNames" @click="setCrop">{{ c }}</option> 
-        </select>
+        </select> -->
         <label for="field">Field:</label>
         <select name="field" id="field" data-cy="area-dropdown">
             <option v-for="f in areaNames">{{ f }}</option> 
@@ -73,19 +81,29 @@
     <script>
         var harvReport = new Vue({
             el: '#harvest-report',
+
+            components: {
+                'dropdown-with-all': DropdownWithAllComponent,
+                // 'date-selection': DateSelectionComponent,
+                // 'date-range-selection': DateRangeSelectionComponent,
+                // 'custom-table': CustomTableComponent,
+                // 'regex-input': RegexInputComponent,
+                // 'error-banner': ErrorBannerComponent,
+            },
+
             data: {
                 idToCropMap: new Map(),
                 idToAreaMap: new Map(),
                 repTitle: 'My Harvest Report',
                 startDate: "2020-05-05",
                 endDate: "2020-05-15",
-                crop: "",
-                // crops: [
-                //     "Kale",
-                //     "Broccoli",
-                //     "Peas",
-                //     "Spinach",
-                // ],
+                crop: "All",
+                crops: [
+                    "Kale",
+                    "Broccoli",
+                    "Peas",
+                    "Spinach",
+                ],
                 fields: [
                     "All", 
                     "Chuau-1",
@@ -143,6 +161,9 @@
 
             },
                 methods: {
+                    cropChange(newCrop) {
+                        this.crop = newCrop
+                    },
                     setCrop: function(c){
                         this.crop == c;
                     },
