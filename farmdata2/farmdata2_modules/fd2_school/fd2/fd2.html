@@ -125,7 +125,7 @@
                             units: log.quantity[0].unit.name,
                             crop: this.idToCropMap.get(log.data.crop_tid)
 		                }
-                        if(tableRow.crop == this.reportCrop){
+                        if(tableRow.crop == this.reportCrop || this.reportCrop == "All"){
                             tableRows.push(tableRow)
                         }
 	                }
@@ -162,7 +162,8 @@
                         let startDate = dayjs(this.$data.reportStartDate).unix();
                         let endDate = dayjs(this.$data.reportEndDate).unix();
                         let request = "/log.json?type=farm_harvest&timestamp[ge]="+startDate+"&timestamp[le]="+endDate;
-
+                        
+                        this.$data.harvestLogs = []
                         getAllPages(request, this.$data.harvestLogs)
                         .then(() => {
                         })
