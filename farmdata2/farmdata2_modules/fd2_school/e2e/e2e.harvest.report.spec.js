@@ -15,5 +15,5 @@ describe("Test the Harvest Report Generation", () => {
         cy.get("[data-cy=user-li]").should("contain.text", "manager1")
         cy.get("[data-cy=language-li]").should("have.text","English")
     })
-
+    
 })
