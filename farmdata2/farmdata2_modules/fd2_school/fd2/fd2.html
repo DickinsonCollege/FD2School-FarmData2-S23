@@ -15,10 +15,16 @@
     <br>
     <br>
 
-    <label for="crop">Crop: </label>
-    <select data-cy="crop-drop-down" id="crop" v-model="reportCrop">
-        <option v-for="crop in cropNameToArray">{{ crop }}</option>
-    </select>
+    <label for="crop"></label>
+    <dropdown-with-all data-cy="crop-drop-down"
+        includes-all
+        id="crop"
+        :dropdown-list="cropNameToArray" 
+        :selected-val="reportCrop"
+        :disabled="false"
+        @selection-changed="cropChange">
+    Crop:
+    </dropdown-with-all>
 
     <label for="field">Field: </label>
     <select id="field">
@@ -95,11 +101,16 @@
         },
 
         el: "#vueReport",
+
+        components: {
+        'dropdown-with-all': DropdownWithAllComponent,
+        },
+
         data: {
             reportTitle: "My Sample Report",
             reportStartDate: "2020-05-05",
             reportEndDate: "2020-05-15",
-            reportCrop: "",
+            reportCrop: "All",
             areas: ["All", "Chuau-1", "SQ7"],
             harvestLog: [],
             idToAreaMap: new Map(),
@@ -173,6 +184,10 @@
             
             changeState: function(newState){
                 this.reportState = newState;
+            },
+
+            cropChange: function(newCrop){
+                this.reportCrop = newCrop;
             },
         }
     });
