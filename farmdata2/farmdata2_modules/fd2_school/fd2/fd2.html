@@ -145,7 +145,7 @@ Pick a Crop:
                         let endTimeStamp = dayjs(this.rptEndDate).unix();
 
                         let x = "/log.json?type=farm_harvest&timestamp[ge]="+startTimeStamp+"&timestamp[le]="+endTimeStamp;
-                        console.log(x);
+                     
                         getAllPages(x,this.allHarvestPage)
                         .then(()=>{         
                         })
