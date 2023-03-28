@@ -61,21 +61,28 @@
 		 );
 		
 		 // Add items blocks for new sub-tabs here.
+		
+		 // Add a sub-tab named HTML with content in ./xyz/xyz.html.
 		 $items['farm/fd2-school/html'] = array(
 		 'title' => 'HTML',
 		 'type' => MENU_LOCAL_TASK,
-		 'page callback' => 'fd2_school_view',
-		 'page arguments' => array('html'),
+		
+ 'page callback' => 'fd2_school_view',
+		
+ 'page arguments' => array('html'),
 		
  'access arguments' => array('view fd2 school'),
 		
- 'weight' => 110, 
+ 'weight' => 110,
+		
 		
  );
 		
 
 		
- $items['farm/fd2-school/Vue1'] = array(
+ // Add a sub-tab named Vue1 with content in ./xyz/xyz.html.
+		
+ $items['farm/fd2-school/vue1'] = array(
 		
  'title' => 'Vue1',
 		
@@ -83,19 +90,19 @@
 		
  'page callback' => 'fd2_school_view',
 		
- 'page arguments' => array('Vue1'),
+ 'page arguments' => array('vue1'),
 		
  'access arguments' => array('view fd2 school'),
 		
- 'weight' => 110, 
+ 'weight' => 150,
 		
  );
 		
- return $items;
-		
-};
-		
 
+		
+ return $items;
+		};
+		
 		// This function Loads the content for the sub-tab from the html file specified in the arguemnt.
 		// It must be renamed in each module.
 		function fd2_school_view($subtab_content) {
@@ -116,8 +123,9 @@
 		 drupal_add_js('https://unpkg.com/dayjs@1.8.21/dayjs.min.js', 'external');
 		
 		 // Define some useful variables in the JavaScript for page.
+		 // the @ symbol surpresses the warning when a user attempts to access a page without being logged in
 		 global $user;
-		 $cmd="var fd2UserID=".$user->uid."; var fd2UserName='".$user->name."';";
+		 @$cmd="var fd2UserID=".$user->uid."; var fd2UserName='".$user->name."';";
 		 drupal_add_js($cmd,'inline');
 		 }
 		};
