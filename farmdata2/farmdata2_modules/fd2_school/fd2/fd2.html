@@ -57,24 +57,15 @@ Pick a Crop:
     </ul>
     <br />
     <p v-if = "harvestReportRows===0">No matching Records</p>
-    <table v-if = "harvestReportRows.length>0" border = "1">
-        
-        <th><strong>Row</strong></th>
-        <th><strong>Date</strong></th>
-        <th><strong>Area</strong></th>
-        <th><strong>Crop</strong></th>
-        <th><strong>Yield</strong></th>
-        <th><strong>Units</strong></th>
-        <tr v-for = "(harvestRow, index) in harvestReportRows" v-if ="rptCrop==harvestRow.crop">
-            <td>{{index}}</td>
-            <td>{{harvestRow.date}}</td>
-            <td>{{harvestRow.area}}</td>
-            <td>{{harvestRow.crop}}</td>
-            <td>{{harvestRow.yield}}</td>
-            <td>{{harvestRow.units}}</td>
-        </tr>
-      
-    </table>
+    <custom-table data-cy="test-table"
+  
+    
+   
+    :columns="columns"
+    :rows="harvestReportRows" 
+   
+    >
+</custom-table>
     </div>
     </div>
     <script>
@@ -84,6 +75,7 @@ Pick a Crop:
                 components: {
         // Register the components used and define the tag name to be used.
         'dropdown-with-all': DropdownWithAllComponent,
+        'custom-table': CustomTableComponent,
         
     },
                 data: {
@@ -100,6 +92,16 @@ Pick a Crop:
         
                     allHarvestPage:[],
                     rptButtonClicked : false,
+                    columns: [
+            {"header": 'ID', "visible": true, "inputType": {'type': 'no input'}},
+            {"header": 'Date', "visible": true, "inputType": {'type': 'no input'}},
+            {"header": 'Area', "visible": true, "inputType": {'type': 'no input'}},
+            {"header": 'Crop', "visible": true, "inputType": {'type': 'no input'}},
+            {"header": 'Yield', "visible": true, "inputType": {'type': 'no input'}},
+            {"header": 'Units', "visible": true, "inputType": {'type': 'no input'}},
+           
+        ],
+                
                 },
                 computed:{
                     cropNames(){
@@ -112,17 +114,31 @@ Pick a Crop:
                     harvestReportRows(){
                         let tableRows = []
                         for(let log of this.allHarvestPage){
+                            id= log.id
+                            date= dayjs.unix(log.timestamp).format('DD/MM/YYYY')
+                            area= log.area[0].name
+                            units =log.quantity[0].unit.name
+                            yields= log.quantity[0].value
+                            crop= this.idToCropMap.get(log.data.crop_tid)
+                            index= 0;
+                            //console.log(id)
+                            if(crop==this.rptCrop || this.rptCrop=='All'){
+
+                            console.log(crop)
                             let tableRow={
-                                date: dayjs.unix(log.timestamp).format('DD/MM/YYYY'),
-                                area: log.area[0].name,
-                                units: log.quantity[0].unit.name,
-                                yield: log.quantity[0].value,
-                                crop: this.idToCropMap.get(log.data.crop_tid),
+                                id:index,
+                                data:[id,date, area, units, yields,crop]
+
 
                             }
                             tableRows.push(tableRow)
                         }
+                            
+                         
+                        }
                         return tableRows
+                     
+                        
                     }
                 },
 
@@ -147,7 +163,8 @@ Pick a Crop:
                         let x = "/log.json?type=farm_harvest&timestamp[ge]="+startTimeStamp+"&timestamp[le]="+endTimeStamp;
                      
                         getAllPages(x,this.allHarvestPage)
-                        .then(()=>{         
+                        .then(()=>{      
+                            
                         })
                         .catch((error)=>{
                             console.log(error);
