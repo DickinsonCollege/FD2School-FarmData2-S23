@@ -28,7 +28,7 @@
     </select>
     <br >
     <br />
-    <button type = "submit" @click = 'saveHarvest'> Generate Report </button>
+    <button type = "submit" @click = 'reportHarvest'> Generate Report </button>
     <br />
     <br />
     <hr />
@@ -52,7 +52,7 @@
         
     </ul>
     <br />
-    <p v-if = "harvestLog.length===0">No matching Records</p>
+    <p v-if = "harvestReportRows===0">No matching Records</p>
     <table v-if = "harvestReportRows.length>0" border = "1">
         
         <th><strong>Row</strong></th>
@@ -68,8 +68,6 @@
             <td>{{harvestRow.crop}}</td>
             <td>{{harvestRow.yield}}</td>
             <td>{{harvestRow.units}}</td>
-
-          
         </tr>
       
     </table>
@@ -83,9 +81,6 @@
                     rptStartDate : "2020-05-05",
                     rptEndDate : "2020-05-15",
                     rptCrop: "Kale",
-    
-                    
-                    
                     harvestLog: [],
                     farm:"",
                     user:"",
@@ -94,8 +89,6 @@
                     idToAreaMap: new Map(),
                     //allPages:["ds"],
                     allHarvestPage:[],
-
-                    
                 },
                 computed:{
                     cropNames(){
@@ -120,11 +113,10 @@
                         }
                         return tableRows
                     }
-
                 },
 
                 methods:{
-                    saveHarvest: function(){
+                    reportHarvest: function(){
 
                         axios.get('/farm.json')
                         .then((response) =>{
@@ -144,10 +136,7 @@
                         let x = "/log.json?type=farm_harvest&timestamp[ge]="+startTimeStamp+"&timestamp[le]="+endTimeStamp;
                         console.log(x);
                         getAllPages(x,this.allHarvestPage)
-                        .then(()=>{
-                           
-                           
-                            
+                        .then(()=>{         
                         })
                         .catch((error)=>{
                             console.log(error);
