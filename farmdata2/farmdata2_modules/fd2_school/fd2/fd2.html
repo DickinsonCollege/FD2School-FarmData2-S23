@@ -23,13 +23,14 @@
       
     </div>
     <div>
-      <label for="crop">Crop: </label>
-      <select data-cy="crop-dropdown" id="crop" name="Crop" v-model="selectedCrop"/>
-        <option v-for="crop in cropMapToArray">{{crop}}</option>
-
-      
-        
-      </select>
+     <dropdown-with-all data-cy="crop-dropdown" 
+      includes-all 
+      :selected-val='selectedCrop'
+      :dropdown-list='cropMapToArray'
+      @selection-changed="cropChange"
+      :disabled="false">
+  Pick a Crop: 
+  </dropdown-with-all>
       <label for="field">Field: </label>
       <select  id="field" name="Field" v-model="selectedField"/>
         <option v-for="field in areaMapToArray">{{field}}</option>
@@ -74,6 +75,9 @@
     var mockupVue = new Vue({
       
         el: "#app",
+        components: {
+          'dropdown-with-all': DropdownWithAllComponent,
+        },
         created() {
           this.startDate = "2020-05-05";
           this.endDate = "2020-05-15";
@@ -99,7 +103,7 @@
             header: '',
             startDate:'',
             endDate:'',
-            selectedCrop: '',
+            selectedCrop: 'All',
             selectedField: 'All',
             farm: '',
             user: '',
@@ -119,6 +123,7 @@
           cropMapToArray(){
             return Array.from(this.idToCropMap.values());
           },
+          
           areaMapToArray(){
             return Array.from(this.idToAreaMap.values());
           },
@@ -148,6 +153,9 @@
           },
         },
         methods: {
+          cropChange(newCrop) {
+            this.selectedCrop = newCrop
+          },
           generateReportData: function() {
             this.buttonPressed = true;
             let harvestLogAPIRequest = '/log.json?type=farm_harvest&timestamp[ge]=PUTSTARTHERE&timestamp[le]=PUTENDHERE';
@@ -183,7 +191,7 @@
               })
 
               .catch((err) => {
-                onsole.log("Error Occurred");
+                console.log("Error Occurred");
               console.log(err);
                   // An error occurred during the requests, process it here.
 
