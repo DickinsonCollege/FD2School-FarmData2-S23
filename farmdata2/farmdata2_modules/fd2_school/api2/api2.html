@@ -29,8 +29,8 @@
             <li><strong>User:</strong>{{user}}</li>
             <li><strong>Language:</strong>{{language}}</li><br>
 
-            <li><strong>Start:</strong>05/01/2018</li>
-            <li><strong>End:</strong>05/15/2018</li>
+            <li><strong>Start:</strong>{{rptStart}}</li>
+            <li><strong>End:</strong>{{rptEnd}}</li>
             <li><strong>Crop:</strong>Kale</li>
         </ul>
         <p v-if="harvestLogs.length===0">There are no matching records.</p>
@@ -58,7 +58,8 @@
         var sample = new Vue({
           el: '#vuecontent',
           created() { 
-            getIDToCropMap().then((theMap) => {
+            getIDToCropMap()
+            .then((theMap) => {
               this.idToCropMap = theMap;
             })
             .catch((err) => {
@@ -66,6 +67,7 @@
               console.log(err);
             })
           }, 
+
           data: {
             idToCropMap: new Map(),
             rptTitle: 'My Sample Harvest Report',
@@ -78,23 +80,45 @@
             'Chuau-1', 
             'SQ7', 
           ],
+
           harvestLogs: [],
           farm: '',
           user:'',
           language:'',
+          result: [],
         },
+
         computed: {
           cropNames(){
             return Array.from(this.idToCropMap.values());
           }
         },
+
         methods: {
             addLog: function(){
                 axios.get('/farm.json')
                 .then((response) => { 
                   this.farm= response.data.name;
                   this.user=response.data.user.name;
-                  this.language=response.data.user.languages.en.name;
+                  this.language=response.data.languages.en.name;
+
+                  let start = dayjs(this.rptStart).unix();
+                  console.log(start)
+                  let end = dayjs(this.rptEnd).unix();
+                  console.log(end)
+
+                  let request = "/log.json?type=farm_harvest&timestamp[le]="+end+"&timestamp[ge]="+start;
+                  console.log(request)
+
+                  getAllPages(request, this.result)
+                  .then(() => {
+                    
+                  })
+                  .catch((err) => {
+                    console.log("An error has occured.")
+                    console.log(err)
+                    })
+
                 }) 
                 .catch((error) => {
                   console.log("Error Occured")
@@ -102,7 +126,7 @@
                 }) 
                 this.harvestLogs.push({row: this.index+1, date: '2018-05-01', area: 'Orion-3', crop: 'Kale', yield: 12, units: 'Bunches'});
 
-            }
+            },
         }
         });
         Vue.config.devtools = true;
