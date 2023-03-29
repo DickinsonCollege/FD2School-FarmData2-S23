@@ -72,12 +72,13 @@
             language: "",
             idToCropMap: new Map(),
             idToAreaMap: new Map(),
+            harvestLogs: [],
         },
         computed: {
-            cropNames: function() {
+            cropNames: function () {
                 return Array.from(this.idToCropMap.values());
             },
-            areaNames: function() {
+            areaNames: function () {
                 return Array.from(this.idToAreaMap.values());
             },
         },
@@ -116,14 +117,14 @@
                 console.log(start);
                 let end = dayjs(this.endDate).unix();
                 console.log(end);
-                let request = 
-                    "/log.json?type=farm_harvest&timestamp[ge]=" + start + 
+                let request =
+                    "/log.json?type=farm_harvest&timestamp[ge]=" + start +
                     "&timestamp[le]=" + end
                 console.log(request)
             }
-            
+
         },
-         created() {
+        created() {
             getIDToCropMap()
                 .then((theMap) => {
                     this.idToCropMap = theMap
