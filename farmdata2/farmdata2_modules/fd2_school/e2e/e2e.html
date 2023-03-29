@@ -26,9 +26,9 @@
 
         <p>Details:</p>
         <ul>
-            <li><strong>Farm:</strong>{{farm}}</li>
-            <li><strong>User:</strong>{{user}}</li>
-            <li><strong>Language:</strong>{{language}}</li><br>
+            <li data-cy="farm-name"><strong>Farm:</strong>{{farm}}</li>
+            <li data-cy="report-username"><strong>User:</strong>{{user}}</li>
+            <li><strong>Language:</strong><span data-cy="report-language">{{ language }}</span></li><br>
 
             <li><strong>Start:</strong>{{rptStart}}</li>
             <li><strong>End:</strong>{{rptEnd}}</li>
