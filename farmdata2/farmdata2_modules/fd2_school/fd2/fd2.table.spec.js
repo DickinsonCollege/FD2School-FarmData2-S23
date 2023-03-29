@@ -22,5 +22,9 @@ describe("Test the generated harvest report table", () => {
 
         cy.get("[data-cy=h4]")
             .should("have.text", "Unit")
+
+        cy.get("[data-cy=table-headers]")
+            .children()
+            .should("have.length", 6)
     })
 })
