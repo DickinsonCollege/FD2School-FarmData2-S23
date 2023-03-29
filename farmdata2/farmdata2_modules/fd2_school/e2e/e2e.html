@@ -1,6 +1,6 @@
 <html>
     <div id="vuecontent" v-cloak>
-        <h1>Harvest Report</h1>
+        <h1 data-cy="page-header">Harvest Report</h1>
         <p>This page is a <i>mockup</i> of a simplified harvest report.</p>
         <label for=”reportTitle”>Title:</label>
         <input type="text" id="reportTitle" name="title" v-model="rptTitle" value="My Sample Harvest Report" /><br>
@@ -78,6 +78,11 @@
             user:'',
             language:'',
             result: [],
+            areas: [ 
+            'All', 
+            'Chuau-1', 
+            'SQ7', 
+            ],
             },
 
         computed: {

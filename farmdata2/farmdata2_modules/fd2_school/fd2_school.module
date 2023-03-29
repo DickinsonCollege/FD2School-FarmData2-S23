@@ -69,7 +69,7 @@ function fd2_school_menu() {
       'page callback' => 'fd2_school_view',
       'page arguments' => array('html'),
      'access arguments' => array('view fd2 school'),
-      'weight' => 0,
+      'weight' => -50,
     );
 
   // Add a sub-tab named Vue1 with content in ./xyz/xyz.html.
@@ -79,7 +79,7 @@ function fd2_school_menu() {
       'page callback' => 'fd2_school_view',
       'page arguments' => array('vue1'),
      'access arguments' => array('view fd2 school'),
-      'weight' => 50,
+      'weight' => 0,
     );
 
   // Add a sub-tab named Vue2 with content in ./xyz/xyz.html.
@@ -89,7 +89,7 @@ function fd2_school_menu() {
       'page callback' => 'fd2_school_view',
       'page arguments' => array('vue2'),
      'access arguments' => array('view fd2 school'),
-      'weight' => 100,
+      'weight' => 50,
     );
 
   // Add a sub-tab named API with content in ./xyz/xyz.html.
@@ -99,7 +99,7 @@ function fd2_school_menu() {
       'page callback' => 'fd2_school_view',
       'page arguments' => array('api'),
      'access arguments' => array('view fd2 school'),
-      'weight' => 150,
+      'weight' => 100,
     );
 
   // Add a sub-tab named API2 with content in ./xyz/xyz.html.
@@ -109,7 +109,7 @@ function fd2_school_menu() {
       'page callback' => 'fd2_school_view',
       'page arguments' => array('api2'),
      'access arguments' => array('view fd2 school'),
-      'weight' => 200,
+      'weight' => 150,
     );
 
   // Add a sub-tab named e2e with content in ./xyz/xyz.html.
@@ -119,7 +119,7 @@ function fd2_school_menu() {
       'page callback' => 'fd2_school_view',
       'page arguments' => array('e2e'),
      'access arguments' => array('view fd2 school'),
-      'weight' => 250,
+      'weight' => 200,
     );
 
   return $items;
