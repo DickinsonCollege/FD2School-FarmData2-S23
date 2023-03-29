@@ -88,14 +88,16 @@
           harvestReportRows() {
             let tableRows = []
             for(let log of this.result) { 
-                let tableRow = { 
-                    date: dayjs.unix(log.timestamp).format('MM-DD-YYYY'),
-                    area: log.area[0].name,
-                    yield: log.quantity[0].value,
-                    units: log.quantity[0].unit.name,
-                    crop: this.idToCropMap.get(log.data.crop_tid),
-                } 
-                tableRows.push(tableRow);
+                if(this.idToCropMap.get(log.data.crop_tid)==this.rptCrop) {
+                    let tableRow = { 
+                        date: dayjs.unix(log.timestamp).format('MM-DD-YYYY'),
+                        area: log.area[0].name,
+                        yield: log.quantity[0].value,
+                        units: log.quantity[0].unit.name,
+                        crop: this.idToCropMap.get(log.data.crop_tid),
+                    }
+                    tableRows.push(tableRow);
+                }
             } 
             return tableRows;
         } 
