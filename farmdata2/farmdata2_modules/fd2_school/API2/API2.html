@@ -121,6 +121,11 @@
                     "/log.json?type=farm_harvest&timestamp[ge]=" + start +
                     "&timestamp[le]=" + end
                 console.log(request)
+                getAllPages(request, this.harvestLogs)
+                    .catch((err) => {
+                        console.log("Error requesting harvest logs");
+                        console.log(err);
+                    })
             }
 
         },
