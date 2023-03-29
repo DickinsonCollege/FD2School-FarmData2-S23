@@ -55,19 +55,13 @@
     <li><strong>Crop: </strong> {{selectedCrop}}</li>
   </ul>
   <p v-if="harvestPages.length === 0">No harvest logs to show</p>
-  <table border="1" v-if="harvestPages.length !== 0">
-    <tr>
-      <th>Row </th><th>Date </th><th>Area </th><th>Crop </th><th>Yield</th><th>Units</th>
-    </tr>
-    <tr v-for="(item, index) in harvestReportRows">
-      <td>{{ index + 1 }}</td>
-      <td>{{item.date}}</td>
-      <td>{{item.area}}</td>
-      <td>{{item.crop}}</td>
-      <td>{{item.yield}}</td>
-      <td>{{item.unit}}</td>
-    </tr>
-  </table>
+
+        <custom-table data-cy="harvest-table"
+        :columns="columns"
+        :rows="harvestReportRows" 
+        :custom-buttons="myButtons"
+        >
+      </custom-table>
 </div>
   </body>
   <script>
@@ -77,6 +71,7 @@
         el: "#app",
         components: {
           'dropdown-with-all': DropdownWithAllComponent,
+          'custom-table': CustomTableComponent,
         },
         created() {
           this.startDate = "2020-05-05";
@@ -99,6 +94,16 @@
           });
         },
         data: {
+          columns: [
+            {"header": 'Row', "visible": true, "inputType": {'type': 'value'}},
+            {"header": 'Date', "visible": true, "inputType": {'type': 'date'}},
+            {"header": 'Area', "visible": true, "inputType": {'type': 'text'}},
+            {"header": 'Crop', "visible": true, "inputType": {'type': 'text'}},
+            {"header": 'Yield', "visible": true, "inputType": {'type': 'value'}},
+            {"header": 'Units', "visible": true, "inputType": {'type': 'value'}},
+            
+           ],
+     
             buttonPressed: false,
             header: '',
             startDate:'',
@@ -108,13 +113,17 @@
             farm: '',
             user: '',
             language: '',
-            selectedCropForRows: '',
+            selectedCropForRows: 'All',
             table: [
 
             ],
             harvestPages: [
 
             ],
+
+             myButtons: [
+             {"hoverTip": 'Clone', "visible": true, "inputType": {'type': 'button', 'value': 'glyphicon glyphicon-asterisk', 'buttonClass': 'table-button btn btn-warning', 'event': 'clone'}},
+         ],
             idToCropMap: new Map(),
             idToAreaMap: new Map(),
 
@@ -123,28 +132,32 @@
           cropMapToArray(){
             return Array.from(this.idToCropMap.values());
           },
-          
           areaMapToArray(){
             return Array.from(this.idToAreaMap.values());
           },
           harvestReportRows() {
             let tableRows = []
+            let index = 1
             for(let log of this.harvestPages) {
               let tableRow = {
+                id: log.id, data: [
+                index,
+                dayjs.unix(log.timestamp).format('DD/MM/YYYY'),
+                log.area[0].name,
+                this.idToCropMap.get(log.data.crop_tid),
+                log.quantity[0].value,
+                log.quantity[0].unit.name,
                 
-                date: dayjs.unix(log.timestamp).format('DD/MM/YYYY'),
-                area: log.area[0].name,
-                yield: log.quantity[0].value,
-                unit: log.quantity[0].unit.name,
-                crop: this.idToCropMap.get(log.data.crop_tid)
+              ]
                  
               }
               let cropStr = this.idToCropMap.get(log.data.crop_tid);
              
               
-             
-              if(cropStr == this.selectedCropForRows){
+              
+              if(cropStr == this.selectedCropForRows || cropStr == 'All'){
               tableRows.push(tableRow);
+              index += 1;
               }
               
               
