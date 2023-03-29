@@ -112,7 +112,16 @@
                             { date: "2018-05-03", area: "Alf-2", crop: "Kale", yield: 12, units: "Bunches" })
                     }
                 }
+                let start = dayjs(this.startDate).unix();
+                console.log(start);
+                let end = dayjs(this.endDate).unix();
+                console.log(end);
+                let request = 
+                    "/log.json?type=farm_harvest&timestamp[ge]=" + start + 
+                    "&timestamp[le]=" + end
+                console.log(request)
             }
+            
         },
          created() {
             getIDToCropMap()
