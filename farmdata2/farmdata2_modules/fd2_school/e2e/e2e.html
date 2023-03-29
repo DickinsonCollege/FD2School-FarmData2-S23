@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <div id="reportform" v-cloak>
-    <h1>Harvest Report Form:</h1>
+    <h1 data-cy="page-header">Harvest Report</h1>
     <p>This page is a <i>mockup</i> of a simplified harvest report</p>
     <label for="title" >Title:</label>
     <input type="text" v-model="header">
     <br><br>
     <label for="startdate">Start date:</label>
-    <input v-model='startdate' type="date" id="startdate" name="startdate"
+    <input v-model='startdate' data-cy="Start-date" type="date" id="startdate" name="startdate"
         min="2014-01-01" max="2022-01-01":max="enddate">
         <br>
     <label for="enddate">End date:</label>
-    <input v-model='enddate' type="date" id="enddate" name="enddate"
+    <input v-model='enddate' data-cy="End-date" type="date" id="enddate" name="enddate"
         min="2020-05-05":min="startdate" max="2022-01-01">
     <br><br>
     <label for="crop">Choose a crop:</label>
