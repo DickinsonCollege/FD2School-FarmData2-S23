@@ -120,6 +120,8 @@
               harvestReportRows() {
                 let tableRows = []
                 for(let log of this.harvestLog) {
+                  if(this.idToCropMap.get(log.data.crop_tid) == this.crop)
+                  {
                   let tableRow = {
                     date: dayjs.unix(log.timestamp).format('YYYY-MM-DD'),
                     area: log.area[0].name,
@@ -129,6 +131,7 @@
                     }
                     tableRows.push(tableRow)
                 }
+              }
               return tableRows
               },
             },
