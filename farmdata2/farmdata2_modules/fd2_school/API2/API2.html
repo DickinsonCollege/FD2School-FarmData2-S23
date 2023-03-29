@@ -81,6 +81,26 @@
             areaNames: function () {
                 return Array.from(this.idToAreaMap.values());
             },
+            harvestReportRows() {
+                let tableRows = []
+                for(let log of this.harvestLogs) {
+                    let cropName = this.idToCropMap.get(log.data.crop_tid);
+
+                    if (cropName === this.crop) {
+                        let date = dayjs.unix(log.timestamp);
+                        let dateStr = date.format("MM/DD/YYYY");
+                        let tableRow = {
+                            date: dateStr,
+                            area: log.area[0].name,
+                            crop: cropName,
+                            yield: log.quantity[0].value,
+                            units: log.quantity[0].unit.name,
+                        }
+                        tableRows.push(tableRow)
+                    }
+                }
+                return tableRows
+            },
         },
         methods: {
             generateReport: function () {
