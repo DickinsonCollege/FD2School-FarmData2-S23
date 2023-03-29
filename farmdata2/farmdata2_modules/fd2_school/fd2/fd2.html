@@ -18,9 +18,12 @@
           
 
         <label for="crop">Crop:</label>
-        <select data-cy="crop-dropdown" id="crop" name="crop" v-model="rptCrop">
-            <option selected v-for="crop in cropNames">{{crop}}</option>  
-        </select>
+            <dropdown-with-all name="crop" data-cy="crop-dropdown"
+            includes-all
+            :selected-val="rptCrop"
+            :dropdown-list="cropNames"
+            @selection-changed="cropChange"
+            ></dropdown-with-all>
         <label for="field">Field:</label>
         <select id="field" name="field">
             <option v-for = "area in areas">{{area}}</option> 
@@ -70,7 +73,7 @@
             rptTitle: "My Sample Report",
             rptStart: '2020-05-05',
             rptEnd: '2020-05-15',
-            rptCrop: 'Kale',
+            rptCrop: 'All',
             crops: [
                 "Kale",
                 "Broccoli",
@@ -142,6 +145,9 @@
             changeState: function(newState){
                 this.state = newState;
             },
+            cropChange(newCrop) {
+                    this.rptCrop = newCrop
+             },
         },
         created() { 
             getIDToCropMap()
@@ -152,6 +158,9 @@
                 console.log("getIDToCropMap caught an error.")
             })
         }, 
+        components: {
+                'dropdown-with-all': DropdownWithAllComponent
+            },
     });
     Vue.config.devtools = true; 
 </script>
