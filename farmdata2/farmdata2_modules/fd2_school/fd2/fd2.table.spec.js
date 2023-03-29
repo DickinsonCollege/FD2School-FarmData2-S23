@@ -13,4 +13,10 @@ describe("Test report table", () => {
     cy.get("[data-cy=h4]").should("have.text","Yield")
     cy.get("[data-cy=h5]").should("have.text","Unit")
 })
+
+it("Test number of columns", () => {
+  cy.get("[data-cy=generate-report-button]").click()
+  cy.get("[data-cy=table-headers]").children().should("have.length", 6)
+})
+
 })
