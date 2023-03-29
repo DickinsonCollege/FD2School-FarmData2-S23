@@ -42,8 +42,8 @@
         </ul>
         <br><br>
         <table border="1">
-          <p v-if="harvestLog.length == 0">No Result Match!</p>
-          <tr v-if="harvestLog.length!=0">
+          <p v-if="harvestReportRows.length == 0">No Result Match!</p>
+          <tr v-if="harvestReportRows.length!=0">
             <td><strong>Row</strong></td>
             <td><strong>Date</strong></td>
             <td><strong>Area</strong></td>
@@ -51,7 +51,7 @@
             <td><strong>Yield</strong></td>
             <td><strong>Units</strong></td>
           </tr>
-          <tr v-for="(l,index) in harvestLog">
+          <tr v-for="(l,index) in harvestReportRows">
             <td>{{ index+1 }}</td>
             <td>{{ l.date }}</td>
             <td>{{ l.area }}</td>
@@ -116,7 +116,21 @@
               },
               areasName() {
                 return Array.from(this.idToAreaMap.values());
-              }
+              },
+              harvestReportRows() {
+                let tableRows = []
+                for(let log of this.harvestLog) {
+                  let tableRow = {
+                    date: dayjs.unix(log.timestamp).format('YYYY-MM-DD'),
+                    area: log.area[0].name,
+                    crop: this.idToCropMap.get(log.data.crop_tid),
+                    yield: log.quantity[0].value,
+                    units: log.quantity[0].unit.name,
+                    }
+                    tableRows.push(tableRow)
+                }
+              return tableRows
+              },
             },
             methods: {
               generateReport: function() {
@@ -130,9 +144,6 @@
                   let endTimestamp = dayjs(this.Edate).unix();
 
                   let dateString="/log.json?type=farm_harvest&timestamp[ge]="+startTimestamp+"&timestamp[le]="+endTimestamp;
-
-                  console.log(startTimestamp);
-                  console.log(endTimestamp);
                   
                   this.harvestLog = [];
                   getAllPages(dateString, this.harvestLog)
@@ -147,7 +158,6 @@
                   console.log("Error occurred.")
                   console.log(error)
                 })
-//              this.harvestLog.push({date:'05/08/2020',area:'Orion-3',crop:'Kale',yield:12,units:'Bunches'});
                 },
             }
           });
