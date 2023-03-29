@@ -83,21 +83,17 @@
             },
             harvestReportRows() {
                 let tableRows = []
-                for(let log of this.harvestLogs) {
-                    let cropName = this.idToCropMap.get(log.data.crop_tid);
+                for (let log of this.harvestLogs) {
 
-                    if (cropName === this.crop) {
-                        let date = dayjs.unix(log.timestamp);
-                        let dateStr = date.format("MM/DD/YYYY");
-                        let tableRow = {
-                            date: dateStr,
-                            area: log.area[0].name,
-                            crop: cropName,
-                            yield: log.quantity[0].value,
-                            units: log.quantity[0].unit.name,
-                        }
-                        tableRows.push(tableRow)
+                    let date = dayjs.unix(log.timestamp);
+                    let dateStr = date.format("MM/DD/YYYY");
+                    let tableRow = {
+                        date: dateStr,
+                        area: log.area[0].name,
+                        yield: log.quantity[0].value,
+                        units: log.quantity[0].unit.name,
                     }
+                    tableRows.push(tableRow)
                 }
                 return tableRows
             },
@@ -118,20 +114,6 @@
                 if (!this.reportVisible) {
                     this.reportVisible = true;
 
-                }
-                else {
-                    if (this.harvestList.length == 0) {
-                        this.harvestList.push(
-                            { date: "2018-05-01", area: "Orion-3", crop: "Kale", yield: 12, units: "Bunches" })
-                    }
-                    else if (this.harvestList.length == 1) {
-                        this.harvestList.push(
-                            { date: "2018-05-02", area: "Chuau-1", crop: "Kale", yield: 9, units: "Bunches" })
-                    }
-                    else if (this.harvestList.length == 2) {
-                        this.harvestList.push(
-                            { date: "2018-05-03", area: "Alf-2", crop: "Kale", yield: 12, units: "Bunches" })
-                    }
                 }
                 let start = dayjs(this.startDate).unix();
                 console.log(start);
