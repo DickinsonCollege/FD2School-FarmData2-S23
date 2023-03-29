@@ -103,6 +103,7 @@ Pick a Crop:
         ],
                 
                 },
+           
                 computed:{
                     cropNames(){
                         return Array.from(this.idToCropMap.values());
@@ -121,13 +122,13 @@ Pick a Crop:
                             yields= log.quantity[0].value
                             crop= this.idToCropMap.get(log.data.crop_tid)
                             index= 0;
-                            //console.log(id)
+                           
                             if(crop==this.rptCrop || this.rptCrop=='All'){
 
-                            console.log(crop)
+                            
                             let tableRow={
                                 id:index,
-                                data:[id,date, area, units, yields,crop]
+                                data:[id,date,area,crop,yields,units]
 
 
                             }
@@ -136,6 +137,7 @@ Pick a Crop:
                             
                          
                         }
+                       
                         return tableRows
                      
                         

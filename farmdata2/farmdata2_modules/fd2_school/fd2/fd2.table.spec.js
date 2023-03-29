@@ -16,5 +16,22 @@ describe("Test the harvest table", () => {
 
 
     })
+    it("Check table filtering by crop", () => {
+        cy.get("[data-cy=generate-report-button]").click()
+        cy.get("[data-cy=crop-dropdown] >[data-cy=dropdown-input]").select(1)
+
+       
+        cy.get("[data-cy=table-body]").children().should("have.length",4)
+      
+
+        //for some reason the expected value has some spaces after the cropName and I had to do this to pass the test.
+        cy.get("[data-cy=td-r0c3]").should("have.text","ARUGULA     ")
+        cy.get("[data-cy=td-r0c3]").should("have.text","ARUGULA     ")
+        cy.get("[data-cy=td-r0c3]").should("have.text","ARUGULA     ")
+        cy.get("[data-cy=td-r0c3]").should("have.text","ARUGULA     ")
+           
+      
+
+    })
    
 })
