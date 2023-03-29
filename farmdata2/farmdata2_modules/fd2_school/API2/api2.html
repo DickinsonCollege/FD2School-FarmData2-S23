@@ -11,10 +11,10 @@
             <br><br>
             <label for="start">Start:</label>
             <input type="date" id="start" name="start date" v-model="Sdate" 
-            v-bind:disabled='Sdate > Edate' min="2014-01-01" max="2022-01-01">
+            min="2014-01-01" v-bind:max="Edate"/>
             <label for="end">End:</label>
             <input type="date" id="end" name="end date" v-model="Edate"
-            v-bind:disabled='Edate < Sdate' min="2020-05-05" max="2022-01-01">
+            v-bind:min="Sdate" max="2022-01-01"/>
             <br><br>
             <label for=”crop”>Crop: </label>
             <select id="crop" name="crop" v-model="crop">  
@@ -25,12 +25,11 @@
                 <option v-for="area in areasName">{{ area }}</option>
             </select>
             <br><br>
-            <button type="button" @click='Newlog'>Generate Report</button>
+            <button type="button" v-on:click='generateReport'>Generate Report</button>
             <br><br>
     </body>
     <hr>
-      <h2 v-if="harvestLog.length === 0">No result matches</h2>
-      <h2 v-else>{{ Title ? Title : 'Mock Harvest Report'}}</h2>
+      <h2>{{ Title ? Title : 'Mock Harvest Report'}}</h2>
     <p>Details:</p>
     <body>   
         <ul>
@@ -43,7 +42,8 @@
         </ul>
         <br><br>
         <table border="1">
-          <tr>
+          <p v-if="harvestLog.length == 0">No Result Match!</p>
+          <tr v-if="harvestLog.length!=0">
             <td><strong>Row</strong></td>
             <td><strong>Date</strong></td>
             <td><strong>Area</strong></td>
@@ -61,6 +61,7 @@
           </tr>
         </table> 
       </div>
+        <script src="https://unpkg.com/vue@2"></script>
         <script>
           var Vue1 = new Vue({
             el: "#vue",
@@ -82,8 +83,8 @@
             },
             data:{
               Title:"My Sample Harvest Report",
-              Sdate:"2018-05-01",
-              Edate:"2018-05-15",
+              Sdate:"2020-05-05",
+              Edate:"2020-05-15",
               crop:'Kale',
               area:'All',
               log:'',
@@ -94,6 +95,7 @@
               farmInfo: '',
               idToCropMap: new Map(),
               idToAreaMap: new Map(),
+              dateString:'',
               crops: [
                 {text: "Broccoli", value: "Broccoli"},
                 {text: "Kale", value: "Kale"},
@@ -110,25 +112,42 @@
             },
             computed: {
               cropsName() {
-                return Array.from(this.$data.idToCropMap.values());
+                return Array.from(this.idToCropMap.values());
               },
               areasName() {
-                return Array.from(this.$data.idToAreaMap.values());
+                return Array.from(this.idToAreaMap.values());
               }
             },
             methods: {
-              Newlog: function() {
+              generateReport: function() {
                 axios.get('/farm.json')
                   .then((response) => {
-                  this.farmName = response.data.name;
-                  this.currentUser = response.data.user.name;
+                  this.farm = response.data.name;
+                  this.user = response.data.user.name;
                   this.language = response.data.languages.en.name;
+
+                  let startTimestamp = dayjs(this.Sdate).unix();
+                  let endTimestamp = dayjs(this.Edate).unix();
+
+                  let dateString="/log.json?type=farm_harvest&timestamp[ge]="+startTimestamp+"&timestamp[le]="+endTimestamp;
+
+                  console.log(startTimestamp);
+                  console.log(endTimestamp);
+                  
+                  this.harvestLog = [];
+                  getAllPages(dateString, this.harvestLog)
+                    .then(() => {
+
+                    })
+                    .catch((err) => {
+                      console.log("Error in getAllPages.")
+                    })
                 })
                   .catch((error) => {
                   console.log("Error occurred.")
                   console.log(error)
                 })
-                  this.harvestLog.push({date:'05/08/2020',area:'Orion-3',crop:'Kale',yield:12,units:'Bunches'});
+//              this.harvestLog.push({date:'05/08/2020',area:'Orion-3',crop:'Kale',yield:12,units:'Bunches'});
                 },
             }
           });
