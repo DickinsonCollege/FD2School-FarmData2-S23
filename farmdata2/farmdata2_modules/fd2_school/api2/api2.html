@@ -33,7 +33,7 @@
             <li><strong>End:</strong>{{rptEnd}}</li>
             <li><strong>Crop:</strong>Kale</li>
         </ul>
-        <p v-if="harvestLogs.length===0">There are no matching records.</p>
+        <p v-if="harvestReportRows.length===0">There are no matching records.</p>
 
         <table border=1 v-else>
             <tr>
@@ -44,7 +44,7 @@
               <th>Yield</th>
               <th>Units</th>
             </tr>
-            <tr v-for="(e,index) in harvestLogs">
+            <tr v-for="(e,index) in harvestReportRows">
               <td >{{index+1}}</td>
               <td >{{e.date}}</td>
               <td >{{e.area}}</td>
@@ -74,24 +74,31 @@
             rptStart: '02-24-2020',
             rptEnd: '02-25-2020',
             rptCrop: 'Broccoli',
-
-          areas: [ 
-            'All', 
-            'Chuau-1', 
-            'SQ7', 
-          ],
-
-          harvestLogs: [],
-          farm: '',
-          user:'',
-          language:'',
-          result: [],
-        },
+            farm: '',
+            user:'',
+            language:'',
+            result: [],
+            },
 
         computed: {
           cropNames(){
             return Array.from(this.idToCropMap.values());
-          }
+          },
+
+          harvestReportRows() {
+            let tableRows = []
+            for(let log of this.result) { 
+                let tableRow = { 
+                    date: dayjs.unix(log.timestamp).format('MM-DD-YYYY'),
+                    area: log.area[0].name,
+                    yield: log.quantity[0].value,
+                    units: log.quantity[0].unit.name,
+                    crop: this.idToCropMap.get(log.data.crop_tid),
+                } 
+                tableRows.push(tableRow);
+            } 
+            return tableRows;
+        } 
         },
 
         methods: {
@@ -112,7 +119,7 @@
 
                   getAllPages(request, this.result)
                   .then(() => {
-                    
+
                   })
                   .catch((err) => {
                     console.log("An error has occured.")
@@ -124,7 +131,7 @@
                   console.log("Error Occured")
                   console.log(error)
                 }) 
-                this.harvestLogs.push({row: this.index+1, date: '2018-05-01', area: 'Orion-3', crop: 'Kale', yield: 12, units: 'Bunches'});
+                
 
             },
         }
