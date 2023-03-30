@@ -23,14 +23,14 @@
       
     </div>
     <div>
-     <dropdown-with-all data-cy="crop-dropdown" 
+    <span> <dropdown-with-all data-cy="crop-dropdown" 
       includes-all 
       :selected-val='selectedCrop'
       :dropdown-list='cropMapToArray'
       @selection-changed="cropChange"
       :disabled="false">
   Pick a Crop: 
-  </dropdown-with-all>
+  </dropdown-with-all></span>
       <label for="field">Field: </label>
       <select  id="field" name="Field" v-model="selectedField"/>
         <option v-for="field in areaMapToArray">{{field}}</option>
@@ -74,7 +74,7 @@
           'custom-table': CustomTableComponent,
         },
         created() {
-          this.startDate = "2020-05-05";
+          this.startDate = "2019-05-05";
           this.endDate = "2020-05-15";
           getIDToCropMap()
           .then((theMap) => {

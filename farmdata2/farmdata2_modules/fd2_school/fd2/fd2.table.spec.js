@@ -14,5 +14,11 @@ describe("Test the custom-table Element", () => {
         cy.get("[data-cy=h5]").should("have.text","Units")
         cy.get("[data-cy=table-headers]").children().should('have.length',7)
     })
+    it("Checks crop filtering", () => {
+        cy.get("[data-cy=crop-dropdown]").click()
+        cy.contains('CARROT').click({force: true})
+        cy.get("[data-cy=generate-report]").click()
+        cy.get("[data-cy=rd-r0c3").should("have.text","CARROT")
+    })
    
 })
