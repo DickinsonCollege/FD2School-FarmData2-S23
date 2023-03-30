@@ -18,9 +18,27 @@ describe("Test the custom table", () => {
         .should("have.text","Yield")
         cy.get("[data-cy=h5]")
         .should("have.text","Units")
-        
+
         cy.get("[data-cy=table-headers]").children()
         .should("have.length",8)
+    }) 
+
+    it("Test the filtering by crop", () => { 
+        cy.get("[data-cy=generate-report]").click()
+        cy.get("[data-cy=crop-dropdown] > [data-cy=dropdown-input]")
+        .select(1)
+
+        cy.get("[data-cy=table-body]").children()
+        .should("have.length",4)
+
+        cy.get("[data-cy=td-r0c3]")
+        .should("contain.text","ARUGULA")
+        cy.get("[data-cy=td-r1c3]")
+        .should("contain.text","ARUGULA")
+        cy.get("[data-cy=td-r2c3]")
+        .should("contain.text","ARUGULA")
+        cy.get("[data-cy=td-r3c3]")
+        .should("contain.text","ARUGULA")
     }) 
 
 }) 
