@@ -90,7 +90,7 @@
 						this.language = response.data.user.languages.en.name;
 					})
 					.catch((error) => {
-						console.log("Error Occured")
+						console.log("An error occured")
 						console.log(error)
 					})
 				this.harvestLogs.push({ row: this.index + 1, date: '2018-06-03', area: 'Orion-3', crop: 'Kale', yield: 12, units: 'Bunches' });
@@ -99,5 +99,4 @@
 	});
 	Vue.config.devtools = true;
 </script>
-
 </html>
