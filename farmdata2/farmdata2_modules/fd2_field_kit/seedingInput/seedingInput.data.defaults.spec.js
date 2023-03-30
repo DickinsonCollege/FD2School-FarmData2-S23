@@ -11,6 +11,6 @@ describe("Test Data section of Seeding Input form", () =>{
         cy.visit('/farm/fd2-field-kit/seedingInput')
     }) 
     it("Checks the Data header", () => {
-        
+        cy.get("[data-cy=data-header").should('have.text',"Data")
     })
 })
