@@ -41,24 +41,12 @@
         </ul>
         <p v-if="harvestReportRows.length===0">There are no matching records.</p>
 
-        <table border=1 v-else>
-            <tr>
-              <th>Row</th>
-              <th>Date</th>
-              <th>Area</th>
-              <th>Crop</th>
-              <th>Yield</th>
-              <th>Units</th>
-            </tr>
-            <tr v-for="(e,index) in harvestReportRows">
-              <td >{{index+1}}</td>
-              <td >{{e.date}}</td>
-              <td >{{e.area}}</td>
-              <td >{{e.crop}}</td>
-              <td >{{e.yield}}</td>
-              <td >{{e.units}}</td>
-            </tr>
-          </table>
+        <custom-table data-cy="harvest-table"
+            can-edit
+            can-delete
+            :columns="columns"
+            :rows="harvestReportRows">
+        </custom-table>
         </div>
     </div>
     <script>
@@ -77,6 +65,7 @@
 
           components: {
             'dropdown-with-all': DropdownWithAllComponent,
+            'custom-table': CustomTableComponent,
           },
 
           data: {
@@ -95,6 +84,16 @@
             'SQ7', 
             ],
             check: false,
+
+            columns: [
+            {"header": 'Row', "visible": true, "inputType": {'type': 'no input'}},
+            {"header": 'Date', "visible": true, "inputType": {'type': 'no input'}},
+            {"header": 'Area', "visible": true, "inputType": {'type': 'no input'}},
+            {"header": 'Crop', "visible": true, "inputType": {'type': 'no input'}},
+            {"header": 'Yield', "visible": true, "inputType": {'type': 'no input'}},
+            {"header": 'Units', "visible": true, "inputType": {'type': 'no input'}},
+            ],
+
             },
 
         computed: {
@@ -103,16 +102,21 @@
           },
 
           harvestReportRows() {
+            let i=1;
             let tableRows = []
             for(let log of this.result) { 
                 let tableRow = { 
-                    date: dayjs.unix(log.timestamp).format('YYYY-MM-DD'),
-                    area: log.area[0].name,
-                    yield: log.quantity[0].value,
-                    units: log.quantity[0].unit.name,
-                    crop: this.idToCropMap.get(log.data.crop_tid),
+                  id: log.id,
+                  data: [
+                    i++,
+                    dayjs.unix(log.timestamp).format('YYYY-MM-DD'),
+                    log.area[0].name,
+                    this.idToCropMap.get(log.data.crop_tid),
+                    log.quantity[0].value,
+                    log.quantity[0].unit.name,
+                ]
                 }
-                if(tableRow.crop==this.rptCrop || this.rptCrop=="All") {
+                if(tableRow.data[3]==this.rptCrop || this.rptCrop=="All") {
                     tableRows.push(tableRow)
                 }
             } 
