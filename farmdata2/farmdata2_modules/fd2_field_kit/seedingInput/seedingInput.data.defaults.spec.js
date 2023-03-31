@@ -10,6 +10,7 @@ describe("Test Data section of Seeding Input form", () =>{
 
     beforeEach(() => {
         cy.login('manager1', 'farmdata2')
+
         
         // Cypress clears the local storage between each test.  
         // So we need to save it at the end of each test (see afterEach)
@@ -34,5 +35,6 @@ describe("Test Data section of Seeding Input form", () =>{
         cy.get("[data-cy=crop-selection] > [data-cy=dropdown-input")
             .children()
             .last().should("have.text", "ZUCCHINI")
+        
     })
 })
