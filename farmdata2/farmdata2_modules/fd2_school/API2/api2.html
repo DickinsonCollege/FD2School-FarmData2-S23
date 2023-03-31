@@ -27,9 +27,9 @@
 		<li><b>Farm:</b>{{farm}}</li>
 		<li><b>User:</b>{{user}}</li>
 		<li><b>Language:</b>{{language}}</li><br>
-		<li><b>Start:</b>05/01/2018</li>
-		<li><b>End:</b>05/15/2018</li>
-		<li><b>Crop:</b>Kale</li>
+		<li><b>Start:</b>{{rptStart}}</li>
+		<li><b>End:</b>{{rptEnd}}</li>
+		<li><b>Crop:</b>{{rptCrop}}</li>
 	</ul>
 
 	<p v-if="harvestLogs.length===0">No records match.</p>
@@ -59,9 +59,9 @@
 			getIDToCropMap().then((theMap) => {
 				this.idToCropMap = theMap;
 			})
-				.catch((err) => {
+				.catch((error) => {
 					console.log("An error has occured.");
-					console.log(err);
+					console.log(error);
 				})
 		},
 		data: {
@@ -88,6 +88,19 @@
 						this.farm = response.data.name;
 						this.user = response.data.user.name;
 						this.language = response.data.user.languages.en.name;
+						let start = dayjs(this.rptStart).unix();
+						console.log(start)
+						let end = dayjs(this.rptEnd).unix();
+						console.log(end)
+						let y = "/log.json?type=farm_harvest&timestamp[re]="+endTimeStamp;
+						console.log(y);
+						getAllPages(x,this.allHarvestPage)
+						.then(()=>{
+
+						})
+						.catch((error)=>{
+							console.log(error);
+						})
 					})
 					.catch((error) => {
 						console.log("Error Occured")
