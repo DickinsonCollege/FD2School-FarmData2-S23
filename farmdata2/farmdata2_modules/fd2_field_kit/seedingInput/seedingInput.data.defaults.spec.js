@@ -18,11 +18,7 @@ describe("Test Data section of Seeding Input form", () =>{
         cy.visit('/farm/fd2-field-kit/seedingInput')
     }) 
 
-    context("CropMap API call",() => {
-        cy.get('@cropMap').should(function(map) {
-            cropToIDMap = map
-        })
-    })
+
     //task #1
     it("Checks the Data header", () => {
         cy.get("[data-cy=data-header").should('have.text',"Data")
@@ -33,6 +29,10 @@ describe("Test Data section of Seeding Input form", () =>{
     it("Checks the crop dropdown is correct", () => {
         cy.get("[data-cy=crop-selection] > [data-cy=dropdown-input")
             .children()
-            .should('have.size',cropToIDMap.size)
+            .first().should("have.text", "ARUGULA")
+        
+        cy.get("[data-cy=crop-selection] > [data-cy=dropdown-input")
+            .children()
+            .last().should("have.text", "ZUCCHINI")
     })
 })
