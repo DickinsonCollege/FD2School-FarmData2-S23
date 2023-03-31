@@ -5,7 +5,8 @@ describe('Test the labor input section', () => {
         cy.visit('/farm/fd2-field-kit/seedingInput')
     }) 
 
-    it("Empty", () => {
-
+    it("Check header", () => {
+        cy.get("[data-cy='labor-header']")
+            .should("have.text", "Labor")
     })
 })
