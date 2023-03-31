@@ -6,18 +6,18 @@
     <input type="text" id="rptTitle" v-model="reportTitle"></input>
     <br><br>
     <label for="startDate">Start:</label>
-    <input type="date" id="startDate"
+    <input type="date" data-cy="start-date" id="startDate"
         v-model="startDate"
         min="2014-01-01" 
         :max="endDate"></input>
     <label for="endDate">End:</label>
-    <input type="date" id="endDate"
+    <input type="date" data-cy="end-date" id="endDate"
         v-model="endDate"
         :min="startDate" 
         max="2022-01-01"></input>
     <br><br>
     <label for="cropDropDown">Crop:</label>
-    <select id="cropDropDown" v-model="crop">
+    <select id="cropDropDown" data-cy="crop-dropdown" v-model="crop">
         <option v-for="crop in cropNames">{{ crop }}</option>
     </select>
     <label for="areaDropDown">Area:</label>
@@ -25,7 +25,7 @@
         <option v-for="area in areaNames">{{ area }}</option>
     </select>
     <br><br>
-    <input type="button" value="Generate Report" @click='generateReport'></input>
+    <input type="button" data-cy="generate-report-button" value="Generate Report" @click='generateReport'></input>
     <hr>
     <div v-if="reportVisible">
         <h1>{{ reportTitle=="" ? "Mock Harvest Report" : reportTitle }}</h1>
