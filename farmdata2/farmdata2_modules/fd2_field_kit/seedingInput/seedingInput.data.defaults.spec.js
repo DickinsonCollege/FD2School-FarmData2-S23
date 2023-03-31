@@ -1,12 +1,7 @@
 const dayjs = require('dayjs')
 
-var FarmOSAPI = require('../../resources/FarmOSAPI.js')
-
-var getCropToIDMap = FarmOSAPI.getCropToIDMap
-
 describe("Test Data section of Seeding Input form", () =>{
 
-    let cropToIDMap = null;
 
     beforeEach(() => {
         cy.login('manager1', 'farmdata2')
@@ -35,6 +30,9 @@ describe("Test Data section of Seeding Input form", () =>{
         cy.get("[data-cy=crop-selection] > [data-cy=dropdown-input")
             .children()
             .last().should("have.text", "ZUCCHINI")
+        cy.get("[data-cy=crop-selection] > [data-cy=dropdown-input")
+            .children()
+            .should("have.length", "111")
         
     })
 })
