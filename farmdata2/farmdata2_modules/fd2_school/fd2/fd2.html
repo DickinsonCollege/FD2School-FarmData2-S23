@@ -54,15 +54,7 @@
         <br>
         <table border="1px">
             <p v-if="harvestReportRows.length === 0">No logs available</p>
-            <!-- <tr v-if="harvestReportRows.length > 0" data-cy="table-headers">
-                <th>Row</th>
-                <th>Date</th>
-                <th>Area</th>
-                <th>Crop</th>
-                <th>Yield</th>
-                <th>Units</th> 
-            </tr> -->
-
+            
             <custom-table data-cy="table"
             an-edit
             can-delete
@@ -78,28 +70,7 @@
             >
         </custom-table>
 
-        <!--    can-edit
-                can-delete
-                csv-name="report_table_"
-                :columns="columns"
-                :rows="harvestReportRows" 
-                :custom-buttons="myButtons"
-                @clone="cloneEvent"
-                @row-deleted="deleteTableRow"
-                @row-edited="updateTableRow"
-                @edit-clicked="showEditRow"
-                @edit-canceled="cancelEditRow" -->
        
-            
-            <!-- <tr v-for="(log,index) in harvestReportRows">{{ 
-                <td>{{ log.id }}</td>
-                <td>{{log.date}}</td> 
-                <td>{{log.area}}</td>
-                <td>{{log.crop}}</td>
-                <td>{{log.yield}}</td>
-                <td>{{log.units}}</td> 
-            }}</tr> -->
-            
            
         
         </table>
@@ -151,7 +122,8 @@
 
                 ],
 
-                
+               
+
                 columns: [
                     //{"header": 'ID', "visible": true, "inputType": {'type': 'no input'}},
                     {"header": 'Date', "visible": true, "inputType": {'type': 'no input'}},
@@ -163,27 +135,13 @@
                 ],
                 
 
-                //tableRows: "harvestReportRows",
+                
 
                 title: "",
             },
 
             computed: {
-                // getTableRows() {
-                //     let rowsArray = harvestReportRows();
-
-                //     for (log in rowsArray){
-                //         {id: 1, data: ['2020-05-05', 'pounds', 'A', 'SPINACH', 5, '20']};
-                //     }
-                //     <!-- <tr v-for="(log,index) in harvestReportRows">{{ 
-                // <td>{{ index+1 }}</td>
-                // <td>{{log.date}}</td> 
-                // <td>{{log.area}}</td>
-                // <td>{{log.crop}}</td>
-                // <td>{{log.yield}}</td>
-                // <td>{{log.units}}</td> 
-            // }}</tr> -->
-                //},
+               
 
                 cropNames() {
                     return Array.from(this.idToCropMap.values());
@@ -193,24 +151,7 @@
                     return Array.from(this.idToAreaMap.values());
                 },
 
-                // harvestReportRows() {
-                //     let tableRows = []
-                    
-                //     for(let log of this.dateRange) {
-                //         if(this.idToCropMap.get(log.data.crop_tid) == this.crop){
-                //         let theDate = dayjs.unix(log.timestamp);
-                //         let tableRow = {
-                //             id: log.id,
-                //             date: theDate.format('DD/MM/YYYY'),
-                //             area: log.area[0].name,
-                //             crop: this.idToCropMap.get(log.data.crop_tid),
-                //             yield: log.quantity[0].value,
-                //             units: log.quantity[0].unit.name,
-                //         }}
-                //         tableRows.push(tableRow)
-                //     }
-                //     return tableRows
-                // },
+                
 
                 harvestReportRows() {
                     let tableRows = []
@@ -218,13 +159,15 @@
                     for(let log of this.dateRange) {
                         if(this.idToCropMap.get(log.data.crop_tid) == this.crop){
                         let theDate = dayjs.unix(log.timestamp);
+                        let date = theDate.format('DD/MM/YYYY');
+                        let area = log.area[0].name;
+                        let crop = this.idToCropMap.get(log.data.crop_tid);
+                        let yield = log.quantity[0].value;
+                        let units = log.quantity[0].unit.name;
                         let tableRow = {
                             id: log.id,
-                            date: theDate.format('DD/MM/YYYY'),
-                            area: log.area[0].name,
-                            crop: this.idToCropMap.get(log.data.crop_tid),
-                            yield: log.quantity[0].value,
-                            units: log.quantity[0].unit.name,
+                            data: [date, area, crop, yield, units],
+                            
                         }
                         tableRows.push(tableRow)
                     }}
