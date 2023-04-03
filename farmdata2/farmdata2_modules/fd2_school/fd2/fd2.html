@@ -158,18 +158,18 @@
                     
                     for(let log of this.dateRange) {
                         if(this.idToCropMap.get(log.data.crop_tid) == this.crop){
-                        let theDate = dayjs.unix(log.timestamp);
-                        let date = theDate.format('DD/MM/YYYY');
-                        let area = log.area[0].name;
-                        let crop = this.idToCropMap.get(log.data.crop_tid);
-                        let yield = log.quantity[0].value;
-                        let units = log.quantity[0].unit.name;
-                        let tableRow = {
-                            id: log.id,
-                            data: [date, area, crop, yield, units],
-                            
-                        }
-                        tableRows.push(tableRow)
+                            let theDate = dayjs.unix(log.timestamp);
+                            let date = theDate.format('DD/MM/YYYY');
+                            let area = log.area[0].name;
+                            let crop = this.idToCropMap.get(log.data.crop_tid);
+                            let yield = log.quantity[0].value;
+                            let units = log.quantity[0].unit.name;
+                            let tableRow = {
+                                id: log.id,
+                                data: [date, area, crop, yield, units],
+                                
+                            }
+                            tableRows.push(tableRow)
                     }}
                     return tableRows
                 },
