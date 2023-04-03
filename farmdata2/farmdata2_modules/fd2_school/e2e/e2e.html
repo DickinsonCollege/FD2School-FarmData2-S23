@@ -33,9 +33,9 @@
     <p v-if="title === 'true'">Details:</p>
     <body>   
         <ul v-if="title === 'true'">
-            <li><strong>Farm</strong>:{{ farm }}</li>
-            <li><strong>User</strong>:{{ user }}</li>
-            <li><strong>Language</strong>:{{ language }}</li><br>
+            <li data-cy="farm"><strong>Farm</strong>:{{ farm }}</li>
+            <li data-cy="user"><strong>User</strong>:{{ user }}</li>
+            <li><strong>Language</strong><span data-cy="language">{{ language }}</span></li><br>
             <li><strong>Start</strong>:{{ Sdate }}</li>
             <li><strong>End</strong>:{{ Edate }}</li>
             <li><strong>Crop</strong>:{{ crop }}</li>
