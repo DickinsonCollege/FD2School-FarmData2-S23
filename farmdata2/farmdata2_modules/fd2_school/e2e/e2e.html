@@ -25,14 +25,14 @@
                 <option v-for="area in areasName">{{ area }}</option>
             </select>
             <br><br>
-            <button type="button" v-on:click='generateReport'>Generate Report</button>
+            <button type="button" v-on:click='generateReport' data-cy="generate-report">Generate Report</button>
             <br><br>
     </body>
     <hr>
-      <h2>{{ Title ? Title : 'Mock Harvest Report'}}</h2>
-    <p>Details:</p>
+      <h2 v-if="title === 'true'" data-cy="title">{{ Title ? Title : 'Mock Harvest Report'}}</h2>
+    <p v-if="title === 'true'">Details:</p>
     <body>   
-        <ul>
+        <ul v-if="title === 'true'">
             <li><strong>Farm</strong>:{{ farm }}</li>
             <li><strong>User</strong>:{{ user }}</li>
             <li><strong>Language</strong>:{{ language }}</li><br>
@@ -82,7 +82,7 @@
               })
             },
             data:{
-              Title:"My Sample Harvest Report",
+              Title:"My Harvest Report",
               Sdate:"2020-05-05",
               Edate:"2020-05-15",
               crop:'Kale',
@@ -96,6 +96,7 @@
               idToCropMap: new Map(),
               idToAreaMap: new Map(),
               dateString:'',
+              title:"",
               crops: [
                 {text: "Broccoli", value: "Broccoli"},
                 {text: "Kale", value: "Kale"},
@@ -142,6 +143,7 @@
                   this.farm = response.data.name;
                   this.user = response.data.user.name;
                   this.language = response.data.languages.en.name;
+                  this.title = "true"
 
                   let startTimestamp = dayjs(this.Sdate).unix();
                   let endTimestamp = dayjs(this.Edate).unix();
