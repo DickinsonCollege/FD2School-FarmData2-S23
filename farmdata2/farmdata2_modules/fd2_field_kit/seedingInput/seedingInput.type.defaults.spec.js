@@ -5,7 +5,7 @@ describe("Test the harvest report default values", () => {
     })
       
     it("Tests whether Tray element is enabled", () => {
-    
+        cy.get("[data-cy='tray-seedings']").should('be.enabled')
     })
 
     
