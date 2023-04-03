@@ -125,6 +125,30 @@
                 }
                 return tableRows
             },
+            reportRows() {
+                let tableRows = []
+                for(let log of this.harvestLogs) {
+                    let cropName = this.idToCropMap.get(log.data.crop_tid);
+
+                    if (this.crop === "All" || cropName === this.crop) {
+                        let date = dayjs.unix(log.timestamp);
+                        let dateStr = date.format("MM/DD/YYYY");
+
+                        let tableRow = {
+                            id: log.id,
+                            data: [
+                                dateStr,
+                                log.area[0].name,
+                                cropName,
+                                log.quantity[0].value,
+                                log.quantity[0].unit.name
+                            ]
+                        }
+                        tableRows.push(tableRow)
+                    }
+                }
+                return tableRows
+            },
         },
         methods: {
             cropChanged: function(newCrop) {
