@@ -10,10 +10,10 @@
               <input type="text" id="title" name="title" v-model="Title" />
             <br><br>
             <label for="start">Start:</label>
-            <input type="date" id="start" name="start date" v-model="Sdate" 
+            <input type="date" data-cy="start-date" id="start" name="start date" v-model="Sdate" 
             min="2014-01-01" v-bind:max="Edate"/>
             <label for="end">End:</label>
-            <input type="date" id="end" name="end date" v-model="Edate"
+            <input type="date" data-cy="end-date" id="end" name="end date" v-model="Edate"
             v-bind:min="Sdate" max="2022-01-01"/>
             <br><br>
             <label for=”crop”>Crop: </label>
