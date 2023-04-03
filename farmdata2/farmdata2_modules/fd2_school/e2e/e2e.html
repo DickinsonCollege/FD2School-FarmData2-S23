@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang='en-US'>>
+    <head>
+      <h1>Harvest Report</h1>
+    </head>
+    <body>
+      <div id="vue">
+        <p>This page is a <i>mockup</i> of a simplified harvest report.</p> 
+            <label for=”title”>Title: </label>
+              <input type="text" id="title" name="title" v-model="Title" />
+            <br><br>
+            <label for="start">Start:</label>
+            <input type="date" id="start" name="start date" v-model="Sdate" 
+            min="2014-01-01" v-bind:max="Edate"/>
+            <label for="end">End:</label>
+            <input type="date" id="end" name="end date" v-model="Edate"
+            v-bind:min="Sdate" max="2022-01-01"/>
+            <br><br>
+            <label for=”crop”>Crop: </label>
+            <select id="crop" name="crop" v-model="crop">  
+              <option v-for="crop in cropsName">{{ crop }}</option>       
+            </select> 
+            <label for=”field”>Area: </label>
+            <select id="field" name="field" v-model="area">
+                <option v-for="area in areasName">{{ area }}</option>
+            </select>
+            <br><br>
+            <button type="button" v-on:click='generateReport'>Generate Report</button>
+            <br><br>
+    </body>
+    <hr>
+      <h2>{{ Title ? Title : 'Mock Harvest Report'}}</h2>
+    <p>Details:</p>
+    <body>   
+        <ul>
+            <li><strong>Farm</strong>:{{ farm }}</li>
+            <li><strong>User</strong>:{{ user }}</li>
+            <li><strong>Language</strong>:{{ language }}</li><br>
+            <li><strong>Start</strong>:{{ Sdate }}</li>
+            <li><strong>End</strong>:{{ Edate }}</li>
+            <li><strong>Crop</strong>:{{ crop }}</li>
+        </ul>
+        <br><br>
+        <table border="1">
+          <p v-if="harvestReportRows.length == 0">No Result Match!</p>
+          <tr v-if="harvestReportRows.length!=0">
+            <td><strong>Row</strong></td>
+            <td><strong>Date</strong></td>
+            <td><strong>Area</strong></td>
+            <td><strong>Crop</strong></td>
+            <td><strong>Yield</strong></td>
+            <td><strong>Units</strong></td>
+          </tr>
+          <tr v-for="(l,index) in harvestReportRows">
+            <td>{{ index+1 }}</td>
+            <td>{{ l.date }}</td>
+            <td>{{ l.area }}</td>
+            <td>{{ l.crop }}</td>
+            <td>{{ l.yield }}</td>
+            <td>{{ l.units }}</td>
+          </tr>
+        </table> 
+      </div>
+        <script src="https://unpkg.com/vue@2"></script>
+        <script>
+          var Vue1 = new Vue({
+            el: "#vue",
+            created() {
+              getIDToCropMap()
+              .then((theMap) => {
+                this.idToCropMap = theMap;
+              })
+              .catch((err) => {
+                console.log("getIDToCropMap caught an error.")
+              })
+              getIDToAreaMap()
+              .then((theMap) => {
+                this.idToAreaMap = theMap;
+              })
+              .catch((err) => {
+                console.log("getIDToAreaMap caught an error.")
+              })
+            },
+            data:{
+              Title:"My Sample Harvest Report",
+              Sdate:"2020-05-05",
+              Edate:"2020-05-15",
+              crop:'Kale',
+              area:'All',
+              log:'',
+              state:'default',
+              farm: '',
+              user: '',
+              language: '',
+              farmInfo: '',
+              idToCropMap: new Map(),
+              idToAreaMap: new Map(),
+              dateString:'',
+              crops: [
+                {text: "Broccoli", value: "Broccoli"},
+                {text: "Kale", value: "Kale"},
+                {text: "Peas", value: "Peas"},
+              ],
+              areas: [
+                {text: "All", value: "All"},
+                {text: "Chuau-1", value: "Chuau-1"},
+                {text: "SQ7", value: "SQ7"},
+              ],
+              harvestLog: [
+    
+              ],
+            },
+            computed: {
+              cropsName() {
+                return Array.from(this.idToCropMap.values());
+              },
+              areasName() {
+                return Array.from(this.idToAreaMap.values());
+              },
+              harvestReportRows() {
+                let tableRows = []
+                for(let log of this.harvestLog) {
+                  if(this.idToCropMap.get(log.data.crop_tid) == this.crop)
+                  {
+                  let tableRow = {
+                    date: dayjs.unix(log.timestamp).format('YYYY-MM-DD'),
+                    area: log.area[0].name,
+                    crop: this.idToCropMap.get(log.data.crop_tid),
+                    yield: log.quantity[0].value,
+                    units: log.quantity[0].unit.name,
+                    }
+                    tableRows.push(tableRow)
+                }
+              }
+              return tableRows
+              },
+            },
+            methods: {
+              generateReport: function() {
+                axios.get('/farm.json')
+                  .then((response) => {
+                  this.farm = response.data.name;
+                  this.user = response.data.user.name;
+                  this.language = response.data.languages.en.name;
+
+                  let startTimestamp = dayjs(this.Sdate).unix();
+                  let endTimestamp = dayjs(this.Edate).unix();
+
+                  let dateString="/log.json?type=farm_harvest&timestamp[ge]="+startTimestamp+"&timestamp[le]="+endTimestamp;
+                  
+                  this.harvestLog = [];
+                  getAllPages(dateString, this.harvestLog)
+                    .then(() => {
+
+                    })
+                    .catch((err) => {
+                      console.log("Error in getAllPages.")
+                    })
+                })
+                  .catch((error) => {
+                  console.log("Error occurred.")
+                  console.log(error)
+                })
+                },
+            }
+          });
+          Vue.config.devtools = true;
+        </script>
+    </body>
+
+</html>
