@@ -14,7 +14,7 @@
         min="2020-05-05":min="startdate" max="2022-01-01">
     <br><br>
     <label for="crop">Choose a crop:</label>
-    <select v-model="cropselect" name="crop" id="crop">
+    <select data-cy="crop-select" v-model="cropselect" name="crop" id="crop">
         <option v-for="crop in getCropNames">{{ crop }}</option>
     </select>
     <br>
@@ -24,12 +24,12 @@
     </select>
 
     <br><br>
-    <button type="btn btn-primary" value="Generate Report" id="Generate Report Button" @click="saveReport">Generate Report</button>
+    <button data-cy="generate-report-button" type="btn btn-primary" value="Generate Report" id="Generate Report Button" @click="saveReport">Generate Report</button>
     <hr></hr>
-    <h1>{{ header == null ? "Mock Harvest Report" : header }}</h1>
     <br>
     <div>
-    <p>Details:</p>
+        <h1 v-if="showReportHeader === true" data-cy="report-header">{{ header }}</h1>
+        <p>Details:</p>
         <ul>
             <li><b>Farm</b>:{{ farm }}</li>
             <li><b>User</b>: {{ user }}</li>
@@ -83,6 +83,7 @@
             startdate:"2020-05-05",
             enddate:"2020-05-15",
             cropselect: "KALE",
+            showReportHeader: false,
             areas: [ "All", "Chaua-1", "SQ7",],
             harvestlogs: [],
             timestampStart: "",
@@ -116,6 +117,7 @@
             },
             methods: {
                     saveReport: function() {
+                        this.showReportHeader = true
                         this.timestampStart = dayjs(this.startdate).unix()
                         this.timestampEnd = dayjs(this.enddate).unix()
                         let query = "/log.json?type=farm_harvest&timestamp[ge]="+this.timestampStart+"&timestamp[le]="+this.timestampEnd
