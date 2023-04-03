@@ -25,9 +25,9 @@
 	<h1 data-cy="report-header">{{rptTitle=='' ? 'Mock Harvest Report':rptTitle}}</h1>
 	<p>Details:</p>
 	<ul>
-		<li><b>Farm:</b>{{farm}}</li>
-		<li><b>User:</b>{{user}}</li>
-		<li><b>Language:</b>{{language}}</li><br>
+		<li data-cy="farm"><b>Farm:</b>{{farm}}</li>
+		<span data-cy="user"><b>User:</b>{{user}}</span>
+		<span data-cy="language"><b>Language:</b>{{language}}</span><br>
 		<li><b>Start:</b>{{rptStart}}</li>
 		<li><b>End:</b>{{rptEnd}}</li>
 		<li><b>Crop:</b>{{rptCrop}}</li>
@@ -74,9 +74,9 @@
 			rptCrop: 'Broccoli',
 			areas: ['All', 'Chuau-1','SQ7',],
 			harvestLogs: [],
-			farm: '',
-			user: '',
-			language: '',
+			farm: 'Sample Farm',
+			user: 'manager1',
+			language: 'English',
 			check: false,
 		},
 		computed: {

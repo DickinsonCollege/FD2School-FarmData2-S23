@@ -8,4 +8,10 @@ describe("Test the generate button in the harvest report", () => {
     cy.get("[data-cy=generate-report-button]").click()
     cy.get("[data-cy=report-header]").should("be.visible")
   })
+  it("Check the report details", () =>{
+    cy.get("[data-cy=generate-report-button]").click()
+    cy.get("[data-cy=farm]").should("have.text", "Farm: Sample Farm")
+    cy.get("[data-cy=user]").should("have.text", "User: manager1")
+    cy.get("[data-cy=language]").should("have.text", "Language: English")
+  })
 })
