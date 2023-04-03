@@ -17,11 +17,11 @@
             v-bind:min="Sdate" max="2022-01-01"/>
             <br><br>
             <label for=”crop”>Crop: </label>
-            <select id="crop" name="crop" v-model="crop">  
+            <select data-cy="crops" id="crop" name="crop" v-model="crop">  
               <option v-for="crop in cropsName">{{ crop }}</option>       
             </select> 
             <label for=”field”>Area: </label>
-            <select id="field" name="field" v-model="area">
+            <select data-cy="areas" id="field" name="field" v-model="area">
                 <option v-for="area in areasName">{{ area }}</option>
             </select>
             <br><br>
