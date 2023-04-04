@@ -69,7 +69,7 @@
 		 'page callback' => 'fd2_school_view',
 		 'page arguments' => array('html'),
 		 'access arguments' => array('view fd2 school'),
-		 'weight' => 0,
+		 'weight' => -50,
 		 );
 		
 		 // Add a sub-tab named Vue1 with content in ./xyz/xyz.html.
@@ -79,7 +79,7 @@
 		 'page callback' => 'fd2_school_view',
 		 'page arguments' => array('vue1'),
 		 'access arguments' => array('view fd2 school'),
-		 'weight' => 50,
+		 'weight' => 0,
 		 );
 		
 		 // Add a sub-tab named Vue2 with content in ./xyz/xyz.html.
@@ -90,7 +90,7 @@
 		 'page arguments' => array('vue2'),
 		 'access arguments' => array('view fd2 school'),
 		
- 'weight' => 100,
+ 'weight' => 50,
 		
  );
 		
@@ -101,7 +101,7 @@
  'page callback' => 'fd2_school_view',
  'page arguments' => array('api1'),
  'access arguments' => array('view fd2 school'),
- 'weight' => 150,
+ 'weight' => 100,
  );
 // Add a sub-tab named API2 with content in ./xyz/xyz.html.
  $items['farm/fd2-school/api1'] = array(	
@@ -110,15 +110,25 @@
  'page callback' => 'fd2_school_view',
  'page arguments' => array('api2'),
  'access arguments' => array('view fd2 school'),
- 'weight' => 200,
+ 'weight' => 150,
  );
 
  // Add a sub-tab named e2e with content in ./xyz/xyz.html.
  $items['farm/fd2-school/e2e'] = array(	
- 'title' => 'e2e',	
+ 'title' => 'E2E',	
  'type' => MENU_LOCAL_TASK,
  'page callback' => 'fd2_school_view',
  'page arguments' => array('e2e'),
+ 'access arguments' => array('view fd2 school'),
+ 'weight' => 200,
+ );
+ 
+ // Add a sub-tab named fd2 with content in ./xyz/xyz.html.
+ $items['farm/fd2-school/fd2'] = array(	
+ 'title' => 'FD2',	
+ 'type' => MENU_LOCAL_TASK,
+ 'page callback' => 'fd2_school_view',
+ 'page arguments' => array('fd2'),
  'access arguments' => array('view fd2 school'),
  'weight' => 250,
  );
