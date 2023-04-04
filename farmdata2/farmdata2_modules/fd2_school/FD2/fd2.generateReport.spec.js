@@ -1,7 +1,7 @@
 describe("Test the generate button in the harvest report", () => {
   beforeEach(() => {
     cy.login("manager1","farmdata2")
-    cy.visit("/farm/fd2-school/e2e")
+    cy.visit("/farm/fd2-school/fd2")
   })
   it("Check the generated report", () =>{
     cy.get("[data-cy=page-header]").should("not.exist")
