@@ -87,6 +87,9 @@
                     }
                 }
             },
+            deleteHarvestLog: function(row) {
+                this.harvestList.splice(row,1)
+            }
         }
     });
     Vue.config.devtools = true;
