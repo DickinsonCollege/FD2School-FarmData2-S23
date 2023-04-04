@@ -16,6 +16,12 @@ describe('Test the labor input section', () => {
             .should('have.prop', 'disabled', false)
     })
 
+    it("Checks Time worked input test", () => {
+        cy.get("[data-cy='minute-input'] > [data-cy=text-input]")
+            .should('have.value', '')
+        cy.get("[data-cy='minute-input'] > [data-cy=text-input]")
+            .should('have.prop', 'disabled', false)
+    })
 
    
 })
