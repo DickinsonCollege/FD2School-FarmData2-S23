@@ -18,5 +18,15 @@ describe("Test the harvest report default values", () => {
         cy.get("[data-cy='message-to-prompt-selection']").should('be.visible')
     })
 
-    
+    it("Tests that the form elements for Tray or Direct are not visible until clicked", () => {
+        //check form elements in tray seeding - should not be visible until tray radio button clicked
+        cy.get("[data-cy='tray-area-selection']").should('not.be.visible')
+        cy.get("[data-cy='num-cell-input']").should('not.be.visible')
+        cy.get("[data-cy='num-tray-input']").should('not.be.visible')
+        cy.get("[data-cy='num-seed-input']").should('not.be.visible')
+        ///check form elements in direct seeding - should not be visible until direct radio button clicked
+        cy.get("[data-cy='direct-area-selection']").should('not.be.visible')
+        cy.get("[data-cy='num-rowbed-input']").should('not.be.visible')
+        cy.get("[data-cy='num-feet-input']").should('not.be.visible')
+    })
 })
