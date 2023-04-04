@@ -14,5 +14,9 @@ describe("Test the harvest report default values", () => {
         cy.get("[data-cy='direct-seedings']").should('not.be.selected')
     })
 
+    it("Tests that the message indicating that the Tray or Direct element must be selected is visible", () => {
+        cy.get("[data-cy='message-to-prompt-selection']").should('be.visible')
+    })
+
     
 })
