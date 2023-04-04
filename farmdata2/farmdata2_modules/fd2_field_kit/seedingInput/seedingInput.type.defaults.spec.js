@@ -27,6 +27,7 @@ describe("Test the harvest report default values", () => {
         ///check form elements in direct seeding - should not be visible until direct radio button clicked
         cy.get("[data-cy='direct-area-selection']").should('not.be.visible')
         cy.get("[data-cy='num-rowbed-input']").should('not.be.visible')
+        cy.get("[data-cy='unit-feet']").should('not.be.visible')
         cy.get("[data-cy='num-feet-input']").should('not.be.visible')
     })
 })
