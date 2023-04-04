@@ -1,4 +1,14 @@
-describe("Test the harvest report default values", () => {
+
+/**
+ * The seeding type selection section of the Seeding Input Log allows the user to select 
+ * the appropriate type of seeding, either tray seeding or direct seeding, for their log. 
+ * This spec tests that both of these options are enabled, that neither of these options 
+ * are selected by default, that a message is visible directing the user to select either 
+ * the Tray or Direct type, and that the form elements for Tray and Direct are not visible
+ * unless their respective option has been selected.
+ */
+
+describe("Test the seeding input type default values in the Seeding Input Log", () => {
     beforeEach(() => {
         cy.login("manager1", "farmdata2")
         cy.visit("/farm/fd2-field-kit/seedingInput")
