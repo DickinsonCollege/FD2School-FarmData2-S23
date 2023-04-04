@@ -9,4 +9,13 @@ describe('Test the labor input section', () => {
         cy.get("[data-cy='labor-header']")
             .should("have.text", "Labor")
     })
+     it("Checks Worker input test", () => {
+        cy.get("[data-cy='num-worker-input'] > [data-cy=text-input]")
+            .should('have.value', '')
+        cy.get("[data-cy='num-worker-input'] > [data-cy=text-input]")
+            .should('have.prop', 'disabled', false)
+    })
+
+
+   
 })
