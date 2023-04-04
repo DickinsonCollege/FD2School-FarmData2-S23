@@ -20,6 +20,16 @@ describe("Test Data section of Seeding Input form", () =>{
         cy.get("[data-cy=data-header").should('have.text',"Data")
     })
 
+    //task #2
+    it("Checks the Date input element selected", () => {
+        cy.get("[data-cy=date-selection").should('not.be.disabled')
+    })
+
+    //task #3
+    it("Checks if selected date is current date", () => {
+        cy.get('[data-cy=date-selection] input[type=date]').should('be.visible').should('have.value', dayjs().format('YYYY-MM-DD'));
+    })
+
 
     //task #6
     it("Checks the crop dropdown is correct", () => {
