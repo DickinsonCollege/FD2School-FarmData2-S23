@@ -65,14 +65,14 @@
             <th>Units</th>
         </tr>
 
-        <tr v-for="(c,index) in result">
+        <tr v-for="(c,index) in harvestReportRows">
 
             <td>{{ index + 1 }}</td>
-            <td>{{ result[index].timestamp }}</td>
-            <td>{{ result[index].area[0].name }}</td>
-            <td>{{ idToCropMap.get(result[index].data.crop_tid) }}</td>
-            <td>{{ result[index].quantity[0].value }}</td>
-            <td>{{ result[index].quantity[0].unit.name }}</td>
+            <td>{{ c.date }}</td>
+            <td>{{ c.area }}</td>
+            <td>{{ c.crop }}</td>
+            <td>{{ c.yield }}</td>
+            <td>{{ c.unit }}</td>
 
         </tr>
     </table>
@@ -123,8 +123,19 @@
             for(let log of this.result) {
                 let tableRow = {
                     date: log.timestamp,
+                    area: log.area[0].name ,
+                    crop: this.idToCropMap.get(log.data.crop_tid),
+                    yield: log.quantity[0].value,
+                    unit: log.quantity[0].unit.name,
                 }
-                tableRows.push(tableRow)
+                console.log("crop:", this.idToCropMap.get(log.data.crop_tid));
+                console.log("cropSelect:", this.cropSelect);
+                if (this.idToCropMap.get(log.data.crop_tid) == this.cropSelect) {
+                    tableRows.push(tableRow)
+                }
+                else if (this.cropSelect == "All"){
+                    tableRows.push(tableRow)
+                }
             }
             return tableRows
             },
@@ -162,7 +173,8 @@
                     console.log("Error Occurred")
                     console.log(error)
                 })
-                this.harvestLog.push({date:"2018-05-01", area:"Orion-3", crop:"Kale", yield:"12", units:"Bunches"});
+                
+                //this.harvestLog.push({date:"2018-05-01", area:"Orion-3", crop:"Kale", yield:"12", units:"Bunches"});
 
                  // Assumes that result is an existing array
                 getAllPages(request, this.result)
