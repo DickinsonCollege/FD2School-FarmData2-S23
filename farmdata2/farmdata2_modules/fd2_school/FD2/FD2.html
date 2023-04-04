@@ -20,10 +20,13 @@
       
     <br>
     <br>
-    <label for="Crop">Crop:</label>
-    <select data-cy="crop-select" id="Crop" v-model="cropSelect" name="Crop">
-        <option v-for="item in cropNames">{{ item }}</option>
-    </select>
+    <dropdown-with-all data-cy="crop-select" 
+        includes-all 
+        :selected-val='cropSelect'
+        :dropdown-list='cropNames'
+        @selection-changed="cropChange">
+    Crop: 
+    </dropdown-with-all>
 
     <label for="Field">Field:</label>
     <select id="Field" name="Field">
@@ -91,12 +94,16 @@
             // Execution continues here immediately after the request is made.
             // Note that the Map will not be available until the then() executes.
         },
+        components: {
+            // Register the components used and define the tag name to be used.
+            'dropdown-with-all': DropdownWithAllComponent,
+        },
         
         data: {
             header: 'My Sample Harvest Report',
             startDate: '2020-05-05',
             endDate: '2020-05-15',
-            cropSelect: 'Kale',
+            cropSelect: "All",
             //crops: ["Broccoli", "Kale", "Peas"] ,
             areas: ["All", "Chuau-1", "SQ7"],
             harvestLog: [],
@@ -127,6 +134,9 @@
             },
         },
         methods: {
+            cropChange(newCrop) {
+                this.cropSelect = newCrop
+            },
             addLog: function(){
 
                 this.showReport = true
