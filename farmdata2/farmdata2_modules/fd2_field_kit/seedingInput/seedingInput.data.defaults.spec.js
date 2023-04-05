@@ -33,7 +33,13 @@ describe("Test Data section of Seeding Input form", () =>{
     // task #4
     it("Checks if crop-dropdown is enabled", ()=>{
         cy.get("[data-cy=crop-selection] > [data-cy=dropdown-input]").should("not.be.disabled")
+        cy.get("[data-cy=crop-selection] > [data-cy=dropdown-input]").should("have.text", "")
     })
+
+    // task #5
+    it("Checks if any crop-dropdown option has been selected ", ()=>{
+        cy.get("[data-cy=crop-selection] > [data-cy=dropdown-input]").should("have.text", "")
+    })    
 
     //task #6
     it("Checks the crop dropdown is correct", () => {
