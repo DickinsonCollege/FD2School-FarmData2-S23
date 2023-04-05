@@ -1,4 +1,4 @@
-describe("Test if the window appears if Direct is selected", () => {
+describe("Tests for seeding input", () => {
 
   beforeEach(() => {
     cy.login('manager1', 'farmdata2')
@@ -16,5 +16,6 @@ describe("Test if the window appears if Direct is selected", () => {
     cy.get('[data-cy=unit-feet]').should('be.visible');
     cy.get('[data-cy=num-feet-input]').should('be.visible');
   });
+
 
 })
