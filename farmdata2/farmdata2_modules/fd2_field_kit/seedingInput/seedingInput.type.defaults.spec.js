@@ -17,7 +17,7 @@ describe("Tests for seeding input", () => {
     cy.get('[data-cy=num-feet-input]').should('be.visible');
   });
 
-
+  //issue 159 sub-task 6
   it('should display dropdown for units that is enabled', () => {
     cy.get('[data-cy=direct-seedings]')
       .click()
@@ -35,4 +35,6 @@ describe("Tests for seeding input", () => {
           .should('have.length', 2)
       })
   })
+
+  
 })
