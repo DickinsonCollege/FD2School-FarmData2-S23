@@ -19,12 +19,9 @@ describe("Test the seeding input type default values in the Seeding Input Log", 
         cy.get("[data-cy='direct-seedings']").should('be.enabled')
     })
 
-    it("Tests that neither the Tray nor the Direct element is selected", () => {
+    it("Tests that neither the Tray nor the Direct element is selected, and a message to prompt the selection of either element is visible", () => {
         cy.get("[data-cy='tray-seedings']").should('not.be.selected')
         cy.get("[data-cy='direct-seedings']").should('not.be.selected')
-    })
-
-    it("Tests that the message indicating that the Tray or Direct element must be selected is visible", () => {
         cy.get("[data-cy='message-to-prompt-selection']").should('be.visible')
     })
 
