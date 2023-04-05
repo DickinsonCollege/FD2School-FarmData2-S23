@@ -17,9 +17,12 @@
             v-bind:min="Sdate" max="2022-01-01"/>
             <br><br>
             <label for=”crop”>Crop: </label>
-            <select data-cy="crops" id="crop" name="crop" v-model="crop">  
-              <option v-for="crop in cropsName">{{ crop }}</option>       
-            </select> 
+            <dropdown-with-all data-cy="crops" 
+              includes-all  
+              :selected-val='crop' 
+              @selection-changed="cropChange" 
+              :dropdown-list='cropsName'>  
+            </dropdown-with-all> 
             <label for=”field”>Area: </label>
             <select data-cy="areas" id="field" name="field" v-model="area">
                 <option v-for="area in areasName">{{ area }}</option>
@@ -65,6 +68,11 @@
         <script>
           var Vue1 = new Vue({
             el: "#vue",
+
+            components: {
+                'dropdown-with-all': DropdownWithAllComponent,
+            },
+
             created() {
               getIDToCropMap()
               .then((theMap) => {
@@ -85,7 +93,7 @@
               Title:"My Harvest Report",
               Sdate:"2020-05-05",
               Edate:"2020-05-15",
-              crop:'Kale',
+              crop:'All',
               area:'All',
               log:'',
               state:'default',
@@ -137,6 +145,10 @@
               },
             },
             methods: {
+              cropChange(newCrop) {
+                this.crop = newCrop
+              },
+
               generateReport: function() {
                 axios.get('/farm.json')
                   .then((response) => {
