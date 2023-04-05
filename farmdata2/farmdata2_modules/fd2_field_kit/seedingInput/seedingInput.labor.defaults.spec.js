@@ -24,7 +24,7 @@ describe('Test the labor input section', () => {
             .should('have.prop', 'disabled', false)
     })
 
-    it("Checks correct dropdown for selected time unit", () => {
+    it("Checks unit dropdown selection activates correct selected time unit", () => {
         //check minute-input
         cy.get("[data-cy='time-unit'] > [data-cy='dropdown-input']")
             .select("minutes")
