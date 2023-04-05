@@ -18,4 +18,21 @@ describe("Tests for seeding input", () => {
   });
 
 
+  it('should display dropdown for units that is enabled', () => {
+    cy.get('[data-cy=direct-seedings]')
+      .click()
+      .then(() => {
+        cy.get('[data-cy=unit-feet] > [data-cy=dropdown-input]')
+          .children() 
+          .first()
+          .should('have.value', 'Bed Feet')
+        cy.get('[data-cy=unit-feet] > [data-cy=dropdown-input]')
+          .children() 
+          .last()  
+          .should('have.value', 'Row Feet')
+        cy.get('[data-cy=unit-feet] > [data-cy=dropdown-input]')
+          .children() 
+          .should('have.length', 2)
+      })
+  })
 })
