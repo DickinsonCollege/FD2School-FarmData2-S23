@@ -9,7 +9,8 @@ describe('Test the labor input section', () => {
         cy.get("[data-cy='labor-header']")
             .should("have.text", "Labor")
     })
-     it("Checks Worker input test", () => {
+    
+    it("Checks Worker input test", () => {
         cy.get("[data-cy='num-worker-input'] > [data-cy=text-input]")
             .should('have.value', '')
         cy.get("[data-cy='num-worker-input'] > [data-cy=text-input]")
@@ -48,6 +49,4 @@ describe('Test the labor input section', () => {
         cy.get("[data-cy='time-unit'] > [data-cy='dropdown-input']")
             .find('option:selected').should("have.text", "minutes")
     })
-
-   
 })
