@@ -26,14 +26,13 @@
     <br><br>
     <button data-cy="generate-report-button" type="btn btn-primary" value="Generate Report" id="Generate Report Button" @click="saveReport">Generate Report</button>
     <hr></hr>
-    <br>
     <div>
         <h1 v-if="showReportHeader === true" data-cy="report-header">{{ header }}</h1>
         <p>Details:</p>
         <ul>
-            <li><b>Farm</b>:{{ farm }}</li>
-            <li><b>User</b>: {{ user }}</li>
-            <li><b>Language</b>: {{ language }}</li>
+            <li data-cy="farm-name"><b>Farm</b>:{{ farm }}</li>
+            <li data-cy="user-name"><b>User</b>: {{ user }}</li>
+            <li><b>Language</b>:<span data-cy="language">{{ language }}</span></li>
         </ul>
         <ul>
             <li><b>Start</b>:{{ startdate }}</li>
@@ -79,7 +78,7 @@
             })
         },
         data: {
-            header: null,
+            header:"Sample Report",
             startdate:"2020-05-05",
             enddate:"2020-05-15",
             cropselect: "KALE",
