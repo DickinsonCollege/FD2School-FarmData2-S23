@@ -18,10 +18,15 @@
         </div>
         <br>
         <div>
-            <label for="crop">Crop: </label>
-            <select name="crop" id="crop" v-model="reportCrop" data-cy="crop-list">
-                <option v-for="crop in cropNames" :value="crop">{{crop}}</option>
-            </select>
+            <dropdown-with-all data-cy="crop-list" 
+            includes-all 
+            :selected-val='reportCrop'
+            :dropdown-list='cropNames'
+            @selection-changed="changeCrop"
+            :disabled='false'
+            >
+            Crop: 
+        </dropdown-with-all>
 
             <label for="area">Area: </label>
             <select name="area" id="crop">
@@ -85,7 +90,7 @@
             reportTitle: "",
             reportStartDate: "2020-05-05",
             reportEndDate: "2020-05-15",
-            reportCrop: "",
+            reportCrop: "All",
             crops: [
                 "Broccoli",
                 "Kale",
@@ -99,6 +104,9 @@
             harvestLogs: [],
             idToCropMap: new Map(),
             idToAreaMap: new Map(),
+        },
+        components: {
+            'dropdown-with-all': DropdownWithAllComponent,
         },
         computed: {
             cropNames() {
@@ -141,6 +149,9 @@
             }
         },
         methods: {
+            changeCrop: function(newCrop) {
+                this.reportCrop = newCrop
+            },
             logHarvest: function() {
                 if (this.reportState !== 'default') {
                     if (this.harvestLogs.length === 0) {
