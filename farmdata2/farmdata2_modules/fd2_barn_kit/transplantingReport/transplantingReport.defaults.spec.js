@@ -3,9 +3,13 @@ describe("Testing Transplanting Report in BarnKit", () => {
         cy.login('manager1', 'farmdata2')
         cy.visit('/farm/fd2-barn-kit/transplantingReport')
     })
-    it("Check page headers" ,() => {
+    it("Check page header and section label" ,() => {
         cy.get("[data-cy = report-header]").should("have.text", "Transplanting Report")
         cy.get("[data-cy = section-header]").should("have.text", "Set Dates")
+    })
+    it("Check generate button in table", () => {
+        cy.get("[data-cy = generate-rpt-btn]").should("have.text", "Generate Report")
+        cy.get("[data-cy = generate-rpt-btn]").should("be.enabled")
     })
 
 })
