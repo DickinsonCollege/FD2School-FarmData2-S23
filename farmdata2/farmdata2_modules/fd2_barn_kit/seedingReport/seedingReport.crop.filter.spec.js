@@ -1,3 +1,11 @@
+/**
+ * The crop dropdown in the Seeding Report allows the user to filter the crops that appear 
+ * in the generated table. This spec tests that when the table is generated that if the 
+ * option "All" is selected that multiple crops will be allowed to appear in the table 
+ * and that when one of the crop options is selected then only that crop will appear in 
+ * the table. This spec will also test that only the crops that appear in the selected date 
+ * range, and "All", will be options in the crop dropdown.
+ */
 describe("Test that the crop filter in the Seeding Report works as intended", () => {
     beforeEach(() => {
         cy.login("manager1", "farmdata2")
@@ -12,7 +20,7 @@ describe("Test that the crop filter in the Seeding Report works as intended", ()
 
         cy.get('[data-cy=crop-dropdown] > [data-cy=dropdown-input]')
                 .children()
-                .should("have.length", 5)
+                .should("have.length", 5)//There should be five options: the four crops in this date range and the "All" option.
 
         cy.get('[data-cy=crop-dropdown] > [data-cy=dropdown-input]')
                 .children()
