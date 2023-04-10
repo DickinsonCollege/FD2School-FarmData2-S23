@@ -24,16 +24,18 @@
   />
   <br />
   <label for="crop">Crop:</label>
-  <select id="crop" v-model="crop">
+  <select id="crop" v-model="rpCrops">
     <option value="kale">Kale</option>
     <option value="broccoli">Broccoli</option>
     <option value="peas">Peas</option>
+    <option v-for="crop in crops" :value="crop">{{crop}}</option>
   </select>
   <label for="area">Area:</label>
   <select id="area">
     <option value="all">All</option>
     <option value="chuau1">Chuau-1</option>
     <option value="sq7">SQ7</option>
+    <option v-for="area in areas" :value="area"></option>
   </select>
   <br />
   <br />
@@ -87,7 +89,18 @@
       header: "My Sample Harvest Report",
       startDate:"",
       endDate: "",
-      crop: ""
+      rpCrops: "",
+      crops: [
+                "Broccoli",
+                "Kale",
+                "Peas",
+                "Bananas"
+            ],
+      areas: [
+                "All",
+                "Chuau-1",
+                "SQ7",
+            ]
     },
   });
 </script>
