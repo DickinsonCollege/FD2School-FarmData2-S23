@@ -18,10 +18,10 @@ describe("Test Data section of Seeding Input form", () =>{
     })
 
     it("Checks the crop-dropdown defaults", ()=>{
+        cy.waitForPage()
+        
         cy.get("[data-cy=crop-selection] > [data-cy=dropdown-input]").should("not.be.disabled")
-        
-        cy.get("[data-cy=crop-selection] > [data-cy=dropdown-input]").should("have.text", "")
-        
+        cy.get("[data-cy=crop-selection] > [data-cy=dropdown-input]").should('have.value', null)
         cy.get("[data-cy=crop-selection] > [data-cy=dropdown-input] > [data-cy=option0").should("have.text","ARUGULA")
         cy.get("[data-cy=crop-selection] > [data-cy=dropdown-input] > [data-cy=option110").should("have.text","ZUCCHINI")
         cy.get("[data-cy=crop-selection] > select").find("option").should("have.length", 111);
