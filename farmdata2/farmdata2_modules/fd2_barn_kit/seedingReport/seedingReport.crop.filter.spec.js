@@ -37,4 +37,19 @@ describe("Test that the crop filter in the Seeding Report works as intended", ()
                 .should('have.value', 'RADISH')
     })
 
+    it("Tests that when 'All' crops are selected, the table will have seeding logs for several crops", () => {
+        //Check date range 03/01/2020 - 03/07/2020
+        cy.get('[data-cy=start-date-select]').type('2020-03-01')
+        cy.get('[data-cy=end-date-select]').type('2020-03-07')
+        cy.get('[data-cy=generate-rpt-btn]').click()
+
+        //Check to ensure All is selected in the dropdown
+        cy.get('[data-cy=crop-dropdown] > [data-cy=dropdown-input]').should('have.value', 'All')
+ 
+        //Check that several crops have logs in the table when All is selected
+        cy.get('[data-cy=report-table]').contains('td', 'ENDIVE')
+        cy.get('[data-cy=report-table]').contains('td', 'RADICCHIO')
+        cy.get('[data-cy=report-table]').contains('td', 'BOKCHOY')
+        cy.get('[data-cy=report-table]').contains('td', 'RADISH')
+    })
 })
