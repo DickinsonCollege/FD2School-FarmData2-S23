@@ -74,25 +74,6 @@ describe("Tests for seeding input", () => {
         })
   })
 
-  //issue 159 sub-task 6, 7 
-  it('should display dropdown for units that is enabled', () => {
-    cy.get('[data-cy=direct-seedings]')
-      .click()
-      .then(() => {
-        cy.get('[data-cy=unit-feet] > [data-cy=dropdown-input]')
-          .children() 
-          .first()
-          .should('have.value', 'Bed Feet')
-        cy.get('[data-cy=unit-feet] > [data-cy=dropdown-input]')
-          .children() 
-          .last()  
-          .should('have.value', 'Row Feet')
-        cy.get('[data-cy=unit-feet] > [data-cy=dropdown-input]')
-          .children() 
-          .should('have.length', 2)
-      })
-  })
-  
   //issue 159 sub-task 4
   it('checks that there is a field for "Row/Bed" that is empty and enabled', () => {
     cy.get('[data-cy=direct-seedings]').click()
@@ -112,7 +93,26 @@ describe("Tests for seeding input", () => {
       .should('be.enabled') // check that it is enabled
       .should('have.value', '')
   })
-  
+
+  //issue 159 sub-task 6, 7 
+  it('should display dropdown for units that is enabled', () => {
+    cy.get('[data-cy=direct-seedings]')
+      .click()
+      .then(() => {
+        cy.get('[data-cy=unit-feet] > [data-cy=dropdown-input]')
+          .children() 
+          .first()
+          .should('have.value', 'Bed Feet')
+        cy.get('[data-cy=unit-feet] > [data-cy=dropdown-input]')
+          .children() 
+          .last()  
+          .should('have.value', 'Row Feet')
+        cy.get('[data-cy=unit-feet] > [data-cy=dropdown-input]')
+          .children() 
+          .should('have.length', 2)
+      })
+  })
+    
   //issue 159 sub-task 8
   it('checks that "Bed Feet" is the default units', () => {
     cy.get('[data-cy=direct-seedings]').click()
