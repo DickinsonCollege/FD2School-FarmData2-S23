@@ -18,4 +18,37 @@ describe('Test the submit button behavior', () => {
             .should("be.disabled")
     })
 
+    it('test tray seeding input has all required fields when submission button is enabled', () => {
+        //tests assume each of the buttons are 
+        //Select the tray seeding input type
+        cy.get('[data-cy="tray-seedings"]').click()
+            .blur()
+
+        //check that the submission button is disabled
+        cy.get('[data-cy="submit-button"]')
+            .should('be.disabled')
+
+        //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        //check the data section inputs alone don't enable the submit button
+        //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+        //Select a date
+        cy.get('[data-cy="date-selection"] > [data-cy="date-select"]').click()
+            .type('2021-04-10')
+            .blur()
+
+        //check that the submission button is disabled
+        cy.get('[data-cy="submit-button"]')
+            .should('be.disabled')
+
+        //select a crop
+        cy.get('[data-cy="date-selection"] > [data-cy="dropdown-input"]').click()
+            .select('BEAN')
+            .blur()
+
+        //check that the submission button is disabled
+        cy.get('[data-cy="submit-button"]')
+            .should('be.disabled')
+    })
+
 })
