@@ -113,4 +113,11 @@ describe("Tests for seeding input", () => {
       .should('have.value', '')
   })
   
+  //issue 159 sub-task 8
+  it('checks that "Bed Feet" is the default units', () => {
+    cy.get('[data-cy=direct-seedings]').click()
+    cy.get('[data-cy=unit-feet] > [data-cy=dropdown-input]')
+    .invoke('val')
+    .should('equal', 'Bed Feet')
+  })
 })
