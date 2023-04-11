@@ -128,4 +128,12 @@ describe('Test the submit button behavior', () => {
             .should('not.be.disabled')
     })
 
+
+    it('test Direct seeding input has all required fields filled when submission button is enabled', () => {
+
+        //Select the direct seeding input type
+        cy.get('[data-cy="tray-seedings"]').click()
+            .blur()
+    })
+
 })
