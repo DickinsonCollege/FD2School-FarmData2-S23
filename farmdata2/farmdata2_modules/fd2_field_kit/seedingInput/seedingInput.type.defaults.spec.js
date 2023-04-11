@@ -100,5 +100,17 @@ describe("Tests for seeding input", () => {
       .should('be.enabled') // check that it is enabled
       .should('have.value', '')
   })
+
+    
+  //issue 159 sub-task 5
+  it('checks that there is a field for "Bed Feed" that is empty and enabled', () => {
+    cy.get('[data-cy=direct-seedings]').click()
+    cy.get('[data-cy=unit-feet] > [data-cy=dropdown-input]')
+      .select('Bed Feet')
+
+    cy.get('[data-cy=num-feet-input] > [data-cy=text-input]')
+      .should('be.enabled') // check that it is enabled
+      .should('have.value', '')
+  })
   
 })
