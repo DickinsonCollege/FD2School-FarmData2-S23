@@ -54,7 +54,7 @@ describe('Test the submit button behavior', () => {
         //check the labor section inputs alone don't enable the submit button
         //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-        //Add workers 
+        //Input workers 
         cy.get('[data-cy="num-worker-input"] > [data-cy="text-input"]')
             .type(3)
             .blur()
@@ -63,7 +63,7 @@ describe('Test the submit button behavior', () => {
         cy.get('[data-cy="submit-button"]')
             .should('be.disabled')
 
-        //Add minutes
+        //Input minutes
         cy.get('[data-cy="minute-input"] > [data-cy="text-input"]')
             .type(30)
             .blur()
@@ -77,7 +77,7 @@ describe('Test the submit button behavior', () => {
             .select('hours')
             .blur()
 
-        //Add hours
+        //Input hours
         cy.get('[data-cy="hour-input"] > [data-cy="text-input"]')
             .type(3)
             .blur()
@@ -86,8 +86,46 @@ describe('Test the submit button behavior', () => {
         cy.get('[data-cy="submit-button"]')
             .should('be.disabled')
 
-        
         //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        //check the seeding section tray inputs don't enable the submit button
+        //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+        //Choose crop area
+        cy.get('[data-cy="tray-area-selection"] > [data-cy="dropdown-input"]')
+            .select('CHUAU')
+            .blur()
+
+        //check that the submission button is disabled
+        cy.get('[data-cy="submit-button"]')
+            .should('be.disabled')
+
+        //Input Cells/Tray
+        cy.get('[data-cy="num-cell-input"] > [data-cy="text-input"]')
+            .type(5)
+            .blur()
+            
+        //check that the submission button is disabled
+        cy.get('[data-cy="submit-button"]')
+            .should('be.disabled')
+
+        //Input Trays
+        cy.get('[data-cy="num-tray-input"] > [data-cy="text-input"]')
+            .type(5)
+            .blur()
+
+        //check that the submission button is disabled
+        cy.get('[data-cy="submit-button"]')
+            .should('be.disabled')
+
+        //Input Seeds
+        cy.get('[data-cy="num-seed-input"] > [data-cy="text-input"]')
+            .type(100)
+            .blur()
+
+        //all blank fields have now been filled submission button should be enabled
+        //check that the submission button is disabled
+        cy.get('[data-cy="submit-button"]')
+            .should('not.be.disabled')
     })
 
 })
