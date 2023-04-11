@@ -18,7 +18,7 @@ describe('Test the submit button behavior', () => {
             .should("be.disabled")
     })
 
-    it('test tray seeding input has all required fields when submission button is enabled', () => {
+    it('test tray seeding input has all required fields filled when submission button is enabled', () => {
         //tests assume each of the buttons are 
         //Select the tray seeding input type
         cy.get('[data-cy="tray-seedings"]').click()
@@ -42,13 +42,52 @@ describe('Test the submit button behavior', () => {
             .should('be.disabled')
 
         //select a crop
-        cy.get('[data-cy="date-selection"] > [data-cy="dropdown-input"]').click()
+        cy.get('[data-cy="crop-selection"] > [data-cy="dropdown-input"]')
             .select('BEAN')
             .blur()
 
         //check that the submission button is disabled
         cy.get('[data-cy="submit-button"]')
             .should('be.disabled')
+        
+        //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        //check the labor section inputs alone don't enable the submit button
+        //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+        //Add workers 
+        cy.get('[data-cy="num-worker-input"] > [data-cy="text-input"]')
+            .type(3)
+            .blur()
+
+        //check that the submission button is disabled
+        cy.get('[data-cy="submit-button"]')
+            .should('be.disabled')
+
+        //Add minutes
+        cy.get('[data-cy="minute-input"] > [data-cy="text-input"]')
+            .type(30)
+            .blur()
+            
+        //check that the submission button is disabled
+        cy.get('[data-cy="submit-button"]')
+            .should('be.disabled')
+
+        //Switch time units to hours
+        cy.get('[data-cy="time-unit"] > [data-cy="dropdown-input"]')
+            .select('hours')
+            .blur()
+
+        //Add hours
+        cy.get('[data-cy="hour-input"] > [data-cy="text-input"]')
+            .type(3)
+            .blur()
+
+        //check that the submission button is disabled
+        cy.get('[data-cy="submit-button"]')
+            .should('be.disabled')
+
+        
+        //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     })
 
 })
