@@ -92,4 +92,13 @@ describe("Tests for seeding input", () => {
           .should('have.length', 2)
       })
   })
+  
+  //issue 159 sub-task 4
+  it('checks that there is a field for "Row/Bed" that is empty and enabled', () => {
+    cy.get('[data-cy=direct-seedings]').click()
+    cy.get('[data-cy=num-rowbed-input] > [data-cy=text-input]')
+      .should('be.enabled') // check that it is enabled
+      .should('have.value', '')
+  })
+  
 })
