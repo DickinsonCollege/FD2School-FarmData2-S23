@@ -123,7 +123,7 @@ describe('Test the submit button behavior', () => {
             .blur()
 
         //all blank fields have now been filled submission button should be enabled
-        //check that the submission button is disabled
+        //check that the submission button is enabled
         cy.get('[data-cy="submit-button"]')
             .should('not.be.disabled')
     })
@@ -247,7 +247,7 @@ describe('Test the submit button behavior', () => {
             .should('be.disabled')
 
         //all blank fields have now been filled submission button should be enabled
-        //check that the submission button is disabled
+        //check that the submission button is enabled
         cy.get('[data-cy="submit-button"]')
             .should('not.be.disabled')
     })
