@@ -21,9 +21,6 @@ describe("Testing Transplanting Report in BarnKit", () => {
     })
 
     it("Check start and end date with current year", () => {
-        cy.get("[data-cy = end-date-select] > [data-cy = date-select]")
-        cy.get("[data-cy = start-date-select] > [data-cy = date-select]")
-
         cy.get("[data-cy = date-range-selection] > [data-cy = end-date-select] > [data-cy = date-select]")
         .should('have.value',dayjs().format("YYYY-MM-DD"))
         cy.get("[data-cy = date-range-selection] > [data-cy = start-date-select] > [data-cy = date-select]")
