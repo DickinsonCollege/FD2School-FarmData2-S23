@@ -20,6 +20,6 @@ describe('eTest Seeding Report Default', () => {
 
   })
   it("Test to make sure that there are dates", () => {
-    cy.get("[data-cy=farm]").should("have.text", "Set Dates")
+    cy.get("[data-cy=panel-heading]").should("have.text", "Set Dates")
   })
 })
