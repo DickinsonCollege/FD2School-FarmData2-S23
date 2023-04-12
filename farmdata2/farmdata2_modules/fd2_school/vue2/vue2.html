@@ -39,41 +39,46 @@
   </select>
   <br />
   <br />
-  <button @click="logHarvests">Generate Report</button>
+  <button @click="logHarvests(), changeState('show')">Generate Report</button>
   <hr />
-  <h1>{{ header ? header : 'Mock Harvest Report' }}</h1>
-  <p> Details: </p>
-  <ul>
-    <li><strong>Farm:</strong>Sample Farm</li>
-    <li><strong>User:</strong>manager1</li>
-    <li><strong>Language:</strong>English</li>
-  </ul>
-  <br />
-  <ul>
-    <li><strong>Start:</strong>{{startDate}}</li>
-    <li><strong>End:</strong>{{endDate}}</li>
-    <li><strong>Crop:</strong>{{crop}}</li>
-  </ul>
+  <div id="rpDetail" v-if="state !== 'default'">
+    <h1>{{ header ? header : 'Mock Harvest Report' }}</h1>
+    <p>Details:</p>
+    <ul>
+        <li><strong>Farm:</strong>Sample Farm</li>
+        <li><strong>User:</strong>manager1</li>
+        <li><strong>Language:</strong>English</li>
+    </ul>
+    <br />
+    <ul>
+        <li><strong>Start:</strong>{{startDate}}</li>
+        <li><strong>End:</strong>{{endDate}}</li>
+        <li><strong>Crop:</strong>{{crop}}</li>
+    </ul>
+    <br>
+    <table border="1">
+        <colgroup span="5"></colgroup>
+        <tr v-if="harvestLogs.length > 0">
+        <th>Row</th>
+        <th>Date</th>
+        <th>Area</th>
+        <th>Crop</th>
+        <th>Yield</th>
+        <th>Units</th>
+        </tr>
+        
+        <p v-else>No available records. Please update your search.</p>
 
-  <table border="1">
-    <colgroup span="5"></colgroup>
-    <tr>
-      <th>Row</th>
-      <th>Date</th>
-      <th>Area</th>
-      <th>Crop</th>
-      <th>Yield</th>
-      <th>Units</th>
-    </tr>
-    <tr v-for="(log, index) in harvestLogs">
-        <td>{{index + 1}}</td>
-        <td>{{log.date}}</td>
-        <td>{{log.area}}</td>
-        <td>{{log.crop}}</td>
-        <td>{{log.yield}}</td>
-        <td>{{log.units}}</td>
-    </tr>
-  </table>
+        <tr v-for="(log, index) in harvestLogs">
+            <td>{{index + 1}}</td>
+            <td>{{log.date}}</td>
+            <td>{{log.area}}</td>
+            <td>{{log.crop}}</td>
+            <td>{{log.yield}}</td>
+            <td>{{log.units}}</td>
+        </tr>
+    </table>
+  </div>
   <br />
 </div>
 
@@ -82,14 +87,14 @@
     el: "#report",
     data: {
       header: "My Sample Harvest Report",
+      state: "default",
       startDate:"",
       endDate: "",
       rpCrops: "",
       crops: [
                 "Broccoli",
                 "Kale",
-                "Peas",
-                "Bananas"
+                "Peas"
             ],
       areas: [
                 "All",
@@ -117,6 +122,7 @@
     },
     methods : {
         logHarvests: function() {
+            if (this.state !== "default") {
                 if (this.harvestLogs.length === 0) {
                     this.harvestLogs.push({date: '2014-01-01', area: 'Chuau-1', crop: 'Kale', yield: '10', units: 'Bunches'})
                 } else if (this.harvestLogs.length === 1) {
@@ -124,8 +130,11 @@
                 } else if (this.harvestLogs.length === 2) {
                     this.harvestLogs.push({date: '2020-05-01', area: 'SQ7', crop: 'Peas', yield: '20', units: 'Bunches'})
                 }
-
-            }
+                }
+            },
+        changeState: function() {
+            this.state = newState;
+        }
     }
   });
   Vue.config.devtools = true;
