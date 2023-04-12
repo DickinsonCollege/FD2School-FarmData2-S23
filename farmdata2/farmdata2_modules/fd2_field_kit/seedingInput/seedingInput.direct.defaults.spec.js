@@ -2,7 +2,6 @@ describe("Tests for seeding input", () => {
 
   beforeEach(() => {
     cy.login('manager1', 'farmdata2')
-
     cy.visit('/farm/fd2-field-kit/seedingInput')
   })
 
@@ -54,20 +53,15 @@ describe("Tests for seeding input", () => {
     cy.get('[data-cy=direct-seedings]')
       .click()
       .then(() => {
-        cy.get('[data-cy=unit-feet] > [data-cy=dropdown-input]')
-          .children() 
-          .first()
+        cy.get('[data-cy=unit-feet] > [data-cy=dropdown-input] > [data-cy=option0]')
           .should('have.value', 'Bed Feet')
-        cy.get('[data-cy=unit-feet] > [data-cy=dropdown-input]')
-          .children() 
-          .last()  
+        cy.get('[data-cy=unit-feet] > [data-cy=dropdown-input] > [data-cy=option1]')
           .should('have.value', 'Row Feet')
         cy.get('[data-cy=unit-feet] > [data-cy=dropdown-input]')
           .children() 
           .should('have.length', 2)
       })
   })
-
 
   //sub-task #8 issue 159  
   it('checks that "Bed Feet" is the default units', () => {
