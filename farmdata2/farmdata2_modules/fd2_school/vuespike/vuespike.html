@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Vue Data Binding Spike</title>
+    <style>
+      [v-cloak] {
+        display:none;
+      }
+    </style>
+  </head>
+
+
+  <div id="heading" v-cloak>
+    <h1>{{ header.toLocaleUpperCase() }}</h1>
+    <ul>
+      <li v-for="name in names">{{ name }}</li>
+    </ul>
+    <ul>
+      <li v-for="c in cards">{{ `{c.rank} of {c.suit}` }}</li>
+  </div>
+
+  <div class="name">
+    <label for="name">Name:</label>
+    <input v-model="newName" type="text" id="name" name="name" placeholder="Add a name" v-on:keyup.enter="names.push(newName)">
+    <button class="btn btn-primary" type="submit" v-on:click="names.push(newName)">Add name</button>
+  </div>
+
+  <script src=https://unpkg.com/vue@2></script>
+  <script>
+    var heading = new Vue({
+      el: "#heading",
+      data: {
+        header: 'Coding is hard',
+        names: [ "Joe", "Aron", "Owen", "Anh", "Sue" ],
+        newName: '',
+        cards: [
+            {suit: "H", rank: "3"},
+            {suit: "S", rank: "K"},
+            {suit: "D", rank: "7"}]
+      }
+    });
+  </script>
+  
+</html>
