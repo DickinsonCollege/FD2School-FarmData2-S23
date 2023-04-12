@@ -54,37 +54,25 @@ describe("Test that the crop filter in the Seeding Report works as intended", ()
     })
 
     it("Tests that when a specific crop is selected, the table will have only the seeding logs for that crop", () => {
-        //Check date range 03/01/2020 - 09/30/2020
-        cy.get('[data-cy=start-date-select]').type('2020-03-01')
-        cy.get('[data-cy=end-date-select]').type('2020-09-30')
+        //Check date range 07/06/2019 - 07/12/2019
+        cy.get('[data-cy=start-date-select]').type('2019-07-06')
+        cy.get('[data-cy=end-date-select]').type('2019-07-12')
         cy.get('[data-cy=generate-rpt-btn]').click()
 
-        //Selecting PEPPERS-HOT in the crops dropdown menu
-        cy.get('[data-cy=crop-dropdown] > [data-cy=dropdown-input]').select('PEPPERS-HOT')
-        //checking to ensure PEPPERS-HOT is selected in the dropdown menu
-        cy.get('[data-cy=crop-dropdown] > [data-cy=dropdown-input]').should('have.value', 'PEPPERS-HOT')
-        //Check that only logs pertaining to PEPPERS-HOT exist in the table
-        cy.get('[data-cy=report-table]').each((tableLog) => {
-            cy.wrap(tableLog).contains('td', "PEPPERS-HOT")
-        })
-
-        //Selecting WATERMELON in the crops dropdown menu
-        cy.get('[data-cy=crop-dropdown] > [data-cy=dropdown-input]').select('WATERMELON')
-        //checking to ensure WATERMELON is selected in the dropdown menu
-        cy.get('[data-cy=crop-dropdown] > [data-cy=dropdown-input]').should('have.value', 'WATERMELON')
-        //Check that only logs pertaining to WATERMELON exist in the table
-        cy.get('[data-cy=report-table]').each((tableLog) => {
-            cy.wrap(tableLog).contains('td', "WATERMELON")
-        })
-
-        //Selecting BEET in the crops dropdown menu
-        cy.get('[data-cy=crop-dropdown] > [data-cy=dropdown-input]').select('BEET')
-        //checking to ensure BEET is selected in the dropdown menu
-        cy.get('[data-cy=crop-dropdown] > [data-cy=dropdown-input]').should('have.value', 'BEET')
-        //Check that only logs pertaining to BEET exist in the table
-        cy.get('[data-cy=report-table]').each((tableLog) => {
-            cy.wrap(tableLog).contains('td', "BEET")
-        })
+        //Selecting CAULIFLOWER in the crops dropdown menu:
+        cy.get('[data-cy=crop-dropdown] > [data-cy=dropdown-input]').select('CAULIFLOWER')
+        //checking to ensure CAULIFLOWER is selected in the dropdown menu:
+        cy.get('[data-cy=crop-dropdown] > [data-cy=dropdown-input]').should('have.value', 'CAULIFLOWER')
+        //checking that only 3 logs exist in the table:
+        cy.get('[data-cy=table-body]')
+        .children()
+        .should('have.length', 3)
+        //Check that only logs pertaining to CAULIFLOWER exist in the table
+        for(let i = 0; i < 3; i++){
+            cy.get('[data-cy=td-r'+i+"c1]")
+            .should('contain.text', 'CAULIFLOWER')
+        }
+        
 
     })
 })
