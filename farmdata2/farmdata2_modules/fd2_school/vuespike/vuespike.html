@@ -9,11 +9,12 @@
     </style>
   </head>
 
-
+  <body>
+    <p>Hello</p>
   <div id="heading" v-cloak>
     <h1>{{ header.toLocaleUpperCase() }}</h1>
     <ul>
-      <li v-for="name in names">{{ name }}</li>
+      <li v-for=" (name,index) in names">{{ name + " (" + index + ")" }}</li>
     </ul>
     <ul>
       <li v-for="c in cards">{{ `{c.rank} of {c.suit}` }}</li>
@@ -21,8 +22,8 @@
 
   <div class="name">
     <label for="name">Name:</label>
-    <input v-model="newName" type="text" id="name" name="name" placeholder="Add a name" @keyup.enter="names.push(newName)">
-    <button class="btn btn-primary" type="submit" @click="names.push(newName)">Add name</button>
+    <input v-model="newName" type="text" id="name" name="name" placeholder="Add a name" @keyup.enter="saveName">
+    <button class="btn btn-primary" type="submit" @click="saveName">Add name</button>
   </div>
 
   <script src=https://unpkg.com/vue@2></script>
@@ -40,11 +41,15 @@
       },
       methods: {
         saveName: function(){
-            this.names.push(this.newName);
-            this.newName = '';
+            if (this.newName != null) {
+                this.names.push(this.newName);
+                this.newName = '';
+            } else {
+                console.log("Please enter a valid name.");
+            }
         }
       }
     });
   </script>
-  
+  </body>
 </html>
