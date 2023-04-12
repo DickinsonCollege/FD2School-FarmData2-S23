@@ -10,12 +10,14 @@ describe('eTest Seeding Report Default', () => {
   //   cy.get("[data-cy=date-range-selection]").should('have.value','2023-04-05')
   // })
   it("Check that the page contains header", () => {
-    cy.get("[data-cy=generate-page-header]").click().should("have text", "Seeding Report")
+    cy.get("[data-cy=text-center]").click()
+    cy.get("[data-cy=text-center]").should("have text", "Seeding Report")
   })
 
   it("Test the generate button", () => {
-    cy.get("[data-cy=generate-rpt-btn]").click()
+    cy.get('[data-cy=generate-rpt-btn]').click()
     cy.get('[data-cy=generate-rpt-btn]').should('exist')
+
   })
   it("Test to make sure that there are dates", () => {
     cy.get("[data-cy=farm]").should("have.text", "Set Dates")
