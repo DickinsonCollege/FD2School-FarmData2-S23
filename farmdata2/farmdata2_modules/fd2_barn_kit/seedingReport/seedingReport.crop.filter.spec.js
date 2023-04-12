@@ -14,27 +14,34 @@ describe("Test that the crop filter in the Seeding Report works as intended", ()
     })
 
     it("Tests that the dropdown for the crop filter only contains the crops that exist in the given date range", () => {
-        cy.get('[data-cy=start-date-select]').type('2020-03-01')
-        cy.get('[data-cy=end-date-select]').type('2020-03-07')
+        cy.get('[data-cy=start-date-select]').type('2019-07-06')
+        cy.get('[data-cy=end-date-select]').type('2019-07-12')
         cy.get('[data-cy=generate-rpt-btn]').click()
 
         cy.get('[data-cy=crop-dropdown] > [data-cy=dropdown-input]')
             .children()
-            .should("have.length", 5)//There should be five options: the four crops in this date range and the "All" option.
+            .should("have.length", 4)//There should be four options: the three crops in this date range and the "All" option.
 
-        cy.get('[data-cy=crop-dropdown] > [data-cy=dropdown-input]')
+        cy.get('[data-cy=crop-dropdown] > [data-cy=dropdown-input]') //the first option in the drop down should be "All"
             .children()
             .first()
             .should('have.value', 'All')
 
-        cy.get('[data-cy=crop-dropdown] > [data-cy=dropdown-input]')
-            .children().next()
-            .should('have.value', 'BOKCHOY')
-
-        cy.get('[data-cy=crop-dropdown] > [data-cy=dropdown-input]')
+        cy.get('[data-cy=crop-dropdown] > [data-cy=dropdown-input]') //the second option in the drop down should be "BROCCOLI"
             .children()
-            .last()
-            .should('have.value', 'RADISH')
+            .first().next()
+            .should('have.value', 'BROCCOLI') 
+        
+        cy.get('[data-cy=crop-dropdown] > [data-cy=dropdown-input]') //the third option in the drop down should be "CAULIFLOWER"
+            .children()
+            .first().next().next()
+            .should('have.value', 'CAULIFLOWER') 
+
+        cy.get('[data-cy=crop-dropdown] > [data-cy=dropdown-input]') //the fourth, and final, option in the drop down should be "KOHLRABI"
+            .children().last()
+            .should('have.value', 'KOHLRABI') 
+
+        
     })
 
     it("Tests that when 'All' crops are selected, the table will have seeding logs for several crops", () => {
