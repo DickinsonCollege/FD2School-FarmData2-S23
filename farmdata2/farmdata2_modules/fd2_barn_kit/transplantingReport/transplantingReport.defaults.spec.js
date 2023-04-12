@@ -8,7 +8,7 @@ describe("Testing Transplanting Report in BarnKit", () => {
 
     it("Check page header and section label" ,() => {
         cy.get("[data-cy = report-header]").should("have.text", "Transplanting Report")
-        cy.get("[data-cy = section-header]").should("have.text", "Set Dates")
+        cy.get("[data-cy = table-header]").should("have.text", "Set Dates")
     })
 
     it("The report table shouldn't be visible", () => {
