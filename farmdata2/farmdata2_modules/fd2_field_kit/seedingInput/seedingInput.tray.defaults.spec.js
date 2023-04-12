@@ -14,7 +14,7 @@ it("Check the tray seeding section when 'Tray' is selected ", () => {
 it("Check the dropdown Area ", () => {
     cy.get ("[data-cy=tray-seedings]").check()
     cy.get("[data-cy=tray-area-selection]>[data-cy=dropdown-input]").should("be.visible")
-    cy.get("[data-cy=tray-area-selection]>[data-cy=dropdown-input]").should("have.text","")
+    cy.get("[data-cy=tray-area-selection]>[data-cy=dropdown-input]").should("have.value",null)
 
 })
 
