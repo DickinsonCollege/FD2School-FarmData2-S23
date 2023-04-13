@@ -25,11 +25,11 @@
   <br />
   <label for="crop">Crop:</label>
   <select id="crop" v-model="rpCrops">
-    <option v-for="crop in crops" :value="crop">{{crop}}</option>
+    <option v-for="crop in cropNames" :value="crop">{{crop}}</option>
   </select>
   <label for="area">Area:</label>
   <select id="area">
-    <option v-for="area in areas" :value="area">{{area}}</option>
+    <option v-for="area in areaNames" :value="area">{{area}}</option>
   </select>
   <br />
   <br />
@@ -141,29 +141,45 @@
                       console.log(response);
                   })
                   .catch((error) => {
-                      console.log("Error Occurred.")
-                      console.log(error)
+                      console.log("Error Occurred.");
+                      console.log(error);
                   })
         }
     },
     created() {
       getIDToCropMap()
             .then((map) => {
-                this.idToCropMap = map
+                this.idToCropMap = map;
             })
             .catch((error) => {
-                console.log("Error occurred.")
-                console.log(error)
+                console.log("Error occurred.");
+                console.log(error);
             }),
       getIDToAreaMap()
             .then((map) => {
-                this.idToAreaMap = map
+                this.idToAreaMap = map;
             })
             .catch((error) => {
-                console.log("Error occurred.")
-                console.log(error)
+                console.log("Error occurred.");
+                console.log(error);
             })
     },
+    computed: {
+            cropNames() {
+                cropNames = [];
+                for (var name of this.idToCropMap.values()) {
+                    cropNames.push(name);
+                }
+                return cropNames
+            },
+            areaNames() {
+                areaNames = [];
+                for (var name of this.idToAreaMap.values()) {
+                    areaNames.push(name);
+                }
+                return areaNames
+            }
+        }
   });
   Vue.config.devtools = true;
 </script>
