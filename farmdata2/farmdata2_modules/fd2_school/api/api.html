@@ -41,13 +41,13 @@
   <br />
   <button @click="logHarvests(), changeState('show')">Generate Report</button>
   <hr />
-  <div id="rpDetail" v-if="state !== 'default'">
+  <div id="rpDetail" v-if="state === 'default'">
     <h1>{{ header ? header : 'Mock Harvest Report' }}</h1>
     <p>Details:</p>
     <ul>
-        <li><strong>Farm:</strong>Sample Farm</li>
-        <li><strong>User:</strong>manager1</li>
-        <li><strong>Language:</strong>English</li>
+        <li><strong>Farm:</strong>{{farm}}</li>
+        <li><strong>User:</strong>{{user}}</li>
+        <li><strong>Language:</strong>{{language}}</li>
     </ul>
     <br />
     <ul>
@@ -119,10 +119,13 @@
                 units: "Bunches"},
             ],
       harvestLogs: [],
+      farm: '',
+      user: '',
+      language: ''
     },
     methods : {
         logHarvests: function() {
-            if (this.state !== "default") {
+            if (this.state === "default") {
                 if (this.harvestLogs.length === 0) {
                     this.harvestLogs.push({date: '2014-01-01', area: 'Chuau-1', crop: 'Kale', yield: '10', units: 'Bunches'})
                 } else if (this.harvestLogs.length === 1) {
