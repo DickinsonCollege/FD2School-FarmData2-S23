@@ -39,46 +39,44 @@
   </select>
   <br />
   <br />
-  <button @click="logHarvests(), changeState('show')">Generate Report</button>
+  <button type="button" v-on:click="setUserInfo(); logHarvests(); changeState('show')">Generate Report</button>
   <hr />
-  <div id="rpDetail" v-if="state === 'default'">
-    <h1>{{ header ? header : 'Mock Harvest Report' }}</h1>
-    <p>Details:</p>
-    <ul>
-        <li><strong>Farm:</strong>{{farm}}</li>
-        <li><strong>User:</strong>{{user}}</li>
-        <li><strong>Language:</strong>{{language}}</li>
-    </ul>
-    <br />
-    <ul>
-        <li><strong>Start:</strong>{{startDate}}</li>
-        <li><strong>End:</strong>{{endDate}}</li>
-        <li><strong>Crop:</strong>{{crop}}</li>
-    </ul>
-    <br>
-    <table border="1">
-        <colgroup span="5"></colgroup>
-        <tr v-if="harvestLogs.length > 0">
-        <th>Row</th>
-        <th>Date</th>
-        <th>Area</th>
-        <th>Crop</th>
-        <th>Yield</th>
-        <th>Units</th>
-        </tr>
-        
-        <p v-else>No available records. Please update your search.</p>
+  <h1>{{ header ? header : 'Mock Harvest Report' }}</h1>
+  <p>Details:</p>
+  <ul>
+      <li><strong>Farm:</strong>{{farm}}</li>
+      <li><strong>User:</strong>{{user}}</li>
+      <li><strong>Language:</strong>{{language}}</li>
+  </ul>
+  <br />
+  <ul>
+      <li><strong>Start:</strong>{{startDate}}</li>
+      <li><strong>End:</strong>{{endDate}}</li>
+      <li><strong>Crop:</strong>{{rpCrops}}</li>
+  </ul>
+  <br>
+  <table border="1">
+      <colgroup span="5"></colgroup>
+      <tr v-if="harvestLogs.length > 0">
+      <th>Row</th>
+      <th>Date</th>
+      <th>Area</th>
+      <th>Crop</th>
+      <th>Yield</th>
+      <th>Units</th>
+      </tr>
+      
+      <p v-else>No available records. Please update your search.</p>
 
-        <tr v-for="(log, index) in harvestLogs">
-            <td>{{index + 1}}</td>
-            <td>{{log.date}}</td>
-            <td>{{log.area}}</td>
-            <td>{{log.crop}}</td>
-            <td>{{log.yield}}</td>
-            <td>{{log.units}}</td>
-        </tr>
-    </table>
-  </div>
+      <tr v-for="(log, index) in harvestLogs">
+          <td>{{index + 1}}</td>
+          <td>{{log.date}}</td>
+          <td>{{log.area}}</td>
+          <td>{{log.crop}}</td>
+          <td>{{log.yield}}</td>
+          <td>{{log.units}}</td>
+      </tr>
+  </table>
   <br />
 </div>
 
@@ -119,11 +117,11 @@
                 units: "Bunches"},
             ],
       harvestLogs: [],
-      farm: '',
-      user: '',
-      language: ''
+      farm: "",
+      user: "",
+      language: ""
     },
-    methods : {
+    methods: {
         logHarvests: function() {
             if (this.state === "default") {
                 if (this.harvestLogs.length === 0) {
@@ -137,6 +135,11 @@
             },
         changeState: function() {
             this.state = newState;
+        },
+        setUserInfo: function() {
+            this.farm = "Sample Farm";
+            this.user = "manager1";
+            this.language = "English";
         }
     }
   });
