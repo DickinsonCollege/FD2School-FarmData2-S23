@@ -25,17 +25,11 @@
   <br />
   <label for="crop">Crop:</label>
   <select id="crop" v-model="rpCrops">
-    <option value="kale">Kale</option>
-    <option value="broccoli">Broccoli</option>
-    <option value="peas">Peas</option>
     <option v-for="crop in crops" :value="crop">{{crop}}</option>
   </select>
   <label for="area">Area:</label>
   <select id="area">
-    <option value="all">All</option>
-    <option value="chuau1">Chuau-1</option>
-    <option value="sq7">SQ7</option>
-    <option v-for="area in areas" :value="area"></option>
+    <option v-for="area in areas" :value="area">{{area}}</option>
   </select>
   <br />
   <br />
@@ -119,7 +113,9 @@
       harvestLogs: [],
       farm: "",
       user: "",
-      language: ""
+      language: "",
+      idToCropMap: new Map(),
+      idToAreaMap: new Map(),
     },
     methods: {
         logHarvests: function() {
@@ -149,7 +145,25 @@
                       console.log(error)
                   })
         }
-    }
+    },
+    created() {
+      getIDToCropMap()
+            .then((map) => {
+                this.idToCropMap = map
+            })
+            .catch((error) => {
+                console.log("Error occurred.")
+                console.log(error)
+            }),
+      getIDToAreaMap()
+            .then((map) => {
+                this.idToAreaMap = map
+            })
+            .catch((error) => {
+                console.log("Error occurred.")
+                console.log(error)
+            })
+    },
   });
   Vue.config.devtools = true;
 </script>
