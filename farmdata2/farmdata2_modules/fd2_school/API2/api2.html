@@ -36,8 +36,9 @@
             <option v-for="item in areas">{{item}}</option>
         </select>
         <br> 
-        <input type="button" value="Generate Report" @click="generaterpt"></input> 
+        <!-- <input type="button" value="Generate Report" @click="generaterpt"></input>   -->
         </form>
+        <button type="button" v-on:click='generaterpt'></button> Generate Report</button>
 
 
         <hr>
@@ -119,6 +120,15 @@
                     this.farmName = response.data.name;
                     this.currentUser = response.data.user.name;
                     this.language = response.data.languages.en.name; 
+
+                    let startTimestamp = dayjs(this.rptStartDate).unix();
+                    let endTimestamp = dayjs(this.rptEndDate).unix();
+
+                    console.log("Timestamp Start: ", startTimestamp);
+                    console.log("Timestamp End: ", endTimestamp);
+
+                    let request = '\log.json?type=farm_harvest&timestamp[ge]=${startTimestamp}&timestamp[le]=${endTimestamp}';
+                    console.log(request);
                  })
                  .catch((error) => {
                     console.log('Error Occurred')
@@ -127,6 +137,14 @@
                  if(this.hlogs.length==0){
                     this.hlogs.push({date:'2018-05-01', area: 'Orion-3', crop: 'Kale', yield: '12',units: 'Bunches'})
                  }
+                 getAllPages(request, hlogs)
+                 .then(()=> {
+
+                 })
+                 .catch((error)=>{
+                    console.log('Error in getting pages')
+                 })
+                 
              },
            },
            created(){
