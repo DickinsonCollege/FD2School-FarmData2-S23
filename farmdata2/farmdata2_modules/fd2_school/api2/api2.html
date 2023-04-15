@@ -33,7 +33,7 @@
   </select>
   <br />
   <br />
-  <button type="button" v-on:click="createRequest(); setUserInfo(); logHarvests(); changeState('show')">Generate Report</button>
+  <button type="button" v-on:click="createRequest(); setUserInfo(); changeState('show')">Generate Report</button>
   <hr />
   <h1>{{ header ? header : 'Mock Harvest Report' }}</h1>
   <p>Details:</p>
@@ -62,7 +62,7 @@
       
       <p v-else>No available records. Please update your search.</p>
 
-      <tr v-for="(log, index) in harvestLogs">
+      <tr v-for="(log, index) in harvestReportRows">
           <td>{{index + 1}}</td>
           <td>{{log.date}}</td>
           <td>{{log.area}}</td>
@@ -93,23 +93,6 @@
                 "Chuau-1",
                 "SQ7",
              ],
-      logs: [
-                {date: "2014-01-01", 
-                area: "Chuau-1", 
-                crop: "Kale", 
-                yield: 10, 
-                units: "Bunches"},
-                {date: "2018-01-01", 
-                area: "All", 
-                crop: "Broccoli", 
-                yield: 5, 
-                units: "Bunches"},
-                {date: "2020-05-01", 
-                area: "SQ7", 
-                crop: "Peas", 
-                yield: 20, 
-                units: "Bunches"},
-            ],
       harvestLogs: [],
       farm: "",
       user: "",
@@ -118,18 +101,6 @@
       idToAreaMap: new Map(),
     },
     methods: {
-        logHarvests: function() {
-            if (this.state === "default") {
-                if (this.harvestLogs.length === 0) {
-                    this.harvestLogs.push({date: '2014-01-01', area: 'Chuau-1', crop: 'Kale', yield: '10', units: 'Bunches'})
-                } else if (this.harvestLogs.length === 1) {
-                    this.harvestLogs.push({date: '2018-01-01', area: 'All', crop: 'Broccoli', yield: '5', units: 'Bunches'})
-                } else if (this.harvestLogs.length === 2) {
-                    this.harvestLogs.push({date: '2020-05-01', area: 'SQ7', crop: 'Peas', yield: '20', units: 'Bunches'})
-                }
-                }
-            },
-            
         changeState: function() {
             this.state = newState;
         },
@@ -195,6 +166,29 @@
                     areaNames.push(name);
                 }
                 return areaNames
+            },
+            harvestReportRows() {
+	            let tableRows = []
+
+                getIDToCropMap()
+                .then((map) => {
+                    this.idToCropMap = map
+                })
+                .catch((err) => {
+                    console.log(err)
+                })   
+
+	            for(let log of this.harvestLogs) {
+		            let tableRow = {
+                    crop: this.idToCropMap.get(log.data.crop_tid),
+                    area: log.area[0].name,
+                    yield: log.quantity[0].value,
+                    units: log.quantity[0].unit.name,
+                    date: dayjs.unix(log.timestamp).format('DD/MM/YYYY'),
+		        }
+		        tableRows.push(tableRow)
+	            }
+	            return tableRows
             }
         },
   });
