@@ -12,6 +12,7 @@
     v-model="startDate"
     v-bind:min="startDate"
     v-bind:max="endDate"
+    data-cy="start-date"
   />
   <label for="end">End:</label>
   <input
@@ -21,6 +22,7 @@
     v-model="endDate"
     v-bind:min="startDate"
     v-bind:max="endDate"
+    data-cy="end-date"
   />
   <br />
   <label for="crop">Crop:</label>
@@ -52,12 +54,12 @@
   <table border="1">
       <colgroup span="5"></colgroup>
       <tr v-if="harvestReportRows.length > 0">
-      <th>Row</th>
-      <th>Date</th>
-      <th>Area</th>
-      <th>Crop</th>
-      <th>Yield</th>
-      <th>Units</th>
+        <th>Row</th>
+        <th>Date</th>
+        <th>Area</th>
+        <th>Crop</th>
+        <th>Yield</th>
+        <th>Units</th>
       </tr>
       
       <p v-else>No available records. Please update your search.</p>
@@ -80,8 +82,8 @@
     data: {
       header: "My Sample Harvest Report",
       state: "default",
-      startDate:"",
-      endDate: "",
+      startDate:"2020-05-05",
+      endDate: "2020-05-15",
       rpCrops: "",
       crops: [
                 "Broccoli",
