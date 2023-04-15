@@ -38,19 +38,28 @@ describe("Test that the crop filter in the Seeding Report works as intended", ()
     })
 
     it("Tests that when 'All' crops are selected, the table will have seeding logs for several crops", () => {
-        //Check date range 03/01/2020 - 03/07/2020
-        cy.get('[data-cy=start-date-select]').type('2020-03-01')
-        cy.get('[data-cy=end-date-select]').type('2020-03-07')
+        //Check date range 07/06/2019 - 07/12/2019
+        cy.get('[data-cy=start-date-select]').type('2019-07-06')
+        cy.get('[data-cy=end-date-select]').type('2019-07-12')
         cy.get('[data-cy=generate-rpt-btn]').click()
 
         //Check to ensure All is selected in the dropdown
         cy.get('[data-cy=crop-dropdown] > [data-cy=dropdown-input]').should('have.value', 'All')
 
+        //checking length of the table - should have 6 rows
+        cy.get('[data-cy=table-body]').children().should('have.length', 6)
+        
+        //make a list of the crops expected in the list
+        const crops = ['KOHLRABI', 'BROCCOLI', 'CAULIFLOWER']
+        //use regex to bind crops together into one string with 'or' statements
+        const cropsRegex = new RegExp(`${crops.join('|')}`, 'g')
         //Check that several crops have logs in the table when All is selected
-        cy.get('[data-cy=report-table]').contains('td', 'ENDIVE')
-        cy.get('[data-cy=report-table]').contains('td', 'RADICCHIO')
-        cy.get('[data-cy=report-table]').contains('td', 'BOKCHOY')
-        cy.get('[data-cy=report-table]').contains('td', 'RADISH')
+        for(let i = 0; i < 6; i++)
+        {
+            //for each row in the table,
+            //the crop should be one of the crops in the list
+            cy.get('[data-cy=td-r'+i+'c1]').contains(cropsRegex)
+        }
     })
 
     it("Tests that when a specific crop is selected, the table will have only the seeding logs for that crop", () => {
