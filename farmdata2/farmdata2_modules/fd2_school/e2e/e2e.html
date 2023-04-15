@@ -26,7 +26,7 @@
   />
   <br />
   <label for="crop">Crop:</label>
-  <select id="crop" v-model="rpCrops">
+  <select data-cy="crop-drop-down" id="crop" v-model="rpCrops">
     <option v-for="crop in cropNames" :value="crop">{{crop}}</option>
   </select>
   <label for="area">Area:</label>
