@@ -10,4 +10,9 @@ describe("Test GENERATE REPORT button", () =>{
         cy.get("[data-cy=generate-report-button]").click()
         cy.get("[data-cy=report-title]").should("be.visible")
     })
+
+    it("Check relevant farm's info", ()=>{
+        cy.get("[data-cy=generate-report-button]").click()
+        cy.get("[data-cy=farm-name]").should("have.text", "Sample Farm")
+    })
 })
