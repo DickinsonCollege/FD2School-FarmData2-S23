@@ -51,7 +51,7 @@
   <br>
   <table border="1">
       <colgroup span="5"></colgroup>
-      <tr v-if="harvestLogs.length > 0">
+      <tr v-if="harvestReportRows.length > 0">
       <th>Row</th>
       <th>Date</th>
       <th>Area</th>
@@ -186,7 +186,9 @@
                     units: log.quantity[0].unit.name,
                     date: dayjs.unix(log.timestamp).format('DD/MM/YYYY'),
 		        }
-		        tableRows.push(tableRow)
+                if (tableRow.crop.toUpperCase() === this.rpCrops) {
+                        tableRows.push(tableRow)
+                    }             
 	            }
 	            return tableRows
             }
