@@ -1,7 +1,7 @@
-describe("Test the harvest report default values", () => {
+describe("Test the harvest report default values in FD2", () => {
     beforeEach(() => {
         cy.login("manager1", "farmdata2")
-        cy.visit("/farm/fd2-school/e2e")
+        cy.visit("/farm/fd2-school/fd2")
     })
       
     it("Check the page header", () => {
@@ -17,13 +17,15 @@ describe("Test the harvest report default values", () => {
     })
 
     it("Check the crop list", () => {
-        cy.get("[data-cy=crop-list]").children().eq(0)
+        cy.get("[data-cy=crop-list] > [data-cy=dropdown-input] > [data-cy=option0")
+        .should("have.text", "All")
+        cy.get("[data-cy=crop-list] > [data-cy=dropdown-input] > [data-cy=option1")
         .should("have.text", "ARUGULA")
-        cy.get("[data-cy=crop-list]").children().eq(4)
+        cy.get("[data-cy=crop-list] > [data-cy=dropdown-input] > [data-cy=option5")
         .should("have.text", "BEAN-FAVA")
-        cy.get("[data-cy=crop-list]").children().eq(110)
+        cy.get("[data-cy=crop-list] > [data-cy=dropdown-input] > [data-cy=option111]")
         .should("have.text", "ZUCCHINI")
-        cy.get("[data-cy=crop-list]").children()
-        .should("have.length", 111)
+        cy.get("[data-cy=crop-list] > [data-cy=dropdown-input]").children()
+        .should("have.length", 112)
     })
 })
