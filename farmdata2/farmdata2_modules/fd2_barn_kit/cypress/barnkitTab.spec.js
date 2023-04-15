@@ -8,4 +8,12 @@ describe("Testing SubTabs in BarnKit", () => {
         cy.get(".pagination-sm").contains("Seeding Report").should("exist")
         cy.get(".pagination-sm").contains("Transplanting Report").should("exist")
     }) 
+    it("BarnKit tabs are ordered properly" , () => {
+        cy.get(".pagination-sm").contains("Info").first()
+        cy.get(".pagination-sm").contains("Transplanting Report").last()//can be improved?
+    }) 
+    it("BarnKit has two sub tabs" , () => {
+        cy.get(".pagination-sm").siblings()//Not finished
+    }) 
+
 })
