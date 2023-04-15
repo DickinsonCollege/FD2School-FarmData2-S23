@@ -33,7 +33,7 @@
   </select>
   <br />
   <br />
-  <button type="button" v-on:click="setUserInfo(); logHarvests(); changeState('show')">Generate Report</button>
+  <button type="button" v-on:click="createRequest(); setUserInfo(); logHarvests(); changeState('show')">Generate Report</button>
   <hr />
   <h1>{{ header ? header : 'Mock Harvest Report' }}</h1>
   <p>Details:</p>
@@ -129,9 +129,11 @@
                 }
                 }
             },
+            
         changeState: function() {
             this.state = newState;
         },
+
         setUserInfo: function() {
             axios.get('/farm.json')
                   .then((response) => {
@@ -144,8 +146,22 @@
                       console.log("Error Occurred.");
                       console.log(error);
                   })
-        }
+        },
+
+        createRequest: function() {
+            let sDate = dayjs(this.startDate).unix();
+            let eDate = dayjs(this.endDate).unix();
+            let request = `/log.json?type=farm_harvest&timestamp[le]=${eDate}&timestamp[ge]=${sDate}`;
+            getAllPages(request, this.harvestLogs)
+            .then(() => {
+                console.log('Request made successfully.');
+            })
+            .catch((err) => {
+                console.log(err);
+            })
+    }
     },
+
     created() {
       getIDToCropMap()
             .then((map) => {
@@ -164,6 +180,7 @@
                 console.log(error);
             })
     },
+
     computed: {
             cropNames() {
                 cropNames = [];
@@ -179,7 +196,7 @@
                 }
                 return areaNames
             }
-        }
+        },
   });
   Vue.config.devtools = true;
 </script>
