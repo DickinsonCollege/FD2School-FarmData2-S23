@@ -35,9 +35,9 @@
   </select>
   <br />
   <br />
-  <button type="button" v-on:click="createRequest(); setUserInfo(); changeState('show')">Generate Report</button>
+  <button type="button" data-cy="generate-report-button" @click="createRequest(); setUserInfo(); changeState('show')">Generate Report</button>
   <hr />
-  <h1>{{ header ? header : 'Mock Harvest Report' }}</h1>
+  <h1 data-cy="report-title">{{ header ? header : 'Mock Harvest Report' }}</h1>
   <p>Details:</p>
   <ul>
       <li><strong>Farm:</strong>{{farm}}</li>
