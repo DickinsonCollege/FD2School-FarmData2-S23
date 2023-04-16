@@ -35,7 +35,7 @@
         </div>
         <br>
     </form>
-    <button @click=" makeRequest(); logHarvest(); changeReportState('show'); setFarmUserLan()" data-cy="generate-btn">Generate Report</button>
+    <button @click=" makeRequest(); changeReportState('show'); setFarmUserLan()" data-cy="generate-btn">Generate Report</button>
     
 
     <hr>
@@ -53,7 +53,14 @@
             <li><b>Crop</b>:{{reportCrop}}</li>
         </ul>
         <br>
-        <table border="1">
+
+        <custom-table
+            :columns="columns"
+            :rows="reportTableRows"
+        >
+        </custom-table>
+
+        <!-- <table border="1">
             <tr v-if="harvestReportRows.length > 0">
                 <th>Row</th>
                 <th>Date</th>
@@ -74,7 +81,7 @@
                 <td>{{harvestLog.units}}</td>
                 <td><button v-on:click="deleteHarvest">Delete</button></td>
             </tr>
-        </table>
+        </table> -->
     </div>
 </div>
 
@@ -104,9 +111,17 @@
             harvestLogs: [],
             idToCropMap: new Map(),
             idToAreaMap: new Map(),
+            columns: [
+                {"header": 'Date', "visible": true, "inputType": {'type': 'no input'}},
+                {"header": 'Area', "visible": true, "inputType": {'type': 'no input'}},
+                {"header": 'Crop', "visible": true, "inputType": {'type': 'no input'}},
+                {"header": 'Yield', "visible": true, "inputType": {'type': 'no input'}},
+                {"header": 'Units', "visible": true, "inputType": {'type': 'no input'}},
+            ]
         },
         components: {
             'dropdown-with-all': DropdownWithAllComponent,
+            'custom-table': CustomTableComponent,
         },
         computed: {
             cropNames() {
@@ -146,22 +161,35 @@
                     }
                 }
                 return tableRows
+            },
+            reportTableRows() {
+                let tableRows = []
+                getIDToCropMap()
+                .then((theMap) => {
+                    this.idToCropMap = theMap
+                })
+                .catch((err) => {
+                    console.log(err)
+                })
+                for(let log of this.harvestLogs) {
+                    let tableRow = []
+                    tableRow.push(dayjs.unix(log.timestamp).format('DD/MM/YYYY')),
+                    tableRow.push(log.area[0].name)
+                    tableRow.push(this.idToCropMap.get(log.data.crop_tid))
+                    tableRow.push(log.quantity[0].value)
+                    tableRow.push(log.quantity[0].unit.name)
+
+                    tableRows.push({
+                        id: log.id,
+                        data: tableRow,
+                    })
+                }
+                return tableRows
             }
         },
         methods: {
             changeCrop: function(newCrop) {
                 this.reportCrop = newCrop
-            },
-            logHarvest: function() {
-                if (this.reportState !== 'default') {
-                    if (this.harvestLogs.length === 0) {
-                        this.harvestLogs.push({date: '2018-05-01', area: 'Orion-3', crop: 'Kale', yield: '12', units: 'Bunches'})
-                    } else if (this.harvestLogs.length === 1) {
-                        this.harvestLogs.push({date: '2020-03-02', area: 'Chuau-1', crop: 'Broccoli', yield: '6', units: 'Bunches'})
-                    } else if (this.harvestLogs.length === 2) {
-                        this.harvestLogs.push({date: '2019-04-21', area: 'Orion-2', crop: 'Cabbage', yield: '18', units: 'Bunches'})
-                    }
-                }
             },
             deleteHarvest: function(harvestIndex) {
                 this.harvestLogs.splice(harvestIndex, 1)
