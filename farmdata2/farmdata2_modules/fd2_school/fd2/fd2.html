@@ -59,29 +59,6 @@
             :rows="reportTableRows"
         >
         </custom-table>
-
-        <!-- <table border="1">
-            <tr v-if="harvestReportRows.length > 0">
-                <th>Row</th>
-                <th>Date</th>
-                <th>Area</th>
-                <th>Crop</th>
-                <th>Yield</th>
-                <th>Units</th>
-                <th>Delete</th>
-            </tr>
-            <p v-else>There are no matching records</p>
-    
-            <tr v-for="(harvestLog, index) in harvestReportRows">
-                <td>{{index + 1}}</td>
-                <td>{{harvestLog.date}}</td>
-                <td>{{harvestLog.area}}</td>
-                <td>{{harvestLog.crop}}</td>
-                <td>{{harvestLog.yield}}</td>
-                <td>{{harvestLog.units}}</td>
-                <td><button v-on:click="deleteHarvest">Delete</button></td>
-            </tr>
-        </table> -->
     </div>
 </div>
 
@@ -179,10 +156,17 @@
                     tableRow.push(log.quantity[0].value)
                     tableRow.push(log.quantity[0].unit.name)
 
-                    tableRows.push({
-                        id: log.id,
-                        data: tableRow,
-                    })
+                    if (this.idToCropMap.get(log.data.crop_tid).toUpperCase() === this.reportCrop) {
+                        tableRows.push({
+                            id: log.id,
+                            data: tableRow,
+                        })
+                    } else if (this.reportCrop === "All") {
+                        tableRows.push({
+                            id: log.id,
+                            data: tableRow,
+                        })
+                    }
                 }
                 return tableRows
             }
