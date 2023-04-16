@@ -17,4 +17,10 @@ describe("Test the contents of harvest report table", () => {
         cy.get("[data-cy=h4]")
         .should("have.text", "Units")
     })
+
+    it("Test the number of columns", () => {
+        cy.get("[data-cy=generate-btn]").click()
+        cy.get("[data-cy=table-headers]").children()
+        .should("have.length", 5)
+    })
 })
