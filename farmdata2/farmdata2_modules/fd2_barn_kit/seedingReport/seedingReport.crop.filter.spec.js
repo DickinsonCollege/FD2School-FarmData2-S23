@@ -17,31 +17,16 @@ describe("Test that the crop filter in the Seeding Report works as intended", ()
         cy.get('[data-cy=start-date-select]').type('2019-07-06')
         cy.get('[data-cy=end-date-select]').type('2019-07-12')
         cy.get('[data-cy=generate-rpt-btn]').click()
-
-        cy.get('[data-cy=crop-dropdown] > [data-cy=dropdown-input]')
-            .children()
-            .should("have.length", 4)//There should be four options: the three crops in this date range and the "All" option.
-
-        cy.get('[data-cy=crop-dropdown] > [data-cy=dropdown-input]') //the first option in the drop down should be "All"
-            .children()
-            .first()
-            .should('have.value', 'All')
-
-        cy.get('[data-cy=crop-dropdown] > [data-cy=dropdown-input]') //the second option in the drop down should be "BROCCOLI"
-            .children()
-            .first().next()
-            .should('have.value', 'BROCCOLI') 
-        
-        cy.get('[data-cy=crop-dropdown] > [data-cy=dropdown-input]') //the third option in the drop down should be "CAULIFLOWER"
-            .children()
-            .first().next().next()
-            .should('have.value', 'CAULIFLOWER') 
-
-        cy.get('[data-cy=crop-dropdown] > [data-cy=dropdown-input]') //the fourth, and final, option in the drop down should be "KOHLRABI"
-            .children().last()
-            .should('have.value', 'KOHLRABI') 
-
-        
+        //There should be four options: the three crops in this date range and the "All" option.
+        cy.get('[data-cy=crop-dropdown] > [data-cy=dropdown-input]').children().should("have.length", 4)
+        //the first option in the drop down should be "All"
+        cy.get('[data-cy=crop-dropdown] > [data-cy=dropdown-input] > [data-cy=option0]').should('have.value', 'All') 
+        //the second option in the drop down should be "BROCCOLI"
+        cy.get('[data-cy=crop-dropdown] > [data-cy=dropdown-input] > [data-cy=option1]').should('have.value', 'BROCCOLI') 
+        //the third option in the drop down should be "CAULIFLOWER"
+        cy.get('[data-cy=crop-dropdown] > [data-cy=dropdown-input] > [data-cy=option2]').should('have.value', 'CAULIFLOWER')  
+        //the fourth, and final, option in the drop down should be "KOHLRABI"
+        cy.get('[data-cy=crop-dropdown] > [data-cy=dropdown-input] > [data-cy=option3]').should('have.value', 'KOHLRABI') 
     })
 
     it("Tests that when 'All' crops are selected, the table will have seeding logs for several crops", () => {
@@ -88,7 +73,5 @@ describe("Test that the crop filter in the Seeding Report works as intended", ()
             cy.get('[data-cy=td-r'+i+"c1]")
             .should('contain.text', 'CAULIFLOWER')
         }
-        
-
     })
 })
