@@ -58,28 +58,14 @@
       <li><strong>Crop:</strong>{{rpCrops}}</li>
   </ul>
   <br>
-  <table border="1">
-      <colgroup span="5"></colgroup>
-      <tr v-if="harvestReportRows.length > 0">
-        <th>Row</th>
-        <th>Date</th>
-        <th>Area</th>
-        <th>Crop</th>
-        <th>Yield</th>
-        <th>Units</th>
-      </tr>
-      
-      <p v-else>No available records. Please update your search.</p>
 
-      <tr v-for="(log, index) in harvestReportRows">
-          <td>{{index + 1}}</td>
-          <td>{{log.date}}</td>
-          <td>{{log.area}}</td>
-          <td>{{log.crop}}</td>
-          <td>{{log.yield}}</td>
-          <td>{{log.units}}</td>
-      </tr>
-  </table>
+  <p v-if="harvestReportRows.length > 0">No available records. Please update your search.</p>
+  <div v-else>
+    <custom-table data-cy="test-table"
+        :columns="columns"
+        :rows="harvestReportRows">
+    </custom-table>
+  </div>
   <br />
 </div>
 
@@ -108,9 +94,18 @@
       language: "",
       idToCropMap: new Map(),
       idToAreaMap: new Map(),
+      columns: [
+                {"header": 'Row', "visible": true, "inputType": {'type': 'no input'}},
+                {"header": 'Date', "visible": true, "inputType": {'type': 'no input'}},
+                {"header": 'Area', "visible": true, "inputType": {'type': 'no input'}},
+                {"header": 'Crop', "visible": true, "inputType": {'type': 'no input'}},
+                {"header": 'Yield', "visible": true, "inputType": {'type': 'no input'}},
+                {"header": 'Units', "visible": true, "inputType": {'type': 'no input'}},
+            ]
     },
     components: {
-        'dropdown-with-all': DropdownWithAllComponent
+        'dropdown-with-all': DropdownWithAllComponent,
+        'custom-table': CustomTableComponent
     },
     methods: {
         changeState: function() {
@@ -195,14 +190,18 @@
                 })   
 
 	            for(let log of this.harvestLogs) {
-                    let cropName = this.idToCropMap.get(log.data.crop_tid);
+                    index = 0
+                    id = log.id
+                    crop: this.idToCropMap.get(log.data.crop_tid)
+                    area: log.area[0].name
+                    yield: log.quantity[0].value
+                    units: log.quantity[0].unit.name
+                    date: dayjs.unix(log.timestamp).format('DD/MM/YYYY')
+
                     if (this.crop === "All" || cropName === this.crop) {
 		            let tableRow = {
-                        crop: cropName,
-                        area: log.area[0].name,
-                        yield: log.quantity[0].value,
-                        units: log.quantity[0].unit.name,
-                        date: dayjs.unix(log.timestamp).format('DD/MM/YYYY'),
+                        id: index,
+                        data: [id, date, area, crop, yield, units]
 		            }
                     tableRows.push(tableRow)
                 }        
