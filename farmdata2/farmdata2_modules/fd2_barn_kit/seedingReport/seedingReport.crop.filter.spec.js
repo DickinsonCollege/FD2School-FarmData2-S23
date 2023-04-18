@@ -34,13 +34,10 @@ describe("Test that the crop filter in the Seeding Report works as intended", ()
         cy.get('[data-cy=start-date-select]').type('2019-07-06')
         cy.get('[data-cy=end-date-select]').type('2019-07-12')
         cy.get('[data-cy=generate-rpt-btn]').click()
-
         //Check to ensure All is selected in the dropdown
         cy.get('[data-cy=crop-dropdown] > [data-cy=dropdown-input]').should('have.value', 'All')
-
         //checking length of the table - should have 6 rows
         cy.get('[data-cy=table-body]').children().should('have.length', 6)
-        
         //make a list of the crops expected in the list
         const crops = ['KOHLRABI', 'BROCCOLI', 'CAULIFLOWER']
         //use regex to bind crops together into one string with 'or' statements
@@ -55,11 +52,10 @@ describe("Test that the crop filter in the Seeding Report works as intended", ()
     })
 
     it("Tests that when a specific crop is selected, the table will have only the seeding logs for that crop", () => {
-        //Check date range 07/06/2019 - 07/12/2019
+        //Selecting date range 07/06/2019 - 07/12/2019
         cy.get('[data-cy=start-date-select]').type('2019-07-06')
         cy.get('[data-cy=end-date-select]').type('2019-07-12')
         cy.get('[data-cy=generate-rpt-btn]').click()
-
         //Selecting CAULIFLOWER in the crops dropdown menu:
         cy.get('[data-cy=crop-dropdown] > [data-cy=dropdown-input]').select('CAULIFLOWER')
         //checking to ensure CAULIFLOWER is selected in the dropdown menu:
