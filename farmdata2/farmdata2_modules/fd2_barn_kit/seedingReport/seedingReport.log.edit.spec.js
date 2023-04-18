@@ -26,7 +26,7 @@ describe('Test the Edit Button Behavior', () => {
     }) 
 
     it("Check that cancel edit works", () => {
-        //Select start data
+        //Select start date
         cy.get('[data-cy="date-range-selection"] > [data-cy="start-date-select"] > [data-cy="date-select"]')
             .type('2020-04-10')
             .blur()
@@ -34,52 +34,45 @@ describe('Test the Edit Button Behavior', () => {
         //Click generate Report
         cy.get('[data-cy="generate-rpt-btn"]').click()
 
-        //Get row
-        let row =  cy.get('[data-cy="r0"]')
+        //Get row date
+        cy.get('[data-cy="r0-Date"]').then(($div)=>{
+            //store original row date
+            const rowDate = $div.text()
+            
+            //get and click edit
+            cy.get('[data-cy="r0-edit-button"]').click()
 
-        //Click edit button
-        cy.get('[data-cy="r0-edit-button"]').click()
+            //change date of row
+            cy.get('[data-cy="r0-Date-input"]')
+                .type('2020-04-10')
+            
+            //cancel
+            cy.get('[data-cy="r0-cancel-button"]')
+                .scrollIntoView()
+                .should('be.visible')
+                .click({force: true})
+            
+            //check that value is not changed in table
+            cy.get('[data-cy="r0-Date"]')
+                .should('have.text', rowDate)
 
-        //Edit date
-        cy.get('[data-cy="r0-Date-input"]')
+            //Check that the row is not updated in the database
+
+            //reload the page to reset the table
+            cy.reload()
+
+            //set the same date
+            cy.get('[data-cy="date-range-selection"] > [data-cy="start-date-select"] > [data-cy="date-select"]')
             .type('2020-04-10')
-        
-        
-        //Edit crop input
-        cy.get('[data-cy="r0-Crop-input"]')
-            .select(0)
-        
+            .blur()
 
-        //Edit Area
-        cy.get('[data-cy="r0-Area-input"]')
-            .select('Q')
+            //get the same table
+            cy.get('[data-cy="generate-rpt-btn"]').click()
 
-        //Edit Workers
-        cy.get('[data-cy="r0-Workers-input"]')
-            .type('4')
-
-        //Edit Hours
-        cy.get('[data-cy="r0-Hours-input"]')
-            .clear()
-            .type('8')
-
-        //Edit comments
-        cy.get('[data-cy="td-r0c13"]')
-            .type('Test')
-
-        //Edit user
-        //cy.get('[data-cy="r0-User-input"]')
-            //.select(0)
-
-        //Click cancel
-        //cy.get('[data-cy="r0-cancel-button"]').click()
-
-        //Check that row is unchanged
-
-        //Refresh page
-
-        //Check that ros is unchanged
-
+            //check that the value is the same as the original 
+            cy.get('[data-cy="r0-Date"]')
+                .should('have.text', rowDate)
+        })
     })
 
 
