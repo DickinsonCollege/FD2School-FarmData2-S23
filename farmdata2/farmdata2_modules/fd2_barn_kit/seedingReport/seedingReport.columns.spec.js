@@ -1,3 +1,19 @@
+const expectedHeaderNames = [
+  {"header": 'Date', "visible": true},
+  {"header": 'Crop', "visible": true},
+  {"header": 'Area', "visible": true},
+  {"header": 'Seeding', "visible": true},
+  {"header": 'Workers', "visible": true},
+  {"header": 'Hours', "visible": true},
+  {"header": 'Varieties', "visible": true},
+  {"header": 'Comments', "visible": true},
+  {"header": 'User', "visible": true},
+  {"header": 'Edit', "visible": true},
+  {"header": 'Seeds', "visible": true},
+  {"header": 'Trays', "visible": true},
+  {"header": 'Cells/Trays', "visible": true},
+];
+
 describe("Test the seeding report columns by seeding type", () => {
     beforeEach(() => {
         cy.login('manager1', 'farmdata2')
@@ -24,4 +40,28 @@ describe("Test the seeding report columns by seeding type", () => {
         cy.get('[data-cy=report-table]')
     })
 
-})
+    it("Tests the tray seeding columns", () =>{
+        cy.get('[data-cy=seeding-type-dropdown]  > [data-cy=dropdown-input]').select('Tray Seedings')
+
+        cy.get('[data-cy=report-table]')
+            .should('exist')
+
+        cy.get('[data-cy=report-table]')
+	cy.get('[data-cy=selectAll-checkbox]').should('be.visible');
+	cy.get('[data-cy="report-table"]').within(() => {
+      
+      cy.get('th').each((header, index) => {
+        if (index > 0 && index < expectedHeaderNames.length + 1) {
+          cy.wrap(header).should('have.text', expectedHeaderNames[index - 1].header);
+          if (expectedHeaderNames[index - 1].visible) {
+            cy.wrap(header).should('be.visible');
+          } else {
+            cy.wrap(header).should('not.be.visible');
+          }
+        }
+      });
+    });
+  });
+});
+
+
