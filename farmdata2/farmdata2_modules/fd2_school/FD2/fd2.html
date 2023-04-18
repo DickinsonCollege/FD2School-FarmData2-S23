@@ -1,42 +1,37 @@
 <!DOCTYPE html>
-    <head> 
 
-    </head>
-    <body>
+<head>
+
+</head>
+
+<body>
     <div id="vuecontent" v-cloak>
         <form>
             <h1>Harvest Report</h1>
-        <p> This page is a <i>mockup</i> of a simplified harvest report</p>
-        <label>Title: </label>
-        <input type="text" id="Title" name="title" v-model="rptTitle" value ="Mock Harvest Report"> 
-        <br>
-        <label for="startDate">Start:</label>
-        <input type="date" id="startDate"
-            value="2020-05-05"
-            min="2014-01-01" max="2022-01-01"
-            v-bind:max="rptEndDate"
-            v-model="rptStartDate"
-            value="Mock Harvest Report"/>
+            <p> This page is a <i>mockup</i> of a simplified harvest report</p>
+            <label>Title: </label>
+            <input type="text" id="Title" name="title" v-model="rptTitle" value="Mock Harvest Report">
+            <br>
+            <label for="startDate">Start:</label>
+            <input type="date" id="startDate" value="2020-05-05" min="2014-01-01" max="2022-01-01"
+                v-bind:max="rptEndDate" v-model="rptStartDate" value="Mock Harvest Report" />
 
-        <label for="endDate">End:</label>
-        <input type="date" id="endDate"
-            value="2020-05-15"
-            min="2020-05-05" max="2022-01-01"
-            v-bind:min="rptStartDate"
-            v-model="rptEndDate"
-            value="Mock Harvest Report">
-        <br>
-        <label for="cropList">Crop:</label>
-        <select id="cropList" v-model="rptCrop" name ="cropList">
-            <option v-for="item in crops">{{item}}</option>
-        </select>
+            <label for="endDate">End:</label>
+            <input type="date" id="endDate" value="2020-05-15" min="2020-05-05" max="2022-01-01"
+                v-bind:min="rptStartDate" v-model="rptEndDate" value="Mock Harvest Report">
+            <br>
+            <label for="cropList">Crop:</label>
+            <dropdown-with-all data-cy="crops" includes-all :selected-val='crop' :dropdown-list='cropList'
+                @selection-changed="cropChange" :disabled="false">
+                Pick a Crop:
+            </dropdown-with-all>
 
-        <label for="areaList">Area:</label>
-        <select id="areaList" name ="area">
-            <option v-for="item in areas">{{item}}</option>
-        </select>
-        <br> 
-        <!-- <input type="button" value="Generate Report" @click="generaterpt"></input>   -->
+            <label for="areaList">Area:</label>
+            <select id="areaList" name="area">
+                <option v-for="item in areas" :value="item">{{item}}</option>
+            </select>
+            <br>
+            <!-- <input type="button" value="Generate Report" @click="generaterpt"></input>   -->
         </form>
         <button type="button" v-on:click='generaterpt'></button> Generate Report</button>
 
@@ -50,8 +45,8 @@
         <ul>
             <li><strong>Farm</strong>: {{farmName}}</li>
             <li><strong>User</strong>: {{currentUser}}</li>
-            <li><strong>Language</strong>: {{language}}</li>      
-            <br>  
+            <li><strong>Language</strong>: {{language}}</li>
+            <br>
         </ul>
         <ul>
             <li><b>Start</b>:{{rptStartDate}}</li>
@@ -69,7 +64,9 @@
                 <th>Yield</th>
                 <th>Units</th>
             </tr>
-            <tr v-else><th>No matching records!</th></tr>
+            <tr v-else>
+                <th>No matching records!</th>
+            </tr>
             <tr v-for="(log,index) in harvestReportRows()">
                 <td>{{index + 1}}</td>
                 <td>{{log.date}}</td>
@@ -80,96 +77,116 @@
 
             </tr>
 
-        </table> 
-    </div>  
+        </table>
+    </div>
     <script src="https://unpkg.com/vue@2"></script>
     <script>
 
         var spike = new Vue({
-          el:'#vuecontent',
-          data:{
-             rptTitle: 'Mock Harvest Report',
-             rptStartDate:'2020-01-01',
-             rptEndDate:'2020-01-01',
-             rptCrop:'',
-             rptArea: '',
-             crops:["Brocoli", "Kale", "Peas"],
-             areas: ["All", "Chuau-1", "SQ7"],
-             hlogs : [],
-             farmName:'',
-             currentUser:'',
-             language:'',
-             idToCropMap: new Map(),
-             idToAreaMap: new Map(),
-          },
-          computed:{
-            cropNames: function(){
-                return Array.from(this.idToCropMap.values());
+            el: '#vuecontent',
+            data: {
+                rptTitle: 'Mock Harvest Report',
+                rptStartDate: '2020-01-01',
+                rptEndDate: '2020-01-01',
+                rptCrop: '',
+                rptArea: '',
+                crops: ["Brocoli", "Kale", "Peas"],
+                areas: ["All", "Chuau-1", "SQ7"],
+                hlogs: [],
+                farmName: '',
+                currentUser: '',
+                language: '',
+                idToCropMap: new Map(),
+                idToAreaMap: new Map(),
             },
-            harvestReportRows(){
-                let tableRows = []
-                for(let log of this.harvestLogs){
-
-                    let tableRow = {
-                        date: log.timestamp,
+            computed: {
+                cropNames: function () {
+                    return Array.from(this.idToCropMap.values());
+                },
+                harvestReportRows() {
+                    let tableRows = []
+                    getIDToCropMap()
+                    .then((map)=> {
+                        this.idToCropMap = map
+                    })
+                    .catch((error) => {
+                        console.log(error)
+                    })
+                    for (let log of this.harvestLogs){
+                        let tableRow = []
+                        date: dayjs.unix(log.timestamp).format('YYYY-MM-DD'),
+                        area: log.area[0].name,
+                        crop: this.idToCropMap.get(log.data.crop_tid),
+                        yield: log.quantity[0].value,
+                        units: log.quantity[0].unit.name,
                     }
+                    // let tableRows = {
+                    //     date: dayjs.unix(log.timestamp).format('YYYY-MM-DD'),
+                    //     area: log.area[0].name,
+                    //     crop: this.idToCropMap.get(log.data.crop_tid),
+                    //     yield: log.quantity[0].value,
+                    //     units: log.quantity[0].unit.name,
+                    // }
                     tableRows.push(tableRow)
+                    return tableRows
                 }
-                return tableRows
-            }
-          },
-           methods:{
-            generaterpt: function(){
-                
-                // this.hlogs.push({date:'2018-05-01', area: 'Orion-3', crop: 'Kale', yield: '12',units: 'Bunches'});
-                // this.farmName = 'Sample Farm';
-                // this.currentUser = 'manager1';
-                // this.language = 'English';
+            },
+            
+            
 
-                 axios.get('/farm.json')
-                 .then((response) => {
-                    this.hlogs.push({date:'2018-05-01', area: 'Orion-3', crop: 'Kale', yield: '12',units: 'Bunches'});
-                    this.farmName = response.data.name;
-                    this.currentUser = response.data.user.name;
-                    this.language = response.data.languages.en.name; 
+            methods: {
+                generaterpt: function () {
 
-                    let startTimestamp = dayjs(this.rptStartDate).unix();
-                    let endTimestamp = dayjs(this.rptEndDate).unix();
+                    // this.hlogs.push({date:'2018-05-01', area: 'Orion-3', crop: 'Kale', yield: '12',units: 'Bunches'});
+                    // this.farmName = 'Sample Farm';
+                    // this.currentUser = 'manager1';
+                    // this.language = 'English';
 
-                    console.log("Timestamp Start: ", startTimestamp);
-                    console.log("Timestamp End: ", endTimestamp);
+                    axios.get('/farm.json')
+                        .then((response) => {
+                            this.hlogs.push({ date: '2018-05-01', area: 'Orion-3', crop: 'Kale', yield: '12', units: 'Bunches' });
+                            this.farmName = response.data.name;
+                            this.currentUser = response.data.user.name;
+                            this.language = response.data.languages.en.name;
 
-                    let request = '\log.json?type=farm_harvest&timestamp[ge]=${startTimestamp}&timestamp[le]=${endTimestamp}';
-                    console.log(request);
-                 })
-                 .catch((error) => {
-                    console.log('Error Occurred')
-                    console.log(error)
-                 })
-                 if(this.hlogs.length==0){
-                    this.hlogs.push({date:'2018-05-01', area: 'Orion-3', crop: 'Kale', yield: '12',units: 'Bunches'})
-                 }
-                 getAllPages(request, hlogs)
-                 .then(()=> {
+                            let startTimestamp = dayjs(this.rptStartDate).unix();
+                            let endTimestamp = dayjs(this.rptEndDate).unix();
 
-                 })
-                 .catch((error)=>{
-                    console.log('Error in getting pages')
-                 })
-                 
-             },
-           },
-           created(){
+                            console.log("Timestamp Start: ", startTimestamp);
+                            console.log("Timestamp End: ", endTimestamp);
+
+                            let request = '\log.json?type=farm_harvest&timestamp[ge]=${startTimestamp}&timestamp[le]=${endTimestamp}';
+                            console.log(request);
+                        })
+                        .catch((error) => {
+                            console.log('Error Occurred')
+                            console.log(error)
+                        })
+                    if (this.hlogs.length == 0) {
+                        this.hlogs.push({ date: '2018-05-01', area: 'Orion-3', crop: 'Kale', yield: '12', units: 'Bunches' })
+                    }
+                    getAllPages(request, hlogs)
+                        .then(() => {
+
+                        })
+                        .catch((error) => {
+                            console.log('Error in getting pages')
+                        })
+
+                },
+            },
+            created() {
                 getIDToCropMap()
-                .then((theMap) => {
-                    this.idToCropMap = theMap;
-            })
-                .catch((error) => {
-                    console.log('Error Occurred')
-            })
-           },
+                    .then((theMap) => {
+                        this.idToCropMap = theMap;
+                    })
+                    .catch((error) => {
+                        console.log('Error Occurred')
+                    })
+            },
         })
         Vue.config.devtools = true;
-      </script>   
-       </body> 
+    </script>
+</body>
+
 </html>
