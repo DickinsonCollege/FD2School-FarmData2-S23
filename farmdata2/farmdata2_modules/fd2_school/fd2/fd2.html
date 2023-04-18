@@ -195,17 +195,22 @@
                 })   
 
 	            for(let log of this.harvestLogs) {
+                    let cropName = this.idToCropMap.get(log.data.crop_tid);
+                    if (this.crop === "All" || cropName === this.crop) {
 		            let tableRow = {
-                    crop: this.idToCropMap.get(log.data.crop_tid),
-                    area: log.area[0].name,
-                    yield: log.quantity[0].value,
-                    units: log.quantity[0].unit.name,
-                    date: dayjs.unix(log.timestamp).format('DD/MM/YYYY'),
-		        }
+                        crop: cropName,
+                        area: log.area[0].name,
+                        yield: log.quantity[0].value,
+                        units: log.quantity[0].unit.name,
+                        date: dayjs.unix(log.timestamp).format('DD/MM/YYYY'),
+		            }
+                    tableRows.push(tableRow)
+                }        
+
                 if (tableRow.crop.toUpperCase() === this.rpCrops) {
-                        tableRows.push(tableRow)
-                    }             
-	            }
+                    tableRows.push(tableRow)
+                }             
+            }
 	            return tableRows
             }
         },
