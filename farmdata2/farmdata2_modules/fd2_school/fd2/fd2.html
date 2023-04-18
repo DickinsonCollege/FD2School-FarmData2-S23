@@ -26,9 +26,16 @@
   />
   <br />
   <label for="crop">Crop:</label>
-  <select data-cy="crop-drop-down" id="crop" v-model="rpCrops">
-    <option v-for="crop in cropNames" :value="crop">{{crop}}</option>
-  </select>
+  <dropdown-with-all 
+        data-cy="crop-drop-down" 
+        id="crop"
+        includes-all 
+        :dropdown-list="cropNames"
+        :selected-val="rpCrops"
+        :disabled="false"
+        @selection-changed="cropChange">
+  </dropdown-with-all>
+
   <label for="area">Area:</label>
   <select id="area">
     <option v-for="area in areaNames" :value="area">{{area}}</option>
@@ -84,7 +91,7 @@
       state: "default",
       startDate:"2020-05-05",
       endDate: "2020-05-15",
-      rpCrops: "",
+      rpCrops: "All",
       crops: [
                 "Broccoli",
                 "Kale",
@@ -101,6 +108,9 @@
       language: "",
       idToCropMap: new Map(),
       idToAreaMap: new Map(),
+    },
+    components: {
+        'dropdown-with-all': DropdownWithAllComponent
     },
     methods: {
         changeState: function() {
@@ -132,7 +142,11 @@
             .catch((err) => {
                 console.log(err);
             })
-    }
+        },
+
+        cropChange: function(newCrop){
+                this.rpCrops = newCrop;
+            }
     },
 
     created() {
