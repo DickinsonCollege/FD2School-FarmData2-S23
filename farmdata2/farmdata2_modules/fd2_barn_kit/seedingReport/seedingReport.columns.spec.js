@@ -26,11 +26,41 @@ describe("Test the seeding report columns by seeding type", () => {
         //first generate a report
         cy.get('[data-cy=start-date-select]').type('2020-01-01')
         cy.get('[data-cy=end-date-select]').type('2020-07-01')
+        
         cy.get('[data-cy=generate-rpt-btn]')
             .click()
 
         cy.waitForPage()
     })
+
+    it('Checks the Report Table header for the "all" option', () => {
+      // Generate report table
+
+      cy.scrollTo(0,50)
+
+      //Check correctness of table header columns
+      cy.get("[data-cy=r1-cbuttonCheckbox]").should('not.be.disabled')
+      cy.get(" [data-cy=table-headers]").children().eq(1).should('have.text',"Date")
+      cy.get(" [data-cy=table-headers]").children().eq(2).should('have.text',"Crop")
+      cy.get(" [data-cy=table-headers]").children().eq(3).should('have.text',"Area")
+      cy.get(" [data-cy=table-headers]").children().eq(4).should('have.text',"Seeding")
+      cy.get(" [data-cy=table-headers]").children().eq(5).should('have.text',"Workers")
+      cy.get(" [data-cy=table-headers]").children().eq(6).should('have.text',"Hours")
+      cy.get(" [data-cy=table-headers]").children().eq(7).should('have.text',"Varieties")
+      cy.get(" [data-cy=table-headers]").children().eq(8).should('have.text',"Comments")
+      cy.get(" [data-cy=table-headers]").children().eq(9).should('have.text',"User")
+      //cy.get(" [data-cy=table-headers]").children().eq(10).should('have.text',"Edit")
+  
+      cy.wait(1000)
+
+      // Check visibility of table header columns
+      let i = 1
+      for (i;i<10;i++){
+          cy.get(" [data-cy=table-headers]").children().eq(i).should('be.visible')
+      }
+
+      cy.get("[data-cy=r1-cbuttonCheckbox]").should('be.visible')
+  })
 
     it("Tests the direct seeding columns", () =>{
         cy.get('[data-cy=seeding-type-dropdown]  > [data-cy=dropdown-input]').select('Direct Seedings')
