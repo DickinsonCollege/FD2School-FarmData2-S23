@@ -14,7 +14,7 @@ describe("Testing SubTabs in BarnKit", () => {
         cy.get(".pagination-sm > li > a").eq(2).should("contain.text", "Transplanting Report")
     }) 
     it("BarnKit has two sub tabs" , () => {
-        cy.get(".pagination-sm > li").should("have.length", "2") 
+        cy.get(".pagination-sm > li").next().children().should("have.length", "2") 
     }) 
 
 })
