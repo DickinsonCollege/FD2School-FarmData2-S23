@@ -14,6 +14,7 @@ const expectedHeaderNames = [
   {"header": 'Cells/Trays', "visible": true},
 ];
 
+
 describe("Test the seeding report columns by seeding type", () => {
     beforeEach(() => {
         cy.login('manager1', 'farmdata2')
@@ -36,8 +37,37 @@ describe("Test the seeding report columns by seeding type", () => {
 
         cy.get('[data-cy=report-table]')
             .should('exist')
+        cy.get('[data-cy=selectAll-checkbox]').should('be.visible');
 
-        cy.get('[data-cy=report-table]')
+        const baseString = '[data-cy=table-headers] > [data-cy=h*]';
+        const allHeaders = [
+            {"header": 'Date', "visible": true}, 
+            {"header": 'Crop', "visible": true}, 
+            {"header": 'Area', "visible": true}, 
+            {"header": 'Seeding', "visible": true},
+            {"header": 'Row Feet', "visible": true},
+            {"header": 'Bed Feet', "visible": true},
+            {"header": 'Rows/Bed', "visible": true},
+            {"header": 'Seeds', "visible": false},
+            {"header": 'Trays', "visible": false},
+            {"header": 'Cells/Tray', "visible": false},
+            {"header": 'Workers', "visible": true},
+            {"header": 'Hours', "visible": true},
+            {"header": 'Varieties', "visible": true},
+            {"header": 'Comments', "visible": true},
+            {"header": 'User', "visible": true}
+        ];
+        cy.get('[data-cy=report-table]').within(() => {
+            let j = 0;
+            for(let i = 0; i < allHeaders.length; i++){
+                if(allHeaders[i].visible){
+                    cy.get(baseString.replace('*',j)).should("have.text", allHeaders[i].header)
+                    j++;
+                }else{
+                    j++;
+                }
+            }
+        })
     })
 
     it("Tests the tray seeding columns", () =>{
