@@ -19,7 +19,6 @@ describe('Test the submit button behavior', () => {
     })
 
     it('test tray seeding input has all required fields filled when submission button is enabled', () => {
-        //tests assume each of the buttons are 
         //Select the tray seeding input type
         cy.get('[data-cy="tray-seedings"]').click()
             .blur()
@@ -128,7 +127,6 @@ describe('Test the submit button behavior', () => {
             .should('not.be.disabled')
     })
 
-
     it('test Direct seeding input has all required fields filled when submission button is enabled', () => {
 
         //Select the direct seeding input type
@@ -173,7 +171,6 @@ describe('Test the submit button behavior', () => {
         //check that the submission button is disabled
         cy.get('[data-cy="submit-button"]')
             .should('be.disabled')
-
         
        // Select Row Feet
        cy.get('[data-cy="unit-feet"] > [data-cy="dropdown-input"]')
@@ -242,14 +239,9 @@ describe('Test the submit button behavior', () => {
             .type(3)
             .blur()
 
-        //check that the submission button is disabled
-        cy.get('[data-cy="submit-button"]')
-            .should('be.disabled')
-
         //all blank fields have now been filled submission button should be enabled
         //check that the submission button is enabled
         cy.get('[data-cy="submit-button"]')
             .should('not.be.disabled')
     })
-
 })
