@@ -15,7 +15,7 @@ describe("Testing Transplanting Report in BarnKit", () => {
         cy.get("[data-cy = report-table]").should("not.exist")
     })
 
-    it("Check generate button in table", () => {
+    it("Check generate button functionality", () => {
         cy.get("[data-cy = generate-rpt-btn]").should("have.text", "Generate Report")
         cy.get("[data-cy = generate-rpt-btn]").should("be.enabled")
     })
