@@ -29,24 +29,28 @@ describe("Test that the crop filter in the Seeding Report works as intended", ()
         cy.get('[data-cy=crop-dropdown] > [data-cy=dropdown-input] > [data-cy=option3]').should('have.value', 'KOHLRABI') 
     })
 
+    /**
+     * The test below will check that when the All option is selected,
+     * the seeding report table will contain several different crops.
+     * First, the table should have 6 rows, and the length has been validated.
+     * Next, the crops variable is a list of crops which should appear in the table.
+     * The cropsRegex variable uses regex to combine the expected crops
+     * into a list which can act as an "or" statement when .contains() is used.
+     * This will check that a crop value existing in our table is expected.
+     * Thus, for each row in the table, the crop value is checked
+     * using its data-cy attribute to validate that the crop exists in
+     * the list of expected crops, and that there are several unique crops.
+     */
     it("Tests that when 'All' crops are selected, the table will have seeding logs for several crops", () => {
-        //Check date range 07/06/2019 - 07/12/2019
         cy.get('[data-cy=start-date-select]').type('2019-07-06')
         cy.get('[data-cy=end-date-select]').type('2019-07-12')
         cy.get('[data-cy=generate-rpt-btn]').click()
-        //Check to ensure All is selected in the dropdown
         cy.get('[data-cy=crop-dropdown] > [data-cy=dropdown-input]').should('have.value', 'All')
-        //checking length of the table - should have 6 rows
         cy.get('[data-cy=table-body]').children().should('have.length', 6)
-        //make a list of the crops expected in the list
         const crops = ['KOHLRABI', 'BROCCOLI', 'CAULIFLOWER']
-        //use regex to bind crops together into one string with 'or' statements
         const cropsRegex = new RegExp(`${crops.join('|')}`, 'g')
-        //Check that several crops have logs in the table when All is selected
         for(let i = 0; i < 6; i++)
         {
-            //for each row in the table,
-            //the crop should be one of the crops in the list
             cy.get('[data-cy=td-r'+i+'c1]').contains(cropsRegex)
         }
     })
