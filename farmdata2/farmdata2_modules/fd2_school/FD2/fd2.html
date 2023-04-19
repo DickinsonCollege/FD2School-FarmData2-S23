@@ -84,6 +84,11 @@
 
         var spike = new Vue({
             el: '#vuecontent',
+            components: {
+            'dropdown-with-all': DropdownWithAllComponent,
+            'custom-table': CustomTableComponent,
+            },
+
             data: {
                 rptTitle: 'Mock Harvest Report',
                 rptStartDate: '2020-01-01',
@@ -98,6 +103,14 @@
                 language: '',
                 idToCropMap: new Map(),
                 idToAreaMap: new Map(),
+                columns: [
+                {"header": 'Row', "visible": true, "inputType": {'type': 'no input'}},
+                {"header": 'Date', "visible": true, "inputType": {'type': 'no input'}},
+                {"header": 'Area', "visible": true, "inputType": {'type': 'no input'}},
+                {"header": 'Crop', "visible": true, "inputType": {'type': 'no input'}},
+                {"header": 'Yield', "visible": true, "inputType": {'type': 'no input'}},
+                {"header": 'Units', "visible": true, "inputType": {'type': 'no input'}},
+            ]
             },
             computed: {
                 cropNames: function () {
@@ -112,7 +125,7 @@
                     .catch((error) => {
                         console.log(error)
                     })
-                    for (let log of this.harvestLogs){
+                    for (let log of this.hlogs){
                         let tableRow = []
                         date: dayjs.unix(log.timestamp).format('YYYY-MM-DD'),
                         area: log.area[0].name,
@@ -120,20 +133,19 @@
                         yield: log.quantity[0].value,
                         units: log.quantity[0].unit.name,
                     }
-                    // let tableRows = {
-                    //     date: dayjs.unix(log.timestamp).format('YYYY-MM-DD'),
-                    //     area: log.area[0].name,
-                    //     crop: this.idToCropMap.get(log.data.crop_tid),
-                    //     yield: log.quantity[0].value,
-                    //     units: log.quantity[0].unit.name,
-                    // }
+                    if (crop == this.rptCrop || this.rptCrop == 'All'){
+                    let tableRow = {
+                        id: index,
+                        data: [id, date, area, crop, yield, units]
+                    }
+                    tableRows.push(tableRow)
+                }
+
+                    
                     tableRows.push(tableRow)
                     return tableRows
                 }
-            },
-            
-            
-
+            },            
             methods: {
                 generaterpt: function () {
 
