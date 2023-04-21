@@ -14,9 +14,15 @@ describe("Tests for seeding input", () => {
     cy.get('[data-cy=num-feet-input]').should('be.visible');
   });
 
-  //sub-task #2,3 issue 159
+  //sub-task #2 issue 159
+  it('checks that the area dropdown is enabled', () => {
+    cy.get('[data-cy=direct-seedings]').click()
+    cy.get('[data-cy=direct-area-selection] > [data-cy=dropdown-input]')
+      .should('be.enabled')
+  });
+
+  //sub-task #3 issue 159
   it('test if areas are correctly loaded to the dropdown for direct seeding', () => {
-    cy.waitForPage()
     cy.get('[data-cy=direct-seedings]')
       .click()
     cy.get('[data-cy=direct-area-selection] > [data-cy=dropdown-input] > [data-cy=option0]')
