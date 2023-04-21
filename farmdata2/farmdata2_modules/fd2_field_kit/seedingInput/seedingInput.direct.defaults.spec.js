@@ -23,6 +23,7 @@ describe("Tests for seeding input", () => {
 
   //sub-task #3 issue 159
   it('test if areas are correctly loaded to the dropdown for direct seeding', () => {
+    cy.waitForPage()
     cy.get('[data-cy=direct-seedings]')
       .click()
     cy.get('[data-cy=direct-area-selection] > [data-cy=dropdown-input] > [data-cy=option0]')
