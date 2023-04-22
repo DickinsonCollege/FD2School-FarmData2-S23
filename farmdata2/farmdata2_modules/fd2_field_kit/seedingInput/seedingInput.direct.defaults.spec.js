@@ -5,7 +5,6 @@ describe("Tests for seeding input", () => {
     cy.visit('/farm/fd2-field-kit/seedingInput')
   })
 
-  //sub-task #1 issue 159
   it('should display the Direct Seeding section when Direct is selected', () => {
     cy.get('[data-cy=direct-seedings]').check();
     cy.get('[data-cy=direct-area-selection]').should('be.visible');
@@ -14,14 +13,12 @@ describe("Tests for seeding input", () => {
     cy.get('[data-cy=num-feet-input]').should('be.visible');
   });
 
-  //sub-task #2 issue 159
   it('checks that the area dropdown is enabled', () => {
     cy.get('[data-cy=direct-seedings]').click()
     cy.get('[data-cy=direct-area-selection] > [data-cy=dropdown-input]')
       .should('be.enabled')
   });
 
-  //sub-task #3 issue 159
   it('test if areas are correctly loaded to the dropdown for direct seeding', () => {
     cy.waitForPage()
     cy.get('[data-cy=direct-seedings]')
@@ -35,7 +32,6 @@ describe("Tests for seeding input", () => {
       .should('have.length', 65)
   })
 
-  //sub-task #4 issue 159
   it('checks that there is a field for "Row/Bed" that is empty and enabled', () => {
     cy.get('[data-cy=direct-seedings]').click()
     cy.get('[data-cy=num-rowbed-input] > [data-cy=text-input]')
@@ -43,7 +39,6 @@ describe("Tests for seeding input", () => {
       .should('have.value', '')
   })
 
-  //sub-task #5 issue 159
   it('checks that there is a field for "Bed Feed" that is empty and enabled', () => {
     cy.get('[data-cy=direct-seedings]').click()
     cy.get('[data-cy=unit-feet] > [data-cy=dropdown-input]')
@@ -54,7 +49,6 @@ describe("Tests for seeding input", () => {
       .should('have.value', '')
   })
 
-  //sub-task #6,7 issue 159
   it('should display dropdown for units that is enabled', () => {
     cy.get('[data-cy=direct-seedings]')
       .click()
@@ -67,7 +61,6 @@ describe("Tests for seeding input", () => {
       .should('have.length', 2)
   })
 
-  //sub-task #8 issue 159  
   it('checks that "Bed Feet" is the default units', () => {
     cy.get('[data-cy=direct-seedings]').click()
     cy.get('[data-cy=unit-feet] > [data-cy=dropdown-input]')
