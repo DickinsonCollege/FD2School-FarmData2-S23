@@ -5,6 +5,7 @@ describe('Tests for SeedingInput log creation', () => {
     cy.visit('/farm/fd2-field-kit/seedingInput')
   })
 
+  //sub-task #1 issue #203
   it("Checks all of the input elements in the form remain populated with their existing values in tray seeding", () => {
 
     //type all inputs into seedingInput report
@@ -55,6 +56,7 @@ describe('Tests for SeedingInput log creation', () => {
       .should('have.value', '60')
   })
 
+  //sub-task #2 issue #203
   it("Checks all of the input elements in the form remain populated with their existing values in direct seeding", () => {
 
     //type all inputs into seedingInput report
@@ -101,5 +103,37 @@ describe('Tests for SeedingInput log creation', () => {
       .should('have.value', '60')
   })
 
+  //sub-task #3 issue #203
+  it("Checks the “Submit” button is enabled after the “Cancel” button is clicked", () => {
+
+    //type all inputs into seedingInput report
+    cy.get('[data-cy=date-select')
+      .type('2022-10-06')
+    cy.get('[data-cy=crop-selection] > [data-cy=dropdown-input]')
+      .select("ARUGULA")
+    cy.get('[data-cy=direct-seedings]')
+      .click()
+    cy.get('[data-cy=direct-area-selection] > [data-cy=dropdown-input]')
+      .select('A')
+    cy.get('[data-cy=num-rowbed-input] > [data-cy=text-input]')
+      .type('3')
+    cy.get('[data-cy=num-feet-input] > [data-cy=text-input]')
+      .type('3')
+    cy.get('[data-cy=num-worker-input] > [data-cy=text-input]')
+      .type('3')
+    cy.get('[data-cy=minute-input] > [data-cy=text-input]')
+      .type('60')
+      .blur()
+
+    //click submit button and then click cancel button
+    cy.get('[data-cy=submit-button]')
+      .click()
+    cy.get('[data-cy=cancel-button]')
+      .click()
+      
+    //checks if the "Submit" button is enabled
+    cy.get('[data-cy=submit-button]')
+      .should('not.be.disabled')
+  })
 
 })
