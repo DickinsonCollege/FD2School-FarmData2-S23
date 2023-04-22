@@ -1,3 +1,9 @@
+/*
+This file contains tests for the seeding input functionality in the FarmData2 Field Kit application.
+The purpose of these tests is to verify the proper functioning of the seeding input form elements,
+such as display, loading of area data, field states, and default values.
+*/
+
 describe("Tests for seeding input", () => {
 
   beforeEach(() => {
