@@ -140,15 +140,16 @@ describe('Tests for SeedingInput log creation', () => {
       .should('not.be.disabled')
   })
 
-  it("Checks no log was created in the database", () => {
+  //sub-task #4 issue #203
+  it("Checks no log was created in the database when the “Cancel” button is clicked", () => {
 
     // Get the start and end timestamps for the date range we want.
     let start = dayjs("2020-05-05","YYYY-MM-DD").unix()
-    // Add 1 day here to get to the end of May 5th.
+    // Add 1 day here to get to the end of May 15th.
     let end = dayjs("2020-05-15","YYYY-MM-DD").add(1,'day').unix()
 
     /*
-     * Request all of the farm seedings between 2020-05-01 and 2020-05-15. There
+     * Request all of the farm seedings between 2020-05-05 and 2020-05-15. There
      * were 56 seeding in this date range.
      */
     let url = "/log.json?type=farm_seeding&timestamp[gt]="+start+"&timestamp[lt]="+end
@@ -189,7 +190,7 @@ describe('Tests for SeedingInput log creation', () => {
       .click()
 
     /*
-     * Request all of the farm seedings between 2020-05-01 and 2020-05-15 again. There
+     * Request all of the farm seedings between 2020-05-05 and 2020-05-15 again. There
      * should still be 56 seeding in this date range.
      */
     let seedingLogsAfter = []
