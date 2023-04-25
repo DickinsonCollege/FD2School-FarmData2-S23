@@ -10,7 +10,7 @@ var FarmOSAPI = require("../../resources/FarmOSAPI.js")
 var getSessionToken = FarmOSAPI.getSessionToken
 var deleteRecord = FarmOSAPI.deleteRecord
 var createRecord = FarmOSAPI.createRecord
-
+var getRecord = FarmOSAPI.getRecord
 describe('Test the Edit Button Behavior', () => {
     //session token to access database
     let sessionToken = null
@@ -25,7 +25,7 @@ describe('Test the Edit Button Behavior', () => {
             sessionToken = token
         })
         cy.visit('/farm/fd2-barn-kit/seedingReport')
-        cy.waitForPage()
+        //cy.waitForPage()
     }) 
 
     it("Check that cancel edit works", () => {
@@ -78,10 +78,13 @@ describe('Test the Edit Button Behavior', () => {
         })
     })
 
-    context("Create a new log, do some tests, delete the log(s) ", () => {
+    context("Create a new Direct seeding log, perform edit tests on it, then delete it. ", () => {
 
         let logID = null
-
+        //initialize the new values
+        let newDate = '2022-05-10'
+        let newArea = "GHANA-3"
+        
         beforeEach(() => {
             cy.wrap(makeDirectSeeding("Test Seeding")).as("make-seeding")
             
@@ -91,6 +94,42 @@ describe('Test the Edit Button Behavior', () => {
                 logID = response.data.id            
             })
         })
+        it("Check some edits made on Direct Seeding is reflected on the table", () => {
+            //select the date range to find the new log
+            cy.get('[data-cy="date-range-selection"] > [data-cy="start-date-select"] > [data-cy="date-select"]')
+            .type('1999-01-01')
+            .blur()
+            cy.get('[data-cy="date-range-selection"] > [data-cy="end-date-select"] > [data-cy="date-select"]')
+            .type('1999-02-02')
+            .blur()
+    
+                //Click generate Report
+            cy.get('[data-cy="generate-rpt-btn"]').click()
+            cy.get('[data-cy="seeding-type-dropdown"]  > [data-cy=dropdown-input]').select('Direct Seedings')
+                //get and click edit
+            cy.get('[data-cy="r0-edit-button"]').click()
+                //change date of row
+            cy.get('[data-cy="r0-Date-input"]')
+                .type(newDate)
+                //change area of row
+            cy.get('[data-cy="r0-Area-input"]')
+                .select(newArea)
+             
+              //save
+            cy.get('[data-cy="r0-save-button"]')
+                .scrollIntoView()
+                .should('be.visible')
+                .click({force: true})
+                //check that value is changed to the appropriate new values in table
+            cy.get('[data-cy="r0-Date"]')
+                .should('have.text', newDate)
+            cy.get('[data-cy="r0-Area"]')
+                .should('have.text', newArea)
+           
+           
+        })
+        
+
         
         afterEach(() => {
             cy.wrap(deleteRecord("/log/"+logID, sessionToken)).as("delete-seeding")
@@ -111,7 +150,7 @@ describe('Test the Edit Button Behavior', () => {
                     logID = response.data.id            
                 })
         })
-
+   
         //Delete Tray seeding report used for testing
         afterEach(() => {
             cy.wrap(deleteRecord("/log/"+logID, sessionToken)).as("delete-seeding")
@@ -184,7 +223,7 @@ describe('Test the Edit Button Behavior', () => {
             ],
             "created": dayjs().unix(),
             "lot_number": "N/A (No Variety)",
-            "data": "{\"crop_tid\": \"161\"}"
+            "data": "{\"crop_tid\": \"162\"}"
         }       
 
         return createRecord('/log', json, sessionToken)
@@ -269,4 +308,5 @@ describe('Test the Edit Button Behavior', () => {
 
         return createRecord('/log', json, sessionToken)
     }
+ 
 })
