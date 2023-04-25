@@ -28,7 +28,7 @@ describe('Test the Edit Button Behavior', () => {
         //cy.waitForPage()
     }) 
 
-    it("Check that cancel edit works", () => {
+    /* it("Check that cancel edit works", () => {
         //Select start date
         cy.get('[data-cy="date-range-selection"] > [data-cy="start-date-select"] > [data-cy="date-select"]')
             .type('2020-04-10')
@@ -77,7 +77,7 @@ describe('Test the Edit Button Behavior', () => {
                 .should('have.text', rowDate)
         })
     })
-
+ */
     context("Create a new Direct seeding log, perform edit tests on it, then delete it. ", () => {
 
         let logID = null
@@ -129,8 +129,41 @@ describe('Test the Edit Button Behavior', () => {
            
         })
         
+        it("Check that cancel edit works", () => {
+            //select the date range to find the new log
+            cy.get('[data-cy="date-range-selection"] > [data-cy="start-date-select"] > [data-cy="date-select"]')
+            .type('1999-01-01')
+            .blur()
+            cy.get('[data-cy="date-range-selection"] > [data-cy="end-date-select"] > [data-cy="date-select"]')
+            .type('1999-02-02')
+            .blur()
+    
+            //Click generate Report
+            cy.get('[data-cy="generate-rpt-btn"]').click()
+            cy.get('[data-cy="seeding-type-dropdown"]  > [data-cy=dropdown-input]').select('Direct Seedings')
+            //get and click edit
+            cy.get('[data-cy="r0-edit-button"]').click()
+            //change area of row
+            cy.get('[data-cy="r0-Area-input"]')
+                .select('A')
+            //cancel
+            cy.get('[data-cy="r0-cancel-button"]')
+                .scrollIntoView()
+                .should('be.visible')
+                .click({force: true})
+            //check that value is not changed in table
+            cy.get('[data-cy="r0-Area"')
+                .should('have.text', "CHUAU-2")
+            //get log from database
+            cy.wrap(getRecord("/log.json?id=6")).as("get-log")
 
-        
+            //check that values have not been changed
+            cy.get("@get-log")
+            .then((response) => {
+                expect(response.data.list[0].movement.area[0].name).to.equal("CHUAU-2")
+            })
+        })
+
         afterEach(() => {
             cy.wrap(deleteRecord("/log/"+logID, sessionToken)).as("delete-seeding")
             cy.get("@delete-seeding")
