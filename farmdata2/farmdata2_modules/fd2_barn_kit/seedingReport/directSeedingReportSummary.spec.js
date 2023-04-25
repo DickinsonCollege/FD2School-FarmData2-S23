@@ -9,19 +9,34 @@ describe('Test the tray seeding ', () => {
         cy.get("[data-cy=seeding-type-dropdown] > [data-cy= dropdown-input]").select("Direct Seedings");
        })
 
+
     it("Check total row feet plated", () => {
-        // cy.get("[data-cy=td-r0c4]");
         let total = 0;
         for (let r=0; r <7; r++) {
             cy.get("[data-cy = td-r"+r+ "c4]").invoke('text').then(value => {
                 total += parseInt(value);
-                cy.log(total);
+                cy.wrap(total).as("to");
             });
         }
-        cy.log(total);
+        cy.get('@to').then(tota => {
+            cy.get("[data-cy = direct-total-rowft]").should("have.text", tota.toString());    
+        });
+    })
 
+    it("Check total bed feet plated", () => {
+        let total = 0;
+        for (let r=0; r <7; r++) {
+            cy.get("[data-cy = td-r"+r+ "c5]").invoke('text').then(value => {
+                total += parseInt(value);
+                cy.wrap(total).as("to");
+            });
+        }
+        cy.get('@to').then(tota => {
+            cy.get("[data-cy = direct-total-bedft]").should("have.text", tota.toString());    
+        });
     })
-    })
+
+})
 
 
 
