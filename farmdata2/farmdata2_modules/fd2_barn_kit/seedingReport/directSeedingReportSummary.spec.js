@@ -15,8 +15,10 @@ describe('Test the tray seeding ', () => {
         for (let r=0; r <7; r++) {
             cy.get("[data-cy = td-r"+r+ "c4]").invoke('text').then(value => {
                 total += parseInt(value);
-                cy.wrap(total).as("to");
-            });
+                if (r ==6){
+                    cy.wrap(total).as("to");
+                }                
+            });      
         }
         cy.get('@to').then(tota => {
             cy.get("[data-cy = direct-total-rowft]").should("have.text", tota.toString());    
@@ -28,20 +30,14 @@ describe('Test the tray seeding ', () => {
         for (let r=0; r <7; r++) {
             cy.get("[data-cy = td-r"+r+ "c5]").invoke('text').then(value => {
                 total += parseInt(value);
-                cy.wrap(total).as("to");
+                if (r ==6){
+                    cy.wrap(total).as("to");
+                }    
             });
         }
         cy.get('@to').then(tota => {
             cy.get("[data-cy = direct-total-bedft]").should("have.text", tota.toString());    
         });
     })
-
+    
 })
-
-
-
-
-    // cy.get("[data-cy = td-r"+1+ "c4]").invoke('text').then(value => {
-    //     return total;
-    // }).invoke('text').should("equal", '26177');
-    // cy.get("[data-cy=direct-total-rowft]").should('have.text', '26177')
