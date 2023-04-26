@@ -31,7 +31,7 @@ describe('Test the Edit Button Behavior', () => {
     context("Create a new Direct seeding log, perform tests on it, then delete it. ", () => {
         //set logID to null before creating the Tray seeding log
         let logID = null
-        
+
         //initialize the new values
         let newDate = '2022-05-10'
         let newArea = "GHANA-3"
@@ -219,7 +219,7 @@ describe('Test the Edit Button Behavior', () => {
                 .should('be.visible')
                 .click({force: true})
 
-            //check that value is changed to the appropriate new values in table
+            //check that the appropriate appears in the table
             cy.get('[data-cy="r0-Date"]')
                 .should('have.text', newDate)
             cy.get('[data-cy="r0-Area"]')
@@ -254,27 +254,21 @@ describe('Test the Edit Button Behavior', () => {
                 .should('be.visible')
                 .click({force: true})
 
-            //reload the page
-            cy.reload()
-            cy.waitForPage()
-            
-            //enter the date range of the edited table entry
-            cy.get('[data-cy="date-range-selection"] > [data-cy="start-date-select"] > [data-cy="date-select"]')
-                .type('2022-10-11')
-                .blur()
-            cy.get('[data-cy="date-range-selection"] > [data-cy="end-date-select"] > [data-cy="date-select"]')
-                .type('2022-10-12')
-                .blur()
+            //page reload
+            .then(() => {
+                cy.reload()
+            })
 
-            //Click generate Report
-            cy.get('[data-cy="generate-rpt-btn"]').click()
-            cy.get('[data-cy="seeding-type-dropdown"]  > [data-cy=dropdown-input]').select('Tray Seedings')
+            //get the record from the database
+            cy.wrap(getRecord("/log.json?id="+logID)).as("get-log")
 
-            //check that values that were entered remain
-            cy.get('[data-cy="r0-Date"]')
-                .should('have.text', newDate)
-            cy.get('[data-cy="r0-Area"]')
-                .should('have.text', newArea)
+            //wait for server to respond
+            cy.get("@get-log")
+            .then((response) => {
+                ///check that the json response reflects the changed values
+                expect(response.data.list[0].movement.area[0].name).to.equal(newArea)
+                expect(response.data.list[0].timestamp).to.equal(dayjs(newDate).unix())
+            })
         })
 
         //Delete Tray seeding report used for testing
