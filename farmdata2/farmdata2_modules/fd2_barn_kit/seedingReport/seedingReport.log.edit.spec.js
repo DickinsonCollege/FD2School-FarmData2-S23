@@ -201,7 +201,11 @@ describe('Test the Edit Button Behavior', () => {
                     .should('be.visible')
                     .click({force: true})
 
-                //enter the date range of the new file
+                //reload the page
+                cy.reload()
+                cy.waitForPage()
+                
+                //enter the date range of the edited table entry
                 cy.get('[data-cy="date-range-selection"] > [data-cy="start-date-select"] > [data-cy="date-select"]')
                     .type('2022-10-11')
                     .blur()
