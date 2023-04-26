@@ -28,16 +28,17 @@ describe('Test the Edit Button Behavior', () => {
         cy.waitForPage()
     }) 
 
-    context("Create a new Direct seeding log, perform edit tests on it, then delete it. ", () => {
-
+    context("Create a new Direct seeding log, perform tests on it, then delete it. ", () => {
+        //set logID to null before creating the Tray seeding log
         let logID = null
+        
         //initialize the new values
         let newDate = '2022-05-10'
         let newArea = "GHANA-3"
         
+        //Create the Direct seeding log to be tested upon
         beforeEach(() => {
             cy.wrap(makeDirectSeeding("Test Seeding")).as("make-seeding")
-            
 
             cy.get("@make-seeding")
             .then((response) => {
@@ -45,7 +46,7 @@ describe('Test the Edit Button Behavior', () => {
             })
         })
 
-        it("Check some edits made on Direct Seeding is reflected on the table", () => {
+        it("Check edits made on Direct Seeding are reflected in the table", () => {
             //select the date range to find the new log
             cy.get('[data-cy="date-range-selection"] > [data-cy="start-date-select"] > [data-cy="date-select"]')
             .type('1999-01-01')
@@ -166,6 +167,7 @@ describe('Test the Edit Button Behavior', () => {
             })
         })
         
+        //Delete Direct seeding report used for testing
         afterEach(() => {
             cy.wrap(deleteRecord("/log/"+logID, sessionToken)).as("delete-seeding")
             cy.get("@delete-seeding")
@@ -191,94 +193,94 @@ describe('Test the Edit Button Behavior', () => {
         })
         
         it("Test edits to the Tray seeding logs are reflected in the table", () => {
-                //select the date range to find the new log
-                cy.get('[data-cy="date-range-selection"] > [data-cy="start-date-select"] > [data-cy="date-select"]')
+            //select the date range to find the new log
+            cy.get('[data-cy="date-range-selection"] > [data-cy="start-date-select"] > [data-cy="date-select"]')
+            .type('1999-01-01')
+            .blur()
+            cy.get('[data-cy="date-range-selection"] > [data-cy="end-date-select"] > [data-cy="date-select"]')
+            .type('1999-02-02')
+            .blur()
+
+            //Click generate Report
+            cy.get('[data-cy="generate-rpt-btn"]').click()
+            cy.get('[data-cy="seeding-type-dropdown"]  > [data-cy=dropdown-input]').select('Tray Seedings')
+            //get and click edit
+            cy.get('[data-cy="r0-edit-button"]').click()
+            //change date of row
+            cy.get('[data-cy="r0-Date-input"]')
+                .type(newDate)
+            //change Area
+            cy.get('[data-cy="r0-Area-input"]')
+                .select(newArea)
+                
+            //save
+            cy.get('[data-cy="r0-save-button"]')
+                .scrollIntoView()
+                .should('be.visible')
+                .click({force: true})
+
+            //check that value is changed to the appropriate new values in table
+            cy.get('[data-cy="r0-Date"]')
+                .should('have.text', newDate)
+            cy.get('[data-cy="r0-Area"]')
+                .should('have.text', newArea)
+        })
+
+        it("Test edits to the Tray seeding logs are reflected in the database", () => {
+            //select the date range to find the new log
+            cy.get('[data-cy="date-range-selection"] > [data-cy="start-date-select"] > [data-cy="date-select"]')
                 .type('1999-01-01')
                 .blur()
-                cy.get('[data-cy="date-range-selection"] > [data-cy="end-date-select"] > [data-cy="date-select"]')
+            cy.get('[data-cy="date-range-selection"] > [data-cy="end-date-select"] > [data-cy="date-select"]')
                 .type('1999-02-02')
                 .blur()
 
-                //Click generate Report
-                cy.get('[data-cy="generate-rpt-btn"]').click()
-                cy.get('[data-cy="seeding-type-dropdown"]  > [data-cy=dropdown-input]').select('Tray Seedings')
-                //get and click edit
-                cy.get('[data-cy="r0-edit-button"]').click()
-                //change date of row
-                cy.get('[data-cy="r0-Date-input"]')
-                    .type(newDate)
-                //change Area
-                cy.get('[data-cy="r0-Area-input"]')
-                    .select(newArea)
-                    
-                //save
-                cy.get('[data-cy="r0-save-button"]')
-                    .scrollIntoView()
-                    .should('be.visible')
-                    .click({force: true})
+            //Click generate Report
+            cy.get('[data-cy="generate-rpt-btn"]').click()
+            cy.get('[data-cy="seeding-type-dropdown"]  > [data-cy=dropdown-input]').select('Tray Seedings')
 
-                //check that value is changed to the appropriate new values in table
-                cy.get('[data-cy="r0-Date"]')
-                    .should('have.text', newDate)
-                cy.get('[data-cy="r0-Area"]')
-                    .should('have.text', newArea)
-            })
-
-            it("Test edits to the Tray seeding logs are reflected in the database", () => {
-                //select the date range to find the new log
-                cy.get('[data-cy="date-range-selection"] > [data-cy="start-date-select"] > [data-cy="date-select"]')
-                    .type('1999-01-01')
-                    .blur()
-                cy.get('[data-cy="date-range-selection"] > [data-cy="end-date-select"] > [data-cy="date-select"]')
-                    .type('1999-02-02')
-                    .blur()
-
-                //Click generate Report
-                cy.get('[data-cy="generate-rpt-btn"]').click()
-                cy.get('[data-cy="seeding-type-dropdown"]  > [data-cy=dropdown-input]').select('Tray Seedings')
-
-                //get and click edit
-                cy.get('[data-cy="r0-edit-button"]').click()
-                //change date of row
-                cy.get('[data-cy="r0-Date-input"]')
-                    .type(newDate)
-                //change Area
-                cy.get('[data-cy="r0-Area-input"]')
-                    .select(newArea)
-                    
-                //save
-                cy.get('[data-cy="r0-save-button"]')
-                    .scrollIntoView()
-                    .should('be.visible')
-                    .click({force: true})
-
-                //reload the page
-                cy.reload()
-                cy.waitForPage()
+            //get and click edit
+            cy.get('[data-cy="r0-edit-button"]').click()
+            //change date of row
+            cy.get('[data-cy="r0-Date-input"]')
+                .type(newDate)
+            //change Area
+            cy.get('[data-cy="r0-Area-input"]')
+                .select(newArea)
                 
-                //enter the date range of the edited table entry
-                cy.get('[data-cy="date-range-selection"] > [data-cy="start-date-select"] > [data-cy="date-select"]')
-                    .type('2022-10-11')
-                    .blur()
-                cy.get('[data-cy="date-range-selection"] > [data-cy="end-date-select"] > [data-cy="date-select"]')
-                    .type('2022-10-12')
-                    .blur()
+            //save
+            cy.get('[data-cy="r0-save-button"]')
+                .scrollIntoView()
+                .should('be.visible')
+                .click({force: true})
 
-                //Click generate Report
-                cy.get('[data-cy="generate-rpt-btn"]').click()
-                cy.get('[data-cy="seeding-type-dropdown"]  > [data-cy=dropdown-input]').select('Tray Seedings')
+            //reload the page
+            cy.reload()
+            cy.waitForPage()
+            
+            //enter the date range of the edited table entry
+            cy.get('[data-cy="date-range-selection"] > [data-cy="start-date-select"] > [data-cy="date-select"]')
+                .type('2022-10-11')
+                .blur()
+            cy.get('[data-cy="date-range-selection"] > [data-cy="end-date-select"] > [data-cy="date-select"]')
+                .type('2022-10-12')
+                .blur()
 
-                //check that values that were entered remain
-                cy.get('[data-cy="r0-Date"]')
-                    .should('have.text', newDate)
-                cy.get('[data-cy="r0-Area"]')
-                    .should('have.text', newArea)
-            })
+            //Click generate Report
+            cy.get('[data-cy="generate-rpt-btn"]').click()
+            cy.get('[data-cy="seeding-type-dropdown"]  > [data-cy=dropdown-input]').select('Tray Seedings')
 
-            //Delete Tray seeding report used for testing
-            afterEach(() => {
-                cy.wrap(deleteRecord("/log/"+logID, sessionToken)).as("delete-seeding")
-                cy.get("@delete-seeding")
+            //check that values that were entered remain
+            cy.get('[data-cy="r0-Date"]')
+                .should('have.text', newDate)
+            cy.get('[data-cy="r0-Area"]')
+                .should('have.text', newArea)
+        })
+
+        //Delete Tray seeding report used for testing
+        afterEach(() => {
+            cy.wrap(deleteRecord("/log/"+logID, sessionToken)).as("delete-seeding")
+            cy.get("@delete-seeding")
         })
     })
 
