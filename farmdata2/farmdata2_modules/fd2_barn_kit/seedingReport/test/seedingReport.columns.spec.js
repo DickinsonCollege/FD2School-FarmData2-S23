@@ -32,9 +32,9 @@ describe("Test the seeding report columns by seeding type", () => {
       }
 
       // Check visibility of table header columns except for "Edit" and Select (Checkbox)
-      header=0
-      for (header; header < 10; header++){
-          cy.get("[data-cy=h"+header+"]").should('be.visible')
+      let i = 1
+      for (i;i<10;i++){
+          cy.get(" [data-cy=table-headers]").children().eq(i).should('be.visible')
       }
 
       // Check visibility of table header columns "Edit" and Select (Checkbox)
