@@ -25,7 +25,7 @@ describe('Test the Edit Button Behavior', () => {
             sessionToken = token
         })
         cy.visit('/farm/fd2-barn-kit/seedingReport')
-        //cy.waitForPage()
+        cy.waitForPage()
     }) 
 
     context("Create a new Direct seeding log, perform edit tests on it, then delete it. ", () => {
@@ -167,6 +167,53 @@ describe('Test the Edit Button Behavior', () => {
                     .click({force: true})
 
                 //check that value is changed to the appropriate new values in table
+                cy.get('[data-cy="r0-Date"]')
+                    .should('have.text', newDate)
+                cy.get('[data-cy="r0-Area"]')
+                    .should('have.text', newArea)
+            })
+
+            it("Test edits to the Tray seeding logs are reflected in the database", () => {
+                //select the date range to find the new log
+                cy.get('[data-cy="date-range-selection"] > [data-cy="start-date-select"] > [data-cy="date-select"]')
+                    .type('1999-01-01')
+                    .blur()
+                cy.get('[data-cy="date-range-selection"] > [data-cy="end-date-select"] > [data-cy="date-select"]')
+                    .type('1999-02-02')
+                    .blur()
+
+                //Click generate Report
+                cy.get('[data-cy="generate-rpt-btn"]').click()
+                cy.get('[data-cy="seeding-type-dropdown"]  > [data-cy=dropdown-input]').select('Tray Seedings')
+
+                //get and click edit
+                cy.get('[data-cy="r0-edit-button"]').click()
+                //change date of row
+                cy.get('[data-cy="r0-Date-input"]')
+                    .type(newDate)
+                //change Area
+                cy.get('[data-cy="r0-Area-input"]')
+                    .select(newArea)
+                    
+                //save
+                cy.get('[data-cy="r0-save-button"]')
+                    .scrollIntoView()
+                    .should('be.visible')
+                    .click({force: true})
+
+                //enter the date range of the new file
+                cy.get('[data-cy="date-range-selection"] > [data-cy="start-date-select"] > [data-cy="date-select"]')
+                    .type('2022-10-11')
+                    .blur()
+                cy.get('[data-cy="date-range-selection"] > [data-cy="end-date-select"] > [data-cy="date-select"]')
+                    .type('2022-10-12')
+                    .blur()
+
+                //Click generate Report
+                cy.get('[data-cy="generate-rpt-btn"]').click()
+                cy.get('[data-cy="seeding-type-dropdown"]  > [data-cy=dropdown-input]').select('Tray Seedings')
+
+                //check that values that were entered remain
                 cy.get('[data-cy="r0-Date"]')
                     .should('have.text', newDate)
                 cy.get('[data-cy="r0-Area"]')
