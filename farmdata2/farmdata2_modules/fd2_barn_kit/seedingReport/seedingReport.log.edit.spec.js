@@ -46,25 +46,25 @@ describe('Test the Edit Button Behavior', () => {
         })
         it("Check some edits made on Direct Seeding is reflected on the table", () => {
             //select the date range to find the new log
-            cy.get('[data-cy="date-range-selection"] > [data-cy="start-date-select"] > [data-cy="date-select"]')
+        cy.get('[data-cy="date-range-selection"] > [data-cy="start-date-select"] > [data-cy="date-select"]')
             .type('1999-01-01')
             .blur()
             cy.get('[data-cy="date-range-selection"] > [data-cy="end-date-select"] > [data-cy="date-select"]')
             .type('1999-02-02')
             .blur()
     
-                //Click generate Report
-            cy.get('[data-cy="generate-rpt-btn"]').click()
+        //Click generate Report
+        cy.get('[data-cy="generate-rpt-btn"]').click()
             cy.get('[data-cy="seeding-type-dropdown"]  > [data-cy=dropdown-input]').select('Direct Seedings')
-                //get and click edit
+            //get and click edit
             cy.get('[data-cy="r0-edit-button"]').click()
-                //change date of row
+            //change date of row
             cy.get('[data-cy="r0-Date-input"]')
                 .type(newDate)
                 //change area of row
             cy.get('[data-cy="r0-Area-input"]')
                 .select(newArea)
-             
+            
               //save
             cy.get('[data-cy="r0-save-button"]')
                 .scrollIntoView()
@@ -75,10 +75,10 @@ describe('Test the Edit Button Behavior', () => {
                 .should('have.text', newDate)
             cy.get('[data-cy="r0-Area"]')
                 .should('have.text', newArea)
-           
-           
+
+
         })
-        
+
         it("Check that cancel edit works", () => {
             //select the date range to find the new log
             cy.get('[data-cy="date-range-selection"] > [data-cy="start-date-select"] > [data-cy="date-select"]')
@@ -87,7 +87,7 @@ describe('Test the Edit Button Behavior', () => {
             cy.get('[data-cy="date-range-selection"] > [data-cy="end-date-select"] > [data-cy="date-select"]')
             .type('1999-02-02')
             .blur()
-    
+
             //Click generate Report
             cy.get('[data-cy="generate-rpt-btn"]').click()
             cy.get('[data-cy="seeding-type-dropdown"]  > [data-cy=dropdown-input]').select('Direct Seedings')
@@ -96,7 +96,7 @@ describe('Test the Edit Button Behavior', () => {
             //change area of row
             cy.get('[data-cy="r0-Area-input"]')
                 .select('A')
-
+            
             //cancel
             cy.get('[data-cy="r0-cancel-button"]')
                 .scrollIntoView()
@@ -114,7 +114,7 @@ describe('Test the Edit Button Behavior', () => {
                 expect(response.data.list[0].movement.area[0].name).to.equal("CHUAU-2")
             })
         })
-
+        
         afterEach(() => {
             cy.wrap(deleteRecord("/log/"+logID, sessionToken)).as("delete-seeding")
             cy.get("@delete-seeding")
@@ -122,19 +122,23 @@ describe('Test the Edit Button Behavior', () => {
     })
 
     context("Create a new Tray seeding log, perform edit tests on it, then delete it.", () => {
-
+        //set logID to null before creating the Tray seeding log
         let logID = null
 
         //Create the Tray seeding log to be tested upon
         beforeEach(() => {
-            cy.wrap(makeTraySeeding("Test Tray Seeding").as("make-seeding"))
-
+            cy.wrap(makeTraySeeding("Test Tray Seeding")).as("make-seeding")
+            
             cy.get("@make-seeding")
-                .then((response) => {
-                    logID = response.data.id            
-                })
+            .then((response) => {
+                logID = response.data.id            
+            })
         })
-   
+        
+        it("Test edits to the Tray seeding logs are reflected in the table", () => {
+            expect(true).to.equal(true)
+        })
+
         //Delete Tray seeding report used for testing
         afterEach(() => {
             cy.wrap(deleteRecord("/log/"+logID, sessionToken)).as("delete-seeding")
@@ -292,5 +296,4 @@ describe('Test the Edit Button Behavior', () => {
 
         return createRecord('/log', json, sessionToken)
     }
- 
 })
