@@ -125,6 +125,10 @@ describe('Test the Edit Button Behavior', () => {
         //set logID to null before creating the Tray seeding log
         let logID = null
 
+        //initialize new date and crop Values
+        let newDate = '2022-10-11'
+        let newArea = "GHANA-3"
+
         //Create the Tray seeding log to be tested upon
         beforeEach(() => {
             cy.wrap(makeTraySeeding("Test Tray Seeding")).as("make-seeding")
@@ -136,13 +140,43 @@ describe('Test the Edit Button Behavior', () => {
         })
         
         it("Test edits to the Tray seeding logs are reflected in the table", () => {
-            expect(true).to.equal(true)
-        })
+                //select the date range to find the new log
+                cy.get('[data-cy="date-range-selection"] > [data-cy="start-date-select"] > [data-cy="date-select"]')
+                .type('1999-01-01')
+                .blur()
+                cy.get('[data-cy="date-range-selection"] > [data-cy="end-date-select"] > [data-cy="date-select"]')
+                .type('1999-02-02')
+                .blur()
 
-        //Delete Tray seeding report used for testing
-        afterEach(() => {
-            cy.wrap(deleteRecord("/log/"+logID, sessionToken)).as("delete-seeding")
-            cy.get("@delete-seeding")
+                //Click generate Report
+                cy.get('[data-cy="generate-rpt-btn"]').click()
+                cy.get('[data-cy="seeding-type-dropdown"]  > [data-cy=dropdown-input]').select('Tray Seedings')
+                //get and click edit
+                cy.get('[data-cy="r0-edit-button"]').click()
+                //change date of row
+                cy.get('[data-cy="r0-Date-input"]')
+                    .type(newDate)
+                //change Area
+                cy.get('[data-cy="r0-Area-input"]')
+                    .select(newArea)
+                    
+                //save
+                cy.get('[data-cy="r0-save-button"]')
+                    .scrollIntoView()
+                    .should('be.visible')
+                    .click({force: true})
+
+                //check that value is changed to the appropriate new values in table
+                cy.get('[data-cy="r0-Date"]')
+                    .should('have.text', newDate)
+                cy.get('[data-cy="r0-Area"]')
+                    .should('have.text', newArea)
+            })
+
+            //Delete Tray seeding report used for testing
+            afterEach(() => {
+                cy.wrap(deleteRecord("/log/"+logID, sessionToken)).as("delete-seeding")
+                cy.get("@delete-seeding")
         })
     })
 
