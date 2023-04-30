@@ -14,6 +14,7 @@ describe('eTest Seeding Report Default', () => {
 
   it("The report table shouldn't be visible", () => {
     cy.get("[data-cy = report-table]").should("not.exist")
+  })
 
     ("Check that the page contains header", () => {
       cy.get("[data-cy=report-header]").should("have.text", "Seeding Report")
