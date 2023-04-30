@@ -18,7 +18,7 @@ describe('Test the submit button behavior', () => {
             .should("be.disabled")
     })
 
-    context("Fills in every input field with Tray seeding selected, then perform tests", () => {
+    context("Fills in every input field, then perform tests", () => {
         beforeEach(() => {
             //Select a date
             cy.get('[data-cy="date-selection"] > [data-cy="date-select"]').click()
@@ -191,6 +191,50 @@ describe('Test the submit button behavior', () => {
             //populate Bed Feet input and check submission button is enabled
             cy.get('[data-cy="num-feet-input"] > [data-cy="text-input"]').click()
                 .type('50')
+                .blur()
+            cy.get('[data-cy="submit-button"]')
+                .should('not.be.disabled')
+        })
+
+        it('Test the Labor Panel', () => {
+            //Test number of laborers input is required to be populated to enable submission button
+            cy.get('[data-cy="num-worker-input"] > [data-cy="text-input"]').click()
+                .type('{selectall}{backspace}')
+                .blur()
+            cy.get('[data-cy="submit-button"]')
+                .should('be.disabled')
+            //populate number of laborers input and check submission button is enabled
+            cy.get('[data-cy="num-worker-input"] > [data-cy="text-input"]').click()
+                .type('6')
+                .blur()
+            cy.get('[data-cy="submit-button"]')
+                .should('not.be.disabled')
+
+            //Test the minutes input is required to be populated to enable submission button
+            cy.get('[data-cy="minute-input"] > [data-cy="text-input"]').click()
+                .type('{selectall}{backspace}')
+                .blur()
+            cy.get('[data-cy="submit-button"]')
+                .should('be.disabled')
+            //populate number of laborers input and check submission button is enabled
+            cy.get('[data-cy="minute-input"] > [data-cy="text-input"]').click()
+                .type('30')
+                .blur()
+            cy.get('[data-cy="submit-button"]')
+                .should('not.be.disabled')
+            //clear the minute input
+            cy.get('[data-cy="minute-input"] > [data-cy="text-input"]')
+                .type('{selectall}{backspace}')
+                .blur()
+
+            //switch to the hours time input and test it is required to be populated to enable submission button
+            cy.get('[data-cy="time-unit"] > [data-cy="dropdown-input"]')
+                .select('hours')
+                .blur()
+            cy.get('[data-cy="submit-button"]')
+                .should('be.disabled')
+            cy.get('[data-cy="hour-input"] > [data-cy="text-input"]').click()
+                .type('2')
                 .blur()
             cy.get('[data-cy="submit-button"]')
                 .should('not.be.disabled')
