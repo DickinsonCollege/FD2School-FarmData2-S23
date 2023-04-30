@@ -145,9 +145,12 @@ describe('Test the Edit Button Behavior', () => {
             cy.get('[data-cy="seeding-type-dropdown"]  > [data-cy=dropdown-input]').select('Direct Seedings')
             //get and click edit
             cy.get('[data-cy="r0-edit-button"]').click()
+            //change date of row
+            cy.get('[data-cy="r0-Date-input"]')
+                .type(newDate)
             //change area of row
             cy.get('[data-cy="r0-Area-input"]')
-                .select('A')
+                .select(newArea)
             
             //cancel
             cy.get('[data-cy="r0-cancel-button"]')
@@ -157,13 +160,17 @@ describe('Test the Edit Button Behavior', () => {
             //check that value is not changed in table
             cy.get('[data-cy="r0-Area"')
                 .should('have.text', "CHUAU-2")
+            cy.get('[data-cy="r0-Date"')
+                .should('have.text', "1999-01-01")
+            
             //get log from database
-            cy.wrap(getRecord("/log.json?id=6")).as("get-log")
+            cy.wrap(getRecord("/log.json?id="+logID)).as("get-log")
 
             //check that values have not been changed
             cy.get("@get-log")
             .then((response) => {
                 expect(response.data.list[0].movement.area[0].name).to.equal("CHUAU-2")
+                expect(response.data.list[0].timestamp).to.equal(dayjs("1999-01-01").unix().toString())
             })
         })
         
@@ -248,26 +255,35 @@ describe('Test the Edit Button Behavior', () => {
             cy.get('[data-cy="r0-Area-input"]')
                 .select(newArea)
                 
+            cy.intercept('PUT', 'log/' + logID).as('logUpdate')
+
             //save
             cy.get('[data-cy="r0-save-button"]')
                 .scrollIntoView()
                 .should('be.visible')
                 .click({force: true})
 
-            //page reload
+            // wait for the log update
+            cy.wait('@logUpdate') 
+            .should((update) => {
+                expect(update.response.statusCode).to.equal(200)
+
+            })
             .then(() => {
+                //Forced to reload, otherwise getRecord fetches old log not updated log.
+                //Unclear why this happens but is an observed behavior.
                 cy.reload()
             })
-
-            //get the record from the database
-            cy.wrap(getRecord("/log.json?id="+logID)).as("get-log")
+            .then(() => {
+                cy.wrap(getRecord("/log.json?id="+logID)).as("get-log")
+            })
 
             //wait for server to respond
             cy.get("@get-log")
             .then((response) => {
                 ///check that the json response reflects the changed values
                 expect(response.data.list[0].movement.area[0].name).to.equal(newArea)
-                expect(response.data.list[0].timestamp).to.equal(dayjs(newDate).unix())
+                expect(response.data.list[0].timestamp).to.equal(dayjs(newDate).unix().toString())
             })
         })
 
