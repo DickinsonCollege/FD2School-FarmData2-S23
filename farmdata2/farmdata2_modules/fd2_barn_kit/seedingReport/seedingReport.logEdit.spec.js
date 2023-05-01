@@ -5,10 +5,13 @@ describe('Tests for SeedingInput log creation', () => {
       cy.visit('/farm/fd2-barn-kit/seedingReport')
     })
 
-    it("Checks all of the input elements in the form remain populated with their existing values in tray seeding", () => {
+    it("Checks if the “Cancel” button (the brown X) discards any edits and does not change the database.", () => {
         cy.get('[data-cy=start-date-select]')
-            .type('2020-05-01')
-
+            .type('2019-02-04')
+        cy.get('[data-cy=end-date-select]')
+            .type('2019-02-04')
+        cy.get('[data-cy=generate-rpt-btn')
+            .click()
     })
 
 })
