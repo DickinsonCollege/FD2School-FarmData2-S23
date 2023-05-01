@@ -1,4 +1,3 @@
-
 const dayjs = require('dayjs')
 
 var FarmOSAPI = require('../../resources/FarmOSAPI.js')
@@ -8,43 +7,24 @@ var createRecord = FarmOSAPI.createRecord
 var getRecord = FarmOSAPI.getRecord
 var getAllPages = FarmOSAPI.getAllPages
 
-describe('Example of creating and deleting seeding logs in a test', () => {
+describe('Testing if logs are properly removed from the database', () => {
+        let sessionToken = null
 
-     let sessionToken = null
-
-    beforeEach(() => {
-
+        beforeEach(() => {
         cy.login("manager1", "farmdata2")
         .then (() => {
             cy.wrap(getSessionToken()).as("get-token")
         })
-
         cy.get("@get-token").then((token) => {
             sessionToken = token
         })
-
         cy.visit("/farm/fd2-barn-kit/seedingReport")
         cy.waitForPage()
     })
 
-    /**
-     * A context allows us to have a beforeEach and an afterEach just for this test.
-     * 
-     * The beforeEach in the context will run before the it in the context.  It can be used
-     * to create a log that is used for testing.
-     * 
-     * The afterEach in the context will run after the it in the context. It can be used 
-     * it to delete any logs that were created for the test or during the test.
-     */
-    context("Create a new log, do some tests, delete the log(s) ", () => {
-
+    context("Create a new log, delete the log(s)", () => {
         let logID = null
 
-        /**
-         * This beforeEach will run before the it in this context.  It is used to 
-         * create a new log. The id of the log is saved in the logID variable 
-         * declared in the context so that it can be deleted in the afterEach.
-         */
         beforeEach(() => {
             cy.wrap(makeDirectSeeding("Test Seeding")).as("make-seeding")
 
@@ -52,63 +32,33 @@ describe('Example of creating and deleting seeding logs in a test', () => {
             .then((response) => {
                 logID = response.data.id            
             })
+            cy.get('[data-cy=start-date-select]').type('2019-01-01')
+            cy.get('[data-cy=end-date-select]').type('2019-03-01')
+            cy.get('[data-cy=generate-rpt-btn]').click()
         })
 
-        /**
-         * Do your testing in this it.
-         */
         it("Test to delete a singular seeding log.", () => {
-            
-          cy.get('[data-cy=start-date-select]').type('2019-01-01')
-          cy.get('[data-cy=end-date-select]').type('2019-03-01')
-          cy.get('[data-cy=generate-rpt-btn]').click()
           cy.wrap(getRecord("/log.json?id=6")).as("get-log")
           cy.get("[data-cy = r0-cbuttonCheckbox]").click()
           cy.get("[data-cy = delete-button]").click()
-
-            /*
-             * This test can be changed to expect(true).to.equal(true)
-             * in order to check that the record is still deleted by the
-             * afterEach() even if the test fails.
-             */
-            expect(true).to.equal(true)
+            // expect(true).to.equal(true)
         })
 
         it("Test to delete a multiple seeding logs.", () => {
-            
-          cy.get('[data-cy=start-date-select]').type('2019-01-01')
-          cy.get('[data-cy=end-date-select]').type('2019-03-01')
-          cy.get('[data-cy=generate-rpt-btn]').click()
           cy.wrap(getRecord("/log.json?id=6")).as("get-log")
           cy.get("[data-cy = r0-cbuttonCheckbox]").click()
           cy.get("[data-cy = r1-cbuttonCheckbox]").click()
           cy.get("[data-cy = r2-cbuttonCheckbox]").click()
           cy.get("[data-cy = r5-cbuttonCheckbox]").click()
           cy.get("[data-cy = delete-button]").click()
-
-            /*
-             * This test can be changed to expect(true).to.equal(true)
-             * in order to check that the record is still deleted by the
-             * afterEach() even if the test fails.
-             */
-            expect(true).to.equal(true)
+            // expect(true).to.equal(true)
         })
 
         it("Test to cancel the deletion of a seeding log(s).", () => {
-            
-          cy.get('[data-cy=start-date-select]').type('2019-01-01')
-          cy.get('[data-cy=end-date-select]').type('2019-03-01')
-          cy.get('[data-cy=generate-rpt-btn]').click()
           cy.wrap(getRecord("/log.json?id=6")).as("get-log")
           cy.get("[data-cy = r0-cbuttonCheckbox]").click()
           cy.get("[data-cy = delete-button]")
-
-            /*
-             * This test can be changed to expect(true).to.equal(true)
-             * in order to check that the record is still deleted by the
-             * afterEach() even if the test fails.
-             */
-            expect(true).to.equal(true)
+            // expect(true).to.equal(true)
         })
         /**
          * Delete the log created in the beforeEach so that the database
