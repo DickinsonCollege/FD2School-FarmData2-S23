@@ -27,10 +27,20 @@ describe('Tests for Canceling SeedingReport log edit', () => {
          */
         cy.get("@get-log")
         .then((response) => {
+            /*
+             * Check the values of only "EDITABLE" column
+             * 
+             * N0TE: Bed feet is not a field in the JSON file but is computed in the Table in the .html file by the formula below:
+             *  
+             *                        bedFeet = rowFeet/rowBed
+
+             *       Hence, row feet and row bed are checked instead
+             */
             expect(response.data.list[0].timestamp).to.equal("1549256400") // date
             expect(response.data.list[0].data).to.have.string("161") // crop
             expect(response.data.list[0].movement.area[0].name).to.equal("CHUAU-2") // area
-            expect(response.data.list[0].log_category[0].name).to.equal("Direct Seedings") //seeding type
+            expect(response.data.list[0].quantity[0].value).to.equal("105") // Row feet
+            expect(response.data.list[0].quantity[1].value).to.equal("3") // RowBed
             expect(response.data.list[0].quantity[3].value).to.equal("1") // number of workers
             expect(response.data.list[0].quantity[2].value).to.equal("0.0166667") // hours worked
             expect(response.data.list[0].notes.value).to.equal("") // comments
@@ -38,10 +48,26 @@ describe('Tests for Canceling SeedingReport log edit', () => {
         })
 
         //---------------------------------------------------------------------------------------------------------------------------------------------------------
-        // Edit each column of the record and then press the cancel button
+        // Select the right record by using filters, edit each column of the record and then press the cancel button
         //---------------------------------------------------------------------------------------------------------------------------------------------------------
 
+        cy.get('[data-cy=start-date-select]') // choose start date
+            .type('2019-02-04')
 
+        cy.get('[data-cy=end-date-select]') // chose end date
+            .type('2019-02-04')
+
+        cy.get('[data-cy=generate-rpt-btn') // press "generate" button
+            .click()
+        
+        cy.get('[data-cy=seeding-type-dropdown] > [data-cy=dropdown-input]') // filter by seeding type 
+            .select("Direct Seedings")
+
+        cy.get('[data-cy=crop-dropdown] > [data-cy=dropdown-input]') //filter by crop
+            .select("RADISH")
+        
+        cy.get('[data-cy=area-dropdown] > [data-cy=dropdown-input]') //filter by area
+            .select("CHUAU-2")
     })
 
 })
