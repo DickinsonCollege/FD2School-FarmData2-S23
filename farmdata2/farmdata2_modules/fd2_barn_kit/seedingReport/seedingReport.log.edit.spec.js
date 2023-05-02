@@ -84,7 +84,6 @@ describe('Test the Edit Button Behavior', () => {
        
         })
 
-
         it("Check that cancel edit works", () => {
             //select the date range to find the new log
             cy.get('[data-cy="date-range-selection"] > [data-cy="start-date-select"] > [data-cy="date-select"]')
