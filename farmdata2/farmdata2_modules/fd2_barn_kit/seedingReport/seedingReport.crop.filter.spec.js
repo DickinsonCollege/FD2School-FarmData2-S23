@@ -70,8 +70,8 @@ describe("Test that the crop filter in the Seeding Report works as intended", ()
         .should('have.length', 3)
         //Check that only logs pertaining to CAULIFLOWER exist in the table
         for(let i = 0; i < 3; i++){
-            cy.get('[data-cy=td-r'+i+"c1]")
-            .should('contain.text', 'CAULIFLOWER')
+            cy.get('[data-cy=r'+i+"-Crop]")
+              .should('have.text', 'CAULIFLOWER')
         }
     })
 })
