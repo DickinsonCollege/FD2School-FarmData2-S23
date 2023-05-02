@@ -68,6 +68,27 @@ describe('Tests for Canceling SeedingReport log edit', () => {
         
         cy.get('[data-cy=area-dropdown] > [data-cy=dropdown-input]') //filter by area
             .select("CHUAU-2")
+
+        cy.get('[data-cy=r0-edit-button]')  //click the edit button
+            .click()
+        
+        cy.get('[data-cy=r0-Date-input]') //edit the date
+            .type('2023-01-05')
+        
+        // cy.get('[data-cy="r0-Crop-input"]')
+        //     //.find('option')
+        //     .find('option:contains("BEET"):first')
+        //     .then(option => {
+        //         cy.get('[data-cy="r0-Crop-input"]').select(option.val());
+        //       });
+        
+        // cy.get('[data-cy=r0-Crop-input]')
+        //     .then((button) => {
+        //         // Check the type of the button element
+        //         expect(button).to.be.a('select')
+        //     })
+        
+
     })
 
 })
