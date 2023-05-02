@@ -75,7 +75,10 @@ describe('Tests for Canceling SeedingReport log edit', () => {
         cy.get('[data-cy=r0-Date-input]') //edit the date
             .type('2023-01-05')
         
-        // cy.get('[data-cy="r0-Crop-input"]')
+        cy.get('[data-cy="r0-Crop-input"]')
+            .find('option')
+            .eq(1) 
+            .select();
         //     //.find('option')
         //     .find('option:contains("BEET"):first')
         //     .then(option => {
