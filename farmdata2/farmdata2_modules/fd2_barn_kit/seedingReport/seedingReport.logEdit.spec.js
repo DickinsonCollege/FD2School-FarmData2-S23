@@ -48,7 +48,7 @@ describe('Tests for Canceling SeedingReport log edit', () => {
         })
 
         //---------------------------------------------------------------------------------------------------------------------------------------------------------
-        // Select the right record by using filters, edit each column of the record and then press the cancel button
+        // Select the right record by using filters
         //---------------------------------------------------------------------------------------------------------------------------------------------------------
 
         cy.get('[data-cy=start-date-select]') // choose start date
@@ -69,28 +69,83 @@ describe('Tests for Canceling SeedingReport log edit', () => {
         cy.get('[data-cy=area-dropdown] > [data-cy=dropdown-input]') //filter by area
             .select("CHUAU-2")
 
-        cy.get('[data-cy=r0-edit-button]')  //click the edit button
+        //---------------------------------------------------------------------------------------------------------------------------------------------------------
+        // Edit each column of the record and then press the cancel button
+        //---------------------------------------------------------------------------------------------------------------------------------------------------------
+
+        cy.get('[data-cy=r0-edit-button]')  // click the edit button
             .click()
         
-        cy.get('[data-cy=r0-Date-input]') //edit the date
+        cy.get('[data-cy=r0-Date-input]') // edit the date
+            .clear()
             .type('2023-01-05')
         
-        cy.get('[data-cy="r0-Crop-input"]')
-            .find('option')
-            .eq(1) 
-            .select();
-        //     //.find('option')
-        //     .find('option:contains("BEET"):first')
-        //     .then(option => {
-        //         cy.get('[data-cy="r0-Crop-input"]').select(option.val());
-        //       });
-        
-        // cy.get('[data-cy=r0-Crop-input]')
-        //     .then((button) => {
-        //         // Check the type of the button element
-        //         expect(button).to.be.a('select')
-        //     })
-        
+        cy.get('[data-cy=r0-Crop-input]') // edit the crop name
+            .select(0)
+
+        cy.get('[data-cy=r0-Area-input]') // edit the area
+            .select("A")
+
+        cy.get('[data-cy="r0-Row Feet-input"] > [data-cy="text-input"]') // edit the row feet
+            .clear()
+            .type(99)
+
+        cy.get('[data-cy="r0-Bed Feet-input"] > [data-cy="text-input"]') // edit the bed feet
+            .clear()
+            .type(99)
+
+        cy.get('[data-cy="r0-Workers-input"] > [data-cy="text-input"]') // edit number of Workers
+            .clear()
+            .type(99)
+
+        cy.get('[data-cy="r0-Hours-input"] > [data-cy="text-input"]') // edit number of hours
+            .clear()
+            .type(99)
+
+        cy.get('[data-cy="r0-Comments-input"]') // add a comment
+            .clear()
+            .type("Running a cypress test ;)")
+
+        cy.get('[data-cy="r0-User-input"]') // edit the user
+            .select("guest")
+
+        cy.get('[data-cy="r0-cancel-button"]') // click the cancel button
+            .click()
+
+        //---------------------------------------------------------------------------------------------------------------------------------------------------------
+        // Check if each "editable" column of the record stays the same after clicking the cancel button
+        //---------------------------------------------------------------------------------------------------------------------------------------------------------
+
+        /*
+         * Request the log with id=6.  This is a direct seeding of Radish in 
+         * CHUAU-2 on February 04, 2019. 
+         */
+        cy.wrap(getRecord("/log.json?id=6")).as("get-log")
+
+        /*
+         * Wait for the promise returned from getRecord to resolve.
+         */
+        cy.get("@get-log")
+        .then((response) => {
+            /*
+             * Check the values of only "EDITABLE" column
+             * 
+             * N0TE: Bed feet is not a field in the JSON file but is computed in the Table in the .html file by the formula below:
+             *  
+             *                        bedFeet = rowFeet/rowBed
+
+             *       Hence, row feet and row bed are checked instead
+             */
+            expect(response.data.list[0].timestamp).to.equal("1549256400") // date
+            expect(response.data.list[0].data).to.have.string("161") // crop
+            expect(response.data.list[0].movement.area[0].name).to.equal("CHUAU-2") // area
+            expect(response.data.list[0].quantity[0].value).to.equal("105") // Row feet
+            expect(response.data.list[0].quantity[1].value).to.equal("3") // RowBed
+            expect(response.data.list[0].quantity[3].value).to.equal("1") // number of workers
+            expect(response.data.list[0].quantity[2].value).to.equal("0.0166667") // hours worked
+            expect(response.data.list[0].notes.value).to.equal("") // comments
+            expect(response.data.list[0].uid.id).to.equal("3") // user
+        })
 
     })
 
