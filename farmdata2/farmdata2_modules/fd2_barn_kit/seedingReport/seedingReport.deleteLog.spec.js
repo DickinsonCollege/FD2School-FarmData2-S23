@@ -36,22 +36,22 @@ describe('Testing if logs are properly removed from the database', () => {
             cy.get('[data-cy=generate-rpt-btn]').click()
         })
 
-        // it("Test to delete a singular seeding log.", () => {
-        // //   cy.wrap(getRecord("/log.json?id=6")).as("get-log")
-        //   cy.get("[data-cy = r0-cbuttonCheckbox]").click()
-        //   cy.get("[data-cy = delete-button]").click()
-        //     // expect(true).to.equal(true)
-        // })
+        it("Test to delete a singular seeding log.", () => {
+          cy.wrap(getRecord("/log.json?id=6")).as("get-log")
+          cy.get("[data-cy = r0-cbuttonCheckbox]").click()
+          cy.get("[data-cy = delete-button]").click()
+            expect(true).to.equal(true)
+        })
 
-        // it("Test to delete a multiple seeding logs.", () => {
-        // //   cy.wrap(getRecord("/log.json?id=6")).as("get-log")
-        //   cy.get("[data-cy = r0-cbuttonCheckbox]").click()
-        //   cy.get("[data-cy = r1-cbuttonCheckbox]").click()
-        //   cy.get("[data-cy = r2-cbuttonCheckbox]").click()
-        //   cy.get("[data-cy = r5-cbuttonCheckbox]").click()
-        //   cy.get("[data-cy = delete-button]").click()
-        //     // expect(true).to.equal(true)
-        // })
+        it("Test to delete a multiple seeding logs.", () => {
+        //   cy.wrap(getRecord("/log.json?id=6")).as("get-log")
+          cy.get("[data-cy = r0-cbuttonCheckbox]").click()
+          cy.get("[data-cy = r1-cbuttonCheckbox]").click()
+          cy.get("[data-cy = r2-cbuttonCheckbox]").click()
+          cy.get("[data-cy = r5-cbuttonCheckbox]").click()
+          cy.get("[data-cy = delete-button]").click()
+            expect(true).to.equal(true)
+        })
 
         // it("Test to cancel the deletion of a seeding log(s).", () => {
         //   cy.wrap(getRecord("/log.json?id=6")).as("get-log")
@@ -76,7 +76,7 @@ describe('Testing if logs are properly removed from the database', () => {
         let json = {
             "name": name,
             "type": "farm_seeding",
-            "timestamp": dayjs("2099-01-01").unix(),
+            "timestamp": dayjs("1999-01-01").unix(),
             "done": "1",  //any seeding recorded is done.
             "notes": {
                 "value": "This is a test direct seeding",
