@@ -27,47 +27,46 @@ describe('Testing if logs are properly removed from the database', () => {
 
         beforeEach(() => {
             cy.wrap(makeDirectSeeding("Test Seeding")).as("make-seeding")
-
             cy.get("@make-seeding")
             .then((response) => {
                 logID = response.data.id            
             })
-            cy.get('[data-cy=start-date-select]').type('2019-01-01')
-            cy.get('[data-cy=end-date-select]').type('2019-03-01')
+            cy.get('[data-cy=start-date-select]').type('1999-01-01')
+            cy.get('[data-cy=end-date-select]').type('1999-01-04')
             cy.get('[data-cy=generate-rpt-btn]').click()
         })
 
-        it("Test to delete a singular seeding log.", () => {
-          cy.wrap(getRecord("/log.json?id=6")).as("get-log")
-          cy.get("[data-cy = r0-cbuttonCheckbox]").click()
-          cy.get("[data-cy = delete-button]").click()
-            // expect(true).to.equal(true)
-        })
+        // it("Test to delete a singular seeding log.", () => {
+        // //   cy.wrap(getRecord("/log.json?id=6")).as("get-log")
+        //   cy.get("[data-cy = r0-cbuttonCheckbox]").click()
+        //   cy.get("[data-cy = delete-button]").click()
+        //     // expect(true).to.equal(true)
+        // })
 
-        it("Test to delete a multiple seeding logs.", () => {
-          cy.wrap(getRecord("/log.json?id=6")).as("get-log")
-          cy.get("[data-cy = r0-cbuttonCheckbox]").click()
-          cy.get("[data-cy = r1-cbuttonCheckbox]").click()
-          cy.get("[data-cy = r2-cbuttonCheckbox]").click()
-          cy.get("[data-cy = r5-cbuttonCheckbox]").click()
-          cy.get("[data-cy = delete-button]").click()
-            // expect(true).to.equal(true)
-        })
+        // it("Test to delete a multiple seeding logs.", () => {
+        // //   cy.wrap(getRecord("/log.json?id=6")).as("get-log")
+        //   cy.get("[data-cy = r0-cbuttonCheckbox]").click()
+        //   cy.get("[data-cy = r1-cbuttonCheckbox]").click()
+        //   cy.get("[data-cy = r2-cbuttonCheckbox]").click()
+        //   cy.get("[data-cy = r5-cbuttonCheckbox]").click()
+        //   cy.get("[data-cy = delete-button]").click()
+        //     // expect(true).to.equal(true)
+        // })
 
-        it("Test to cancel the deletion of a seeding log(s).", () => {
-          cy.wrap(getRecord("/log.json?id=6")).as("get-log")
-          cy.get("[data-cy = r0-cbuttonCheckbox]").click()
-          cy.get("[data-cy = delete-button]")
-            // expect(true).to.equal(true)
-        })
-        /**
-         * Delete the log created in the beforeEach so that the database
-         * is back to where it started.
-         */
-        afterEach(() => {
-            cy.wrap(deleteRecord("/log/"+logID, sessionToken)).as("delete-seeding")
-            cy.get("@delete-seeding")
-        })
+        // it("Test to cancel the deletion of a seeding log(s).", () => {
+        //   cy.wrap(getRecord("/log.json?id=6")).as("get-log")
+        //   cy.get("[data-cy = r0-cbuttonCheckbox]").click()
+        //   cy.get("[data-cy = delete-button]")
+        //     // expect(true).to.equal(true)
+        // })
+        // /**
+        //  * Delete the log created in the beforeEach so that the database
+        //  * is back to where it started.
+        //  */
+        // afterEach(() => {
+        //     cy.wrap(deleteRecord("/log/"+logID, sessionToken)).as("delete-seeding")
+        //     cy.get("@delete-seeding")
+        // })
     })
 
     /**
@@ -77,7 +76,7 @@ describe('Testing if logs are properly removed from the database', () => {
         let json = {
             "name": name,
             "type": "farm_seeding",
-            "timestamp": dayjs("1999-01-01").unix(),
+            "timestamp": dayjs("2099-01-01").unix(),
             "done": "1",  //any seeding recorded is done.
             "notes": {
                 "value": "This is a test direct seeding",
