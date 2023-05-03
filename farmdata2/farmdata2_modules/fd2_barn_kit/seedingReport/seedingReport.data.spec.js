@@ -16,23 +16,48 @@ describe("Test the seeding report columns by seeding type", () => {
 
         
     })
-	it("Tests Total Number of Seeds Planted in Tray Seeding Summary", () => {
-		let total = 0;
+
+	it("Tests Total Number of Seeds Planted, Total Number of Seeding Hours, and Average Seed Planted per Hour in Tray Seeding Summary", () => {
+		
+		// Total number of seeds planted
+		let totalS = 0;
+
+		// Total number of hours
+		let totalH = 0;
 	  
 		// Get the total number of rows in the table
 		cy.get('[data-cy="report-table"] tbody tr').then(($rows) => {
 		  const numRows = $rows.length;
 	  
-		  // Loop through each row and add up the value in column 7
+		  // Loop through each row and add up the value in column 7,11 into two cumulative values.
 		  for (let r = 0; r < numRows; r++) {
 			cy.get("[data-cy=td-r" + r + "c7]").invoke("text").then((value) => {
-			  total += parseInt(value);
+			  totalS += parseInt(value);
 			});
-		  }
+			cy.get("[data-cy=td-r" + r + "c11]").invoke("text").then((value) => {
+				totalH += parseFloat(value);
+			  });
+			}
+
+		  totalH = Math.round(totalH*100)/100
+
+		  // Number of seeds planted per hour
+		  let seedsPerHours = Math.round((totalS/totalH)*100)/100
+
 	  
-		  // Check if the total matches the value in the Tray Seeding Summary
+		  // Check if the total of seeds planted matches the value in the Tray Seeding Summary
 		  cy.get('[data-cy="tray-total-seeds"]').invoke("text").then((value) => {
-			expect(total).to.eq(parseInt(value));
+			expect(totalS).to.eq(parseInt(value));
+		  });
+
+		  // Check if the total of hours matches the value in the Tray Seeding Summary
+		  cy.get('[data-cy="tray-total-seeds-hour"]').invoke("text").then((value) => {
+			expect(Math.round(totalH*100)/100).to.eq(parseFloat(value));
+		  });
+
+		  // Check if the average seeds planted per hour matches the value in the Tray Seeding Summary
+		  cy.get('[data-cy="tray-avg-seeds-hour"]').invoke("text").then((value) => {
+			expect(Math.round((totalS/totalH)*100)/100).to.eq(parseFloat(value));
 		  });
 		});
 	  });
