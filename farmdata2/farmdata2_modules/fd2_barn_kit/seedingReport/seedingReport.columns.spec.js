@@ -44,9 +44,9 @@ describe("Test the seeding report columns by seeding type", () => {
       cy.get("[data-cy=r1-cbuttonCheckbox]").should('not.be.disabled')
       cy.get("[data-cy=r1-cbuttonCheckbox]").should('be.visible')
 
-      //Check inner HTML text of other table header columns except for "Edit"
-      let includedHeaders = ["Date", "Crop", "Area", "Seeding", "Workers", "Hours", " Varieties", "User"]
       //Make sure these headers are visible on the page and the rest are not
+      let includedHeaders = ["Date", "Crop", "Area", "Seeding", "Workers", "Hours", " Varieties", "User"]
+     
       let i = 0
       allExpectedHeaders.forEach(header =>{
         if(includedHeaders.includes(header.header)){
