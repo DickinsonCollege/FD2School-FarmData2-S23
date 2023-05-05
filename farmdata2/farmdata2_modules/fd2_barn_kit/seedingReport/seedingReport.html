@@ -845,10 +845,6 @@
                 getCropToIDMap()
                     .then((response) => {
                         this.cropToIDMap = new Map(response)
-                        this.cropNameArray = []
-                        for(let [key, info] of this.cropToIDMap){
-                            this.cropNameArray.push(key)
-                        }
                         this.createdCount++
                     })
                     .catch((err) => { 
