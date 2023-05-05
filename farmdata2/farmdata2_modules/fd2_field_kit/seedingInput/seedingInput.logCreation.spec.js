@@ -1,3 +1,11 @@
+/* 
+ * This file contains tests for the seeding input functionality in the FarmData2 Field Kit application.
+ * The purpose of these tests is to verify that that when the “Cancel” button is clicked all of the input elements 
+ * in the form remain populated with their existing values when creating a tray or direct seeding. 
+ * These test also verify that when the "Cancel" button is clicked, the "Submit" button is enabled and no log is created in
+ * the database. However, if the "Submit" button is clicked, these tests verify that a new seeding log is created in the database. 
+ */
+
 const dayjs = require('dayjs')
 
 var FarmOSAPI = require('../../resources/FarmOSAPI.js')
