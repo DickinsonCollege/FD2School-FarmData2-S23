@@ -3,7 +3,15 @@ describe('Testing the seeding type filter', () => {
         cy.login("manager1", "farmdata2")
         cy.visit("/farm/fd2-barn-kit/seedingReport")
     })
-    // it("Tests that direct and tray seedings are both shown when All is selected", () => {
+     it("Tests that direct and tray seedings are both shown when All is selected", () => {
+        cy.get('[data-cy=start-date-select]').type('2019-02-13')
+        cy.get('[data-cy=end-date-select]').type('2019-02-15')
+        cy.get('[data-cy=generate-rpt-btn]').click()
+        cy.get('[data-cy=crop-dropdown] > [data-cy=dropdown-input]').should('have.value', 'All')
+        cy.get('[data-cy=crop-dropdown] > [data-cy=dropdown-input]').should('have.value', 'Direct Seedings')
+        cy.get('[data-cy=crop-dropdown] > [data-cy=dropdown-input]').should('have.value', 'Tray Seedings')
+    })
+
     //     cy.get('[data-cy=generate-rpt-btn]').click()
     //     cy.get('[data-cy=crop-dropdown] > [data-cy=dropdown-input]').select('direct seeding').should('have.value', 'direct seeding')
     //     cy.get('[data-cy=crop-dropdown] > [data-cy=dropdown-input]').should('have.value', 'All')
