@@ -8,8 +8,10 @@ describe('Testing the seeding type filter', () => {
         cy.get('[data-cy=end-date-select]').type('2019-02-15')
         cy.get('[data-cy=generate-rpt-btn]').click()
         cy.get('[data-cy=crop-dropdown] > [data-cy=dropdown-input]').should('have.value', 'All')
-        cy.get('[data-cy=crop-dropdown] > [data-cy=dropdown-input]').should('have.value', 'Direct Seedings')
-        cy.get('[data-cy=crop-dropdown] > [data-cy=dropdown-input]').should('have.value', 'Tray Seedings')
+        cy.get('[data-cy=seeding-type-dropdown] > [data-cy=dropdown-input]').select('Direct Seedings')
+        cy.get('[data-cy=tray-summary]').should('exist')
+        cy.get('[data-cy=seeding-type-dropdown] > [data-cy=dropdown-input]').select('Tray Seedings')
+        cy.get('[data-cy=direct-summary]').should('exist')
     })
 
     //     cy.get('[data-cy=generate-rpt-btn]').click()
