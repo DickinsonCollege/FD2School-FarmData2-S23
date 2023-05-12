@@ -28,7 +28,7 @@ describe("Test the seeding report columns by seeding type", () => {
 
 		// Get the total number of rows in the table
 		cy.get('[data-cy="report-table"] tbody tr').then(($rows) => {
-		  const numRows = $rows.length;
+		  	const numRows = $rows.length;
 	  
 		  	// Loop through each row and add up the value in column 7,11 into two cumulative values.
 			for (let r = 0; r < numRows; r++) {
