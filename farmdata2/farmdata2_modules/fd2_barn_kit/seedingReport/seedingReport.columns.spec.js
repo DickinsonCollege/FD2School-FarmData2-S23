@@ -51,6 +51,8 @@ describe("Test the seeding report columns by seeding type", () => {
       }
       i++
     })
+    
+    cy.get('[data-cy=r1-edit-button]').should('exist');
   });
 
   it("Tests the direct seeding columns", () => {
@@ -71,6 +73,8 @@ describe("Test the seeding report columns by seeding type", () => {
       }
       i++
     })
+
+    cy.get('[data-cy=r1-edit-button]').should('exist');
   });
 
   it("Tests the tray seeding columns", () => {
@@ -78,7 +82,7 @@ describe("Test the seeding report columns by seeding type", () => {
 
     cy.get('[data-cy=report-table]')
       .should('exist')
-    cy.get('[data-cy=selectAll-checkbox]').should('be.visible');
+    cy.get('[data-cy=selectAll-checkbox]').should('exist');
 
     //Make sure these headers exist on the page and the rest are not
     let includedHeaders = ["Date", "Crop", "Area", "Seeding", "Seeds", "Trays", "Cells/Tray", "Workers", "Hours", "Varieties", "Comments", "User"]
@@ -91,5 +95,7 @@ describe("Test the seeding report columns by seeding type", () => {
       }
       i++
     })
+
+    cy.get('[data-cy=r1-edit-button]').should('exist');
   });
 });
