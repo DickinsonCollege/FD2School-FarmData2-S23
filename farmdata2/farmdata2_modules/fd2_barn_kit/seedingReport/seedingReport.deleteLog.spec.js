@@ -22,10 +22,9 @@ describe('Testing if logs are properly removed from the database', () => {
         cy.waitForPage()
     })
 
-    context("Create a new logs, delete the log(s)", () => {
+    context("Create new log(s), delete the log(s)", () => {
         let logID = null
 
-        context("Adding logs, dates and testing for singular seeding log", () => {
             //Create new logs for testing and add dates
             beforeEach(() => {
                 cy.wrap(makeDirectSeeding("Test Seeding")).as("make-seeding")
@@ -60,10 +59,7 @@ describe('Testing if logs are properly removed from the database', () => {
                 cy.wrap(deleteRecord("/log/"+logID, sessionToken)).as("delete-seeding")
                 cy.get("@delete-seeding")
             })
-        })
-
         
-
         // it("Test to delete a singular seeding log.", () => {
         // //   cy.wrap(getRecord("/log.json?id=6")).as("get-log")
         //   cy.get("[data-cy = r0-cbuttonCheckbox]").click()
