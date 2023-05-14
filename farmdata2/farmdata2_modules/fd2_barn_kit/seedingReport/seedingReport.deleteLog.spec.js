@@ -28,6 +28,10 @@ describe('Testing if logs are properly removed from the database', () => {
             //Create new logs for testing and add dates
             beforeEach(() => {
                 cy.wrap(makeDirectSeeding("Test Seeding")).as("make-seeding")
+                cy.wrap(makeDirectSeeding("Test Seeding1")).as("make-seeding")
+                cy.wrap(makeDirectSeeding("Test Seeding2")).as("make-seeding")
+                cy.wrap(makeTraySeeding("Test Seeding3")).as("make-seeding")
+                cy.wrap(makeTraySeeding("Test Seeding4")).as("make-seeding")
                 cy.get("@make-seeding")
                 .then((response) => {
                     logID = response.data.id            
@@ -46,7 +50,19 @@ describe('Testing if logs are properly removed from the database', () => {
 
             it("Delete a singular seeding log from the row.", () => {
                 cy.get('[data-cy=report-table]').should('exist')
-                cy.get("[data-cy = r1-cbuttonCheckbox]").click()
+                cy.get("[data-cy = r0-cbuttonCheckbox]").click()
+                cy.get("[data-cy = delete-button]")
+                    .click((response) => {
+                        expect(response.status).to.equal(200)
+                    })
+                expect(true).to.equal(true)
+            })
+            
+            it("Delete multiple seeding logs from the row.", () => {
+                cy.get('[data-cy=report-table]').should('exist')
+                cy.get("[data-cy = r0-cbuttonCheckbox]").click()
+                cy.get("[data-cy = r2-cbuttonCheckbox]").click()
+                cy.get("[data-cy = r3-cbuttonCheckbox]").click()
                 cy.get("[data-cy = delete-button]")
                     .click((response) => {
                         expect(response.status).to.equal(200)
@@ -54,43 +70,21 @@ describe('Testing if logs are properly removed from the database', () => {
                 expect(true).to.equal(true)
             })
 
+            it("Test to cancel the deletion of a seeding log(s).", () => {
+                cy.get('[data-cy=report-table]').should('exist')
+                cy.get("[data-cy = r0-cbuttonCheckbox]").click()
+                cy.get("[data-cy = delete-button]")
+                .click((response) => {
+                    expect(response.status).to.equal(500)
+                })
+                // expect(true).to.equal(true)
+            })
+
             //Delete the created logs so the database is refreshed
             afterEach(() => {
                 cy.wrap(deleteRecord("/log/"+logID, sessionToken)).as("delete-seeding")
                 cy.get("@delete-seeding")
             })
-        
-        // it("Test to delete a singular seeding log.", () => {
-        // //   cy.wrap(getRecord("/log.json?id=6")).as("get-log")
-        //   cy.get("[data-cy = r0-cbuttonCheckbox]").click()
-        //   cy.get("[data-cy = delete-button]").click()
-        //     expect(true).to.equal(true)
-        // })
-
-        // it("Test to delete a multiple seeding logs.", () => {
-        // //   cy.wrap(getRecord("/log.json?id=6")).as("get-log")
-        //   cy.get("[data-cy = r0-cbuttonCheckbox]").click()
-        //   cy.get("[data-cy = r1-cbuttonCheckbox]").click()
-        //   cy.get("[data-cy = r2-cbuttonCheckbox]").click()
-        //   cy.get("[data-cy = r5-cbuttonCheckbox]").click()
-        //   cy.get("[data-cy = delete-button]").click()
-        //     expect(true).to.equal(true)
-        // })
-
-        // it("Test to cancel the deletion of a seeding log(s).", () => {
-        //   cy.wrap(getRecord("/log.json?id=6")).as("get-log")
-        //   cy.get("[data-cy = r0-cbuttonCheckbox]").click()
-        //   cy.get("[data-cy = delete-button]")
-        //     // expect(true).to.equal(true)
-        // })
-        // /**
-        //  * Delete the log created in the beforeEach so that the database
-        //  * is back to where it started.
-        //  */
-        // afterEach(() => {
-        //     cy.wrap(deleteRecord("/log/"+logID, sessionToken)).as("delete-seeding")
-        //     cy.get("@delete-seeding")
-        // })
     })
 
     /**
