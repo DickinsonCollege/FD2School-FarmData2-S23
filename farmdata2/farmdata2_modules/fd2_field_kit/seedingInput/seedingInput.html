@@ -14,7 +14,7 @@
         <fieldset class="panel panel-default center-block" style='max-width: 500px;'>
             <legend data-cy="data-header" class="panel-heading" style='background-color: #da4f3f; color: white;font-size: x-large;'>Data</legend>
             <div class="center-block" style='padding: 12px; text-align:center; font-size: medium; margin-top: 45px'>
-                <date-selection data-cy="date-selection" :set-date='selectedDate' @date-changed='setNewDate' :disabled='submitInProgress'>Date:<label style='color: #da4f3f'>*</label></date-selection> 
+                <date-selection data-cy="date-selection" :set-date='selectedDate' @date-changed='setNewDate' @click='setNewDate' :disabled='submitInProgress'>Date:<label style='color: #da4f3f'>*</label></date-selection> 
                 <br>
                 <dropdown-with-all data-cy="crop-selection" :selected-val='selectedCrop' :dropdown-list='cropArray' @selection-changed='setNewCrop' :disabled='submitInProgress'>Crop:<label style='color: #da4f3f;'>*</label></dropdown-with-all>
             </div>
@@ -145,7 +145,11 @@
                     this.validMap[key] = bool;
                 },
                 setNewDate(newDate){
-                    this.selectedDate = newDate
+                    if(dayjs(newDate).isValid()){
+                        this.selectedDate = newDate
+                    } else {
+                        this.selectedDate = null
+                    }
                 },
                 setNewCrop(newCrop){
                     this.selectedCrop = newCrop
@@ -305,6 +309,9 @@
                 },
                 formNotCompleted(){
                     if (this.submitInProgress == true){
+                        return true
+                    }
+                    if(this.selectedDate == null){
                         return true
                     }
                     if(this.selectedCrop == null){
