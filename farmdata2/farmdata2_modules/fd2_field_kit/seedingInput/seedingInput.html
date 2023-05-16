@@ -307,6 +307,9 @@
                     if (this.submitInProgress == true){
                         return true
                     }
+                    if(!dayjs(this.selectedDate).isValid()){
+                        return true
+                    }
                     if(this.selectedCrop == null){
                         return true
                     }
