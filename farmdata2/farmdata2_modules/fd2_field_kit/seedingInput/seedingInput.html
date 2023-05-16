@@ -145,12 +145,11 @@
                     this.validMap[key] = bool;
                 },
                 setNewDate(newDate){
-                    if(dayjs(this.selectedDate).isValid()){
+                    if(dayjs(newDate).isValid()){
                         this.selectedDate = newDate
                     } else {
-                        this.selectedDate = 'No Date Selected'
+                        this.selectedDate = null
                     }
-                    
                 },
                 setNewCrop(newCrop){
                     this.selectedCrop = newCrop
@@ -312,7 +311,7 @@
                     if (this.submitInProgress == true){
                         return true
                     }
-                    if(!dayjs(this.selectedDate).isValid()){
+                    if(this.selectedDate == null){
                         return true
                     }
                     if(this.selectedCrop == null){
