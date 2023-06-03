@@ -36,17 +36,17 @@
 			</select>
             
 			<br>
-			<button class="btn btn-primary" @click="reqDates()">Generate Report</button>
+			<button class="btn btn-primary" @click="reqDates()" data-cy="generate-report-button">Generate Report</button>
 
 		<hr>
 		
-		<h1>{{ harvestTitle == '' ? 'Mock Harvest Report' : harvestTitle }}</h1>
+		<h1 data-cy="report-header">{{ harvestTitle == '' ? 'Mock Harvest Report' : harvestTitle }}</h1>
 		
 			<p>Details:</p>
 			<ul>
-					<li><b>Farm</b>: {{ farm }}</li>
-					<li><b>User</b>: {{ user }}</li>
-					<li><b>Language</b>: {{ language }}</li>
+					<li data-cy="farm-name"><b>Farm</b>: {{ farm }}</li>
+					<li data-cy="user-name"><b>User</b>: {{ user }}</li>
+					<li><b>Language</b>:<span data-cy="language"> {{ language }}</span></li>
 					<br>
 					<li><b>Start</b>:{{ startDate }}</li>
 					<li><b>End</b>:{{ endDate }}</li>
