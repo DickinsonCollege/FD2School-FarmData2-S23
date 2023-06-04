@@ -28,4 +28,28 @@ describe("Test the harvest report table", () => {
             .should("have.length", 5)
     })
 
+    it("check table rows", () => {
+        cy.get("[data-cy=generate-report-button]")
+            .click()
+
+        cy.get("[data-cy=select-crop] > [data-cy=dropdown-input]")
+            .select(1)
+
+        cy.get("[data-cy=table-body]")
+            .children()
+            .should("have.length", 4)
+
+        cy.get("[data-cy=td-r0c2]")
+            .should("contains.text", "ARUGULA")
+
+        cy.get("[data-cy=td-r1c2]")
+            .should("contains.text", "ARUGULA")
+
+        cy.get("[data-cy=td-r2c2]")
+            .should("contains.text", "ARUGULA")
+
+        cy.get("[data-cy=td-r3c2]")
+            .should("contains.text", "ARUGULA")
+    })
+
 })
