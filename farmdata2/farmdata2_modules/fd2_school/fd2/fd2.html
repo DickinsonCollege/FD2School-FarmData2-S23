@@ -24,12 +24,10 @@
 	       	:min="startDate" max="2022-01-01">
 
 			<br>
-			
-			<label for=”crop”>Crop:</label>
-			<select data-cy="select-crop" id="crop" name="crop" v-model="selectedCrop">
-	  			<option v-for="crop in cropMaptoArray">{{ crop }}</option>
-            </select>
-            
+
+            <dropdown-with-all :selected-val="selectedCrop" data-cy="select-crop" includes-all :dropdown-list="cropMaptoArray" @selection-changed="changeCrop" :disabled="false"> Crop: 
+            </dropdown-with-all>
+
             <label for=”field”>Field:</label>
 			<select id="field" name="field" v-model="selectedField">
 	  			<option v-for="area in areaMaptoArray">{{ area }}</option>
@@ -91,7 +89,7 @@
 				harvestTitle: 'My Sample Harvest Report',
 				startDate: '2020-05-05',
 				endDate: '2020-05-15',
-				selectedCrop: 'Kale',
+				selectedCrop: 'All',
                 cropOptions: [ 'Broccoli', 'Kale', 'Peas' ],
                 selectedField: 'All',
                 fieldOptions: [ 'All', 'Chuau-1', 'SQ7' ],
@@ -123,7 +121,10 @@
                     this.genState = true
                     let link = '/log.json?type=farm_harvest&timestamp[ge]=' + dayjs(this.startDate).unix() + '&timestamp[le]=' + dayjs(this.endDate).unix()
                     getAllPages(link,this.harvestLogs)
-                }
+                },
+                changeCrop: function (newCrop){
+                        this.selectedCrop = newCrop;
+                    },
             },
             computed:{
                 cropMaptoArray() {
