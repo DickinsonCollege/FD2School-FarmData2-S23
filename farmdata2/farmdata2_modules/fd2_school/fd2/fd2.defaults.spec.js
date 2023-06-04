@@ -1,7 +1,7 @@
 describe("Test the harvest report default values", () => {
     beforeEach(() => {
         cy.login("manager1", "farmdata2")
-        cy.visit("/farm/fd2-school/e2e")
+        cy.visit("/farm/fd2-school/fd2")
     })
       
     it("Check the page header", () => {
@@ -16,14 +16,21 @@ describe("Test the harvest report default values", () => {
             .should("have.value", "2020-05-15")
     })
 
-    it("check if crop select is correct", () => {
-        cy.get("[data-cy=select-crop]").children().eq(0)
+    it("Check crop dropdown menu", () => {
+        cy.get("[data-cy=select-crop] > [data-cy=dropdown-input] > [data-cy=option0]")
+            .should("have.value", "All")
+
+        cy.get("[data-cy=select-crop] > [data-cy=dropdown-input] > [data-cy=option1]")
             .should("have.value", "ARUGULA")
-        cy.get("[data-cy=select-crop]").children().eq(4)
+
+        cy.get("[data-cy=select-crop] > [data-cy=dropdown-input] > [data-cy=option5]")
             .should("have.value", "BEAN-FAVA")
-        cy.get("[data-cy=select-crop]").children().eq(110)  
+
+        cy.get("[data-cy=select-crop] > [data-cy=dropdown-input] > [data-cy=option111]")
             .should("have.value", "ZUCCHINI")
-        cy.get("[data-cy=select-crop]").children()
-            .should("have.length", 111)
+
+        cy.get(("[data-cy=select-crop] > [data-cy=dropdown-input]")).children()
+            .should("have.length", "112")
+
     })
 })
