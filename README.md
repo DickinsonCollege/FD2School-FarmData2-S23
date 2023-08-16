@@ -1,3 +1,11 @@
+```
+***********************************************************************************
+*****            THIS REPOSITORY WAS FOR COMP290 IN SPRING 2023.              *****
+***** IF YOU ARE TAKING COMP290 NOW THIS IS NOT THE REPO YOU ARE LOOKING FOR. *****
+*****           CHECK WITH YOUR INSTRUCTOR FOR THE CORRECT REOP URL.          *****
+***********************************************************************************
+```
+
 # FarmData2 #
 
 FarmData2 is an application that supports the operation and certification requirements for small organic farming operations.
