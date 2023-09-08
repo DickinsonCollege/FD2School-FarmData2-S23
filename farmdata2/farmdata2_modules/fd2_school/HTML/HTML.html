@@ -1,0 +1,56 @@
+<h1>Harvest Report</h1>
+<p>This page is a <i>mockup</i> of a simplified harvest report.</p>
+<p>Title:<input type="text" value="My Sample Harvest Report"></p>
+<p>Start: <input type="date" id="start_date" name="season-start" value="2020-05-05" min="2014-01-01" max="2022-01-01"/>
+ End: <input type="date" id="end_date" name="season-end" value="2020-05-15" min="2020-05-05" max="2022-01-01" /> </p>
+<p>Crop: 
+    <select id="simple" name="crops">
+        <option>Broccoli</option>
+        <option selected>Kale</option>
+        <option>Peas</option>
+    </select> 
+    Field: 
+    <select id="simple" name="fields">
+        <option selected>All</option>
+        <option>Chuau-1</option>
+        <option>SQ7</option>
+    </select>
+</p>
+<button type="button">Generate Report</button>
+<hr>
+<h1>My Sample Harvest Report</h1>
+<p>
+    Details
+    <ul>
+        <li><b>Farm:</b>Sample Farm</li>
+        <li><b>User:</b>manager1</li>
+        <li><b>Language:</b>English</li>
+        <br>
+        <li><b>Start:</b>05/05/2020</li>
+        <li><b>End:</b>05/15/2020</li>
+        <li><b>Crop:</b>Kale</li>
+    </ul>
+    <table border="1">
+        <tr>
+            <th style="width: 75px; text-align: center;">Date</th>
+            <th style="width: 75px; text-align: center;">Area</th>
+            <th style="width: 75px; text-align: center;">Crop</th>
+            <th style="width: 75px; text-align: center;">Yield</th>
+            <th style="width: 75px; text-align: center;">Units</th>
+        </tr>
+        <tr>
+            <td style="width: 75px; text-align: center;">05/05/2020</td>
+            <td style="width: 75px; text-align: center;">Chuau-1</td>
+            <td style="width: 75px; text-align: center;">Kale</td>
+            <td style="width: 75px; text-align: center;">10</td>
+            <td style="width: 75px; text-align: center;">Bunches</td>
+        </tr>
+        <tr>
+            <td style="width: 75px; text-align: center;">05/05/2020</td>
+            <td style="width: 75px; text-align: center;">SQ7</td>
+            <td style="width: 75px; text-align: center;">Kale</td>
+            <td style="width: 75px; text-align: center;">7</td>
+            <td style="width: 75px; text-align: center;">Bunches</td>
+        </tr>
+    </table>
+</p>  
